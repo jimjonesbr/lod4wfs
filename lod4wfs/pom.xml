@@ -1,0 +1,23 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>de.uni-muenster.ifgi.lod4wfs</groupId>
+	<artifactId>lod4wfs</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>lod4wfs</name>
+	<description>Linked Open Data Adapter for Web Feature Services</description>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.jena</groupId>
+			<artifactId>apache-jena-libs</artifactId>
+			<type>pom</type>
+			<version>2.10.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>jetty-maven-plugin</artifactId>
+			<version>8.1.10.v20130312</version>
+		</dependency>
+
+	</dependencies>
+</project>
