@@ -1,4 +1,4 @@
-package de.ifgi.lod4wfs.web;
+package de.ifgi.lod4wfs.tests.web;
 
 import java.io.IOException;
 
