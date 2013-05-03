@@ -25,5 +25,9 @@ public class Facade {
 	public ArrayList<SpatialObject> listSpatialObjects(){
 		return factory.listSpatialObjects();
 	}
+	
+	public String getCapabilities(){
+		return factory.createCapabilitiesDocument();
+	}
 
 }

@@ -5,7 +5,7 @@ package de.ifgi.lod4wfs.core;
  * 
  * @author jones
  * @version 1.0
- * @
+ * 
  */
 public class Constants {
 
@@ -13,7 +13,7 @@ public class Constants {
 	public static String defautlCRS = "urn:ogc:def:crs:EPSG::4326";
 	public static String lowerCorner = "-180.0 -78.11";
 	public static String upperCorner = "180.0 83.57";
-	
+		
 	public static String prefixes = "" +
 									"PREFIX geo:  <http://www.opengis.net/ont/geosparql/1.0#>  " + 
 									"PREFIX my:   <http://big.that.de/1.0/>  " +
@@ -29,7 +29,8 @@ public class Constants {
 										    " WHERE { " +
 		    								"   ?spatialObject a geo:SpatialObject . " +
 											"   ?spatialObject dct:abstract ?abstract . " +
-											"   ?spatialObject dct:title ?title }"; 
+											"   ?spatialObject dct:title ?title . " +
+											"   ?spatialObject dct:subject ?keywords }"; 
 	
 
 	public static String listSpatialObjectsKeywords= prefixes +

@@ -1,11 +1,8 @@
 package de.ifgi.lod4wfs.web;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Iterator;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
+import com.hp.hpl.jena.util.FileUtils;
 import de.ifgi.lod4wfs.core.SpatialObject;
 import de.ifgi.lod4wfs.facade.Facade;
 
@@ -33,7 +30,7 @@ public class ServletParser extends HttpServlet
 
 		Enumeration<String> listParameters = request.getParameterNames();
 
-		System.out.println("List of Parameters:\n");
+		System.out.println("Incoming request:\n");
 
 		while (listParameters.hasMoreElements()) {
 			String string = (String) listParameters.nextElement();
@@ -50,16 +47,15 @@ public class ServletParser extends HttpServlet
 				list = Facade.getInstance().listSpatialObjects();
 
 				for (int i = 0; i < list.size(); i++) {
-					response.setContentType("text/html");
-					response.setStatus(HttpServletResponse.SC_OK);
-					response.getWriter().println("<h1>"+list.get(i).getName()+"</h1>");
-					response.getWriter().println("<h3>"+list.get(i).getTitle()+"</h3>");
-					response.getWriter().println("<h3>"+list.get(i).getFeatureAbstract()+"</h3>");
-					response.getWriter().println("<h3>"+list.get(i).getDefaultCRS()+"</h3>");
-					response.getWriter().println("<h3>"+list.get(i).getLowerCorner()+"</h3>");
-					response.getWriter().println("<h3>"+list.get(i).getUpperCorner()+"</h3>");
-					response.getWriter().println("<h3>"+list.get(i).getDefaultCRS()+"</h3>");
-
+//					response.setContentType("text/xml");
+//					response.setStatus(HttpServletResponse.SC_OK);				
+//					response.getWriter().println("<h1>Feature: "+list.get(i).getName()+"</h1>");
+//					response.getWriter().println("<h3>Title: "+list.get(i).getTitle()+"</h3>");
+//					response.getWriter().println("<h3>Abstract: "+list.get(i).getFeatureAbstract()+"</h3>");
+//					response.getWriter().println("<h3>CRS: "+list.get(i).getDefaultCRS()+"</h3>");
+//					response.getWriter().println("<h3>Lower Corner: "+list.get(i).getLowerCorner()+"</h3>");
+//					response.getWriter().println("<h3>Upper Corner: "+list.get(i).getUpperCorner()+"</h3>");
+					
 				}
 			}
 				
@@ -71,8 +67,18 @@ public class ServletParser extends HttpServlet
 
 		}
 
-
-
+		//File fXmlFile = new File("/home/jones/Desktop/staff.xml");
+		
+		response.setContentType("text/xml");
+		response.setStatus(HttpServletResponse.SC_OK);	
+		
+		//String tmp = FileUtils.readWholeFileAsUTF8("/home/jones/Desktop/CapDoc2.xml");
+		//String tmp = FileUtils.readWholeFileAsUTF8("/media/jones/Dateien/ifgi/MSc/Thesis/GEOSERVER.xml");
+		//String tmp = FileUtils.readWholeFileAsUTF8("/media/jones/Dateien/ifgi/MSc/Thesis/MODEL-WFS.xml");
+		String tmp = FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument.xml");
+		
+		response.getWriter().println(tmp);
+				
 		//response.setContentType("text/html");
 		//response.setStatus(HttpServletResponse.SC_OK);
 		//response.getWriter().println("<h1>"+greeting+"</h1>");

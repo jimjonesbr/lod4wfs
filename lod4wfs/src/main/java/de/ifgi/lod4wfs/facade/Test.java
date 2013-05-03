@@ -18,9 +18,7 @@ public class Test {
 		System.out.println(list.get(i).getDefaultCRS());
 		System.out.println(list.get(i).getLowerCorner());
 		System.out.println(list.get(i).getUpperCorner());
-		for (int j = 0; j < list.get(i).getKeywords().getKeywordList().size(); j++) {
-			System.out.println(list.get(i).getKeywords().getKeywordList().get(j));
-		}
+		System.out.println(list.get(i).getKeywords());
 		
 	}
 	

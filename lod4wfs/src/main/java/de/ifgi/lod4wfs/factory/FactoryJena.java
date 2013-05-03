@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.Constants;
-import de.ifgi.lod4wfs.core.Keywords;
 import de.ifgi.lod4wfs.core.SpatialObject;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
@@ -38,7 +37,7 @@ public class FactoryJena {
 			sp.setName(soln.get("?spatialObject").toString());
 			sp.setTitle(soln.getLiteral("?title").getValue().toString());
 			sp.setFeatureAbstract(soln.getLiteral("?abstract").getValue().toString());
-			sp.setKeywords(this.listSpatialObjectsKeywords(soln.get("?spatialObject").toString()));
+			sp.setKeywords(soln.getLiteral("?keywords").getValue().toString());
 			sp.setLowerCorner(Constants.lowerCorner);
 			sp.setUpperCorner(Constants.upperCorner);
 			sp.setDefaultCRS(Constants.defautlCRS);
@@ -48,19 +47,26 @@ public class FactoryJena {
 		return result;
 	}
 	
-	
-	public Keywords listSpatialObjectsKeywords(String spatialObject){
-		ResultSet rs = jn.executeQuery(Constants.listSpatialObjectsKeywords.replace("PARAM_SPOBJ", spatialObject));
-		Keywords keyword = new Keywords();
-		ArrayList<String> arrayList = new ArrayList<String>();
+	public String createCapabilitiesDocument(){
 		
-		while (rs.hasNext()) {
-			QuerySolution soln = rs.nextSolution();
-			arrayList.add(soln.getLiteral("?keyword").getValue().toString());
-		}
+		return null;
 		
-		keyword.setKeywordList(arrayList);
-		
-		return keyword;
 	}
+	
+
+	
+	//	public Keywords listSpatialObjectsKeywords(String spatialObject){
+//		ResultSet rs = jn.executeQuery(Constants.listSpatialObjectsKeywords.replace("PARAM_SPOBJ", spatialObject));
+//		Keywords keyword = new Keywords();
+//		ArrayList<String> arrayList = new ArrayList<String>();
+//		
+//		while (rs.hasNext()) {
+//			QuerySolution soln = rs.nextSolution();
+//			arrayList.add(soln.getLiteral("?keyword").getValue().toString());
+//		}
+//		
+//		keyword.setKeywordList(arrayList);
+//		
+//		return keyword;
+//	}
 }

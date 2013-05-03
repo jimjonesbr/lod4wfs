@@ -4,7 +4,7 @@ public class SpatialObject {
 
 	private String name;
 	private String title;
-	private Keywords keywords;
+	private String keywords;
 	private String featureAbstract;
 	private String defaultCRS;
 	private String lowerCorner;
@@ -15,7 +15,7 @@ public class SpatialObject {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SpatialObject(String name, String title, Keywords keywords,
+	public SpatialObject(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
 			String upperCorner) {
 		super();
@@ -46,11 +46,11 @@ public class SpatialObject {
 		this.title = title;
 	}
 
-	public Keywords getKeywords() {
+	public String getKeywords() {
 		return keywords;
 	}
 
-	public void setKeywords(Keywords keywords) {
+	public void setKeywords(String keywords) {
 		this.keywords = keywords;
 	}
 
