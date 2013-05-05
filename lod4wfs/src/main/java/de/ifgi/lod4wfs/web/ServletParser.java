@@ -17,10 +17,12 @@ import de.ifgi.lod4wfs.facade.Facade;
 public class ServletParser extends HttpServlet
 {
 	private String greeting="Linked Open Data for Web Feature Services Adapter";
-	private String version="Beta 0.1.0";
+	
+	//private String version="Beta 0.1.0";
 
 	public ServletParser(){}
 
+	
 	public ServletParser(String greeting)
 	{
 		this.greeting=greeting;
@@ -29,20 +31,32 @@ public class ServletParser extends HttpServlet
 	{
 
 		Enumeration<String> listParameters = request.getParameterNames();
-
+		String CapabilitiesDocuemnt = new String();
+		
 		System.out.println("Incoming request:\n");
-
+		
+		
 		while (listParameters.hasMoreElements()) {
 			String string = (String) listParameters.nextElement();
 
-			System.out.println(string+" -> "+request.getParameter(string)+"");
+			System.out.println(string + " -> "+ request.getParameter(string)+"");
+
+			if (string.toUpperCase().equals("VERSION")) {
+				
+				if(request.getParameter(string).equals("1.0.0")){
+					CapabilitiesDocuemnt = Facade.getInstance().getCapabilities(request.getParameter(string));
+				}
+
+				if(request.getParameter(string).equals("2.0.0")){
+					CapabilitiesDocuemnt = "Version not supported.";
+				}
+			}
 
 			//if(request.getParameter(string).toUpperCase().equals("WFS")){ 
 					
 				
 			if(request.getParameter(string).toUpperCase().equals("GETCAPABILITIES")){
-				System.out.println("GetCapabilities Request for Web Feature Service.\n");
-				
+								
 				ArrayList<SpatialObject> list = new ArrayList<SpatialObject>(); 
 				list = Facade.getInstance().listSpatialObjects();
 
@@ -75,9 +89,10 @@ public class ServletParser extends HttpServlet
 		//String tmp = FileUtils.readWholeFileAsUTF8("/home/jones/Desktop/CapDoc2.xml");
 		//String tmp = FileUtils.readWholeFileAsUTF8("/media/jones/Dateien/ifgi/MSc/Thesis/GEOSERVER.xml");
 		//String tmp = FileUtils.readWholeFileAsUTF8("/media/jones/Dateien/ifgi/MSc/Thesis/MODEL-WFS.xml");
-		String tmp = FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument.xml");
+		//String tmp = FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument_100.xml");
 		
-		response.getWriter().println(tmp);
+		//String tmp = Facade.getInstance().getCapabilities(versionx);
+		response.getWriter().println(CapabilitiesDocuemnt);
 				
 		//response.setContentType("text/html");
 		//response.setStatus(HttpServletResponse.SC_OK);

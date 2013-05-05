@@ -7,13 +7,8 @@ package de.ifgi.lod4wfs.core;
  * @version 1.0
  * 
  */
-public class Constants {
-
-	public static String SPARQL_Endpoint= "http://recife:8081/parliament/sparql";
-	public static String defautlCRS = "urn:ogc:def:crs:EPSG::4326";
-	public static String lowerCorner = "-180.0 -78.11";
-	public static String upperCorner = "180.0 83.57";
-		
+public class SPARQL {
+	
 	public static String prefixes = "" +
 									"PREFIX geo:  <http://www.opengis.net/ont/geosparql/1.0#>  " + 
 									"PREFIX my:   <http://big.that.de/1.0/>  " +
