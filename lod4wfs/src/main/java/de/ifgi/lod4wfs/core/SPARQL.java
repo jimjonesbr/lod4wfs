@@ -17,21 +17,54 @@ public class SPARQL {
 									"PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " + 
 									"PREFIX dct: <http://purl.org/dc/terms/> " +
 									"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  " +
-									"PREFIX sf:	 <http://www.opengis.net/ont/sf#> \n";
+									"PREFIX sf:	 <http://www.opengis.net/ont/sf#> " +
+									"PREFIX parliament: <http://parliament.semwebcentral.org/parliament#> \n";
 	
-	public static String listSpatialObjects= prefixes + 
-										    " SELECT ?spatialObject ?title ?abstract ?keywords " +
-										    " WHERE { " +
-		    								"   ?spatialObject a geo:SpatialObject . " +
-											"   ?spatialObject dct:abstract ?abstract . " +
-											"   ?spatialObject dct:title ?title . " +
-											"   ?spatialObject dct:subject ?keywords }"; 
+//	public static String listSpatialObjects= prefixes + 
+//										    " SELECT ?feature ?title ?abstract ?keywords " +
+//										    " WHERE { " +
+//		    								"   ?feature a geo:Feature . " +
+//											"   ?feature dct:abstract ?abstract . " +
+//											"   ?feature dct:title ?title . " +
+//											"   ?feature dct:subject ?keywords }"; 
 	
 
 	public static String listSpatialObjectsKeywords= prefixes +
 											"SELECT ?keyword WHERE { " +
 											"<PARAM_SPOBJ> dct:subject ?keyword}";
 	
+	public static String getFeature = prefixes +
+											" SELECT ?geometry ?wkt WHERE { " +
+											" 	<PARAM_SPOBJ> geo:hasGeometry ?geometry . " + 
+											"	?geometry geo:asWKT ?wkt } ";
+	
+//	public static String listGeometryPredicates = prefixes + 
+//											" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) WHERE { " +
+//										    " <PARAM_SPOBJ> geo:hasGeometry ?geometry ." + 
+//										    " ?geometry ?predicate ?object} ";
+	
+	public static String listGeometryPredicates = prefixes +
+										" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) " +
+										" WHERE { GRAPH <PARAM_LAYER> { " +
+										"		?geometry ?predicate ?object . " +
+										"		?geometry a geo:Geometry .}  " +
+										" }"; 
+	
+	
+	public static String listNamedGraphs = prefixes +  
+										   " SELECT ?graphName ?abstract ?keywords ?title " + 
+											"WHERE { GRAPH ?graph { " + 
+											"	?graphName dct:abstract ?abstract . " +
+											"	?graphName dct:title ?title . " +
+											"	?graphName dct:subject ?keywords  .} " +
+											"}";		
+	
+	public static String getFeatureType = prefixes + "SELECT ?wkt " +
+													" WHERE { GRAPH <PARAM_LAYER> { " +
+													" ?geometry a geo:Geometry . " +
+													" ?geometry geo:asWKT ?wkt " +
+													" }} LIMIT 1 ";
+			
 }
 
 
@@ -39,11 +72,11 @@ public class SPARQL {
 PREFIX geo:  <http://www.opengis.net/spec/geosparql/1.0#> 
 PREFIX dct: <http://purl.org/dc/terms/> 
 
-SELECT ?spatialObject ?title ?abstract ?keywords WHERE {
-   ?spatialObject a geo:SpatialObject .
-   ?spatialObject dct:abstract ?abstract .
-   ?spatialObject dct:title ?title .
-   ?spatialObject dct:subject ?keywords
+SELECT ?feature ?title ?abstract ?keywords WHERE {
+   ?feature a geo:SpatialObject .
+   ?feature dct:abstract ?abstract .
+   ?feature dct:title ?title .
+   ?feature dct:subject ?keywords
 }
 
 
@@ -51,10 +84,10 @@ SELECT ?spatialObject ?title ?abstract ?keywords WHERE {
 PREFIX geo:  <http://www.opengis.net/spec/geosparql/1.0#> 
 PREFIX dct: <http://purl.org/dc/terms/> 
 
-SELECT ?spatialObject (COUNT(?geometries) AS ?numberGeometries) WHERE {
-   ?spatialObject a geo:SpatialObject .
-   ?spatialObject geo:hasGeometry ?geometries .
-} GROUP BY ?spatialObject
+SELECT ?feature (COUNT(?geometries) AS ?numberGeometries) WHERE {
+   ?feature a geo:SpatialObject .
+   ?feature geo:hasGeometry ?geometries .
+} GROUP BY ?feature
 
 
 # calculating bbox and envelope

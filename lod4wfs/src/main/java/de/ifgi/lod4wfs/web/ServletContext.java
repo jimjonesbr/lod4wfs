@@ -15,7 +15,7 @@ public class ServletContext{
     public static void main(String[] args) throws Exception
     {
          //TODO: Document -> Loading all available capabilities documents to memory for future requests.
-
+    	
     	Facade.getInstance().loadCapabilitiesDocuments();
         
     	Server server = new Server(GlobalSettings.defaultPort);
@@ -27,7 +27,7 @@ public class ServletContext{
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         //TODO: Create welcome page and attach to /lod4wfs 
         
-        context.setContextPath("/lod4wfs");
+        context.setContextPath("/"+GlobalSettings.defaultServiceName);
         server.setHandler(context);
         
         context.addServlet(new ServletHolder(new ServletParser()),"/*");
@@ -37,8 +37,8 @@ public class ServletContext{
         context.addServlet(new ServletHolder(new ServletParser("Service started at: " + startTime )),"/wfs/*");
         
         server.start();
-        System.out.println("Web Feature Service Adapter started\n" +
-        				   "Start time: " + startTime + "\n" +
+        System.out.println("Web Feature Service Adapter started\n\n" +
+        				   "Startup time: " + startTime + "\n" +
         				   "Port: " + GlobalSettings.defaultPort);
         server.join();
         

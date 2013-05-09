@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Servers>
+	<server>
+		<name>something</name>
+		<port>port</port>
+	</server>
+<server><name>foo</name><port>12345</port></server></Servers>

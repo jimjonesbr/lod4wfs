@@ -1,6 +1,6 @@
 package de.ifgi.lod4wfs.core;
 
-public class SpatialObject {
+public class GeographicLayer {
 
 	private String name;
 	private String title;
@@ -10,12 +10,12 @@ public class SpatialObject {
 	private String lowerCorner;
 	private String upperCorner;
 	
-	public SpatialObject() {
+	public GeographicLayer() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public SpatialObject(String name, String title, String keywords,
+	public GeographicLayer(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
 			String upperCorner) {
 		super();

@@ -1,7 +1,7 @@
 package de.ifgi.lod4wfs.facade;
 
 import java.util.ArrayList;
-import de.ifgi.lod4wfs.core.SpatialObject;
+import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.factory.FactoryJena;
 
 public class Facade {
@@ -23,15 +23,27 @@ public class Facade {
 
 	public void loadCapabilitiesDocuments(){
 		
+		System.out.println("Loading capabilities document...");
 		this.CapabilitiesDocument_v1_0_0 = factory.createCapabilitiesDocument("1.0.0");
+		System.out.println("Capabilities document loaded.");
 		
 	}
 	
 	//TODO: Delete! Only supposed to be accessed at the Factory level.
-	public ArrayList<SpatialObject> listSpatialObjects(){
-		return factory.listSpatialObjects();
+	public ArrayList<GeographicLayer> listSpatialObjects(){
+		
+		return factory.listGeographicLayers();
+	}
+		
+	public String getFeature(GeographicLayer spatialObject){
+		
+		return factory.createFeatureCollection(spatialObject);
 	}
 	
+	public String describeFeatureType(GeographicLayer geographicLayer){
+		
+		return factory.describeFeatureType(geographicLayer);
+	}
 	
 	public String getCapabilities(String version){
 		

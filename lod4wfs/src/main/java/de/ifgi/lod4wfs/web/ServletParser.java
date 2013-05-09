@@ -11,18 +11,18 @@ import javax.swing.text.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import com.hp.hpl.jena.util.FileUtils;
-import de.ifgi.lod4wfs.core.SpatialObject;
+import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.facade.Facade;
 
 public class ServletParser extends HttpServlet
 {
 	private String greeting="Linked Open Data for Web Feature Services Adapter";
-	
+
 	//private String version="Beta 0.1.0";
 
 	public ServletParser(){}
 
-	
+
 	public ServletParser(String greeting)
 	{
 		this.greeting=greeting;
@@ -32,97 +32,82 @@ public class ServletParser extends HttpServlet
 
 		Enumeration<String> listParameters = request.getParameterNames();
 		String CapabilitiesDocuemnt = new String();
-		
+		String currentVersion = new String();
+		String currentRequest = new String();
+		String currentService = new String();
+		String currentTypeName = new String();
+		String currentSRSName = new String();
+
 		System.out.println("Incoming request:\n");
-		
-		
+
+
 		while (listParameters.hasMoreElements()) {
-			String string = (String) listParameters.nextElement();
+			String parameter = (String) listParameters.nextElement();
 
-			System.out.println(string + " -> "+ request.getParameter(string)+"");
+			System.out.println(parameter + " -> "+ request.getParameter(parameter)+"");
 
-			if (string.toUpperCase().equals("VERSION")) {
-				
-				if(request.getParameter(string).equals("1.0.0")){
-					CapabilitiesDocuemnt = Facade.getInstance().getCapabilities(request.getParameter(string));
-				}
+			if (parameter.toUpperCase().equals("VERSION")) {
 
-				if(request.getParameter(string).equals("2.0.0")){
-					CapabilitiesDocuemnt = "Version not supported.";
-				}
+				currentVersion=request.getParameter(parameter);
 			}
 
-			//if(request.getParameter(string).toUpperCase().equals("WFS")){ 
-					
-				
-			if(request.getParameter(string).toUpperCase().equals("GETCAPABILITIES")){
-								
-				ArrayList<SpatialObject> list = new ArrayList<SpatialObject>(); 
-				list = Facade.getInstance().listSpatialObjects();
+			if(parameter.toUpperCase().equals("REQUEST")){
 
-				for (int i = 0; i < list.size(); i++) {
-//					response.setContentType("text/xml");
-//					response.setStatus(HttpServletResponse.SC_OK);				
-//					response.getWriter().println("<h1>Feature: "+list.get(i).getName()+"</h1>");
-//					response.getWriter().println("<h3>Title: "+list.get(i).getTitle()+"</h3>");
-//					response.getWriter().println("<h3>Abstract: "+list.get(i).getFeatureAbstract()+"</h3>");
-//					response.getWriter().println("<h3>CRS: "+list.get(i).getDefaultCRS()+"</h3>");
-//					response.getWriter().println("<h3>Lower Corner: "+list.get(i).getLowerCorner()+"</h3>");
-//					response.getWriter().println("<h3>Upper Corner: "+list.get(i).getUpperCorner()+"</h3>");
-					
-				}
+				currentRequest=request.getParameter(parameter);
 			}
-				
-			//}
 
+			if(parameter.toUpperCase().equals("TYPENAME")){
 
+				currentTypeName=request.getParameter(parameter);
+			}
 
+			if(parameter.toUpperCase().equals("SRSNAME")){
 
+				currentSRSName=request.getParameter(parameter);
+			}
+
+			if(parameter.toUpperCase().equals("SERVICE")){
+
+				currentService=request.getParameter(parameter);
+			}
 
 		}
 
-		//File fXmlFile = new File("/home/jones/Desktop/staff.xml");
-		
-		response.setContentType("text/xml");
-		response.setStatus(HttpServletResponse.SC_OK);	
-		
-		//String tmp = FileUtils.readWholeFileAsUTF8("/home/jones/Desktop/CapDoc2.xml");
-		//String tmp = FileUtils.readWholeFileAsUTF8("/media/jones/Dateien/ifgi/MSc/Thesis/GEOSERVER.xml");
-		//String tmp = FileUtils.readWholeFileAsUTF8("/media/jones/Dateien/ifgi/MSc/Thesis/MODEL-WFS.xml");
-		//String tmp = FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument_100.xml");
-		
-		//String tmp = Facade.getInstance().getCapabilities(versionx);
-		response.getWriter().println(CapabilitiesDocuemnt);
-				
-		//response.setContentType("text/html");
-		//response.setStatus(HttpServletResponse.SC_OK);
-		//response.getWriter().println("<h1>"+greeting+"</h1>");
-		//response.getWriter().println("<h2>"+version+"</h2>");
-		//response.getWriter().println("session=" + request.getSession(true).getId());
 
+		if(currentRequest.equals("GetCapabilities")){	
 
-		//		File fXmlFile = new File("/Users/mkyong/staff.xml");
-		//		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		//		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		//		Document doc = dBuilder.parse(fXmlFile);
+			if(currentVersion.equals("1.0.0")){
 
-		//		System.out.println("\nParameters Values:\n");
-		//		System.out.println("REQUEST: "+request.getParameter("REQUEST"));
-		//		System.out.println("VERSION: "+request.getParameter("VERSION"));
-		//		System.out.println("SERVICE: "+request.getParameter("SERVICE"));
-		//		
+				CapabilitiesDocuemnt = Facade.getInstance().getCapabilities(currentVersion);
 
-		//		String serv = request.getParameter("SERVICE");
-		//		
-		//		System.out.println(serv);
-		//		
-		//		if(serv=="WFS"){
-		//			
-		//			System.out.println("Web Feature Serice");
-		//			
-		//		}
-		//		
-		//System.out.println("Full Request: "+request.getRequestURL());
+			} else if(currentVersion.equals("2.0.0")){
 
+				CapabilitiesDocuemnt = "Version not supported.";
+			}
+
+			response.setContentType("text/xml");
+			response.setStatus(HttpServletResponse.SC_OK);	
+			response.getWriter().println(CapabilitiesDocuemnt);
+
+			
+		} else if (currentRequest.equals("GetFeature")) {
+
+			GeographicLayer sp = new GeographicLayer();
+			sp.setName(currentTypeName);
+			response.setContentType("text/xml");
+			response.setStatus(HttpServletResponse.SC_OK);	
+			response.getWriter().println(Facade.getInstance().getFeature(sp));
+			
+		} else if (currentRequest.equals("DescribeFeatureType")) {
+
+			GeographicLayer layer = new GeographicLayer();
+			layer.setName(currentTypeName);
+			response.setContentType("text/xml");
+			response.setStatus(HttpServletResponse.SC_OK);	
+			response.getWriter().println(Facade.getInstance().describeFeatureType(layer));
+			
+
+		}
 	}
+
 }

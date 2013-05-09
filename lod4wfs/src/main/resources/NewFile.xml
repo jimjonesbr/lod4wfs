@@ -1,0 +1,74 @@
+<gml:MultiPolygon xmlns:gml="http://www.opengis.net/gml">
+	<gml:polygonMember>
+		<gml:Polygon>
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:coordinates>121.576393,22.001389 121.490257,22.078609
+						121.546944,22.078053 121.576393,22.001389</gml:coordinates>
+				</gml:LinearRing>
+			</gml:outerBoundaryIs>
+		</gml:Polygon>
+	</gml:polygonMember>
+	<gml:polygonMember>
+		<gml:Polygon>
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:coordinates>119.669434,23.549999 119.526703,23.535461
+						119.598328,23.606941 119.669434,23.549999</gml:coordinates>
+				</gml:LinearRing>
+			</gml:outerBoundaryIs>
+		</gml:Polygon>
+	</gml:polygonMember>
+	<gml:polygonMember>
+		<gml:Polygon>
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:coordinates>118.223602,24.404163 118.207489,24.412495
+						118.241364,24.445827 118.223602,24.404163</gml:coordinates>
+				</gml:LinearRing>
+			</gml:outerBoundaryIs>
+		</gml:Polygon>
+	</gml:polygonMember>
+	<gml:polygonMember>
+		<gml:Polygon>
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:coordinates>118.419144,24.395828 118.275543,24.399162
+						118.401657,24.521664 118.419144,24.395828</gml:coordinates>
+				</gml:LinearRing>
+			</gml:outerBoundaryIs>
+		</gml:Polygon>
+	</gml:polygonMember>
+	<gml:polygonMember>
+		<gml:Polygon>
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:coordinates>121.734711,25.138885 122.002213,25.006943
+						121.839706,24.476383 120.716377,21.928051 120.052757,23.044998
+						120.111366,23.620274 121.009163,25.008888 121.734711,25.138885
+					</gml:coordinates>
+				</gml:LinearRing>
+			</gml:outerBoundaryIs>
+		</gml:Polygon>
+	</gml:polygonMember>
+	<gml:polygonMember>
+		<gml:Polygon>
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:coordinates>119.929428,26.134995 119.909416,26.159439
+						119.952477,26.159996 119.929428,26.134995</gml:coordinates>
+				</gml:LinearRing>
+			</gml:outerBoundaryIs>
+		</gml:Polygon>
+	</gml:polygonMember>
+	<gml:polygonMember>
+		<gml:Polygon>
+			<gml:outerBoundaryIs>
+				<gml:LinearRing>
+					<gml:coordinates>119.967209,26.187496 119.956383,26.215549
+						120.006104,26.219162 119.967209,26.187496</gml:coordinates>
+				</gml:LinearRing>
+			</gml:outerBoundaryIs>
+		</gml:Polygon>
+	</gml:polygonMember>
+</gml:MultiPolygon>
