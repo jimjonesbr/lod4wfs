@@ -16,6 +16,7 @@ public class SPARQL {
 									"PREFIX dbpedia-prop: <http://dbpedia.org/property/>  " +
 									"PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " + 
 									"PREFIX dct: <http://purl.org/dc/terms/> " +
+									"PREFIX dc:	  <http://purl.org/dc/elements/1.1/> " +
 									"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  " +
 									"PREFIX sf:	 <http://www.opengis.net/ont/sf#> " +
 									"PREFIX parliament: <http://parliament.semwebcentral.org/parliament#> \n";
@@ -37,12 +38,7 @@ public class SPARQL {
 											" SELECT ?geometry ?wkt WHERE { " +
 											" 	<PARAM_SPOBJ> geo:hasGeometry ?geometry . " + 
 											"	?geometry geo:asWKT ?wkt } ";
-	
-//	public static String listGeometryPredicates = prefixes + 
-//											" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) WHERE { " +
-//										    " <PARAM_SPOBJ> geo:hasGeometry ?geometry ." + 
-//										    " ?geometry ?predicate ?object} ";
-	
+		
 	public static String listGeometryPredicates = prefixes +
 										" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) " +
 										" WHERE { GRAPH <PARAM_LAYER> { " +

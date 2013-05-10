@@ -5,6 +5,7 @@ import it.cutruzzula.lwkt.WKTParser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URI;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -19,19 +20,16 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.util.FileUtils;
 import de.ifgi.lod4wfs.core.Geometry;
 import de.ifgi.lod4wfs.core.SPARQL;
@@ -44,15 +42,17 @@ public class FactoryJena {
 
 	private static JenaConnector jn;
 	private static Model model = ModelFactory.createDefaultModel();
-	//private String result;
 
 	public FactoryJena(){
 		jn = new JenaConnector(GlobalSettings.SPARQL_Endpoint);
 
-		//Model model = ModelFactory.createDefaultModel();
-
-		model.setNsPrefix( "xsd", GlobalSettings.xsdNameSpace );        
-		model.setNsPrefix( "sf", GlobalSettings.sfNameSpace );
+		//TODO Fix redundancy of GlobalSettings prefixes with ModelFactory prefixes
+		model.setNsPrefix("xsd", GlobalSettings.xsdNameSpace );        
+		model.setNsPrefix("sf", GlobalSettings.sfNameSpace );
+		model.setNsPrefix("dc", GlobalSettings.dublinCoreNameSpace );
+		model.setNsPrefix("geo", GlobalSettings.geoSPARQLNameSpace );
+		model.setNsPrefix("rdf", GlobalSettings.RDFNameSpace);
+		model.setNsPrefix("dct", GlobalSettings.dublinCoreTermsNameSpace);
 
 	}
 
@@ -170,6 +170,9 @@ public class FactoryJena {
 
 	}
 
+	// TODO Fix dependency on the commented geometry on the XML File DescribeFeatureType_100
+	// TODO Implement standardized exception for wrong requests.
+
 	public String describeFeatureType(GeographicLayer geographicLayer){
 
 		String describeFeatureTypeResponse = new String(); 
@@ -187,24 +190,38 @@ public class FactoryJena {
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
 
+				String predicateWithoutPrefix = new String();
+				predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
+
 				Element sequence = document.createElement("xsd:element");
 				sequence.setAttribute("maxOccurs","1");
 				sequence.setAttribute("minOccurs","0");
-				sequence.setAttribute("name",predicates.get(i).getPredicate());
+				sequence.setAttribute("name",predicateWithoutPrefix);
 				sequence.setAttribute("nillable","true");
-				
-				if(predicates.get(i).getPredicate().equals("asWKT")){
+
+				//TODO Try to fix hardcoded geo:asWKT to the describeFeature operation 
+
+				if(predicates.get(i).getPredicate().equals("geo:asWKT")){
 					String featureType = new String();
 					featureType = this.getFeatureType(geographicLayer);
-					
+
 					if(featureType.equals("gml:MultiPolygon") || featureType.equals("gml:Polygon")){
-						sequence.setAttribute("type","gml:MultiPolygonPropertyTypeX");
+						sequence.setAttribute("type","gml:MultiPolygonPropertyType");
 					}
-					
+
+					if(featureType.equals("gml:LineString")){
+						sequence.setAttribute("type","gml:MultiLineStringPropertyType");
+					}
+
+					if(featureType.equals("gml:Point") || featureType.equals("gml:MultiPoint") ){
+						sequence.setAttribute("type","gml:MultiPointPropertyType");
+					}
+
+
 				} else {
 					sequence.setAttribute("type",predicates.get(i).getObjectDataType());
 				}
-				
+
 				myNodeList.item(1).getParentNode().insertBefore(sequence, myNodeList.item(0));
 
 			}
@@ -264,7 +281,7 @@ public class FactoryJena {
 			Triple triple = new Triple();
 
 			QuerySolution soln = rs.nextSolution();
-			triple.setPredicate(soln.getResource("?predicate").getLocalName().toString());
+			triple.setPredicate(model.shortForm(soln.getResource("?predicate").toString()));
 
 			if (soln.get("?dataType")==null) {
 
@@ -332,38 +349,188 @@ public class FactoryJena {
 		return rsw;
 	}
 
-	
+
 	private String getFeatureType (GeographicLayer layer){
-		
+
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", layer.getName()));
 		String result = new String();
-				
-		
-		
+
 		while (rs.hasNext()) {
-			
+
 			QuerySolution soln = rs.nextSolution();					
-			
+
 			result = soln.getLiteral("?wkt").getString();
 		}
-		
+
 		try {
-			
+
 			result = WKTParser.parseToGML2(result);
-			
+
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-					
+
 			Document document = documentBuilder.parse(new InputSource(new ByteArrayInputStream(result.getBytes("utf-8"))));
-					  
+
 			result = document.getDocumentElement().getNodeName();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return result;
+	}
+
+
+	public String getFeature(GeographicLayer layer) {
+
+		String getFeatureResponse = new String();
+		ResultSet rs = jn.executeQuery(SPARQL.prefixes +" \n" + this.createGetFeatureSPARQL(layer));
+
+
+		try {
+
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder;
+
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			Document document = documentBuilder.parse("src/main/resources/GetFeature_100.xml");
+
+			ArrayList<Triple> predicates = new ArrayList<Triple>();
+			predicates = this.getGeometriesPredicates(layer);
+
+
+			while (rs.hasNext()) {
+
+				XPath xpath = XPathFactory.newInstance().newXPath();
+				NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
+				
+				QuerySolution soln = rs.nextSolution();
+				
+				String currentGeometryName = GlobalSettings.defaultServiceName + ":" + soln.getResource("?geometry").getLocalName();
+				
+				Element currentGeometryElement = document.createElement(currentGeometryName);
+				Element rootGeometry = document.createElement("gml:featureMember");
+				
+				for (int i = 0; i < predicates.size(); i++) {
+
+					String predicateWithoutPrefix = new String();
+					predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
+
+					
+					Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" +predicateWithoutPrefix);
+					elementGeometryPredicate.setAttribute("fid", currentGeometryName+"."+i);
+					
+
+					
+					//TODO Fix hardcoded geo:asWKT 
+
+					if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
+
+						String GML = WKTParser.parseToGML2(soln.getLiteral("?asWKT").getString().toString());
+						Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(GML.getBytes())).getDocumentElement();		
+						Node dup = document.importNode(GMLnode, true);
+
+						elementGeometryPredicate.appendChild(dup);
+						rootGeometry.appendChild(elementGeometryPredicate);
+						currentGeometryElement.appendChild(elementGeometryPredicate);
+						
+						rootGeometry.appendChild(currentGeometryElement);
+						
+	
+
+					} else {
+
+
+						
+						Element elementAttribute = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
+						elementAttribute.appendChild(document.createCDATASection(model.shortForm(soln.get("?"+predicateWithoutPrefix).toString())));
+					
+						currentGeometryElement.appendChild(elementAttribute);
+						
+					}
+
+
+					myNodeList.item(0).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
+					
+
+
+				}
+
+				// TODO iterate over query result and convert to GML2
+				// TODO Create method for making transformation and deliver XML result as String.
+				// TODO fid="" attribute to the geometry by GetFeature.
+
+			}
+
+			DOMSource source = new DOMSource(document);
+
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			StringWriter sw = new StringWriter();
+
+			StreamResult result = new StreamResult(sw);
+			transformer.transform(source, result);
+
+			StringBuffer sb = sw.getBuffer();
+
+
+			getFeatureResponse= sb.toString();
+
+
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (XPathExpressionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return getFeatureResponse;
+
+	}
+
+	public String createGetFeatureSPARQL(GeographicLayer layer){
+
+		ArrayList<Triple> predicates = new ArrayList<Triple>();
+		predicates = this.getGeometriesPredicates(layer);
+
+		String selectClause = new String();
+		String whereClause = new String();
+
+		for (int i = 0; i < predicates.size(); i++) {
+
+			String tmp = new String();
+
+			tmp= predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length()) ;
+
+			selectClause = selectClause + " ?" + tmp + " \n" ;
+			whereClause = whereClause + "?geometry " + predicates.get(i).getPredicate() + " ?" + tmp +" .\n"; 
+
+		}
+
+		String SPARQL = new String();
+
+		SPARQL = " SELECT ?geometry \n" + selectClause +
+				" WHERE { GRAPH <"+ layer.getName() + "> {" +
+				"?geometry a geo:Geometry . \n" + whereClause + "}}";
+
+		return SPARQL;
 	}
 
 }

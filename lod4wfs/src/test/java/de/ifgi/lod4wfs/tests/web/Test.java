@@ -31,13 +31,16 @@ public class Test {
 //		}
 
 		
-	GeographicLayer geo = new GeographicLayer();
-	geo.setName("http://ifgi.lod4wfs.de/layer/world");
-	String str = new String(); 
+	GeographicLayer layer = new GeographicLayer();
+	layer.setName("http://ifgi.lod4wfs.de/layer/world");
+	 
 
 	//System.out.println(Facade.getInstance().describeFeatureType(geo));
 	
 	FactoryJena f = new FactoryJena();
+	//f.createGetFeatureSPARQL(geo);
+	
+	f.getFeature(layer);
 	
 	//f.getFeatureType(geo);
 
