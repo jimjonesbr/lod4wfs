@@ -48,8 +48,8 @@ public class SPARQL {
 	
 	
 	public static String listNamedGraphs = prefixes +  
-										   " SELECT ?graphName ?abstract ?keywords ?title " + 
-											"WHERE { GRAPH ?graph { " + 
+										    " SELECT ?graphName ?abstract ?keywords ?title " + 
+											" WHERE { GRAPH ?graph { " + 
 											"	?graphName dct:abstract ?abstract . " +
 											"	?graphName dct:title ?title . " +
 											"	?graphName dct:subject ?keywords  .} " +

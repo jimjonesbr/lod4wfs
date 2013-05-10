@@ -1,11 +1,9 @@
 package de.ifgi.lod4wfs.factory;
 
 import it.cutruzzula.lwkt.WKTParser;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.net.URI;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -30,8 +28,6 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-import com.hp.hpl.jena.util.FileUtils;
-import de.ifgi.lod4wfs.core.Geometry;
 import de.ifgi.lod4wfs.core.SPARQL;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.GeographicLayer;
@@ -59,10 +55,12 @@ public class FactoryJena {
 	public ArrayList<GeographicLayer> listGeographicLayers(){
 
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
+		
 		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
-		GeographicLayer layer = new GeographicLayer();
+		
 
 		while (rs.hasNext()) {
+			GeographicLayer layer = new GeographicLayer();
 			QuerySolution soln = rs.nextSolution();
 			layer.setName(soln.get("?graphName").toString());
 			layer.setTitle(soln.getLiteral("?title").getValue().toString());
@@ -72,12 +70,11 @@ public class FactoryJena {
 			layer.setUpperCorner(GlobalSettings.defaultUpperCorner);
 			layer.setDefaultCRS(GlobalSettings.defautlCRS);
 			result.add(layer);
+			
 		}
-
+		
 		return result;
 	}
-
-
 
 	public String createCapabilitiesDocument(String version){
 
@@ -97,7 +94,9 @@ public class FactoryJena {
 				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
 
 				for (int i = 0; i < list.size(); i++) {
-
+					
+					System.out.println(list.get(i).getName());
+					
 					Element name = document.createElement("Name");
 					name.appendChild(document.createTextNode(list.get(i).getName()));
 					Element featureAbstract = document.createElement("Abstract");
@@ -108,8 +107,8 @@ public class FactoryJena {
 					keywords.appendChild(document.createTextNode(list.get(i).getKeywords()));
 					Element SRS = document.createElement("SRS");
 					SRS.appendChild(document.createTextNode(GlobalSettings.defautlCRS));
-					//		            Element BBOX = document.createElement("LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"");
-					//		            BBOX.appendChild(document.createTextNode(""));
+					//	Element BBOX = document.createElement("LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"");
+					//	BBOX.appendChild(document.createTextNode(""));
 
 					XPath xpath = XPathFactory.newInstance().newXPath();
 					NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
@@ -298,56 +297,56 @@ public class FactoryJena {
 		return result;
 	}
 
-	public String createFeatureCollection(GeographicLayer feature){
-
-		ResultSet rs = jn.executeQuery(SPARQL.getFeature.replaceFirst("PARAM_SPOBJ", feature.getName()));
-		ArrayList<Geometry> result = new ArrayList<Geometry>();
-		Geometry geo = new Geometry();
-
-		try {
-
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-
-			//			if (version.equals("1.0.0")) {
-			//
-			//				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
-			//
-			//				while (rs.hasNext()) {
-			//
-			//					QuerySolution soln = rs.nextSolution();
-			//					geo.setName(soln.get("?geometry").toString());
-			//					geo.setWKT(soln.get("?wkt").toString());
-			//					geo.setWKT(WKTParser.parseToGML2(soln.get("?wkt").toString().replace("^^http://www.opengis.net/ont/sf#wktLiteral", "")));
-			//					result.add(geo);
-			//
-			//					System.out.println(geo.getName() + " ===>> " + geo.getWKT());
-			//				}
-			//
-			//				
-			//			}
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}  
-
-
-
-		String rsw = new String(); 
-		try {
-
-			rsw =	FileUtils.readWholeFileAsUTF8("src/main/resources/GetFeature_100.xml");
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-
-
-		return rsw;
-	}
+//	public String createFeatureCollection(GeographicLayer feature){
+//
+//		ResultSet rs = jn.executeQuery(SPARQL.getFeature.replaceFirst("PARAM_SPOBJ", feature.getName()));
+//		ArrayList<Geometry> result = new ArrayList<Geometry>();
+//		Geometry geo = new Geometry();
+//
+//		try {
+//
+//			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+//			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+//
+//			//			if (version.equals("1.0.0")) {
+//			//
+//			//				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
+//			//
+//			//				while (rs.hasNext()) {
+//			//
+//			//					QuerySolution soln = rs.nextSolution();
+//			//					geo.setName(soln.get("?geometry").toString());
+//			//					geo.setWKT(soln.get("?wkt").toString());
+//			//					geo.setWKT(WKTParser.parseToGML2(soln.get("?wkt").toString().replace("^^http://www.opengis.net/ont/sf#wktLiteral", "")));
+//			//					result.add(geo);
+//			//
+//			//					System.out.println(geo.getName() + " ===>> " + geo.getWKT());
+//			//				}
+//			//
+//			//				
+//			//			}
+//
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}  
+//
+//
+//
+//		String rsw = new String(); 
+//		try {
+//
+//			rsw =	FileUtils.readWholeFileAsUTF8("src/main/resources/GetFeature_100.xml");
+//
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//
+//
+//		return rsw;
+//	}
 
 
 	private String getFeatureType (GeographicLayer layer){
@@ -380,7 +379,6 @@ public class FactoryJena {
 
 		return result;
 	}
-
 
 	public String getFeature(GeographicLayer layer) {
 

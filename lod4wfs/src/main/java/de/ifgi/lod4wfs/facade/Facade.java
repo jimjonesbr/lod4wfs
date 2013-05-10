@@ -38,7 +38,6 @@ public class Facade {
 		
 	public String getFeature(GeographicLayer layer){
 		
-		//return factory.createFeatureCollection(spatialObject);
 		return factory.getFeature(layer);
 	}
 	

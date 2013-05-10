@@ -1,12 +1,10 @@
 package de.ifgi.lod4wfs.tests.web;
 
 import java.util.ArrayList;
-
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
-
 import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.facade.Facade;
 import de.ifgi.lod4wfs.factory.FactoryJena;
@@ -40,7 +38,7 @@ public class Test {
 	FactoryJena f = new FactoryJena();
 	//f.createGetFeatureSPARQL(geo);
 	
-	f.getFeature(layer);
+	f.listGeographicLayers();
 	
 	//f.getFeatureType(geo);
 
