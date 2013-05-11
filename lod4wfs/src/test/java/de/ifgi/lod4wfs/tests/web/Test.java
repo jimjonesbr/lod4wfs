@@ -38,7 +38,7 @@ public class Test {
 	FactoryJena f = new FactoryJena();
 	//f.createGetFeatureSPARQL(geo);
 	
-	f.listGeographicLayers();
+	
 	
 	//f.getFeatureType(geo);
 

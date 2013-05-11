@@ -52,7 +52,7 @@ public class FactoryJena {
 
 	}
 
-	public ArrayList<GeographicLayer> listGeographicLayers(){
+	private ArrayList<GeographicLayer> listGeographicLayers(){
 
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
 		
@@ -94,9 +94,7 @@ public class FactoryJena {
 				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
 
 				for (int i = 0; i < list.size(); i++) {
-					
-					System.out.println(list.get(i).getName());
-					
+								
 					Element name = document.createElement("Name");
 					name.appendChild(document.createTextNode(list.get(i).getName()));
 					Element featureAbstract = document.createElement("Abstract");
@@ -169,6 +167,7 @@ public class FactoryJena {
 
 	}
 
+	// TODO Check need for loading capabilities document by start-up.
 	// TODO Fix dependency on the commented geometry on the XML File DescribeFeatureType_100
 	// TODO Implement standardized exception for wrong requests.
 
@@ -297,58 +296,6 @@ public class FactoryJena {
 		return result;
 	}
 
-//	public String createFeatureCollection(GeographicLayer feature){
-//
-//		ResultSet rs = jn.executeQuery(SPARQL.getFeature.replaceFirst("PARAM_SPOBJ", feature.getName()));
-//		ArrayList<Geometry> result = new ArrayList<Geometry>();
-//		Geometry geo = new Geometry();
-//
-//		try {
-//
-//			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-//			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-//
-//			//			if (version.equals("1.0.0")) {
-//			//
-//			//				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
-//			//
-//			//				while (rs.hasNext()) {
-//			//
-//			//					QuerySolution soln = rs.nextSolution();
-//			//					geo.setName(soln.get("?geometry").toString());
-//			//					geo.setWKT(soln.get("?wkt").toString());
-//			//					geo.setWKT(WKTParser.parseToGML2(soln.get("?wkt").toString().replace("^^http://www.opengis.net/ont/sf#wktLiteral", "")));
-//			//					result.add(geo);
-//			//
-//			//					System.out.println(geo.getName() + " ===>> " + geo.getWKT());
-//			//				}
-//			//
-//			//				
-//			//			}
-//
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}  
-//
-//
-//
-//		String rsw = new String(); 
-//		try {
-//
-//			rsw =	FileUtils.readWholeFileAsUTF8("src/main/resources/GetFeature_100.xml");
-//
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//
-//
-//		return rsw;
-//	}
-
-
 	private String getFeatureType (GeographicLayer layer){
 
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", layer.getName()));
@@ -397,9 +344,9 @@ public class FactoryJena {
 			ArrayList<Triple> predicates = new ArrayList<Triple>();
 			predicates = this.getGeometriesPredicates(layer);
 
-
+			long countIteration = 0;
 			while (rs.hasNext()) {
-
+				countIteration++;
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
 				
@@ -417,7 +364,7 @@ public class FactoryJena {
 
 					
 					Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" +predicateWithoutPrefix);
-					elementGeometryPredicate.setAttribute("fid", currentGeometryName+"."+i);
+					elementGeometryPredicate.setAttribute("fid", currentGeometryName + "." + countIteration);
 					
 
 					
@@ -457,7 +404,6 @@ public class FactoryJena {
 
 				// TODO iterate over query result and convert to GML2
 				// TODO Create method for making transformation and deliver XML result as String.
-				// TODO fid="" attribute to the geometry by GetFeature.
 
 			}
 

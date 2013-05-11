@@ -30,12 +30,6 @@ public class Facade {
 		
 	}
 	
-	//TODO: Delete! Only supposed to be accessed at the Factory level.
-	public ArrayList<GeographicLayer> listSpatialObjects(){
-		
-		return factory.listGeographicLayers();
-	}
-		
 	public String getFeature(GeographicLayer layer){
 		
 		return factory.getFeature(layer);
