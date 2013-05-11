@@ -168,8 +168,9 @@ public class FactoryJena {
 	}
 
 	// TODO Check need for loading capabilities document by start-up.
-	// TODO Fix dependency on the commented geometry on the XML File DescribeFeatureType_100
+	// TODO Fix dependency on the commented geometry on the XML File DescribeFeatureType_100.
 	// TODO Implement standardized exception for wrong requests.
+	// TODO Implement use of jogl for logging operations.
 
 	public String describeFeatureType(GeographicLayer geographicLayer){
 

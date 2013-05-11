@@ -1,7 +1,11 @@
 package de.ifgi.lod4wfs.web;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Enumeration;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,7 +21,7 @@ import de.ifgi.lod4wfs.facade.Facade;
 public class ServletParser extends HttpServlet
 {
 	private String greeting="Linked Open Data for Web Feature Services Adapter";
-
+	
 	//private String version="Beta 0.1.0";
 
 	public ServletParser(){}
@@ -95,8 +99,14 @@ public class ServletParser extends HttpServlet
 			GeographicLayer sp = new GeographicLayer();
 			sp.setName(currentTypeName);
 			response.setContentType("text/xml");
-			response.setStatus(HttpServletResponse.SC_OK);	
+			response.setStatus(HttpServletResponse.SC_OK);
+			
+						
+			System.out.println("\n[" + this.getCurrentTime() + "] Processing GetFeature request for the feature "+ sp.getName() + " ...");
+			
 			response.getWriter().println(Facade.getInstance().getFeature(sp));
+			
+			System.out.println("[" + this.getCurrentTime() + "] GetFeature request delivered. \n");
 			
 		} else if (currentRequest.equals("DescribeFeatureType")) {
 
@@ -104,10 +114,21 @@ public class ServletParser extends HttpServlet
 			layer.setName(currentTypeName);
 			response.setContentType("text/xml");
 			response.setStatus(HttpServletResponse.SC_OK);	
+			
+			System.out.println("\n[" + this.getCurrentTime() + "] Processing DescribeFeatureType request for the feature "+ layer.getName() + " ...");
+			
 			response.getWriter().println(Facade.getInstance().describeFeatureType(layer));
 			
-
+			System.out.println("[" + this.getCurrentTime() + "] DescribeFeatureType request delivered. \n");
 		}
 	}
 
+	private String getCurrentTime(){
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+		Calendar cal = Calendar.getInstance();
+		
+		return dateFormat.format(cal.getTime());
+		
+	}
 }
