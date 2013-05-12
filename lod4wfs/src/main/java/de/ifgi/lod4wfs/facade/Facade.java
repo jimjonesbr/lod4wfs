@@ -1,6 +1,5 @@
 package de.ifgi.lod4wfs.facade;
 
-import java.util.ArrayList;
 import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.factory.FactoryJena;
 
@@ -24,9 +23,9 @@ public class Facade {
 
 	public void loadCapabilitiesDocuments(){
 		
-		System.out.println("Loading capabilities document...");
+//		System.out.println("Loading capabilities document...");
 		this.CapabilitiesDocument_v1_0_0 = factory.createCapabilitiesDocument("1.0.0");
-		System.out.println("Capabilities document loaded.");
+//		System.out.println("Capabilities document loaded.");
 		
 	}
 	

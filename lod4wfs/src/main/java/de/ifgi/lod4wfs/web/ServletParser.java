@@ -11,26 +11,27 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.Document;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import com.hp.hpl.jena.util.FileUtils;
+import org.apache.log4j.Logger;
 import de.ifgi.lod4wfs.core.GeographicLayer;
+import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.facade.Facade;
 
 public class ServletParser extends HttpServlet
 {
 	private String greeting="Linked Open Data for Web Feature Services Adapter";
-	
 	//private String version="Beta 0.1.0";
-
-	public ServletParser(){}
+    private static Logger logger = Logger.getLogger("Server");
+        
+	public ServletParser(){
+		
+	}
 
 
 	public ServletParser(String greeting)
 	{
 		this.greeting=greeting;
 	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 
@@ -43,7 +44,7 @@ public class ServletParser extends HttpServlet
 		String currentSRSName = new String();
 
 		System.out.println("Incoming request:\n");
-
+		
 
 		while (listParameters.hasMoreElements()) {
 			String parameter = (String) listParameters.nextElement();
@@ -78,13 +79,18 @@ public class ServletParser extends HttpServlet
 		}
 
 
+		System.out.println("\n");
+		
 		if(currentRequest.equals("GetCapabilities")){	
 
 			if(currentVersion.equals("1.0.0")){
-
+				
+				
+				logger.info("Processing " + currentRequest + "  ...");
+				
 				CapabilitiesDocuemnt = Facade.getInstance().getCapabilities(currentVersion);
 
-			} else if(currentVersion.equals("2.0.0")){
+			} else {
 
 				CapabilitiesDocuemnt = "Version not supported.";
 			}
@@ -93,20 +99,22 @@ public class ServletParser extends HttpServlet
 			response.setStatus(HttpServletResponse.SC_OK);	
 			response.getWriter().println(CapabilitiesDocuemnt);
 
+			logger.info(currentRequest +  " request delivered. ");
+			
 			
 		} else if (currentRequest.equals("GetFeature")) {
 
-			GeographicLayer sp = new GeographicLayer();
-			sp.setName(currentTypeName);
+			GeographicLayer layer = new GeographicLayer();
+			layer.setName(currentTypeName);
 			response.setContentType("text/xml");
 			response.setStatus(HttpServletResponse.SC_OK);
 			
 						
-			System.out.println("\n[" + this.getCurrentTime() + "] Processing GetFeature request for the feature "+ sp.getName() + " ...");
+			logger.info("Processing " + currentRequest +  " request for the feature "+ layer.getName() + " ...");
 			
-			response.getWriter().println(Facade.getInstance().getFeature(sp));
+			response.getWriter().println(Facade.getInstance().getFeature(layer));
 			
-			System.out.println("[" + this.getCurrentTime() + "] GetFeature request delivered. \n");
+			logger.info(currentRequest +  " request delivered. \n");
 			
 		} else if (currentRequest.equals("DescribeFeatureType")) {
 
@@ -115,20 +123,13 @@ public class ServletParser extends HttpServlet
 			response.setContentType("text/xml");
 			response.setStatus(HttpServletResponse.SC_OK);	
 			
-			System.out.println("\n[" + this.getCurrentTime() + "] Processing DescribeFeatureType request for the feature "+ layer.getName() + " ...");
+			
+			logger.info("Processing " + currentRequest +  " request for the feature "+ layer.getName() + " ...");
 			
 			response.getWriter().println(Facade.getInstance().describeFeatureType(layer));
 			
-			System.out.println("[" + this.getCurrentTime() + "] DescribeFeatureType request delivered. \n");
+			logger.info(currentRequest +  " request delivered.");
 		}
 	}
 
-	private String getCurrentTime(){
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-		Calendar cal = Calendar.getInstance();
-		
-		return dateFormat.format(cal.getTime());
-		
-	}
 }

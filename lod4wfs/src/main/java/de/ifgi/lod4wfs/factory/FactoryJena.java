@@ -18,6 +18,8 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -38,7 +40,8 @@ public class FactoryJena {
 
 	private static JenaConnector jn;
 	private static Model model = ModelFactory.createDefaultModel();
-
+	private static Logger logger = Logger.getLogger("Factory");
+	
 	public FactoryJena(){
 		jn = new JenaConnector(GlobalSettings.SPARQL_Endpoint);
 
@@ -54,6 +57,8 @@ public class FactoryJena {
 
 	private ArrayList<GeographicLayer> listGeographicLayers(){
 
+		logger.info("Listing geographic layers (Named Graphs at " + GlobalSettings.SPARQL_Endpoint + " ...");
+		
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
 		
 		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
@@ -92,7 +97,8 @@ public class FactoryJena {
 			if (version.equals("1.0.0")) {
 
 				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
-
+				
+				logger.info("Creating Capabilities Document...");
 				for (int i = 0; i < list.size(); i++) {
 								
 					Element name = document.createElement("Name");
@@ -170,13 +176,12 @@ public class FactoryJena {
 	// TODO Check need for loading capabilities document by start-up.
 	// TODO Fix dependency on the commented geometry on the XML File DescribeFeatureType_100.
 	// TODO Implement standardized exception for wrong requests.
-	// TODO Implement use of jogl for logging operations.
 
-	public String describeFeatureType(GeographicLayer geographicLayer){
+	public String describeFeatureType(GeographicLayer layer){
 
 		String describeFeatureTypeResponse = new String(); 
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
-		predicates = this.getGeometriesPredicates(geographicLayer);
+		predicates = this.getGeometriesPredicates(layer);
 
 		try {
 
@@ -184,6 +189,8 @@ public class FactoryJena {
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document = documentBuilder.parse("src/main/resources/DescribeFeature_100.xml");
 
+			logger.info("Creating DescribeFeatureType XML document for " + layer.getName() + " ...");
+			
 			for (int i = 0; i < predicates.size(); i++) {
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
@@ -202,7 +209,7 @@ public class FactoryJena {
 
 				if(predicates.get(i).getPredicate().equals("geo:asWKT")){
 					String featureType = new String();
-					featureType = this.getFeatureType(geographicLayer);
+					featureType = this.getFeatureType(layer);
 
 					if(featureType.equals("gml:MultiPolygon") || featureType.equals("gml:Polygon")){
 						sequence.setAttribute("type","gml:MultiPolygonPropertyType");
@@ -240,7 +247,7 @@ public class FactoryJena {
 			describeFeatureTypeResponse = stringBuffer.toString();
 
 			//describeFeatureTypeResponse = FileUtils.readWholeFileAsUTF8("src/main/resources/DescribeFeature_100.xml");
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", geographicLayer.getName());
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", layer.getName());
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.defaultPort));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER", java.net.InetAddress.getLocalHost().getHostName());
@@ -272,6 +279,8 @@ public class FactoryJena {
 
 	public ArrayList<Triple> getGeometriesPredicates(GeographicLayer layer){
 
+		logger.info("Listing available predicates for " + layer.getName() + " ...");
+		
 		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", layer.getName()));
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
@@ -299,6 +308,8 @@ public class FactoryJena {
 
 	private String getFeatureType (GeographicLayer layer){
 
+		logger.info("Getting geometry type for " + layer.getName() + " ...");
+		
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", layer.getName()));
 		String result = new String();
 
@@ -329,8 +340,11 @@ public class FactoryJena {
 	}
 
 	public String getFeature(GeographicLayer layer) {
-
+		//TODO Fix redundancy of calling List Parameters (See system.log) 
 		String getFeatureResponse = new String();
+		
+		logger.info("Performing query at " + GlobalSettings.SPARQL_Endpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
+		
 		ResultSet rs = jn.executeQuery(SPARQL.prefixes +" \n" + this.createGetFeatureSPARQL(layer));
 
 
@@ -346,6 +360,9 @@ public class FactoryJena {
 			predicates = this.getGeometriesPredicates(layer);
 
 			long countIteration = 0;
+			
+			logger.info("Creating GetFeature XML document for " + layer.getName() + "...");
+			
 			while (rs.hasNext()) {
 				countIteration++;
 				XPath xpath = XPathFactory.newInstance().newXPath();
@@ -478,4 +495,5 @@ public class FactoryJena {
 		return SPARQL;
 	}
 
+	
 }

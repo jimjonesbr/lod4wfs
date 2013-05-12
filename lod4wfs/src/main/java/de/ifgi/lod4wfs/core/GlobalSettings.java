@@ -2,7 +2,7 @@ package de.ifgi.lod4wfs.core;
 
 public class GlobalSettings {
 
-	public static int defaultPort = 8080;
+	public static int defaultPort = 8081;
 	public static String defautlCRS = "EPSG:4326";
 	public static String SPARQL_Endpoint= "http://recife:8081/parliament/sparql";
 	public static String defaultLowerCorner = "-180.0 -78.11";
