@@ -1,4 +1,4 @@
-package de.ifgi.lod4wfs.tests.web;
+package de.ifgi.lod4wfs.tests;
  
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;

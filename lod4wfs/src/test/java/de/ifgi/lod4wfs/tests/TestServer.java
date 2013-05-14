@@ -1,4 +1,4 @@
-package de.ifgi.lod4wfs.tests.web;
+package de.ifgi.lod4wfs.tests;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;

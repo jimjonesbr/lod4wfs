@@ -5,6 +5,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,10 +23,13 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
+import org.apache.xerces.dom.DOMImplementationImpl;
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -39,19 +45,21 @@ import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 public class FactoryJena {
 
 	private static JenaConnector jn;
-	private static Model model = ModelFactory.createDefaultModel();
+	private static Model modelNameSpaces = ModelFactory.createDefaultModel();
+	private static Model modelLayers;
+	
 	private static Logger logger = Logger.getLogger("Factory");
 	
 	public FactoryJena(){
 		jn = new JenaConnector(GlobalSettings.SPARQL_Endpoint);
 
 		//TODO Fix redundancy of GlobalSettings prefixes with ModelFactory prefixes
-		model.setNsPrefix("xsd", GlobalSettings.xsdNameSpace );        
-		model.setNsPrefix("sf", GlobalSettings.sfNameSpace );
-		model.setNsPrefix("dc", GlobalSettings.dublinCoreNameSpace );
-		model.setNsPrefix("geo", GlobalSettings.geoSPARQLNameSpace );
-		model.setNsPrefix("rdf", GlobalSettings.RDFNameSpace);
-		model.setNsPrefix("dct", GlobalSettings.dublinCoreTermsNameSpace);
+		modelNameSpaces.setNsPrefix("xsd", GlobalSettings.xsdNameSpace );        
+		modelNameSpaces.setNsPrefix("sf", GlobalSettings.sfNameSpace );
+		modelNameSpaces.setNsPrefix("dc", GlobalSettings.dublinCoreNameSpace );
+		modelNameSpaces.setNsPrefix("geo", GlobalSettings.geoSPARQLNameSpace );
+		modelNameSpaces.setNsPrefix("rdf", GlobalSettings.RDFNameSpace);
+		modelNameSpaces.setNsPrefix("dct", GlobalSettings.dublinCoreTermsNameSpace);
 
 	}
 
@@ -85,30 +93,42 @@ public class FactoryJena {
 
 		String resultCapabilities = new String();
 
-		ArrayList<GeographicLayer> list = new ArrayList<GeographicLayer>(); 
-		list = this.listGeographicLayers();
-
+		ArrayList<GeographicLayer> layers = new ArrayList<GeographicLayer>(); 
+		layers = this.listGeographicLayers();
+		this.generateLayersPrefixes(layers);
 		try {
 
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 
-
 			if (version.equals("1.0.0")) {
 
 				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
 				
+
+				
+				
+				
+				Element requestElement = document.createElementNS("http://www.opengis.net/wfs", "WFS_Capabilities");
+//				Element requestElement = document.getDocumentElement();
+				requestElement.setAttribute("xmlns:PREFIX", "http://example/namespace");
+				documentBuilderFactory.setNamespaceAware(true);
+				document.getDocumentElement().appendChild(requestElement);
+				//document.appendChild(requestElement);
+				
+				
+				
 				logger.info("Creating Capabilities Document...");
-				for (int i = 0; i < list.size(); i++) {
+				for (int i = 0; i < layers.size(); i++) {
 								
 					Element name = document.createElement("Name");
-					name.appendChild(document.createTextNode(list.get(i).getName()));
-					Element featureAbstract = document.createElement("Abstract");
-					featureAbstract.appendChild(document.createTextNode(list.get(i).getFeatureAbstract()));
+					name.appendChild(document.createTextNode(modelLayers.shortForm(layers.get(i).getName())));
 					Element title = document.createElement("Title");
-					title.appendChild(document.createTextNode(list.get(i).getTitle()));
+					title.appendChild(document.createTextNode(layers.get(i).getTitle()));
+					Element featureAbstract = document.createElement("Abstract");
+					featureAbstract.appendChild(document.createTextNode(layers.get(i).getFeatureAbstract()));
 					Element keywords = document.createElement("Keywords");
-					keywords.appendChild(document.createTextNode(list.get(i).getKeywords()));
+					keywords.appendChild(document.createTextNode(layers.get(i).getKeywords()));
 					Element SRS = document.createElement("SRS");
 					SRS.appendChild(document.createTextNode(GlobalSettings.defautlCRS));
 					//	Element BBOX = document.createElement("LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"");
@@ -119,15 +139,19 @@ public class FactoryJena {
 
 					Element p = document.createElement("FeatureType");
 					p.appendChild(name);
-					p.appendChild(featureAbstract);
 					p.appendChild(title);
+					p.appendChild(featureAbstract);
 					p.appendChild(keywords);
 					p.appendChild(SRS);
 					//p.appendChild(BBOX);
+					//p.setAttributeNS("http://abc.aaa.cc/uji", "gl0", name.getLocalName());
+			        
 					myNodeList.item(1).getParentNode().insertBefore(p, myNodeList.item(1));
 
 				}
-
+				
+					        
+				
 				DOMSource source = new DOMSource(document);
 
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -281,7 +305,7 @@ public class FactoryJena {
 
 		logger.info("Listing available predicates for " + layer.getName() + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", layer.getName()));
+		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
 		while (rs.hasNext()) {
@@ -289,7 +313,7 @@ public class FactoryJena {
 			Triple triple = new Triple();
 
 			QuerySolution soln = rs.nextSolution();
-			triple.setPredicate(model.shortForm(soln.getResource("?predicate").toString()));
+			triple.setPredicate(modelNameSpaces.shortForm(soln.getResource("?predicate").toString()));
 
 			if (soln.get("?dataType")==null) {
 
@@ -297,7 +321,7 @@ public class FactoryJena {
 
 			} else {
 
-				triple.setObjectDataType(model.shortForm(soln.getResource("?dataType").getURI()));
+				triple.setObjectDataType(modelNameSpaces.shortForm(soln.getResource("?dataType").getURI()));
 			}
 
 			result.add(triple);			   
@@ -310,7 +334,7 @@ public class FactoryJena {
 
 		logger.info("Getting geometry type for " + layer.getName() + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", layer.getName()));
+		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String result = new String();
 
 		while (rs.hasNext()) {
@@ -407,7 +431,7 @@ public class FactoryJena {
 
 						
 						Element elementAttribute = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
-						elementAttribute.appendChild(document.createCDATASection(model.shortForm(soln.get("?"+predicateWithoutPrefix).toString())));
+						elementAttribute.appendChild(document.createCDATASection(modelNameSpaces.shortForm(soln.get("?"+predicateWithoutPrefix).toString())));
 					
 						currentGeometryElement.appendChild(elementAttribute);
 						
@@ -489,11 +513,46 @@ public class FactoryJena {
 		String SPARQL = new String();
 
 		SPARQL = " SELECT ?geometry \n" + selectClause +
-				" WHERE { GRAPH <"+ layer.getName() + "> {" +
+				" WHERE { GRAPH <"+ modelLayers.expandPrefix(layer.getName()) + "> {" +
 				"?geometry a geo:Geometry . \n" + whereClause + "}}";
 
 		return SPARQL;
 	}
 
-	
+	private void generateLayersPrefixes(ArrayList<GeographicLayer> layers){
+		
+		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
+		modelLayers = ModelFactory.createDefaultModel();
+		
+		for (int i = 0; i < layers.size(); i++) {
+
+			boolean scape = false;
+
+			int size = layers.get(i).getName().length()-1;
+			int position = 0;
+
+			while ((scape == false) && (size >= 0)) {
+
+				Matcher matcher = pattern.matcher(Character.toString(layers.get(i).getName().charAt(size)));
+
+				boolean finder = matcher.find();
+
+				if (finder==true) {
+					//System.out.println("Position: " + size);
+					position = size;
+					scape=true;
+				}
+
+				size--;
+			}
+			
+			if (modelLayers.getNsURIPrefix(layers.get(i).getName().substring(0, position+1))==null) {
+				
+				modelLayers.setNsPrefix("gl"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );	
+			
+			}
+			
+		}
+		
+	}
 }

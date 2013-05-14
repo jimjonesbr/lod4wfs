@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WFS_Capabilities version="1.0.0" xmlns="http://www.opengis.net/wfs"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ogc="http://www.opengis.net/ogc"
-	xsi:schemaLocation="http://www.opengis.net/wfs http://localhost:8080/lod4wfs/schemas/wfs/1.0.0/WFS-capabilities.xsd">
+	xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-capabilities.xsd">
 	<Service>
 		<Name>WFS</Name>
 		<Title>Linked Open Data for Web Feature Services</Title>
@@ -46,10 +46,6 @@
 			<GetFeature>
 				<ResultFormat>
 					<GML2 />
-					<GML3 />
-					<SHAPE-ZIP />
-					<GEOJSON />
-					<CSV />
 				</ResultFormat>
 				<DCPType>
 					<HTTP>
@@ -112,16 +108,18 @@
 			<Delete />
 			<Lock />
 		</Operations>
-		<FeatureType>
-<!--  			<Name>tiger:poly_landmarks</Name>
-			<Title>Manhattan (NY) landmarks</Title>
-			<Abstract>Manhattan landmarks, identifies water, lakes, parks,
-				interesting buildilngs</Abstract>
-			<Keywords>landmarks, DS_poly_landmarks, manhattan, poly_landmarks</Keywords>
+<!--  	<FeatureType>
+			<Name>poly_landmarks</Name>
+			<Title>Manhattan (NY) 
+			landmarks</Title>
+			<Abstract>Manhattan landmarks, identifies water, lakes, 
+			parks, interesting buildilngs</Abstract>
+			<Keywords>landmarks, DS_poly_landmarks, 
+			manhattan, poly_landmarks</Keywords>
 			<SRS>EPSG:4326</SRS>
 			<LatLongBoundingBox minx="-74.047185" miny="40.679648"
-				maxx="-73.90782" maxy="40.882078" /> -->   
-		</FeatureType>
+				maxx="-73.90782" maxy="40.882078" />
+		</FeatureType> -->
 	</FeatureTypeList>
 	<ogc:Filter_Capabilities>
 		<ogc:Spatial_Capabilities>
@@ -139,5 +137,13 @@
 				<ogc:BBOX />
 			</ogc:Spatial_Operators>
 		</ogc:Spatial_Capabilities>
+		<ogc:Scalar_Capabilities>
+			<ogc:Comparison_Operators>
+				<ogc:Simple_Comparisons />
+				<ogc:Between />
+				<ogc:Like />
+				<ogc:NullCheck />
+			</ogc:Comparison_Operators>
+		</ogc:Scalar_Capabilities>
 	</ogc:Filter_Capabilities>
 </WFS_Capabilities>

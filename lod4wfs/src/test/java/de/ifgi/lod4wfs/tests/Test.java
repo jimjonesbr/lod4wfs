@@ -1,4 +1,4 @@
-package de.ifgi.lod4wfs.tests.web;
+package de.ifgi.lod4wfs.tests;
 
 import java.util.ArrayList;
 import com.hp.hpl.jena.rdf.model.Model;
