@@ -1,5 +1,7 @@
 package de.ifgi.lod4wfs.facade;
 
+import java.util.Enumeration;
+
 import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.factory.FactoryJena;
 
@@ -7,7 +9,7 @@ public class Facade {
 
 	private static Facade instance;
 	private FactoryJena factory;
-	private String CapabilitiesDocument_v1_0_0 = new String();
+	private String CapabilitiesDocument100 = new String();
 	
 	
 	public Facade(){
@@ -23,9 +25,7 @@ public class Facade {
 
 	public void loadCapabilitiesDocuments(){
 		
-//		System.out.println("Loading capabilities document...");
-		this.CapabilitiesDocument_v1_0_0 = factory.createCapabilitiesDocument("1.0.0");
-//		System.out.println("Capabilities document loaded.");
+		this.CapabilitiesDocument100 = factory.createCapabilitiesDocument("1.0.0");
 		
 	}
 	
@@ -38,12 +38,13 @@ public class Facade {
 		
 		return factory.describeFeatureType(geographicLayer);
 	}
+
 	
 	public String getCapabilities(String version){
 		
 		String result = new String();
 		if (version.equals("1.0.0")) {
-			result = this.CapabilitiesDocument_v1_0_0;
+			result = this.CapabilitiesDocument100;
 		}
 		
 		return result;

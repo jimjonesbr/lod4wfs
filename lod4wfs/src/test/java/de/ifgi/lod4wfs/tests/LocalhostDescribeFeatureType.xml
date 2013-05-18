@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:cite="http://www.opengeospatial.net/cite" xmlns:gl0="http://ifgi.lod4wfs.de/layer/"
+	xmlns:gl1="http://ifgi.lod4wfs.de/anotherlayer/" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:sf="http://www.opengis.net/ont/sf" elementFormDefault="qualified">
+	<xsd:import namespace="http://www.opengis.net/gml"
+		schemaLocation="http://schemas.opengis.net/gml/2.1.2/feature.xsd" />
+	<xsd:complexType name="world_Type">
+		<xsd:complexContent>
+			<xsd:extension base="gml:AbstractFeatureType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="description"
+						nillable="true" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="ID"
+						nillable="true" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="asWKT"
+						nillable="true" type="gml:MultiPolygonPropertyType" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="type"
+						nillable="true" type="xsd:string" />
+					<!--<xsd:element maxOccurs="1" minOccurs="0" name="the_geom" nillable="true" 
+						type="gml:MultiPolygonPropertyType" /> -->
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="world" substitutionGroup="gml:_Feature"
+		type="world_Type" />
+</xsd:schema>

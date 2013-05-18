@@ -5,9 +5,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -21,15 +21,11 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.log4j.Logger;
-import org.apache.xerces.dom.DOMImplementationImpl;
-import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -106,17 +102,16 @@ public class FactoryJena {
 				Document document = documentBuilder.parse("src/main/resources/CapabilitiesDocument_100.xml");
 				
 
-				
-				
-				
-				Element requestElement = document.createElementNS("http://www.opengis.net/wfs", "WFS_Capabilities");
-//				Element requestElement = document.getDocumentElement();
-				requestElement.setAttribute("xmlns:PREFIX", "http://example/namespace");
-				documentBuilderFactory.setNamespaceAware(true);
-				document.getDocumentElement().appendChild(requestElement);
-				//document.appendChild(requestElement);
-				
-				
+				/**
+				 * Iterates through the layers' model and creates namespaces entries with the layers prefixes.
+				 */
+				Element requestElement = document.getDocumentElement(); 
+								
+				for (Map.Entry<String, String> entry : modelLayers.getNsPrefixMap().entrySet())
+				{
+					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
+				}
+
 				
 				logger.info("Creating Capabilities Document...");
 				for (int i = 0; i < layers.size(); i++) {
@@ -167,11 +162,6 @@ public class FactoryJena {
 
 			}
 
-			if (version.equals("2.0.0")) {
-
-				//result = FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument_200.xml");
-
-			}
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -211,8 +201,11 @@ public class FactoryJena {
 
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			
 			Document document = documentBuilder.parse("src/main/resources/DescribeFeature_100.xml");
-
+			
+			//TODO implement prefixes namespaces from layers model 
+			
 			logger.info("Creating DescribeFeatureType XML document for " + layer.getName() + " ...");
 			
 			for (int i = 0; i < predicates.size(); i++) {
@@ -222,7 +215,14 @@ public class FactoryJena {
 
 				String predicateWithoutPrefix = new String();
 				predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
-
+				
+				Element requestElement = document.getDocumentElement(); 
+				
+				for (Map.Entry<String, String> entry : modelLayers.getNsPrefixMap().entrySet())
+				{
+					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
+				}
+				
 				Element sequence = document.createElement("xsd:element");
 				sequence.setAttribute("maxOccurs","1");
 				sequence.setAttribute("minOccurs","0");
@@ -267,11 +267,9 @@ public class FactoryJena {
 
 			StringBuffer stringBuffer = stringWriter.getBuffer();
 
-
 			describeFeatureTypeResponse = stringBuffer.toString();
 
-			//describeFeatureTypeResponse = FileUtils.readWholeFileAsUTF8("src/main/resources/DescribeFeature_100.xml");
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", layer.getName());
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", layer.getName().substring(layer.getName().indexOf(":")+1, layer.getName().length()));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.defaultPort));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER", java.net.InetAddress.getLocalHost().getHostName());
@@ -369,7 +367,7 @@ public class FactoryJena {
 		
 		logger.info("Performing query at " + GlobalSettings.SPARQL_Endpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.prefixes +" \n" + this.createGetFeatureSPARQL(layer));
+		ResultSet rs = jn.executeQuery(SPARQL.prefixes +" \n" + this.generateGetFeatureSPARQL(layer));
 
 
 		try {
@@ -397,6 +395,8 @@ public class FactoryJena {
 				String currentGeometryName = GlobalSettings.defaultServiceName + ":" + soln.getResource("?geometry").getLocalName();
 				
 				Element currentGeometryElement = document.createElement(currentGeometryName);
+				currentGeometryElement.setAttribute("fid", currentGeometryName + "." + countIteration);				
+
 				Element rootGeometry = document.createElement("gml:featureMember");
 				
 				for (int i = 0; i < predicates.size(); i++) {
@@ -406,8 +406,8 @@ public class FactoryJena {
 
 					
 					Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" +predicateWithoutPrefix);
-					elementGeometryPredicate.setAttribute("fid", currentGeometryName + "." + countIteration);
-					
+					//elementGeometryPredicate.setAttribute("fid", currentGeometryName.substring(currentGeometryName.indexOf(":")+1, currentGeometryName.length()) + "." + countIteration);
+					//elementGeometryPredicate.setAttribute("fid", currentGeometryName + "." + countIteration);
 
 					
 					//TODO Fix hardcoded geo:asWKT 
@@ -415,6 +415,7 @@ public class FactoryJena {
 					if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
 
 						String GML = WKTParser.parseToGML2(soln.getLiteral("?asWKT").getString().toString());
+						
 						Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(GML.getBytes())).getDocumentElement();		
 						Node dup = document.importNode(GMLnode, true);
 
@@ -438,7 +439,7 @@ public class FactoryJena {
 					}
 
 
-					myNodeList.item(0).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
+					myNodeList.item(1).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
 					
 
 
@@ -491,7 +492,7 @@ public class FactoryJena {
 
 	}
 
-	public String createGetFeatureSPARQL(GeographicLayer layer){
+	public String generateGetFeatureSPARQL(GeographicLayer layer){
 
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 		predicates = this.getGeometriesPredicates(layer);
@@ -555,4 +556,5 @@ public class FactoryJena {
 		}
 		
 	}
+
 }

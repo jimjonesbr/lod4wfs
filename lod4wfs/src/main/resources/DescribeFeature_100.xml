@@ -4,7 +4,7 @@
 	xmlns:sf="http://www.opengis.net/ont/sf"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
 	<xsd:import namespace="http://www.opengis.net/gml"
-		schemaLocation="http://PARAM_SERVER:PARAM_SERVER_PORT/PARAM_SERVICE/schemas/gml/2.1.2/feature.xsd" />
+		schemaLocation="http://schemas.opengis.net/gml/2.1.2/feature.xsd" />
 	<xsd:complexType name="PARAM_NAME_Type">
 		<xsd:complexContent>
 			<xsd:extension base="gml:AbstractFeatureType">
