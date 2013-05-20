@@ -1,6 +1,8 @@
 package de.ifgi.lod4wfs.factory;
 
 import it.cutruzzula.lwkt.WKTParser;
+
+import java.awt.print.PrinterGraphics;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -85,7 +87,7 @@ public class FactoryJena {
 		return result;
 	}
 
-	public String createCapabilitiesDocument(String version){
+	public String getCapabilities(String version){
 
 		String resultCapabilities = new String();
 
@@ -147,19 +149,21 @@ public class FactoryJena {
 				
 					        
 				
-				DOMSource source = new DOMSource(document);
+//				DOMSource source = new DOMSource(document);
+//
+//				TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//				Transformer transformer = transformerFactory.newTransformer();
+//				
+//				StringWriter sw = new StringWriter();
+//
+//				StreamResult result = new StreamResult(sw);
+//				transformer.transform(source, result);
+//
+//				StringBuffer sb = sw.getBuffer();
+//
+//				resultCapabilities = sb.toString(); //FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument_100.xml");
 
-				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				StringWriter sw = new StringWriter();
-
-				StreamResult result = new StreamResult(sw);
-				transformer.transform(source, result);
-
-				StringBuffer sb = sw.getBuffer();
-
-				resultCapabilities = sb.toString(); //FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument_100.xml");
-
+				resultCapabilities = this.printXMLDocument(document);
 			}
 
 
@@ -175,21 +179,14 @@ public class FactoryJena {
 		} catch (XPathExpressionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+		} 
+		
 		return resultCapabilities;
 
 	}
 
 	// TODO Check need for loading capabilities document by start-up.
 	// TODO Fix dependency on the commented geometry on the XML File DescribeFeatureType_100.
-	// TODO Implement standardized exception for wrong requests.
 
 	public String describeFeatureType(GeographicLayer layer){
 
@@ -256,18 +253,19 @@ public class FactoryJena {
 
 			}
 
+			
+			
+//			DOMSource source = new DOMSource(document);
+//			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//			Transformer transformer = transformerFactory.newTransformer();
+//			StringWriter stringWriter = new StringWriter();
+//
+//			StreamResult result = new StreamResult(stringWriter);
+//			transformer.transform(source, result);
+//
+//			StringBuffer stringBuffer = stringWriter.getBuffer();
 
-			DOMSource source = new DOMSource(document);
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			StringWriter stringWriter = new StringWriter();
-
-			StreamResult result = new StreamResult(stringWriter);
-			transformer.transform(source, result);
-
-			StringBuffer stringBuffer = stringWriter.getBuffer();
-
-			describeFeatureTypeResponse = stringBuffer.toString();
+			describeFeatureTypeResponse = this.printXMLDocument(document);
 
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", layer.getName().substring(layer.getName().indexOf(":")+1, layer.getName().length()));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.defaultPort));
@@ -286,13 +284,7 @@ public class FactoryJena {
 		} catch (XPathExpressionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 
 		return describeFeatureTypeResponse;
 
@@ -333,41 +325,42 @@ public class FactoryJena {
 		logger.info("Getting geometry type for " + layer.getName() + " ...");
 		
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
-		String result = new String();
+		String geometryCoordinates = new String();
 
 		while (rs.hasNext()) {
 
 			QuerySolution soln = rs.nextSolution();					
-
-			result = soln.getLiteral("?wkt").getString();
+			geometryCoordinates = soln.getLiteral("?wkt").getString();
 		}
 
 		try {
 
-			result = WKTParser.parseToGML2(result);
-
+			geometryCoordinates = this.convertWKTtoGML(geometryCoordinates);
+			
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			
+			Document document = documentBuilder.parse(new InputSource(new ByteArrayInputStream(geometryCoordinates.getBytes("utf-8"))));
 
-			Document document = documentBuilder.parse(new InputSource(new ByteArrayInputStream(result.getBytes("utf-8"))));
-
-			result = document.getDocumentElement().getNodeName();
+			geometryCoordinates = document.getDocumentElement().getNodeName();
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return result;
+		return geometryCoordinates;
 	}
 
 	public String getFeature(GeographicLayer layer) {
-		//TODO Fix redundancy of calling List Parameters (See system.log) 
+
 		String getFeatureResponse = new String();
+		ArrayList<Triple> predicates = new ArrayList<Triple>();
+		predicates = this.getGeometriesPredicates(layer);
 		
 		logger.info("Performing query at " + GlobalSettings.SPARQL_Endpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.prefixes +" \n" + this.generateGetFeatureSPARQL(layer));
+		ResultSet rs = jn.executeQuery(SPARQL.prefixes +" \n" + this.generateGetFeatureSPARQL(layer, predicates));
 
 
 		try {
@@ -378,8 +371,6 @@ public class FactoryJena {
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			Document document = documentBuilder.parse("src/main/resources/GetFeature_100.xml");
 
-			ArrayList<Triple> predicates = new ArrayList<Triple>();
-			predicates = this.getGeometriesPredicates(layer);
 
 			long countIteration = 0;
 			
@@ -405,7 +396,7 @@ public class FactoryJena {
 					predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
 
 					
-					Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" +predicateWithoutPrefix);
+					Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
 					//elementGeometryPredicate.setAttribute("fid", currentGeometryName.substring(currentGeometryName.indexOf(":")+1, currentGeometryName.length()) + "." + countIteration);
 					//elementGeometryPredicate.setAttribute("fid", currentGeometryName + "." + countIteration);
 
@@ -413,10 +404,10 @@ public class FactoryJena {
 					//TODO Fix hardcoded geo:asWKT 
 
 					if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
-
-						String GML = WKTParser.parseToGML2(soln.getLiteral("?asWKT").getString().toString());
+					
+						String gml = this.convertWKTtoGML(soln.getLiteral("?asWKT").getString().toString());
 						
-						Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(GML.getBytes())).getDocumentElement();		
+						Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 						Node dup = document.importNode(GMLnode, true);
 
 						elementGeometryPredicate.appendChild(dup);
@@ -429,8 +420,6 @@ public class FactoryJena {
 
 					} else {
 
-
-						
 						Element elementAttribute = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
 						elementAttribute.appendChild(document.createCDATASection(modelNameSpaces.shortForm(soln.get("?"+predicateWithoutPrefix).toString())));
 					
@@ -438,33 +427,36 @@ public class FactoryJena {
 						
 					}
 
-
 					myNodeList.item(1).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
 					
-
+					
 
 				}
 
 				// TODO iterate over query result and convert to GML2
-				// TODO Create method for making transformation and deliver XML result as String.
 
+				
 			}
 
-			DOMSource source = new DOMSource(document);
+			logger.info("XML Document with " + countIteration + " features successfully created.");
+			
+//			DOMSource source = new DOMSource(document);
+//
+//			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+//			Transformer transformer = transformerFactory.newTransformer();
+//			
+//			StringWriter stringWriter = new StringWriter();			
+//			StreamResult result = new StreamResult(stringWriter);
+//			
+//			
+//			transformer.transform(source, result);
+//			StringBuffer stringBuffer = stringWriter.getBuffer();
+//			
+//
+//			getFeatureResponse = stringBuffer.toString();
 
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			Transformer transformer = transformerFactory.newTransformer();
-			StringWriter sw = new StringWriter();
-
-			StreamResult result = new StreamResult(sw);
-			transformer.transform(source, result);
-
-			StringBuffer sb = sw.getBuffer();
-
-
-			getFeatureResponse= sb.toString();
-
-
+			getFeatureResponse = this.printXMLDocument(document);
+			
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -477,13 +469,7 @@ public class FactoryJena {
 		} catch (XPathExpressionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
+		}  catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -492,10 +478,7 @@ public class FactoryJena {
 
 	}
 
-	public String generateGetFeatureSPARQL(GeographicLayer layer){
-
-		ArrayList<Triple> predicates = new ArrayList<Triple>();
-		predicates = this.getGeometriesPredicates(layer);
+	public String generateGetFeatureSPARQL(GeographicLayer layer, ArrayList<Triple> predicates){
 
 		String selectClause = new String();
 		String whereClause = new String();
@@ -518,6 +501,7 @@ public class FactoryJena {
 				"?geometry a geo:Geometry . \n" + whereClause + "}}";
 
 		return SPARQL;
+		
 	}
 
 	private void generateLayersPrefixes(ArrayList<GeographicLayer> layers){
@@ -557,4 +541,46 @@ public class FactoryJena {
 		
 	}
 
+	private String printXMLDocument(Document document){
+		
+		String XMLString = new String();
+		StringWriter stringWriter = new StringWriter();		
+		DOMSource source = new DOMSource(document);
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer;
+		
+		try {
+			
+			transformer = transformerFactory.newTransformer();
+			StreamResult result = new StreamResult(stringWriter);
+			transformer.transform(source, result);
+			StringBuffer stringBuffer = stringWriter.getBuffer();
+			XMLString = stringBuffer.toString();
+			
+		} catch (TransformerConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		return XMLString;
+	}
+
+	private String convertWKTtoGML(String wkt){
+		
+		String gml = new String();
+		
+		try {
+		
+			gml = WKTParser.parseToGML2(wkt);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return gml;
+		
+	}
 }
