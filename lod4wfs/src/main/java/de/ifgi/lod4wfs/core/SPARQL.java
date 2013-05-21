@@ -21,14 +21,6 @@ public class SPARQL {
 									"PREFIX sf:	 <http://www.opengis.net/ont/sf#> " +
 									"PREFIX parliament: <http://parliament.semwebcentral.org/parliament#> \n";
 	
-//	public static String listSpatialObjects= prefixes + 
-//										    " SELECT ?feature ?title ?abstract ?keywords " +
-//										    " WHERE { " +
-//		    								"   ?feature a geo:Feature . " +
-//											"   ?feature dct:abstract ?abstract . " +
-//											"   ?feature dct:title ?title . " +
-//											"   ?feature dct:subject ?keywords }"; 
-	
 
 	public static String listSpatialObjectsKeywords= prefixes +
 											"SELECT ?keyword WHERE { " +

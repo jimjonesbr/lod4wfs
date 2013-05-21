@@ -3,28 +3,20 @@ package de.ifgi.lod4wfs.web;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Enumeration;
 import java.util.Scanner;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 import de.ifgi.lod4wfs.core.GeographicLayer;
-import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.facade.Facade;
 
 public class ServletParser extends HttpServlet
 {
 	private String greeting="Linked Open Data for Web Feature Services Adapter";
-	//private String version="Beta 0.1.0";
-	private static Logger logger = Logger.getLogger("Server");
+	private static Logger logger = Logger.getLogger("Web-Interface");
 
 	public ServletParser(){
 
@@ -92,8 +84,6 @@ public class ServletParser extends HttpServlet
 
 		if(validRequest.equals("valid")){
 
-
-
 			System.out.println("\n");
 
 			/**
@@ -129,15 +119,16 @@ public class ServletParser extends HttpServlet
 
 
 				logger.info("Processing " + currentRequest +  " request for the feature "+ layer.getName() + " ...");
-
+							
 				response.getWriter().println(Facade.getInstance().getFeature(layer));
-
+			
 				logger.info(currentRequest +  " request delivered. \n");
 
 
 				/**
 				 * DescribeFeatureType request
 				 */
+				
 			} else if (currentRequest.toUpperCase().equals("DESCRIBEFEATURETYPE")) {
 
 				GeographicLayer layer = new GeographicLayer();

@@ -9,7 +9,7 @@ public class GlobalSettings {
 	public static String defaultUpperCorner = "180.0 83.57";
 	public static String defaultServiceName = "lod4wfs";
 	
-	public static String defaultDataType = "xsd:string";
+	public static String defaultLiteralType = "xsd:string";
 	public static String xsdNameSpace = "http://www.w3.org/2001/XMLSchema#";
 	public static String sfNameSpace = "http://www.opengis.net/ont/sf#";
 	public static String dublinCoreNameSpace = "http://purl.org/dc/elements/1.1/";

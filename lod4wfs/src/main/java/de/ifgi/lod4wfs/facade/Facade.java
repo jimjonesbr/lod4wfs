@@ -10,7 +10,6 @@ public class Facade {
 	private FactoryJena factory;
 	private String CapabilitiesDocument100 = new String();
 	
-	
 	public Facade(){
 		factory = new FactoryJena();
 	}
@@ -30,6 +29,7 @@ public class Facade {
 	
 	public String getFeature(GeographicLayer layer){
 		
+		
 		return factory.getFeature(layer);
 	}
 	
@@ -37,7 +37,6 @@ public class Facade {
 		
 		return factory.describeFeatureType(geographicLayer);
 	}
-
 	
 	public String getCapabilities(String version){
 		

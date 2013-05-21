@@ -1,8 +1,6 @@
 package de.ifgi.lod4wfs.factory;
 
 import it.cutruzzula.lwkt.WKTParser;
-
-import java.awt.print.PrinterGraphics;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -44,8 +42,7 @@ public class FactoryJena {
 
 	private static JenaConnector jn;
 	private static Model modelNameSpaces = ModelFactory.createDefaultModel();
-	private static Model modelLayers;
-	
+	private static Model modelLayers;	
 	private static Logger logger = Logger.getLogger("Factory");
 	
 	public FactoryJena(){
@@ -116,6 +113,10 @@ public class FactoryJena {
 
 				
 				logger.info("Creating Capabilities Document...");
+
+				XPath xpath = XPathFactory.newInstance().newXPath();
+				NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
+
 				for (int i = 0; i < layers.size(); i++) {
 								
 					Element name = document.createElement("Name");
@@ -131,8 +132,6 @@ public class FactoryJena {
 					//	Element BBOX = document.createElement("LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"");
 					//	BBOX.appendChild(document.createTextNode(""));
 
-					XPath xpath = XPathFactory.newInstance().newXPath();
-					NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
 
 					Element p = document.createElement("FeatureType");
 					p.appendChild(name);
@@ -140,8 +139,6 @@ public class FactoryJena {
 					p.appendChild(featureAbstract);
 					p.appendChild(keywords);
 					p.appendChild(SRS);
-					//p.appendChild(BBOX);
-					//p.setAttributeNS("http://abc.aaa.cc/uji", "gl0", name.getLocalName());
 			        
 					myNodeList.item(1).getParentNode().insertBefore(p, myNodeList.item(1));
 
@@ -204,11 +201,11 @@ public class FactoryJena {
 			//TODO implement prefixes namespaces from layers model 
 			
 			logger.info("Creating DescribeFeatureType XML document for " + layer.getName() + " ...");
-			
-			for (int i = 0; i < predicates.size(); i++) {
 
-				XPath xpath = XPathFactory.newInstance().newXPath();
-				NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
+			XPath xpath = XPathFactory.newInstance().newXPath();
+			NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
+
+			for (int i = 0; i < predicates.size(); i++) {
 
 				String predicateWithoutPrefix = new String();
 				predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
@@ -307,7 +304,7 @@ public class FactoryJena {
 
 			if (soln.get("?dataType")==null) {
 
-				triple.setObjectDataType(GlobalSettings.defaultDataType);
+				triple.setObjectDataType(GlobalSettings.defaultLiteralType);
 
 			} else {
 
@@ -375,11 +372,12 @@ public class FactoryJena {
 			long countIteration = 0;
 			
 			logger.info("Creating GetFeature XML document for " + layer.getName() + "...");
-			
+
+			XPath xpath = XPathFactory.newInstance().newXPath();
+			NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
+
 			while (rs.hasNext()) {
 				countIteration++;
-				XPath xpath = XPathFactory.newInstance().newXPath();
-				NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
 				
 				QuerySolution soln = rs.nextSolution();
 				
@@ -393,31 +391,30 @@ public class FactoryJena {
 				for (int i = 0; i < predicates.size(); i++) {
 
 					String predicateWithoutPrefix = new String();
+					
 					predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
-
-					
 					Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
-					//elementGeometryPredicate.setAttribute("fid", currentGeometryName.substring(currentGeometryName.indexOf(":")+1, currentGeometryName.length()) + "." + countIteration);
-					//elementGeometryPredicate.setAttribute("fid", currentGeometryName + "." + countIteration);
 
-					
 					//TODO Fix hardcoded geo:asWKT 
 
 					if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
 					
 						String gml = this.convertWKTtoGML(soln.getLiteral("?asWKT").getString().toString());
-						
+											
 						Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
+
 						Node dup = document.importNode(GMLnode, true);
 
 						elementGeometryPredicate.appendChild(dup);
+						
 						rootGeometry.appendChild(elementGeometryPredicate);
+												
 						currentGeometryElement.appendChild(elementGeometryPredicate);
 						
 						rootGeometry.appendChild(currentGeometryElement);
 						
+						
 	
-
 					} else {
 
 						Element elementAttribute = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
@@ -428,12 +425,8 @@ public class FactoryJena {
 					}
 
 					myNodeList.item(1).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
-					
-					
 
 				}
-
-				// TODO iterate over query result and convert to GML2
 
 				
 			}
@@ -478,7 +471,7 @@ public class FactoryJena {
 
 	}
 
-	public String generateGetFeatureSPARQL(GeographicLayer layer, ArrayList<Triple> predicates){
+	private String generateGetFeatureSPARQL(GeographicLayer layer, ArrayList<Triple> predicates){
 
 		String selectClause = new String();
 		String whereClause = new String();
@@ -583,4 +576,5 @@ public class FactoryJena {
 		return gml;
 		
 	}
+
 }
