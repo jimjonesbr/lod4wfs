@@ -2,8 +2,9 @@ package de.ifgi.lod4wfs.core;
 
 public class GlobalSettings {
 
-	public static int defaultPort = 8081;
+	public static int defaultPort = 8080;
 	public static String defautlCRS = "EPSG:4326";
+	//public static String defautlCRS = "http://www.opengis.net/def/crs/EPSG/0/4326";
 	public static String SPARQL_Endpoint= "http://recife:8081/parliament/sparql";
 	public static String defaultLowerCorner = "-180.0 -78.11";
 	public static String defaultUpperCorner = "180.0 83.57";
@@ -18,8 +19,7 @@ public class GlobalSettings {
 	public static String dublinCoreTermsNameSpace =  "http://purl.org/dc/terms/";
 
 	//TODO Fix bounding box in the Capabilities Document!
-	public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
-	//LatLongBoundingBox maxx="-73.90782" maxy="40.882078" minx="-74.047185" miny="40.679648"
+	//public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
 	
 		
 }

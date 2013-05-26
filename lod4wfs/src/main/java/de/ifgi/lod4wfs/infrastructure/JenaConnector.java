@@ -21,7 +21,7 @@ public class JenaConnector {
 		Query query = QueryFactory.create(SPARQL);
 		QueryExecution qexec = QueryExecutionFactory.sparqlService(this.endpointURL, query);
 		ResultSet results = qexec.execSelect();
-
+		
 		return results;
 		
 	}

@@ -62,7 +62,7 @@ public class GeographicLayer {
 		this.featureAbstract = featureAbstract;
 	}
 
-	public String getDefaultCRS() {
+	public String getCRS() {
 		return defaultCRS;
 	}
 

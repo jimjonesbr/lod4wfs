@@ -13,17 +13,22 @@ import org.apache.log4j.Logger;
 import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.facade.Facade;
 
-public class ServletParser extends HttpServlet
+/**
+ * @author jones
+ * @version 1.0
+ */
+
+public class ServletWFS extends HttpServlet
 {
 	private String greeting="Linked Open Data for Web Feature Services Adapter";
 	private static Logger logger = Logger.getLogger("Web-Interface");
 
-	public ServletParser(){
+	public ServletWFS(){
 
 	}
 
 
-	public ServletParser(String greeting)
+	public ServletWFS(String greeting)
 	{
 		this.greeting=greeting;
 	}
@@ -40,7 +45,10 @@ public class ServletParser extends HttpServlet
 		String currentSRSName = new String();
 
 		System.out.println("Incoming request:\n");
-
+		
+		System.out.println(request.getRequestURL());
+		System.out.println(request.getRequestURI());
+		System.out.println(request.getQueryString() + "\n");
 
 		while (listParameters.hasMoreElements()) {
 			String parameter = (String) listParameters.nextElement();
@@ -74,7 +82,8 @@ public class ServletParser extends HttpServlet
 
 		}
 
-
+		
+		
 		/**
 		 * Checking if the current request is valid
 		 */
@@ -164,16 +173,37 @@ public class ServletParser extends HttpServlet
 
 			if(!service.toUpperCase().equals("WFS")){
 
-				result = result.replace("PARAM_REPORT", "Service " + service + " is not supported by this server.");
-				result = result.replace("PARAM_CODE", "ServiceNotSupported");
-				logger.error("Service " + service + " is not supported by this server.");
+				if(service.isEmpty()){
+					
+					result = result.replace("PARAM_REPORT", "No service provided in the request.");
+					result = result.replace("PARAM_CODE", "ServiceNotSupported");
+					logger.error("No service provided in the request.");					
+					
+				} else {
+					result = result.replace("PARAM_REPORT", "Service " + service + " is not supported by this server.");
+					result = result.replace("PARAM_CODE", "ServiceNotSupported");
+					logger.error("Service " + service + " is not supported by this server.");
+				}
+				
 				valid = false;
 
 			} else if (!version.equals("1.0.0")){
 
-				result = result.replace("PARAM_REPORT", "WFS version " + version + " is not supported by this server.");
-				result = result.replace("PARAM_CODE", "VersionNotSupported");
-				logger.error("WFS version " + version + " is not supported by this server.");
+				if (version.isEmpty()){
+
+					result = result.replace("PARAM_REPORT", "Web Feature Service version not informed.");
+					result = result.replace("PARAM_CODE", "VersionNotSupported");
+					logger.error("Web Feature Service version not informed.");
+
+				} else {
+
+					result = result.replace("PARAM_REPORT", "WFS version " + version + " is not supported by this server.");
+					result = result.replace("PARAM_CODE", "VersionNotSupported");
+					logger.error("WFS version " + version + " is not supported by this server.");
+
+
+				}
+
 				valid = false;
 
 			} else if(!request.toUpperCase().equals("GETCAPABILITIES") && 
@@ -191,14 +221,14 @@ public class ServletParser extends HttpServlet
 				result = result.replace("PARAM_CODE", "FeatureNotProvided");
 				logger.error("No feature provided for " + request + ".");
 				valid = false;
-				
+
 			} else if (request.toUpperCase().equals("GETFEATURE") && typeName.isEmpty()){
-				
+
 				result = result.replace("PARAM_REPORT", "No feature provided for " + request + ".");
 				result = result.replace("PARAM_CODE", "FeatureNotProvided");
 				logger.error("No feature provided for " + request + ".");
 				valid = false;
-				
+
 			}
 
 			if(!valid){

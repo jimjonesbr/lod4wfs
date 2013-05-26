@@ -6,42 +6,46 @@ import java.util.Date;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+
 import de.ifgi.lod4wfs.core.GlobalSettings;
-import de.ifgi.lod4wfs.facade.Facade;
+
+/**
+ * 
+ * @author jones
+ * @version 1.0
+ */
 
 public class ServletContext{
 	public static String startTime;
-	
-    public static void main(String[] args) throws Exception
-    {
-         //TODO: Document -> Loading all available capabilities documents to memory for future requests.
-    	
-    	Facade.getInstance().loadCapabilitiesDocuments();
-        
-    	Server server = new Server(GlobalSettings.defaultPort);
-		
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+
+	public static void main(String[] args) throws Exception
+	{
+
+		Server server = new Server(GlobalSettings.defaultPort);
+
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		startTime = dateFormat.format(date);
+
+		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
+		context.setContextPath("/"+GlobalSettings.defaultServiceName);
 		
-        ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        //TODO: Create welcome page and attach to /lod4wfs 
-        
-        context.setContextPath("/"+GlobalSettings.defaultServiceName);
-        server.setHandler(context);
-        
-        context.addServlet(new ServletHolder(new ServletParser()),"/*");
-//        context.addServlet(new ServletHolder(new ServletParser("Buongiorno Mondo")),"/it/*");
-//        context.addServlet(new ServletHolder(new ServletParser("Bonjour le Monde")),"/fr/*");
-        
-        context.addServlet(new ServletHolder(new ServletParser("Service started at: " + startTime )),"/wfs/*");
-        
-        server.start();
-        System.out.println("Web Feature Service Adapter started\n\n" +
-        				   "Startup time: " + startTime + "\n" +
-        				   "Port: " + GlobalSettings.defaultPort);
-        server.join();
-        
-        
-    }
+		server.setHandler(context);
+		
+		context.addServlet(new ServletHolder(new ServletWFS()),"/*");
+//		context.addServlet(new ServletHolder(new ServletGUI("Buongiorno Mondo")),"/it/*");
+
+		//context.addServlet(new ServletHolder(new ServletWFS("Service started at: " + startTime )),"/wfs/*");
+
+		
+		server.start();
+
+		System.out.println("Web Feature Service Adapter started\n\n" +
+				"Startup time: " + startTime + "\n" +
+				"Port: " + GlobalSettings.defaultPort + "\n");
+		
+		server.join();
+
+
+	}
 }

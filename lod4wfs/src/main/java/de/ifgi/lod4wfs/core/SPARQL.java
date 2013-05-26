@@ -8,50 +8,39 @@ package de.ifgi.lod4wfs.core;
  * 
  */
 public class SPARQL {
-	
-	public static String prefixes = "" +
-									"PREFIX geo:  <http://www.opengis.net/ont/geosparql/1.0#>  " + 
-									"PREFIX my:   <http://big.that.de/1.0/>  " +
-									"PREFIX dbpedia-owl: <http://dbpedia.org/ontology/> " + 
-									"PREFIX dbpedia-prop: <http://dbpedia.org/property/>  " +
-									"PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> " + 
-									"PREFIX dct: <http://purl.org/dc/terms/> " +
-									"PREFIX dc:	  <http://purl.org/dc/elements/1.1/> " +
-									"PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  " +
-									"PREFIX sf:	 <http://www.opengis.net/ont/sf#> " +
-									"PREFIX parliament: <http://parliament.semwebcentral.org/parliament#> \n";
-	
+		
 
-	public static String listSpatialObjectsKeywords= prefixes +
+	public static String listSpatialObjectsKeywords= 
 											"SELECT ?keyword WHERE { " +
 											"<PARAM_SPOBJ> dct:subject ?keyword}";
 	
-	public static String getFeature = prefixes +
+	public static String getFeature = 
 											" SELECT ?geometry ?wkt WHERE { " +
 											" 	<PARAM_SPOBJ> geo:hasGeometry ?geometry . " + 
 											"	?geometry geo:asWKT ?wkt } ";
 		
-	public static String listGeometryPredicates = prefixes +
+	public static String listGeometryPredicates = 
 										" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) " +
 										" WHERE { GRAPH <PARAM_LAYER> { " +
 										"		?geometry ?predicate ?object . " +
 										"		?geometry a geo:Geometry .}  " +
-										" }"; 
+										" } "; 
 	
 	
-	public static String listNamedGraphs = prefixes +  
-										    " SELECT ?graphName ?abstract ?keywords ?title " + 
+	public static String listNamedGraphs =  
+										    " SELECT ?graphName ?abstract ?keywords ?title ?wkt " + 
 											" WHERE { GRAPH ?graph { " + 
 											"	?graphName dct:abstract ?abstract . " +
 											"	?graphName dct:title ?title . " +
-											"	?graphName dct:subject ?keywords  .} " +
+											"	?graphName dct:subject ?keywords  . " +
+											"	{ SELECT DISTINCT ?wkt WHERE { GRAPH ?graph {?geometry geo:asWKT ?wkt} } LIMIT 1 }} " +
 											"}";		
 	
-	public static String getFeatureType = prefixes + "SELECT ?wkt " +
-													" WHERE { GRAPH <PARAM_LAYER> { " +
-													" ?geometry a geo:Geometry . " +
-													" ?geometry geo:asWKT ?wkt " +
-													" }} LIMIT 1 ";
+	public static String getFeatureType =   " SELECT ?wkt " +
+											" WHERE { GRAPH <PARAM_LAYER> { " +
+											" ?geometry a geo:Geometry . " +
+											" ?geometry geo:asWKT ?wkt " +
+											" }} LIMIT 1 ";
 			
 }
 

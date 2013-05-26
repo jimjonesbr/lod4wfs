@@ -38,17 +38,24 @@ import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
+/**
+ * 
+ * @author jones
+ * @version 1.0
+ * Class responsible for establishing communication with the triple store and providing the XML documents to the facade.
+ */
+
 public class FactoryJena {
 
 	private static JenaConnector jn;
 	private static Model modelNameSpaces = ModelFactory.createDefaultModel();
 	private static Model modelLayers;	
+	
 	private static Logger logger = Logger.getLogger("Factory");
 	
 	public FactoryJena(){
 		jn = new JenaConnector(GlobalSettings.SPARQL_Endpoint);
 
-		//TODO Fix redundancy of GlobalSettings prefixes with ModelFactory prefixes
 		modelNameSpaces.setNsPrefix("xsd", GlobalSettings.xsdNameSpace );        
 		modelNameSpaces.setNsPrefix("sf", GlobalSettings.sfNameSpace );
 		modelNameSpaces.setNsPrefix("dc", GlobalSettings.dublinCoreNameSpace );
@@ -58,15 +65,37 @@ public class FactoryJena {
 
 	}
 
+	/**
+	 * 
+	 * @param model
+	 * @return Prefix header of all vocabularies used in the system, to be used in SPARQL Queries.
+	 */
+	private String getPrefixes(Model model){
+		
+		String prefixes = new String();
+		for (Map.Entry<String, String> entry : modelNameSpaces.getNsPrefixMap().entrySet())
+		{
+			prefixes = prefixes + "PREFIX " + entry.getKey() + ": <" + entry.getValue() + "> \n";
+		}
+		
+		return prefixes;
+	}
+	
+	/**
+	 * 
+	 * @return A list of all geographic layers of a given SPARQL Endpoint.
+	 */
+	
 	private ArrayList<GeographicLayer> listGeographicLayers(){
 
-		logger.info("Listing geographic layers (Named Graphs at " + GlobalSettings.SPARQL_Endpoint + " ...");
+		logger.info("Listing geographic layers at " + GlobalSettings.SPARQL_Endpoint + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
+		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listNamedGraphs);
 		
 		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
 		
-
+		String CRS = new String();
+		
 		while (rs.hasNext()) {
 			GeographicLayer layer = new GeographicLayer();
 			QuerySolution soln = rs.nextSolution();
@@ -76,7 +105,25 @@ public class FactoryJena {
 			layer.setKeywords(soln.getLiteral("?keywords").getValue().toString());
 			layer.setLowerCorner(GlobalSettings.defaultLowerCorner);
 			layer.setUpperCorner(GlobalSettings.defaultUpperCorner);
-			layer.setDefaultCRS(GlobalSettings.defautlCRS);
+						
+			CRS = soln.get("?wkt").toString();
+
+			if(CRS.contains("<") || CRS.contains(">")){
+				
+				CRS = CRS.substring(CRS.indexOf("<"), CRS.indexOf(">"));
+				CRS = CRS.replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
+				
+				CRS = CRS.replace("<", "");
+				CRS = CRS.replace(">", "");
+				
+				layer.setDefaultCRS(CRS);
+			
+			} else {
+			
+				layer.setDefaultCRS(GlobalSettings.defautlCRS);
+				
+			}
+			
 			result.add(layer);
 			
 		}
@@ -84,6 +131,13 @@ public class FactoryJena {
 		return result;
 	}
 
+	/**
+	 * @see OGC Specification for WFS http://www.opengeospatial.org/standards/wfs
+	 * @param version Version of the Capabilities Document.
+	 * @return Capabilities Document
+	 * Retrieves the Capabilities Document of a given WFS version.
+	 */
+	
 	public String getCapabilities(String version){
 
 		String resultCapabilities = new String();
@@ -102,7 +156,7 @@ public class FactoryJena {
 				
 
 				/**
-				 * Iterates through the layers' model and creates namespaces entries with the layers prefixes.
+				 * Iterates through the layers' model and creates NameSpaces entries with the layers prefixes.
 				 */
 				Element requestElement = document.getDocumentElement(); 
 								
@@ -128,20 +182,25 @@ public class FactoryJena {
 					Element keywords = document.createElement("Keywords");
 					keywords.appendChild(document.createTextNode(layers.get(i).getKeywords()));
 					Element SRS = document.createElement("SRS");
-					SRS.appendChild(document.createTextNode(GlobalSettings.defautlCRS));
-					//	Element BBOX = document.createElement("LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"");
-					//	BBOX.appendChild(document.createTextNode(""));
-
-
+					SRS.appendChild(document.createTextNode(layers.get(i).getCRS()));
+					
+					Element BBOX = document.createElement("LatLongBoundingBox");
+					BBOX.setAttribute("minx", "180");
+					BBOX.setAttribute("miny", "-90");
+					BBOX.setAttribute("maxx", "-180");
+					BBOX.setAttribute("maxy", "83.6274");
+					
 					Element p = document.createElement("FeatureType");
 					p.appendChild(name);
 					p.appendChild(title);
 					p.appendChild(featureAbstract);
 					p.appendChild(keywords);
 					p.appendChild(SRS);
+					p.appendChild(BBOX);
 			        
 					myNodeList.item(1).getParentNode().insertBefore(p, myNodeList.item(1));
-
+					
+					
 				}
 				
 					        
@@ -178,13 +237,20 @@ public class FactoryJena {
 			e.printStackTrace();
 		} 
 		
+		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.defaultPort));
 		return resultCapabilities;
 
 	}
 
-	// TODO Check need for loading capabilities document by start-up.
 	// TODO Fix dependency on the commented geometry on the XML File DescribeFeatureType_100.
 
+	/**
+	 * @see OGC Specification for WFS http://www.opengeospatial.org/standards/wfs 
+	 * @param layer geographic feature to be described.
+	 * @return XML Document containing the WFS DescribeFeatureType response.
+	 * Retrieves the XML Document containing the WFS DescribeFeatureType response, listing all properties related to a given feature with their data types.
+	 */
+	
 	public String describeFeatureType(GeographicLayer layer){
 
 		String describeFeatureTypeResponse = new String(); 
@@ -224,11 +290,12 @@ public class FactoryJena {
 				sequence.setAttribute("nillable","true");
 
 				//TODO Try to fix hardcoded geo:asWKT to the describeFeature operation 
-
+				//TODO Check different datums for the wktLiterals 
+								
 				if(predicates.get(i).getPredicate().equals("geo:asWKT")){
 					String featureType = new String();
 					featureType = this.getFeatureType(layer);
-
+			
 					if(featureType.equals("gml:MultiPolygon") || featureType.equals("gml:Polygon")){
 						sequence.setAttribute("type","gml:MultiPolygonPropertyType");
 					}
@@ -250,17 +317,6 @@ public class FactoryJena {
 
 			}
 
-			
-			
-//			DOMSource source = new DOMSource(document);
-//			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//			Transformer transformer = transformerFactory.newTransformer();
-//			StringWriter stringWriter = new StringWriter();
-//
-//			StreamResult result = new StreamResult(stringWriter);
-//			transformer.transform(source, result);
-//
-//			StringBuffer stringBuffer = stringWriter.getBuffer();
 
 			describeFeatureTypeResponse = this.printXMLDocument(document);
 
@@ -288,11 +344,15 @@ public class FactoryJena {
 
 	}
 
-	public ArrayList<Triple> getGeometriesPredicates(GeographicLayer layer){
+	/**
+	 * @param layer geographic feature 
+	 * @return Lists all predicates (properties) related to a given feature.  
+	 */
+	private ArrayList<Triple> getGeometriesPredicates(GeographicLayer layer){
 
 		logger.info("Listing available predicates for " + layer.getName() + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
 		while (rs.hasNext()) {
@@ -317,11 +377,15 @@ public class FactoryJena {
 		return result;
 	}
 
+	/**
+	 * @param layer geographic feature 
+	 * @return Data type of a given feature.
+	 */
 	private String getFeatureType (GeographicLayer layer){
 
 		logger.info("Getting geometry type for " + layer.getName() + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String geometryCoordinates = new String();
 
 		while (rs.hasNext()) {
@@ -349,6 +413,11 @@ public class FactoryJena {
 		return geometryCoordinates;
 	}
 
+	/**
+	 * @see OGC Specification for WFS http://www.opengeospatial.org/standards/wfs
+	 * @param layer geographic feature to be retrieved.
+	 * @return XML Document containing the WFS GetFeature response with all geometries of a given feature together with their attribute table.
+	 */
 	public String getFeature(GeographicLayer layer) {
 
 		String getFeatureResponse = new String();
@@ -357,7 +426,7 @@ public class FactoryJena {
 		
 		logger.info("Performing query at " + GlobalSettings.SPARQL_Endpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.prefixes +" \n" + this.generateGetFeatureSPARQL(layer, predicates));
+		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + " \n" + this.generateGetFeatureSPARQL(layer, predicates));
 
 
 		try {
@@ -471,6 +540,11 @@ public class FactoryJena {
 
 	}
 
+	/**
+	 * @param layer geographic feature
+	 * @param predicates list of predicates from the feature of interest.
+	 * @return SPARQL query for retrieving all geometries of a given feature and their related attributes.
+	 */
 	private String generateGetFeatureSPARQL(GeographicLayer layer, ArrayList<Triple> predicates){
 
 		String selectClause = new String();
@@ -497,6 +571,11 @@ public class FactoryJena {
 		
 	}
 
+	/**
+	 * @param layers list of geographic features
+	 * 
+	 */
+	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
 	private void generateLayersPrefixes(ArrayList<GeographicLayer> layers){
 		
 		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
@@ -516,9 +595,10 @@ public class FactoryJena {
 				boolean finder = matcher.find();
 
 				if (finder==true) {
-					//System.out.println("Position: " + size);
+
 					position = size;
 					scape=true;
+					
 				}
 
 				size--;
@@ -534,6 +614,11 @@ public class FactoryJena {
 		
 	}
 
+	/**
+	 * 
+	 * @param XML Document
+	 * @return string containing a given XML Document contents.
+	 */
 	private String printXMLDocument(Document document){
 		
 		String XMLString = new String();
@@ -561,13 +646,32 @@ public class FactoryJena {
 		return XMLString;
 	}
 
+	/**
+	 * 
+	 * @param wkt Well Known Text geometry to be converted.
+	 * @return GML encoding of a given Well Known Text literal.
+	 */
 	private String convertWKTtoGML(String wkt){
 		
 		String gml = new String();
 		
 		try {
 		
-			gml = WKTParser.parseToGML2(wkt);
+			if(wkt.contains("<") && wkt.contains(">")){
+				String CRS = new String();
+				
+				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));// .replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
+				
+				wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+				
+				gml = WKTParser.parseToGML2(wkt,CRS);
+				
+				
+			} else {
+			
+				gml = WKTParser.parseToGML2(wkt,GlobalSettings.defautlCRS);
+			
+			}
 		
 		} catch (Exception e) {
 			e.printStackTrace();
