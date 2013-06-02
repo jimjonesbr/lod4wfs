@@ -8,6 +8,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 
 import de.ifgi.lod4wfs.core.GlobalSettings;
+import de.ifgi.lod4wfs.facade.Facade;
 
 /**
  * 
@@ -38,8 +39,10 @@ public class ServletContext{
 		//context.addServlet(new ServletHolder(new ServletWFS("Service started at: " + startTime )),"/wfs/*");
 
 		
+		Facade.getInstance().getCapabilities("1.0.0");
+		
 		server.start();
-
+				
 		System.out.println("Web Feature Service Adapter started\n\n" +
 				"Startup time: " + startTime + "\n" +
 				"Port: " + GlobalSettings.defaultPort + "\n");

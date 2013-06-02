@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <WFS_Capabilities 
 	version="1.0.0"
-	updateSequence="0" 
+
 	xmlns="http://www.opengis.net/wfs"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:ogc="http://www.opengis.net/ogc"
@@ -22,12 +22,12 @@
 			<GetCapabilities>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs?request=GetCapabilities" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=GetCapabilities" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
 					</HTTP>
 				</DCPType>
 			</GetCapabilities>
@@ -38,12 +38,12 @@
 				<DCPType>
 					<HTTP>
 						<Get
-							onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs?request=DescribeFeatureType" />
+							onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=DescribeFeatureType" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
 					</HTTP>
 				</DCPType>
 			</DescribeFeatureType>
@@ -53,36 +53,36 @@
 				</ResultFormat>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs?request=GetFeature" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=GetFeature" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
 					</HTTP>
 				</DCPType>
 			</GetFeature>
 			<Transaction>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs?request=Transaction" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=Transaction" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
 					</HTTP>
 				</DCPType>
 			</Transaction>
 			<LockFeature>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs?request=LockFeature" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=LockFeature" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
 					</HTTP>
 				</DCPType>
 			</LockFeature>
@@ -93,12 +93,12 @@
 				<DCPType>
 					<HTTP>
 						<Get
-							onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs?request=GetFeatureWithLock" />
+							onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=GetFeatureWithLock" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://localhost:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
 					</HTTP>
 				</DCPType>
 			</GetFeatureWithLock>
@@ -112,18 +112,7 @@
 			<Delete />
 			<Lock />
 		</Operations>
-<!--  	<FeatureType>
-			<Name>poly_landmarks</Name>
-			<Title>Manhattan (NY) 
-			landmarks</Title>
-			<Abstract>Manhattan landmarks, identifies water, lakes, 
-			parks, interesting buildilngs</Abstract>
-			<Keywords>landmarks, DS_poly_landmarks, 
-			manhattan, poly_landmarks</Keywords>
-			<SRS>EPSG:4326</SRS>
-			<LatLongBoundingBox minx="-74.047185" miny="40.679648"
-				maxx="-73.90782" maxy="40.882078" />
-		</FeatureType> -->
+
 	</FeatureTypeList>
 	<ogc:Filter_Capabilities>
 		<ogc:Spatial_Capabilities>

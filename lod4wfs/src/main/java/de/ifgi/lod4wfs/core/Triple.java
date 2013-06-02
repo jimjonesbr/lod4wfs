@@ -10,7 +10,6 @@ public class Triple {
 
 	public Triple() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 

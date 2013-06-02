@@ -28,7 +28,6 @@ public class Log4jXmlTest {
 			logger.addAppender( fileAppender );
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

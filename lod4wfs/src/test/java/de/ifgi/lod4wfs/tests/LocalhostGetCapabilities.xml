@@ -10,7 +10,7 @@
 		<Abstract>This service works as an adapter to provide access to
 			Geographic Linked Open Datasets via Web Feature Services.</Abstract>
 		<Keywords>WFS, Linked Open Data, lod4wfs</Keywords>
-		<OnlineResource>http://localhost:8080/lod4wfs/wfs
+		<OnlineResource>http://zakopane:8080/lod4wfs/wfs
 		</OnlineResource>
 		<Fees>NONE</Fees>
 		<AccessConstraints>NONE</AccessConstraints>
@@ -116,6 +116,8 @@
 			<Abstract>Roads of the Brazilian Amazon legal area</Abstract>
 			<Keywords>brazil, amazon, roads, linked open data, amazon, generated using R</Keywords>
 			<SRS>EPSG:4326</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
 		</FeatureType>
 		<FeatureType>
 			<Name>gl0:world</Name>
@@ -123,27 +125,8 @@
 			<Abstract>Polygons representing all countries of the world merged into one feature.</Abstract>
 			<Keywords>countries geometries, linked open data, generated using R</Keywords>
 			<SRS>EPSG:4326</SRS>
-		</FeatureType>
-		<FeatureType>
-			<Name>gl0:brazil_states</Name>
-			<Title>Brazilian States</Title>
-			<Abstract>Polygons representing all states of Federal States of Brazil.</Abstract>
-			<Keywords>brazil, linked open data, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-		</FeatureType>
-		<FeatureType>
-			<Name>gl0:tasmania_roads</Name>
-			<Title>Tasmania Roads</Title>
-			<Abstract>Main Tasmania roads</Abstract>
-			<Keywords>tasmania, roads, linked open data, amazon, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-		</FeatureType>
-		<FeatureType>
-			<Name>gl1:brazil_amazon_airports</Name>
-			<Title>Brazilian Amazon Airports</Title>
-			<Abstract>Airports in the Brazilian Amazon legal area.</Abstract>
-			<Keywords>brazil, airports, linked open data, amazon, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
 		</FeatureType>
 		<FeatureType>
 			<Name>gl0:brazil_amazon_airports</Name>
@@ -151,12 +134,55 @@
 			<Abstract>Airports in the Brazilian Amazon legal area.</Abstract>
 			<Keywords>brazil, airports, linked open data, amazon, generated using R</Keywords>
 			<SRS>EPSG:4326</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
 		</FeatureType>
-		<!-- <FeatureType> <Name>poly_landmarks</Name> <Title>Manhattan (NY) landmarks</Title> 
-			<Abstract>Manhattan landmarks, identifies water, lakes, parks, interesting 
-			buildilngs</Abstract> <Keywords>landmarks, DS_poly_landmarks, manhattan, 
-			poly_landmarks</Keywords> <SRS>EPSG:4326</SRS> <LatLongBoundingBox minx="-74.047185" 
-			miny="40.679648" maxx="-73.90782" maxy="40.882078" /> </FeatureType> -->
+		<FeatureType>
+			<Name>gl0:brazil_municipalities</Name>
+			<Title>Brazilian States</Title>
+			<Abstract>Polygons representing all municipalities of the Brazilian Federal States.</Abstract>
+			<Keywords>brazil, linked open data, generated using R</Keywords>
+			<SRS>EPSG:4326</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
+		</FeatureType>
+		<FeatureType>
+			<Name>gl0:brazil_states</Name>
+			<Title>Brazilian States</Title>
+			<Abstract>Polygons representing all states of Federal States of Brazil.</Abstract>
+			<Keywords>brazil, linked open data, generated using R</Keywords>
+			<SRS>EPSG:4326</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
+		</FeatureType>
+		<FeatureType>
+			<Name>gl0:tasmania_roads</Name>
+			<Title>Tasmania Roads</Title>
+			<Abstract>Main Tasmania roads</Abstract>
+			<Keywords>tasmania, roads, linked open data, amazon, generated using R</Keywords>
+			<SRS>EPSG:4326</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
+		</FeatureType>
+		<FeatureType>
+			<Name>gl0:spearfish_streams</Name>
+			<Title>Polylines of spearfish streams</Title>
+			<Abstract>Spearfish streams</Abstract>
+			<Keywords>spearfish, stream, generated using R</Keywords>
+			<SRS>EPSG:26713</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
+		</FeatureType>
+		<FeatureType>
+			<Name>gl1:brazil_amazon_airports</Name>
+			<Title>Brazilian Amazon Airports</Title>
+			<Abstract>Airports in the Brazilian Amazon legal area.</Abstract>
+			<Keywords>brazil, airports, linked open data, amazon, generated using R</Keywords>
+			<SRS>EPSG:4326</SRS>
+			<LatLongBoundingBox maxx="-180" maxy="83.6274"
+				minx="180" miny="-90" />
+		</FeatureType>
+
 	</FeatureTypeList>
 	<ogc:Filter_Capabilities>
 		<ogc:Spatial_Capabilities>

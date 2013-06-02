@@ -1,198 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<WFS_Capabilities xmlns="http://www.opengis.net/wfs"
-	xmlns:gl0="http://ifgi.lod4wfs.de/layer/" xmlns:gl1="http://ifgi.lod4wfs.de/anotherlayer/"
-	xmlns:ogc="http://www.opengis.net/ogc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	version="1.0.0"
-	xsi:schemaLocation="http://www.opengis.net/wfs http://schemas.opengis.net/wfs/1.0.0/WFS-capabilities.xsd">
-	<Service>
-		<Name>WFS</Name>
-		<Title>Linked Open Data for Web Feature Services</Title>
-		<Abstract>This service works as an adapter to provide access to
-			Geographic Linked Open Datasets via Web Feature Services.</Abstract>
-		<Keywords>WFS, Linked Open Data, lod4wfs</Keywords>
-		<OnlineResource>http://localhost:8080/lod4wfs/wfs
-		</OnlineResource>
-		<Fees>NONE</Fees>
-		<AccessConstraints>NONE</AccessConstraints>
-	</Service>
-	<Capability>
-		<Request>
-			<GetCapabilities>
-				<DCPType>
-					<HTTP>
-						<Get onlineResource="http://localhost:8080/lod4wfs/wfs?request=GetCapabilities" />
-					</HTTP>
-				</DCPType>
-				<DCPType>
-					<HTTP>
-						<Post onlineResource="http://localhost:8080/lod4wfs/wfs" />
-					</HTTP>
-				</DCPType>
-			</GetCapabilities>
-			<DescribeFeatureType>
-				<SchemaDescriptionLanguage>
-					<XMLSCHEMA />
-				</SchemaDescriptionLanguage>
-				<DCPType>
-					<HTTP>
-						<Get
-							onlineResource="http://localhost:8080/lod4wfs/wfs?request=DescribeFeatureType" />
-					</HTTP>
-				</DCPType>
-				<DCPType>
-					<HTTP>
-						<Post onlineResource="http://localhost:8080/lod4wfs/wfs" />
-					</HTTP>
-				</DCPType>
-			</DescribeFeatureType>
-			<GetFeature>
-				<ResultFormat>
-					<GML2 />
-				</ResultFormat>
-				<DCPType>
-					<HTTP>
-						<Get onlineResource="http://localhost:8080/lod4wfs/wfs?request=GetFeature" />
-					</HTTP>
-				</DCPType>
-				<DCPType>
-					<HTTP>
-						<Post onlineResource="http://localhost:8080/lod4wfs/wfs" />
-					</HTTP>
-				</DCPType>
-			</GetFeature>
-			<Transaction>
-				<DCPType>
-					<HTTP>
-						<Get onlineResource="http://localhost:8080/lod4wfs/wfs?request=Transaction" />
-					</HTTP>
-				</DCPType>
-				<DCPType>
-					<HTTP>
-						<Post onlineResource="http://localhost:8080/lod4wfs/wfs" />
-					</HTTP>
-				</DCPType>
-			</Transaction>
-			<LockFeature>
-				<DCPType>
-					<HTTP>
-						<Get onlineResource="http://localhost:8080/lod4wfs/wfs?request=LockFeature" />
-					</HTTP>
-				</DCPType>
-				<DCPType>
-					<HTTP>
-						<Post onlineResource="http://localhost:8080/lod4wfs/wfs" />
-					</HTTP>
-				</DCPType>
-			</LockFeature>
-			<GetFeatureWithLock>
-				<ResultFormat>
-					<GML2 />
-				</ResultFormat>
-				<DCPType>
-					<HTTP>
-						<Get
-							onlineResource="http://localhost:8080/lod4wfs/wfs?request=GetFeatureWithLock" />
-					</HTTP>
-				</DCPType>
-				<DCPType>
-					<HTTP>
-						<Post onlineResource="http://localhost:8080/lod4wfs/wfs" />
-					</HTTP>
-				</DCPType>
-			</GetFeatureWithLock>
-		</Request>
-	</Capability>
-	<FeatureTypeList>
-		<Operations>
-			<Query />
-			<Insert />
-			<Update />
-			<Delete />
-			<Lock />
-		</Operations>
-		<FeatureType>
-			<Name>gl0:brazil_amazon_roads</Name>
-			<Title>Brazilian Amazon Roads</Title>
-			<Abstract>Roads of the Brazilian Amazon legal area</Abstract>
-			<Keywords>brazil, amazon, roads, linked open data, amazon, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-			<LatLongBoundingBox maxx="-180" maxy="83.6274"
-				minx="180" miny="-90" />
-		</FeatureType>
-		<FeatureType>
-			<Name>gl0:world</Name>
-			<Title>World Borders Dataset</Title>
-			<Abstract>Polygons representing all countries of the world merged into one feature.</Abstract>
-			<Keywords>countries geometries, linked open data, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-			<LatLongBoundingBox maxx="-180" maxy="83.6274"
-				minx="180" miny="-90" />
-		</FeatureType>
-		<FeatureType>
-			<Name>gl0:brazil_states</Name>
-			<Title>Brazilian States</Title>
-			<Abstract>Polygons representing all states of Federal States of Brazil.</Abstract>
-			<Keywords>brazil, linked open data, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-			<LatLongBoundingBox maxx="-180" maxy="83.6274"
-				minx="180" miny="-90" />
-		</FeatureType>
-		<FeatureType>
-			<Name>gl0:tasmania_roads</Name>
-			<Title>Tasmania Roads</Title>
-			<Abstract>Main Tasmania roads</Abstract>
-			<Keywords>tasmania, roads, linked open data, amazon, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-			<LatLongBoundingBox maxx="-180" maxy="83.6274"
-				minx="180" miny="-90" />
-		</FeatureType>
-		<FeatureType>
-			<Name>gl1:brazil_amazon_airports</Name>
-			<Title>Brazilian Amazon Airports</Title>
-			<Abstract>Airports in the Brazilian Amazon legal area.</Abstract>
-			<Keywords>brazil, airports, linked open data, amazon, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-			<LatLongBoundingBox maxx="-180" maxy="83.6274"
-				minx="180" miny="-90" />
-		</FeatureType>
-		<FeatureType>
-			<Name>gl0:brazil_amazon_airports</Name>
-			<Title>Brazilian Amazon Airports</Title>
-			<Abstract>Airports in the Brazilian Amazon legal area.</Abstract>
-			<Keywords>brazil, airports, linked open data, amazon, generated using R</Keywords>
-			<SRS>EPSG:4326</SRS>
-			<LatLongBoundingBox maxx="-180" maxy="83.6274"
-				minx="180" miny="-90" />
-		</FeatureType>
-		<!-- <FeatureType> <Name>poly_landmarks</Name> <Title>Manhattan (NY) landmarks</Title> 
-			<Abstract>Manhattan landmarks, identifies water, lakes, parks, interesting 
-			buildilngs</Abstract> <Keywords>landmarks, DS_poly_landmarks, manhattan, 
-			poly_landmarks</Keywords> <SRS>EPSG:4326</SRS> <LatLongBoundingBox minx="-74.047185" 
-			miny="40.679648" maxx="-73.90782" maxy="40.882078" /> </FeatureType> -->
-	</FeatureTypeList>
-	<ogc:Filter_Capabilities>
-		<ogc:Spatial_Capabilities>
-			<ogc:Spatial_Operators>
-				<ogc:Disjoint />
-				<ogc:Equals />
-				<ogc:DWithin />
-				<ogc:Beyond />
-				<ogc:Intersect />
-				<ogc:Touches />
-				<ogc:Crosses />
-				<ogc:Within />
-				<ogc:Contains />
-				<ogc:Overlaps />
-				<ogc:BBOX />
-			</ogc:Spatial_Operators>
-		</ogc:Spatial_Capabilities>
-		<ogc:Scalar_Capabilities>
-			<ogc:Comparison_Operators>
-				<ogc:Simple_Comparisons />
-				<ogc:Between />
-				<ogc:Like />
-				<ogc:NullCheck />
-			</ogc:Comparison_Operators>
-		</ogc:Scalar_Capabilities>
-	</ogc:Filter_Capabilities>
-</WFS_Capabilities>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:cite="http://www.opengeospatial.net/cite" xmlns:gl0="http://ifgi.lod4wfs.de/layer/"
+	xmlns:gl1="http://ifgi.lod4wfs.de/anotherlayer/" xmlns:gml="http://www.opengis.net/gml"
+	xmlns:sf="http://www.opengis.net/ont/sf" elementFormDefault="qualified">
+	<xsd:import namespace="http://www.opengis.net/gml"
+		schemaLocation="http://schemas.opengis.net/gml/2.1.2.1/feature.xsd" />
+	<xsd:complexType name="tasmania_roadsType">
+		<xsd:complexContent>
+			<xsd:extension base="gml:AbstractFeatureType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="1" minOccurs="0" name="description"
+						nillable="true" type="xsd:string" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="asWKT"
+						nillable="true" type="gml:MultiLineStringPropertyType" />
+					<xsd:element maxOccurs="1" minOccurs="0" name="type"
+						nillable="true" type="xsd:string" />
+
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="tasmania_roads" substitutionGroup="gml:_Feature"
+		type="gl0:tasmania_roadsType" />
+</xsd:schema>

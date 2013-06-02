@@ -33,6 +33,7 @@ public class ServletWFS extends HttpServlet
 		this.greeting=greeting;
 	}
 
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 
@@ -50,6 +51,8 @@ public class ServletWFS extends HttpServlet
 		System.out.println(request.getRequestURI());
 		System.out.println(request.getQueryString() + "\n");
 
+		// TODO Implement MAXFEATURE for GetFeature
+		
 		while (listParameters.hasMoreElements()) {
 			String parameter = (String) listParameters.nextElement();
 
@@ -168,7 +171,7 @@ public class ServletWFS extends HttpServlet
 		boolean valid = true;
 		try {
 
-			result = new Scanner(new File("src/main/resources/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
+			result = new Scanner(new File("src/main/resources/wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
 
 
 			if(!service.toUpperCase().equals("WFS")){
@@ -176,7 +179,7 @@ public class ServletWFS extends HttpServlet
 				if(service.isEmpty()){
 					
 					result = result.replace("PARAM_REPORT", "No service provided in the request.");
-					result = result.replace("PARAM_CODE", "ServiceNotSupported");
+					result = result.replace("PARAM_CODE", "ServiceNotProvided");
 					logger.error("No service provided in the request.");					
 					
 				} else {
@@ -192,7 +195,7 @@ public class ServletWFS extends HttpServlet
 				if (version.isEmpty()){
 
 					result = result.replace("PARAM_REPORT", "Web Feature Service version not informed.");
-					result = result.replace("PARAM_CODE", "VersionNotSupported");
+					result = result.replace("PARAM_CODE", "VersionNotProvided");
 					logger.error("Web Feature Service version not informed.");
 
 				} else {
@@ -239,7 +242,6 @@ public class ServletWFS extends HttpServlet
 
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

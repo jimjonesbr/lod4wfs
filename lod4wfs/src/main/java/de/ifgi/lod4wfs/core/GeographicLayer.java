@@ -12,7 +12,7 @@ public class GeographicLayer {
 	
 	public GeographicLayer() {
 		super();
-		// TODO Auto-generated constructor stub
+
 	}
 
 	public GeographicLayer(String name, String title, String keywords,
