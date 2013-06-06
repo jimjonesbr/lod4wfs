@@ -153,8 +153,7 @@ public class FactoryJena {
 			if (version.equals("1.0.0")) {
 
 				Document document = documentBuilder.parse("src/main/resources/wfs/CapabilitiesDocument_100.xml");
-				//Document document = documentBuilder.parse("src/main/resources/TEST_GeoserverGetCapabilities.xml");
-				//Document document = documentBuilder.parse("src/main/resources/xml/GetCapabilities.xml");
+
 				/**
 				 * Iterates through the layers' model and creates NameSpaces entries with the layers prefixes.
 				 */
@@ -166,7 +165,7 @@ public class FactoryJena {
 				}
 
 				
-				logger.info("Creating Capabilities Document...");
+				logger.info("Creating Capabilities Document of " + GlobalSettings.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
@@ -190,9 +189,6 @@ public class FactoryJena {
 					BBOX.setAttribute("miny", "-90");
 					BBOX.setAttribute("minx", "180");
 					
-					
-					
-					
 					Element p = document.createElement("FeatureType");
 					p.appendChild(name);
 					p.appendChild(title);
@@ -207,47 +203,30 @@ public class FactoryJena {
 				}
 				
 					        
-				
-//				DOMSource source = new DOMSource(document);
-//
-//				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-//				Transformer transformer = transformerFactory.newTransformer();
-//				
-//				StringWriter sw = new StringWriter();
-//
-//				StreamResult result = new StreamResult(sw);
-//				transformer.transform(source, result);
-//
-//				StringBuffer sb = sw.getBuffer();
-//
-//				resultCapabilities = sb.toString(); //FileUtils.readWholeFileAsUTF8("src/main/resources/CapabilitiesDocument_100.xml");
-
 				resultCapabilities = this.printXMLDocument(document);
 			}
 
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (XPathExpressionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
 		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.defaultPort));
-		//TODO Fix hardcoded hostname/ip
-		resultCapabilities = resultCapabilities.replace("PARAM_HOST", "192.168.1.8");
+		resultCapabilities = resultCapabilities.replace("PARAM_HOST", GlobalSettings.getCanonicalHostName());
+		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
 		return resultCapabilities;
 
 	}
 
 
+	
+	
 	/**
 	 * @see OGC Specification for WFS http://www.opengeospatial.org/standards/wfs 
 	 * @param layer geographic feature to be described.

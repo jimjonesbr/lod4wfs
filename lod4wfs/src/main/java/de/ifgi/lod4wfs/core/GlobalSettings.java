@@ -1,5 +1,10 @@
 package de.ifgi.lod4wfs.core;
 
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 public class GlobalSettings {
 
 	public static int defaultPort = 8081;
@@ -9,7 +14,7 @@ public class GlobalSettings {
 	public static String defaultLowerCorner = "-180.0 -78.11";
 	public static String defaultUpperCorner = "180.0 83.57";
 	public static String defaultServiceName = "lod4wfs";
-	
+
 	public static String defaultLiteralType = "xsd:string";
 	public static String xsdNameSpace = "http://www.w3.org/2001/XMLSchema#";
 	public static String sfNameSpace = "http://www.opengis.net/ont/sf#";
@@ -20,6 +25,40 @@ public class GlobalSettings {
 
 	//TODO Fix bounding box in the Capabilities Document!
 	//public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
-	
+
+
+	public static String getCanonicalHostName(){
 		
+		String result = new String();
+		
+		try {
+			
+			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+
+			for (int networkInterfaceNumber = 0; en.hasMoreElements(); networkInterfaceNumber++) {
+				
+				NetworkInterface intf = en.nextElement();
+				Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
+
+				for (int addressNumber = 0; enumIpAddr.hasMoreElements(); addressNumber++) {
+					
+					InetAddress ipAddr = enumIpAddr.nextElement();
+					
+					if(networkInterfaceNumber==2 && addressNumber==1){
+
+						result = ipAddr.getCanonicalHostName();
+						
+					}
+				}
+
+
+			}
+
+		} catch (SocketException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
 }

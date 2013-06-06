@@ -11,8 +11,8 @@
 		<Title>Linked Open Data for Web Feature Services</Title>
 		<Abstract>This service works as an adapter to provide access to
 			Geographic Linked Open Datasets via Web Feature Services.</Abstract>
-		<Keywords>WFS, Linked Open Data, lod4wfs</Keywords>
-		<OnlineResource>http://zakopane:PARAM_PORT/lod4wfs/wfs
+		<Keywords>WFS, Linked Open Data, PARAM_SERVICE</Keywords>
+		<OnlineResource>http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs
 		</OnlineResource>
 		<Fees>NONE</Fees>
 		<AccessConstraints>NONE</AccessConstraints>
@@ -22,12 +22,12 @@
 			<GetCapabilities>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=GetCapabilities" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs?request=GetCapabilities" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs" />
 					</HTTP>
 				</DCPType>
 			</GetCapabilities>
@@ -38,12 +38,12 @@
 				<DCPType>
 					<HTTP>
 						<Get
-							onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=DescribeFeatureType" />
+							onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs?request=DescribeFeatureType" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs" />
 					</HTTP>
 				</DCPType>
 			</DescribeFeatureType>
@@ -53,36 +53,36 @@
 				</ResultFormat>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=GetFeature" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs?request=GetFeature" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs" />
 					</HTTP>
 				</DCPType>
 			</GetFeature>
 			<Transaction>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=Transaction" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs?request=Transaction" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs" />
 					</HTTP>
 				</DCPType>
 			</Transaction>
 			<LockFeature>
 				<DCPType>
 					<HTTP>
-						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=LockFeature" />
+						<Get onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs?request=LockFeature" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs" />
 					</HTTP>
 				</DCPType>
 			</LockFeature>
@@ -93,12 +93,12 @@
 				<DCPType>
 					<HTTP>
 						<Get
-							onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs?request=GetFeatureWithLock" />
+							onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs?request=GetFeatureWithLock" />
 					</HTTP>
 				</DCPType>
 				<DCPType>
 					<HTTP>
-						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/lod4wfs/wfs" />
+						<Post onlineResource="http://PARAM_HOST:PARAM_PORT/PARAM_SERVICE/wfs" />
 					</HTTP>
 				</DCPType>
 			</GetFeatureWithLock>
