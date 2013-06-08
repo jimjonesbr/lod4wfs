@@ -16,7 +16,7 @@ import de.ifgi.lod4wfs.facade.Facade;
  * @version 1.0
  */
 
-public class ServletContext{
+public class Start{
 	public static String startTime;
 
 	public static void main(String[] args) throws Exception
