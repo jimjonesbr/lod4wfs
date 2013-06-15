@@ -6,7 +6,6 @@ import java.util.Date;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.facade.Facade;
 
@@ -37,7 +36,7 @@ public class Start{
 //		context.addServlet(new ServletHolder(new ServletGUI("Buongiorno Mondo")),"/it/*");
 
 		//context.addServlet(new ServletHolder(new ServletWFS("Service started at: " + startTime )),"/wfs/*");
-
+		
 		
 		Facade.getInstance().getCapabilities("1.0.0");
 		
