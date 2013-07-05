@@ -10,7 +10,17 @@ public class GlobalSettings {
 	public static int defaultPort = 8081;
 	public static String defautlCRS = "EPSG:4326";
 	//public static String defautlCRS = "http://www.opengis.net/def/crs/EPSG/0/4326";
+
+	//Parliament
 	public static String SPARQL_Endpoint= "http://recife:8081/parliament/sparql";
+	
+	//Fuseki
+	//public static String SPARQL_Endpoint= "http://recife:3030/lod4wfs/query";
+	
+	//OWLIM
+	//public static String SPARQL_Endpoint= "http://recife:8080/openrdf-sesame/repositories/lod4wfs";
+	
+	
 	public static String defaultLowerCorner = "-180.0 -78.11";
 	public static String defaultUpperCorner = "180.0 83.57";
 	public static String defaultServiceName = "lod4wfs";
