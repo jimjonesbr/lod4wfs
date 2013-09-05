@@ -1,9 +1,5 @@
 package de.ifgi.lod4wfs.tests;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
 import it.cutruzzula.lwkt.WKTParser;
 
 public class TestParseWKT {

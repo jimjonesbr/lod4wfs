@@ -1,6 +1,7 @@
 package de.ifgi.lod4wfs.factory;
 
 import it.cutruzzula.lwkt.WKTParser;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -62,6 +63,7 @@ public class FactoryJena {
 		modelNameSpaces.setNsPrefix("geo", GlobalSettings.geoSPARQLNameSpace );
 		modelNameSpaces.setNsPrefix("rdf", GlobalSettings.RDFNameSpace);
 		modelNameSpaces.setNsPrefix("dct", GlobalSettings.dublinCoreTermsNameSpace);
+		modelNameSpaces.setNsPrefix("vocab", GlobalSettings.testVocabulary);
 
 	}
 
@@ -152,8 +154,8 @@ public class FactoryJena {
 
 			if (version.equals("1.0.0")) {
 
-				Document document = documentBuilder.parse("src/main/resources/wfs/CapabilitiesDocument_100.xml");
-
+				//Document document = documentBuilder.parse("src/main/resources/wfs/CapabilitiesDocument_100.xml");
+				Document document = documentBuilder.parse("wfs/CapabilitiesDocument_100.xml");
 				/**
 				 * Iterates through the layers' model and creates NameSpaces entries with the layers prefixes.
 				 */
@@ -245,7 +247,8 @@ public class FactoryJena {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			
-			Document document = documentBuilder.parse("src/main/resources/wfs/DescribeFeature_100.xml");
+			//Document document = documentBuilder.parse("src/main/resources/wfs/DescribeFeature_100.xml");
+			Document document = documentBuilder.parse("wfs/DescribeFeature_100.xml");
 			
 			//TODO implement prefixes namespaces from layers model 
 			
@@ -378,7 +381,8 @@ public class FactoryJena {
 		
 		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String geometryCoordinates = new String();
-
+		
+		
 		while (rs.hasNext()) {
 
 			QuerySolution soln = rs.nextSolution();					
@@ -419,7 +423,7 @@ public class FactoryJena {
 		logger.info("Performing query at " + GlobalSettings.SPARQL_Endpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 		
 		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + " \n" + this.generateGetFeatureSPARQL(layer, predicates));
-		
+			
 		layerPrefix = modelLayers.shortForm(layer.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
@@ -430,7 +434,8 @@ public class FactoryJena {
 			DocumentBuilder documentBuilder;
 
 			documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.parse("src/main/resources/wfs/GetFeature_100.xml");
+			//Document document = documentBuilder.parse("src/main/resources/wfs/GetFeature_100.xml");
+			Document document = documentBuilder.parse("wfs/GetFeature_100.xml");
 
 			
 			//

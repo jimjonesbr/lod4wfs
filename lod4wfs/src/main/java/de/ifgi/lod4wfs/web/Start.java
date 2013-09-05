@@ -20,6 +20,16 @@ public class Start{
 
 	public static void main(String[] args) throws Exception
 	{
+		//First parameter: SPARQL Endpoint address. 
+		if (args.length >= 1) {
+			
+			GlobalSettings.SPARQL_Endpoint = args[0];
+		}
+
+		if (args.length == 2) {
+			
+			GlobalSettings.defaultPort = Integer.parseInt(args[1]);
+		}
 
 		Server server = new Server(GlobalSettings.defaultPort);
 
