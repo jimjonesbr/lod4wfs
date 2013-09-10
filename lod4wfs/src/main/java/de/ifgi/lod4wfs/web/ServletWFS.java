@@ -171,8 +171,8 @@ public class ServletWFS extends HttpServlet
 		boolean valid = true;
 		try {
 
-			result = new Scanner(new File("src/main/resources/wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
-
+			//result = new Scanner(new File("src/main/resources/wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
+			result = new Scanner(new File("wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
 
 			if(!service.toUpperCase().equals("WFS")){
 

@@ -1,7 +1,6 @@
 package de.ifgi.lod4wfs.facade;
 
 import de.ifgi.lod4wfs.core.GeographicLayer;
-import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.factory.FactoryJena;
 
 /**

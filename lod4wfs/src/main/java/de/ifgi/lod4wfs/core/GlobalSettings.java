@@ -12,13 +12,13 @@ public class GlobalSettings {
 	//public static String defautlCRS = "http://www.opengis.net/def/crs/EPSG/0/4326";
 
 	//Parliament
-	public static String SPARQL_Endpoint= "http://recife:8081/parliament/sparql";
+	//public static String SPARQL_Endpoint= "http://recife:8081/parliament/sparql";
 	
 	//Fuseki
 	//public static String SPARQL_Endpoint= "http://recife:3030/lod4wfs/query";
 	
 	//OWLIM
-	//public static String SPARQL_Endpoint= "http://recife:8080/openrdf-sesame/repositories/lod4wfs";
+	public static String SPARQL_Endpoint= "http://localhost:8080/openrdf-sesame/repositories/lod4wfs";
 	
 	
 	public static String defaultLowerCorner = "-180.0 -78.11";
@@ -32,7 +32,7 @@ public class GlobalSettings {
 	public static String geoSPARQLNameSpace = "http://www.opengis.net/ont/geosparql/1.0#";
 	public static String RDFNameSpace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 	public static String dublinCoreTermsNameSpace =  "http://purl.org/dc/terms/";
-
+	public static String testVocabulary =  "http://test.vocabulary.com/";
 	//TODO Fix bounding box in the Capabilities Document!
 	//public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
 

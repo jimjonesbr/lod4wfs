@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite failures="0" time="0.002" errors="0" skipped="0" tests="0" name="de.ifgi.lod4wfs.tests.TestNamedGraphMapping">
+<testsuite failures="0" time="0.001" errors="0" skipped="0" tests="0" name="de.ifgi.lod4wfs.tests.TestNamedGraphMapping">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64"/>
@@ -19,7 +19,7 @@
     <property name="basedir" value="/media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs"/>
     <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/endorsed"/>
     <property name="os.arch" value="amd64"/>
-    <property name="surefire.real.class.path" value="/media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefirebooter5196885111505418780.jar"/>
+    <property name="surefire.real.class.path" value="/media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefirebooter2126416300195857366.jar"/>
     <property name="java.io.tmpdir" value="/tmp"/>
     <property name="line.separator" value="
 "/>
@@ -31,7 +31,7 @@
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="java.class.version" value="51.0"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
-    <property name="os.version" value="3.8.0-22-generic"/>
+    <property name="os.version" value="3.8.0-26-generic"/>
     <property name="user.home" value="/home/jones"/>
     <property name="user.timezone" value="Europe/Berlin"/>
     <property name="java.awt.printerjob" value="sun.print.PSPrinterJob"/>
@@ -42,7 +42,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/usr/lib/jvm/java-7-openjdk-amd64/jre"/>
-    <property name="sun.java.command" value="/media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefirebooter5196885111505418780.jar /media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefire8675459975685067558tmp /media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefire460255531999291995tmp"/>
+    <property name="sun.java.command" value="/media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefirebooter2126416300195857366.jar /media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefire7879242374439254971tmp /media/jones/Dateien/ifgi/MSc/Thesis/github/lod4wfs/lod4wfs/target/surefire/surefire1857505687756592957tmp"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
