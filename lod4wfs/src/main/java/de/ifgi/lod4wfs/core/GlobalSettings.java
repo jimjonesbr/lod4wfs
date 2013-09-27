@@ -12,13 +12,13 @@ public class GlobalSettings {
 	//public static String defautlCRS = "http://www.opengis.net/def/crs/EPSG/0/4326";
 
 	//Parliament
-	//public static String SPARQL_Endpoint= "http://recife:8081/parliament/sparql";
+	//public static String default_SPARQLEndpoint= "http://recife:8088/parliament/sparql";
 	
 	//Fuseki
 	//public static String SPARQL_Endpoint= "http://recife:3030/lod4wfs/query";
 	
 	//OWLIM
-	public static String SPARQL_Endpoint= "http://localhost:8080/openrdf-sesame/repositories/lod4wfs";
+	public static String default_SPARQLEndpoint= "http://recife:8080/openrdf-sesame/repositories/lod4wfs";
 	
 	
 	public static String defaultLowerCorner = "-180.0 -78.11";

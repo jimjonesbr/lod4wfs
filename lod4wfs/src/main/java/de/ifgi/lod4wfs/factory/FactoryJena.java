@@ -55,8 +55,8 @@ public class FactoryJena {
 	private static Logger logger = Logger.getLogger("Factory");
 	
 	public FactoryJena(){
-		jn = new JenaConnector(GlobalSettings.SPARQL_Endpoint);
-
+		jn = new JenaConnector(GlobalSettings.default_SPARQLEndpoint);
+					
 		modelNameSpaces.setNsPrefix("xsd", GlobalSettings.xsdNameSpace );        
 		modelNameSpaces.setNsPrefix("sf", GlobalSettings.sfNameSpace );
 		modelNameSpaces.setNsPrefix("dc", GlobalSettings.dublinCoreNameSpace );
@@ -90,7 +90,7 @@ public class FactoryJena {
 	
 	private ArrayList<GeographicLayer> listGeographicLayers(){
 
-		logger.info("Listing geographic layers at " + GlobalSettings.SPARQL_Endpoint + " ...");
+		logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
 		
 		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listNamedGraphs);
 		
@@ -420,7 +420,7 @@ public class FactoryJena {
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 		predicates = this.getGeometriesPredicates(layer);
 		
-		logger.info("Performing query at " + GlobalSettings.SPARQL_Endpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
+		logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 		
 		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + " \n" + this.generateGetFeatureSPARQL(layer, predicates));
 			

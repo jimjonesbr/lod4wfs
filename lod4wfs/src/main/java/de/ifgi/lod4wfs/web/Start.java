@@ -19,11 +19,11 @@ public class Start{
 	public static String startTime;
 
 	public static void main(String[] args) throws Exception
-	{
+	{			
 		//First parameter: SPARQL Endpoint address. 
 		if (args.length >= 1) {
 			
-			GlobalSettings.SPARQL_Endpoint = args[0];
+			GlobalSettings.default_SPARQLEndpoint = args[0];
 		}
 
 		if (args.length == 2) {
@@ -31,6 +31,7 @@ public class Start{
 			GlobalSettings.defaultPort = Integer.parseInt(args[1]);
 		}
 
+				
 		Server server = new Server(GlobalSettings.defaultPort);
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -48,11 +49,14 @@ public class Start{
 		//context.addServlet(new ServletHolder(new ServletWFS("Service started at: " + startTime )),"/wfs/*");
 		
 		
+		
 		Facade.getInstance().getCapabilities("1.0.0");
+		
+		
 		
 		server.start();
 				
-		System.out.println("Web Feature Service Adapter started\n\n" +
+		System.out.println("LOD4WFS (Linked Open Data for Web Feature Service) Adapter started\n\n" +
 				"Startup time: " + startTime + "\n" +
 				"Port: " + GlobalSettings.defaultPort + "\n");
 		
