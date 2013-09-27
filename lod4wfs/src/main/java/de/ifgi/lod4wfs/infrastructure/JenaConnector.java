@@ -7,6 +7,12 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
 
+/**
+ * 
+ * @author jones
+ * @version 1.0
+ */
+
 public class JenaConnector {
 	String endpointURL;
 	static Logger  logger = Logger.getLogger("JenaConnector.class");
