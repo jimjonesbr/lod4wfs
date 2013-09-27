@@ -7,7 +7,7 @@ import java.util.Enumeration;
 
 public class GlobalSettings {
 
-	public static int defaultPort = 8081;
+	public static int defaultPort = 8088;
 	public static String defautlCRS = "EPSG:4326";
 	//public static String defautlCRS = "http://www.opengis.net/def/crs/EPSG/0/4326";
 

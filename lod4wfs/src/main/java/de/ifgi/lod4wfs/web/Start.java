@@ -56,7 +56,8 @@ public class Start{
 		
 		server.start();
 				
-		System.out.println("LOD4WFS (Linked Open Data for Web Feature Service) Adapter started\n\n" +
+		System.out.println("\nLOD4WFS (Linked Open Data for Web Feature Service) Adapter started\n" +
+				"Version: BETA 1.0 \n\n" +
 				"Startup time: " + startTime + "\n" +
 				"Port: " + GlobalSettings.defaultPort + "\n");
 		

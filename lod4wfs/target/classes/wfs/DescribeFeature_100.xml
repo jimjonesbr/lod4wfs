@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:cite="http://www.opengeospatial.net/cite"
+	xmlns:gml="http://www.opengis.net/gml"
+	xmlns:sf="http://www.opengis.net/ont/sf"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified">
+	<xsd:import namespace="http://www.opengis.net/gml"
+				schemaLocation="http://schemas.opengis.net/gml/2.1.2/feature.xsd" />
+	<xsd:complexType name="PARAM_NAMEType">
+		<xsd:complexContent>
+			<xsd:extension base="gml:AbstractFeatureType">
+				<xsd:sequence>
+					
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	<xsd:element name="PARAM_NAME" substitutionGroup="gml:_Feature"	type="PARAM_TYPEType" />
+</xsd:schema>

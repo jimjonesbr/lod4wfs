@@ -166,3 +166,97 @@ Was expecting one of:
 [2013-09-27 16:10:01,820] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
 [2013-09-27 16:10:02,047] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
 [2013-09-27 16:10:02,119] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8081
+[2013-09-27 16:18:02,862] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:18:03,012] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-09-27 16:18:03,073] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8081: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:57)
+[2013-09-27 16:18:03,075] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@6875577e: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:57)
+[2013-09-27 16:18:20,629] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:18:20,793] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-09-27 16:18:20,854] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8081
+[2013-09-27 16:18:37,524] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:18:37,710] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-09-27 16:18:37,765] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8081: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:57)
+[2013-09-27 16:18:37,767] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@6d7af37b: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:57)
+[2013-09-27 16:18:42,774] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:18:42,930] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-09-27 16:18:42,995] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8081
+[2013-09-27 16:19:34,538] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:19:34,703] INFO  [Factory]  - Creating Capabilities Document of WL-POOL1-PNT-12876.UNI-MUENSTER.DE:8081/lod4wfs/wfs ...
+[2013-09-27 16:19:34,886] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-09-27 16:19:34,949] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8081
+[2013-09-27 16:21:00,609] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:21:00,769] INFO  [Factory]  - Creating Capabilities Document of WL-POOL1-PNT-12876.UNI-MUENSTER.DE:8088/lod4wfs/wfs ...
+[2013-09-27 16:21:00,819] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-09-27 16:21:00,894] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-09-27 16:21:10,952] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-09-27 16:21:10,952] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:21:10,988] INFO  [Factory]  - Creating Capabilities Document of WL-POOL1-PNT-12876.UNI-MUENSTER.DE:8088/lod4wfs/wfs ...
+[2013-09-27 16:21:11,008] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-09-27 16:21:17,266] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature gl0:brazil_municipalities ...
+[2013-09-27 16:21:17,266] INFO  [Factory]  - Listing available predicates for gl0:brazil_municipalities ...
+[2013-09-27 16:21:17,613] INFO  [Factory]  - Creating DescribeFeatureType XML document for gl0:brazil_municipalities ...
+[2013-09-27 16:21:17,615] INFO  [Factory]  - Getting geometry type for gl0:brazil_municipalities ...
+[2013-09-27 16:21:17,698] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-09-27 16:21:17,707] INFO  [Web-Interface]  - Processing GetFeature request for the feature gl0:brazil_municipalities ...
+[2013-09-27 16:21:17,707] INFO  [Factory]  - Listing available predicates for gl0:brazil_municipalities ...
+[2013-09-27 16:21:18,025] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of gl0:brazil_municipalities  ...
+[2013-09-27 16:21:18,058] INFO  [Factory]  - Creating GetFeature XML document for gl0:brazil_municipalities...
+[2013-09-27 16:21:26,017] INFO  [Factory]  - XML Document with 5799 features successfully created.
+[2013-09-27 16:21:26,839] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-09-27 16:21:27,705] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-09-27 16:21:27,705] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-09-27 16:21:27,744] INFO  [Factory]  - Creating Capabilities Document of WL-POOL1-PNT-12876.UNI-MUENSTER.DE:8088/lod4wfs/wfs ...
+[2013-09-27 16:21:27,769] INFO  [Web-Interface]  - GetCapabilities request delivered. 
