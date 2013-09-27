@@ -48,16 +48,15 @@ public class Start{
 
 		//context.addServlet(new ServletHolder(new ServletWFS("Service started at: " + startTime )),"/wfs/*");
 		
-		
-		
 		Facade.getInstance().getCapabilities("1.0.0");
-		
-		
 		
 		server.start();
 				
-		System.out.println("\nLOD4WFS (Linked Open Data for Web Feature Service) Adapter started\n" +
-				"Version: BETA 1.0 \n\n" +
+		System.out.println("" +
+				"\nLOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 1.0\n" +
+				"Institut für Geoinformatik der Westfälische Wilhelms-Universität Münster\n" +
+				"Visit us at: http://ifgi.uni-muenster.de/\n\n" +
+				
 				"Startup time: " + startTime + "\n" +
 				"Port: " + GlobalSettings.defaultPort + "\n");
 		
