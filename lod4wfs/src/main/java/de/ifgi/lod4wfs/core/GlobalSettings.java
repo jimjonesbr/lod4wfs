@@ -1,9 +1,14 @@
 package de.ifgi.lod4wfs.core;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+
+import org.ini4j.InvalidFileFormatException;
+import org.ini4j.Wini;
 
 public class GlobalSettings {
 
@@ -36,6 +41,58 @@ public class GlobalSettings {
 	//TODO Fix bounding box in the Capabilities Document!
 	//public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
 
+	
+	
+	 private static String abstractPredicate ="";
+	    private static String titlePredicate ="";
+	    private static String keywordsPredicate ="";
+	    private static String geometryPredicate ="";
+	    private static String geometryClass ="";
+	   
+	    public static String getAbstractPredicate(){
+	        return abstractPredicate;
+	    }
+	   
+	    public static String getTitlePredicate(){
+	        return titlePredicate;
+	    }
+
+	    public static String getKeywordsPredicate(){
+	        return keywordsPredicate;
+	    }
+	   
+	    public static String getGeometryPredicate(){
+	        return geometryPredicate;
+	    }
+	   
+	    public static String getGeometryClass(){
+	        return geometryClass;
+	    }
+	   
+	    public static void loadVariables(){
+	       
+	        Wini ini;
+	        try {
+	            ini = new Wini(new File("settings.jim"));
+
+	            titlePredicate = ini.get("GetCapabilities", "title");           
+	            abstractPredicate = ini.get("GetCapabilities", "abstract");           
+	            keywordsPredicate = ini.get("GetCapabilities", "keywords");
+	           
+	            geometryPredicate = ini.get("Geometry", "geometryPredicate");
+	            geometryClass = ini.get("Geometry", "geometryClass");
+	           
+	           
+	        } catch (InvalidFileFormatException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	       
+	       
+	    }	
+	
+	
 
 	public static String getCanonicalHostName(){
 		

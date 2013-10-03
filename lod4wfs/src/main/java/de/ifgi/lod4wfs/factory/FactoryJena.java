@@ -65,6 +65,8 @@ public class FactoryJena {
 		modelNameSpaces.setNsPrefix("dct", GlobalSettings.dublinCoreTermsNameSpace);
 		modelNameSpaces.setNsPrefix("vocab", GlobalSettings.testVocabulary);
 
+		//Load variables defined at the settings file.
+		GlobalSettings.loadVariables();
 	}
 
 	/**
@@ -92,7 +94,8 @@ public class FactoryJena {
 
 		logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
 		
-		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listNamedGraphs);
+		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listNamedGraphs);
+		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
 		
 		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
 		
@@ -227,14 +230,18 @@ public class FactoryJena {
 	}
 
 
-	
-	
 	/**
 	 * @see OGC Specification for WFS http://www.opengeospatial.org/standards/wfs 
 	 * @param layer geographic feature to be described.
 	 * @return XML Document containing the WFS DescribeFeatureType response.
 	 * Retrieves the XML Document containing the WFS DescribeFeatureType response, listing all properties related to a given feature with their data types.
 	 */
+	
+	private String removePredicateURL(String predicate){
+		
+		return predicate.split("\\P{Alpha}+")[predicate.split("\\P{Alpha}+").length-1];
+						
+	}
 	
 	public String describeFeatureType(GeographicLayer layer){
 
@@ -276,7 +283,7 @@ public class FactoryJena {
 				String predicateWithoutPrefix = new String();
 				predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
 				
-
+				predicateWithoutPrefix = this.removePredicateURL(predicates.get(i).getPredicate());
 				
 				
 
@@ -289,8 +296,11 @@ public class FactoryJena {
 				sequence.setAttribute("nillable","true");
 
 				//TODO Try to fix hardcoded geo:asWKT to the describeFeature operation 
-								
-				if(predicates.get(i).getPredicate().equals("geo:asWKT")){
+				System.out.println("DELETE MEPredicates: " + predicates.get(i).getPredicate());
+				
+					
+				//if(predicates.get(i).getPredicate().equals("geo:asWKT")){
+				if(predicates.get(i).getPredicate().equals("http://www.opengis.net/ont/geosparql/1.0#asWKT")){
 					String featureType = new String();
 					featureType = this.getFeatureType(layer);
 			
@@ -346,16 +356,22 @@ public class FactoryJena {
 
 		logger.info("Listing available predicates for " + layer.getName() + " ...");
 		
-		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
+		System.out.println("DELETE ME: " + SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		
 		while (rs.hasNext()) {
 
 			Triple triple = new Triple();
 
 			QuerySolution soln = rs.nextSolution();
-			triple.setPredicate(modelNameSpaces.shortForm(soln.getResource("?predicate").toString()));
+			//triple.setPredicate(modelNameSpaces.shortForm(soln.getResource("?predicate").toString()));
+			triple.setPredicate(soln.getResource("?predicate").toString());
 
+			System.out.println("DELETE ME  predicate string -->" + soln.getResource("?predicate").toString());
+			
 			if (soln.get("?dataType")==null) {
 
 				triple.setObjectDataType(GlobalSettings.defaultLiteralType);
@@ -379,7 +395,8 @@ public class FactoryJena {
 
 		logger.info("Getting geometry type for " + layer.getName() + " ...");
 		
-		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String geometryCoordinates = new String();
 		
 		
@@ -421,6 +438,8 @@ public class FactoryJena {
 		predicates = this.getGeometriesPredicates(layer);
 		
 		logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
+		
+		System.out.println("DELETE ME GetFeature: " + this.generateGetFeatureSPARQL(layer, predicates));
 		
 		ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + " \n" + this.generateGetFeatureSPARQL(layer, predicates));
 			
@@ -478,7 +497,9 @@ public class FactoryJena {
 
 					String predicateWithoutPrefix = new String();
 					
-					predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
+					//predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
+					
+					predicateWithoutPrefix =  this.removePredicateURL(predicates.get(i).getPredicate());
 					
 					//Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
 					Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
@@ -486,9 +507,9 @@ public class FactoryJena {
 										
 					
 					//TODO Fix hardcoded geo:asWKT 
-
-					if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
 					
+					//if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
+					if (predicates.get(i).getPredicate().equals("http://www.opengis.net/ont/geosparql/1.0#asWKT")) {
 						String gml = this.convertWKTtoGML(soln.getLiteral("?asWKT").getString().toString());
 											
 						Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
@@ -503,7 +524,7 @@ public class FactoryJena {
 						
 						rootGeometry.appendChild(currentGeometryElement);
 						
-						
+						System.out.println("Geometry found!");						
 	
 					} else {
 
@@ -570,23 +591,33 @@ public class FactoryJena {
 
 		String selectClause = new String();
 		String whereClause = new String();
-
+		ArrayList<String> variables = new ArrayList<String>();
+		
 		for (int i = 0; i < predicates.size(); i++) {
 
-			String tmp = new String();
+			String SPARQL_Variable = new String();
+			SPARQL_Variable = this.removePredicateURL(predicates.get(i).getPredicate());
+			
+		
+			//tmp = predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length()) ;
+			
+			//Check if more than one variable with the same name is generated.
+			if(variables.contains(SPARQL_Variable)){
+				SPARQL_Variable = SPARQL_Variable + i;
+			}
+			
+			selectClause = selectClause + " ?" + SPARQL_Variable + " \n" ;
+			whereClause = whereClause + "?geometry <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" .\n"; 
 
-			tmp= predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length()) ;
-
-			selectClause = selectClause + " ?" + tmp + " \n" ;
-			whereClause = whereClause + "?geometry " + predicates.get(i).getPredicate() + " ?" + tmp +" .\n"; 
-
+			
+			variables.add(SPARQL_Variable);
 		}
 
 		String SPARQL = new String();
 
 		SPARQL = " SELECT ?geometry \n" + selectClause +
 				" WHERE { GRAPH <"+ modelLayers.expandPrefix(layer.getName()) + "> {" +
-				"?geometry a geo:Geometry . \n" + whereClause + "}}";
+				"?geometry a " + GlobalSettings.getGeometryClass() + " . \n" + whereClause + "}}";
 
 		return SPARQL;
 		

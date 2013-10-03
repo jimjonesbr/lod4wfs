@@ -10,36 +10,36 @@ package de.ifgi.lod4wfs.core;
 public class SPARQL {
 		
 
-	public static String listSpatialObjectsKeywords= 
-											"SELECT ?keyword WHERE { " +
-											"<PARAM_SPOBJ> dct:subject ?keyword}";
-	
-	public static String getFeature = 
-											" SELECT ?geometry ?wkt WHERE { " +
-											" 	<PARAM_SPOBJ> geo:hasGeometry ?geometry . " + 
-											"	?geometry geo:asWKT ?wkt } ";
+//	public static String listSpatialObjectsKeywords= 
+//											"SELECT ?keyword WHERE { " +
+//											"<PARAM_SPOBJ> dct:subject ?keyword}";
+//	
+//	public static String getFeature = 
+//											" SELECT ?geometry ?wkt WHERE { " +
+//											" 	<PARAM_SPOBJ> geo:hasGeometry ?geometry . " + 
+//											"	?geometry geo:asWKT ?wkt } ";
 		
 	public static String listGeometryPredicates = 
 										" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) " +
 										" WHERE { GRAPH <PARAM_LAYER> { " +
 										"		?geometry ?predicate ?object . " +
-										"		?geometry a geo:Geometry .}  " +
+										"		?geometry a " + GlobalSettings.getGeometryClass() + " .}  " +
 										" } "; 
 	
 	//TODO Check performance of listNamedGraphs SPARQL.
 	public static String listNamedGraphs =  
 										    " SELECT ?graphName ?abstract ?keywords ?title ?wkt " + 
 											" WHERE { GRAPH ?graph { " + 
-											"	?graphName dct:abstract ?abstract . " +
-											"	?graphName dct:title ?title . " +
-											"	?graphName dct:subject ?keywords  . " +
-											"	{ SELECT DISTINCT ?wkt WHERE { GRAPH ?graph {?geometry geo:asWKT ?wkt} } LIMIT 1 }} " +
+											"	?graphName " + GlobalSettings.getAbstractPredicate() + " ?abstract . " +
+											"	?graphName " + GlobalSettings.getTitlePredicate() + " ?title . " +
+											"	?graphName " + GlobalSettings.getKeywordsPredicate() + " ?keywords  . " +
+											"	{ SELECT DISTINCT ?wkt WHERE { GRAPH ?graph {?geometry " + GlobalSettings.getGeometryPredicate() + " ?wkt} } LIMIT 1 }} " +
 											"}";		
 	
 	public static String getFeatureType =   " SELECT ?wkt " +
 											" WHERE { GRAPH <PARAM_LAYER> { " +
-											" ?geometry a geo:Geometry . " +
-											" ?geometry geo:asWKT ?wkt " +
+											" ?geometry a " + GlobalSettings.getGeometryClass() + " . " +
+											" ?geometry " + GlobalSettings.getGeometryPredicate() + " ?wkt " +
 											" }} LIMIT 1 ";
 			
 }
