@@ -12,38 +12,29 @@ import org.ini4j.Wini;
 
 public class GlobalSettings {
 
-	public static int defaultPort = 8088;
+	public static int defaultPort;
 	public static String defautlCRS = "EPSG:4326";
-	//public static String defautlCRS = "http://www.opengis.net/def/crs/EPSG/0/4326";
-
-	//Parliament
-	//public static String default_SPARQLEndpoint= "http://recife:8088/parliament/sparql";
-	
-	//Fuseki
-	//public static String SPARQL_Endpoint= "http://recife:3030/lod4wfs/query";
-	
-	//OWLIM
-	public static String default_SPARQLEndpoint= "http://recife:8080/openrdf-sesame/repositories/lod4wfs";
-	
-	
+	public static String default_SPARQLEndpoint= "";
 	public static String defaultLowerCorner = "-180.0 -78.11";
 	public static String defaultUpperCorner = "180.0 83.57";
 	public static String defaultServiceName = "lod4wfs";
-
 	public static String defaultLiteralType = "xsd:string";
-	public static String xsdNameSpace = "http://www.w3.org/2001/XMLSchema#";
-	public static String sfNameSpace = "http://www.opengis.net/ont/sf#";
-	public static String dublinCoreNameSpace = "http://purl.org/dc/elements/1.1/";
-	public static String geoSPARQLNameSpace = "http://www.opengis.net/ont/geosparql/1.0#";
-	public static String RDFNameSpace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-	public static String dublinCoreTermsNameSpace =  "http://purl.org/dc/terms/";
-	public static String testVocabulary =  "http://test.vocabulary.com/";
+	
+	public static String xsdNameSpace = "";
+//	public static String sfNameSpace = "http://www.opengis.net/ont/sf#";
+//	public static String dublinCoreNameSpace = "http://purl.org/dc/elements/1.1/";
+//	public static String geoSPARQLNameSpace = "http://www.opengis.net/ont/geosparql/1.0#";
+//	public static String RDFNameSpace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+//	public static String dublinCoreTermsNameSpace =  "http://purl.org/dc/terms/";
+//	public static String testVocabulary =  "http://test.vocabulary.com/";
+	
 	//TODO Fix bounding box in the Capabilities Document!
+	
 	//public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
 
 	
 	
-	 private static String abstractPredicate ="";
+	 	private static String abstractPredicate ="";
 	    private static String titlePredicate ="";
 	    private static String keywordsPredicate ="";
 	    private static String geometryPredicate ="";
@@ -68,12 +59,16 @@ public class GlobalSettings {
 	    public static String getGeometryClass(){
 	        return geometryClass;
 	    }
-	   
+
+	    public static String getXsdNameSpace(){
+	        return xsdNameSpace;
+	    }
+	    
 	    public static void loadVariables(){
 	       
 	        Wini ini;
 	        try {
-	            ini = new Wini(new File("settings.jim"));
+	            ini = new Wini(new File("settings/settings.jim"));
 
 	            titlePredicate = ini.get("GetCapabilities", "title");           
 	            abstractPredicate = ini.get("GetCapabilities", "abstract");           
@@ -82,7 +77,12 @@ public class GlobalSettings {
 	            geometryPredicate = ini.get("Geometry", "geometryPredicate");
 	            geometryClass = ini.get("Geometry", "geometryClass");
 	           
+	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
+	            
+	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");	            
+	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
 	           
+	            
 	        } catch (InvalidFileFormatException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {

@@ -9,8 +9,25 @@ geometryClass = <http://www.opengis.net/ont/geosparql/1.0#Geometry>
 featureConnector = http://www.opengis.net/ont/geosparql/1.0#hasGeometry
 wktLiteral = <http://www.opengis.net/ont/sf#wktLiteral>
 
-[Defaults]
+## Don't touch the [SystemDefaults] variables, unless you really know what you're doing.
+[SystemDefaults]
+xsdNameSpace = http://www.w3.org/2001/XMLSchema#
 defaultLiteral = <http://www.w3.org/2001/XMLSchema#string>
 stringLiteral = <http://www.w3.org/2001/XMLSchema#string>
 integerLiteral = <http://www.w3.org/2001/XMLSchema#integer>
 RDFNamespace = <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+defaultCRS = EPSG:4326
+
+[Server]
+defaultPort = 8088
+SPARQLEndpointURL = http://recife:8080/openrdf-sesame/repositories/lod4wfs
+
+
+#Parliament
+#http://recife:8088/parliament/sparql
+	
+#Fuseki
+#http://recife:3030/lod4wfs/query
+	
+#OWLIM
+#http://recife:8080/openrdf-sesame/repositories/lod4wfs

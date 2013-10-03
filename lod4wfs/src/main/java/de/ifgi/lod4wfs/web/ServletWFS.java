@@ -45,11 +45,11 @@ public class ServletWFS extends HttpServlet
 		String currentTypeName = new String();
 		String currentSRSName = new String();
 
-		System.out.println("Incoming request:\n");
+		System.out.println("\nIncoming request:\n");
 		
-		System.out.println(request.getRequestURL());
-		System.out.println(request.getRequestURI());
-		System.out.println(request.getQueryString() + "\n");
+//		System.out.println(request.getRequestURL());
+//		System.out.println(request.getRequestURI());
+//		System.out.println(request.getQueryString() + "\n");
 
 		// TODO Implement MAXFEATURE for GetFeature
 		
@@ -84,8 +84,6 @@ public class ServletWFS extends HttpServlet
 			}
 
 		}
-
-		
 		
 		/**
 		 * Checking if the current request is valid
@@ -135,7 +133,6 @@ public class ServletWFS extends HttpServlet
 				response.getWriter().println(Facade.getInstance().getFeature(layer));
 			
 				logger.info(currentRequest +  " request delivered. \n");
-
 
 				/**
 				 * DescribeFeatureType request

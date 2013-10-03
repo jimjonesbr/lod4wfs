@@ -20,20 +20,25 @@ public class Start{
 
 	public static void main(String[] args) throws Exception
 	{			
+		
+		GlobalSettings.loadVariables();
+		
 		//First parameter: SPARQL Endpoint address. 
 		if (args.length >= 1) {
 			
 			GlobalSettings.default_SPARQLEndpoint = args[0];
 		}
-
+		
+		//Second parameter: Server port
 		if (args.length == 2) {
 			
 			GlobalSettings.defaultPort = Integer.parseInt(args[1]);
 		}
 
-				
+			
 		Server server = new Server(GlobalSettings.defaultPort);
-
+		
+		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		startTime = dateFormat.format(date);
@@ -51,9 +56,9 @@ public class Start{
 		Facade.getInstance().getCapabilities("1.0.0");
 		
 		server.start();
-				
+			
 		System.out.println("" +
-				"\nLOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 1.0\n" +
+				"\nLOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.3\n" +
 				"Institut für Geoinformatik der Westfälische Wilhelms-Universität Münster\n" +
 				"Visit us at: http://ifgi.uni-muenster.de/\n\n" +
 				

@@ -26,7 +26,6 @@ public class SPARQL {
 										"		?geometry a " + GlobalSettings.getGeometryClass() + " .}  " +
 										" } "; 
 	
-	//TODO Check performance of listNamedGraphs SPARQL.
 	public static String listNamedGraphs =  
 										    " SELECT ?graphName ?abstract ?keywords ?title ?wkt " + 
 											" WHERE { GRAPH ?graph { " + 
