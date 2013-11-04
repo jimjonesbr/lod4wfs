@@ -96,7 +96,7 @@ public class FactoryJena {
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listNamedGraphs);
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
-		
+		//System.out.println(SPARQL.listNamedGraphs);
 		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
 		
 		String CRS = new String();
@@ -386,6 +386,7 @@ public class FactoryJena {
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		//System.out.println("DELETE ME --> "+SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String geometryCoordinates = new String();
 		
 		
@@ -429,6 +430,9 @@ public class FactoryJena {
 		logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + " \n" + this.generateGetFeatureSPARQL(layer, predicates));
+		
+		//System.out.println("DELETE ME --> " + this.generateGetFeatureSPARQL(layer, predicates));
+		
 		ResultSet rs = jn.executeQuery(this.generateGetFeatureSPARQL(layer, predicates));
 			
 		layerPrefix = modelLayers.shortForm(layer.getName());
@@ -491,7 +495,12 @@ public class FactoryJena {
 																			
 					//if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
 					if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
-						String gml = this.convertWKTtoGML(soln.getLiteral("?asWKT").getString().toString());
+						
+						//System.out.println("DELETE ME! -> "+soln.getLiteral("?asWKT").getString().toString());
+						
+						//String gml = this.convertWKTtoGML(soln.getLiteral("?asWKT").getString().toString());
+						//TODO: Automatic generate getGeometryVariable
+						String gml = this.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().toString());
 											
 						Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 

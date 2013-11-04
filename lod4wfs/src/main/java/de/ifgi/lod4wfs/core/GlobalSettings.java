@@ -39,6 +39,7 @@ public class GlobalSettings {
 	    private static String keywordsPredicate ="";
 	    private static String geometryPredicate ="";
 	    private static String geometryClass ="";
+	    private static String geometryVariable ="";
 	   
 	    public static String getAbstractPredicate(){
 	        return abstractPredicate;
@@ -64,6 +65,10 @@ public class GlobalSettings {
 	        return xsdNameSpace;
 	    }
 	    
+	    public static String getGeometryVariable(){
+	        return geometryVariable;
+	    }
+	    
 	    public static void loadVariables(){
 	       
 	        Wini ini;
@@ -76,7 +81,8 @@ public class GlobalSettings {
 	           
 	            geometryPredicate = ini.get("Geometry", "geometryPredicate");
 	            geometryClass = ini.get("Geometry", "geometryClass");
-	           
+	            geometryVariable = ini.get("Geometry", "geometryVariable");
+	            
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
 	            
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");	            
