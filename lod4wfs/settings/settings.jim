@@ -21,9 +21,12 @@ defaultCRS = EPSG:4326
 
 [Server]
 defaultPort = 8088
-SPARQLEndpointURL = http://localhost:8080/openrdf-sesame/repositories/lod4wfs
+SPARQLEndpointURL = http://recife:8080/openrdf-sesame/repositories/lod4wfs
+SPARQLDirectory = sparql/
+
 
 #SPARQLEndpointURL = http://giv-siidemo.uni-muenster.de:8081/parliament/sparql
+#SPARQLEndpointURL = http://localhost:8080/openrdf-sesame/repositories/lod4wfs
 
 
 #Parliament

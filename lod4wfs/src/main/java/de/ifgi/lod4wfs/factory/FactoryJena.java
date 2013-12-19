@@ -29,6 +29,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -51,6 +54,7 @@ public class FactoryJena {
 	private static JenaConnector jn;
 //	private static Model modelNameSpaces = ModelFactory.createDefaultModel();
 	private static Model modelLayers;	
+	private static ArrayList<GeographicLayer> dynamicLayers;
 	
 	private static Logger logger = Logger.getLogger("Factory");
 	
@@ -94,9 +98,7 @@ public class FactoryJena {
 
 		logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
 		
-		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listNamedGraphs);
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
-		//System.out.println(SPARQL.listNamedGraphs);
 		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
 		
 		String CRS = new String();
@@ -110,7 +112,8 @@ public class FactoryJena {
 			layer.setKeywords(soln.getLiteral("?keywords").getValue().toString());
 			layer.setLowerCorner(GlobalSettings.defaultLowerCorner);
 			layer.setUpperCorner(GlobalSettings.defaultUpperCorner);
-						
+			layer.setDynamic(false);
+			
 			CRS = soln.get("?wkt").toString();
 
 			if(CRS.contains("<") || CRS.contains(">")){
@@ -132,6 +135,20 @@ public class FactoryJena {
 			result.add(layer);
 			
 		}
+		
+		
+		/**
+		 * Adding dynamic layers based on sparql queries saved in the settings directory.
+		 */
+		
+		//ArrayList<GeographicLayer> dynamicLayers = new ArrayList<GeographicLayer>();
+		dynamicLayers = DynamicLayers.loadDynamicLayers(GlobalSettings.getSparqlDirectory());
+		
+		for (int i = 0; i < dynamicLayers.size(); i++) {
+			
+			result.add(dynamicLayers.get(i));
+		}
+		
 		
 		return result;
 	}
@@ -243,12 +260,61 @@ public class FactoryJena {
 						
 	}
 	
+	private boolean isDynamic(GeographicLayer layer){
+		
+		boolean result = false;
+		
+		/**
+		 * Checks if the selected layer is dynamic (based on pre-defined SPARQL Query)
+		 */
+		for (int i = 0; i < dynamicLayers.size(); i++) {
+			
+			if(dynamicLayers.get(i).getName().equals(modelLayers.expandPrefix(layer.getName()))){
+				result = true; 
+				layer.setQuery(dynamicLayers.get(i).getQuery());
+			}
+			
+		}
+		
+		return result;
+		
+	}
+	
 	public String describeFeatureType(GeographicLayer layer){
 
+		//System.out.println("is dynamic? --> " + layer.isDynamic() + " - Name: " + layer.getName());
+		
+//		String layerPrefix = modelLayers.shortForm(layer.getName());
+//		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":")+1);										 						
+//		System.out.println(modelLayers.expandPrefix(layerPrefix));		
+
+		boolean isDynamic = isDynamic(layer);
+		
+//		/**
+//		 * Checks if the selected layer is dynamic (based on pre-defined SPARQL Query)
+//		 */
+//		for (int i = 0; i < dynamicLayers.size(); i++) {
+//			
+//			if(dynamicLayers.get(i).getName().equals(modelLayers.expandPrefix(layer.getName()))){
+//				isDynamic = true; 
+//				layer.setQuery(dynamicLayers.get(i).getQuery());
+//			}
+//			
+//		}
+		
 		String describeFeatureTypeResponse = new String(); 
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
-		predicates = this.getGeometriesPredicates(layer);
-
+		
+		if(isDynamic){
+			System.out.println("Dynamic Layer");
+			
+			predicates = this.getPredicatesDynamicLayers(layer);
+			
+		} else { 
+				
+			predicates = this.getPredicatesStandardLayers(layer);
+		}
+		
 		try {
 
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -268,7 +334,6 @@ public class FactoryJena {
 			Element requestElement = document.getDocumentElement(); 						
 			requestElement.setAttribute("targetNamespace", modelLayers.expandPrefix(layerPrefix));
 			
-			
 			for (Map.Entry<String, String> entry : modelLayers.getNsPrefixMap().entrySet())
 			{
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
@@ -286,10 +351,14 @@ public class FactoryJena {
 				Element sequence = document.createElement("xsd:element");
 				sequence.setAttribute("maxOccurs","1");
 				sequence.setAttribute("minOccurs","0");
-				sequence.setAttribute("name",predicateWithoutPrefix);
+				sequence.setAttribute("name", predicateWithoutPrefix);
 				sequence.setAttribute("nillable","true");
 								
 				//if(predicates.get(i).getPredicate().equals("geo:asWKT")){
+				
+				System.out.println("predicate: " + predicates.get(i).getPredicate());
+				//System.out.println(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+				
 				if(predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))){
 					String featureType = new String();
 					featureType = this.getFeatureType(layer);
@@ -307,6 +376,13 @@ public class FactoryJena {
 					}
 
 
+				} else if(isDynamic && (predicates.get(i).getPredicate().equals("asWKT"))){
+					
+					//TODO: create function to identify geometry type!!!
+					sequence.setAttribute("type","gml:MultiPolygonPropertyType");
+					
+					
+					
 				} else {
 					sequence.setAttribute("type",predicates.get(i).getObjectDataType());
 				}
@@ -342,11 +418,31 @@ public class FactoryJena {
 	 * @param layer geographic feature 
 	 * @return Lists all predicates (properties) related to a given feature.  
 	 */
-	private ArrayList<Triple> getGeometriesPredicates(GeographicLayer layer){
+	
+	private ArrayList<Triple> getPredicatesDynamicLayers(GeographicLayer layer){
+		
+		logger.info("Listing available predicates for the dynamic layer " + layer.getName() + " ...");
+		Query query = QueryFactory.create(layer.getQuery());		
+		ArrayList<Triple> result = new ArrayList<Triple>();
+		
+		for (int i = 0; i < query.getResultVars().size(); i++) {
+			
+			Triple triple = new Triple();
+			triple.setObjectDataType(GlobalSettings.defaultLiteralType);
+			triple.setPredicate(query.getResultVars().get(i).toString());
+			result.add(triple);
+			
+			
+		}
+		
+		
+		return result;
+	}
+	
+	private ArrayList<Triple> getPredicatesStandardLayers(GeographicLayer layer){
 
 		logger.info("Listing available predicates for " + layer.getName() + " ...");
-		
-		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+	
 		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
@@ -408,7 +504,6 @@ public class FactoryJena {
 			geometryCoordinates = document.getDocumentElement().getNodeName();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -424,17 +519,29 @@ public class FactoryJena {
 
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
+		
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
-		predicates = this.getGeometriesPredicates(layer);
+		
 		
 		logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + " \n" + this.generateGetFeatureSPARQL(layer, predicates));
 		
-		//System.out.println("DELETE ME --> " + this.generateGetFeatureSPARQL(layer, predicates));
+		ResultSet rs;
 		
-		ResultSet rs = jn.executeQuery(this.generateGetFeatureSPARQL(layer, predicates));
+		System.out.println("GeFeature isDynamic -> " + isDynamic(layer));
+		
+		if(isDynamic(layer)){
+			predicates = this.getPredicatesDynamicLayers(layer);
+			//System.out.println(layer.getQuery());
+			rs = jn.executeQuery(layer.getQuery());
+		} else {
 			
+			predicates = this.getPredicatesStandardLayers(layer);			
+			//System.out.println(this.generateGetFeatureSPARQL(layer, predicates));			
+			rs = jn.executeQuery(this.generateGetFeatureSPARQL(layer, predicates));
+		}
+		
 		layerPrefix = modelLayers.shortForm(layer.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
@@ -475,6 +582,7 @@ public class FactoryJena {
 				//Element currentGeometryElement = document.createElement(currentGeometryName);
 				
 				
+				System.out.println("local name " + soln.getResource("?geometry").getLocalName());
 				String currentGeometryName = soln.getResource("?geometry").getLocalName();
 				Element currentGeometryElement = document.createElement(modelLayers.shortForm(layer.getName()));
 				
@@ -494,11 +602,10 @@ public class FactoryJena {
 					Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
 																			
 					//if (predicates.get(i).getPredicate().equals("geo:asWKT")) {
+					System.out.println("Predicates if --> " + predicates.get(i).getPredicate());
+					
 					if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 						
-						//System.out.println("DELETE ME! -> "+soln.getLiteral("?asWKT").getString().toString());
-						
-						//String gml = this.convertWKTtoGML(soln.getLiteral("?asWKT").getString().toString());
 						//TODO: Automatic generate getGeometryVariable
 						String gml = this.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().toString());
 											
@@ -603,7 +710,10 @@ public class FactoryJena {
 		modelLayers = ModelFactory.createDefaultModel();
 		
 		for (int i = 0; i < layers.size(); i++) {
-
+			
+			//DELETE-ME!
+			System.out.println(layers.get(i).isDynamic());
+			
 			boolean scape = false;
 
 			int size = layers.get(i).getName().length()-1;
@@ -626,9 +736,11 @@ public class FactoryJena {
 			}
 			
 			if (modelLayers.getNsURIPrefix(layers.get(i).getName().substring(0, position+1))==null) {
-				
-				modelLayers.setNsPrefix("gl"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );	
-			
+				if (layers.get(i).isDynamic()){
+					modelLayers.setNsPrefix("dy"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );
+				} else {
+					modelLayers.setNsPrefix("gl"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );	
+				}
 			}
 			
 		}

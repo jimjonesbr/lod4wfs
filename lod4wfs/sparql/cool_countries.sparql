@@ -1,0 +1,38 @@
+
+{
+ "title":"Cool Countries!",
+ "abstract":"Countries where I would live in",
+ "name":"http://ifgi.lod4wfs.de/cool_countries",
+ "keywords":"Cool, Countries",
+ "query":"prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  prefix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?asWKT ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?asWKT .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}"
+}

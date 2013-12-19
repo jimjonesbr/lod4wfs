@@ -40,7 +40,12 @@ public class GlobalSettings {
 	    private static String geometryPredicate ="";
 	    private static String geometryClass ="";
 	    private static String geometryVariable ="";
-	   
+	    private static String sparqlDirectory ="";
+
+	    public static String getSparqlDirectory(){
+	        return sparqlDirectory;
+	    }
+	    
 	    public static String getAbstractPredicate(){
 	        return abstractPredicate;
 	    }
@@ -85,7 +90,8 @@ public class GlobalSettings {
 	            
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
 	            
-	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");	            
+	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
+	            sparqlDirectory = ini.get("Server", "SPARQLDirectory");
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
 	           
 	            

@@ -9,6 +9,8 @@ public class GeographicLayer {
 	private String defaultCRS;
 	private String lowerCorner;
 	private String upperCorner;
+	private boolean dynamic;
+	private String query;
 	
 	public GeographicLayer() {
 		super();
@@ -17,7 +19,7 @@ public class GeographicLayer {
 
 	public GeographicLayer(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
-			String upperCorner) {
+			String upperCorner, String query, boolean dynamic) {
 		super();
 		this.name = name;
 		this.title = title;
@@ -26,6 +28,8 @@ public class GeographicLayer {
 		this.defaultCRS = defaultCRS;
 		this.lowerCorner = lowerCorner;
 		this.upperCorner = upperCorner;
+		this.dynamic = dynamic;
+		this.query = query;
 	}
 
 
@@ -85,6 +89,23 @@ public class GeographicLayer {
 	public void setUpperCorner(String upperCorner) {
 		this.upperCorner = upperCorner;
 	}
+
+	public boolean isDynamic() {
+		return dynamic;
+	}
+
+	public void setDynamic(boolean dynamic) {
+		this.dynamic = dynamic;
+	}
+
+	public String getQuery() {
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
+	}
+
 	
 	
 }
