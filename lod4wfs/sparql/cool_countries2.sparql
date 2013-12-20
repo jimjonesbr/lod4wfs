@@ -1,6 +1,6 @@
 
 {
- "title":"SPARQL_Cool-Countries",
+ "title":"SPARQL_Cool-Countries2",
  "abstract":"Countries where I would live in. Data from DBpedia and GIV-LODUM.",
  "name":"http://sparql.lod4wfs.de/cool_countries",
  "keywords":"Cool, Countries",
@@ -17,7 +17,7 @@
 		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
 		  prefix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
 		
-		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  SELECT ?geometry ?description ?wkt ?capital ?drivesOn ?language 
 		  WHERE {
 			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
 			    	   ?geometry a geo:Geometry .

@@ -64,6 +64,10 @@ public class DynamicLayers {
 
 							layer.setKeywords(jsonReader.nextString());
 
+						} else if (name.equals("geometryVariable")) {
+
+							layer.setGeometryVariable(jsonReader.nextString().replace("?", ""));
+
 						}
 																		
 						layer.setLowerCorner(GlobalSettings.defaultLowerCorner);
