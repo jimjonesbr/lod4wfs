@@ -6,6 +6,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.reasoner.rulesys.builtins.IsDType;
 
 /**
  * 
@@ -14,18 +15,19 @@ import com.hp.hpl.jena.query.ResultSet;
  */
 
 public class JenaConnector {
-	String endpointURL;
+
 	static Logger  logger = Logger.getLogger("JenaConnector.class");
 	
-	public JenaConnector(String url) {
+	public JenaConnector() {
 		super();
-		endpointURL = url;
 	}
 
-	public ResultSet executeQuery(String SPARQL){
+	public ResultSet executeQuery(String SPARQL, String endpoint){
 		
 		Query query = QueryFactory.create(SPARQL);
-		QueryExecution qexec = QueryExecutionFactory.sparqlService(this.endpointURL, query);
+		
+		
+		QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
 		ResultSet results = qexec.execSelect();
 		
 		return results;

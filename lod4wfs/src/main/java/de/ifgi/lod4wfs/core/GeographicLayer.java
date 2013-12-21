@@ -1,5 +1,7 @@
 package de.ifgi.lod4wfs.core;
 
+import com.hp.hpl.jena.query.Query;
+
 public class GeographicLayer {
 
 	private String name;
@@ -11,17 +13,24 @@ public class GeographicLayer {
 	private String upperCorner;
 	
 	private boolean dynamic;
-	private String query;
+	private Query query;
 	private String geometryVariable;
+	private String endpoint;
 	
 	public GeographicLayer() {
 		super();
 
 	}
 
+	
+	
+
+
+
 	public GeographicLayer(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
-			String upperCorner, String query, boolean dynamic, String geometryVariable) {
+			String upperCorner, boolean dynamic, Query query,
+			String geometryVariable, String endpoint) {
 		super();
 		this.name = name;
 		this.title = title;
@@ -33,7 +42,9 @@ public class GeographicLayer {
 		this.dynamic = dynamic;
 		this.query = query;
 		this.geometryVariable = geometryVariable;
+		this.endpoint = endpoint;
 	}
+
 
 
 
@@ -101,11 +112,11 @@ public class GeographicLayer {
 		this.dynamic = dynamic;
 	}
 
-	public String getQuery() {
+	public Query getQuery() {
 		return query;
 	}
 
-	public void setQuery(String query) {
+	public void setQuery(Query query) {
 		this.query = query;
 	}
 
@@ -115,6 +126,14 @@ public class GeographicLayer {
 
 	public void setGeometryVariable(String geometryVariable) {
 		this.geometryVariable = geometryVariable;
+	}
+
+	public String getEndpoint() {
+		return endpoint;
+	}
+
+	public void setEndpoint(String endpoint) {
+		this.endpoint = endpoint;
 	}
 
 	

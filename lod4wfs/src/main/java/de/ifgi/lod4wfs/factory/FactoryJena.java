@@ -59,36 +59,12 @@ public class FactoryJena {
 	private static Logger logger = Logger.getLogger("Factory");
 	
 	public FactoryJena(){
-		jn = new JenaConnector(GlobalSettings.default_SPARQLEndpoint);
-					
-//		modelNameSpaces.setNsPrefix("xsd", GlobalSettings.xsdNameSpace );        
-//		modelNameSpaces.setNsPrefix("sf", GlobalSettings.sfNameSpace );
-//		modelNameSpaces.setNsPrefix("dc", GlobalSettings.dublinCoreNameSpace );
-//		modelNameSpaces.setNsPrefix("geo", GlobalSettings.geoSPARQLNameSpace );
-//		modelNameSpaces.setNsPrefix("rdf", GlobalSettings.RDFNameSpace);
-//		modelNameSpaces.setNsPrefix("dct", GlobalSettings.dublinCoreTermsNameSpace);
-//		modelNameSpaces.setNsPrefix("vocab", GlobalSettings.testVocabulary);
-
+		jn = new JenaConnector();
+		
 		//Load variables defined at the settings file.
 		GlobalSettings.loadVariables();
 	}
 
-	/**
-	 * 
-	 * @param model
-	 * @return Prefix header of all vocabularies used in the system, to be used in SPARQL Queries.
-	 */
-//	private String getPrefixes(Model model){
-//		
-//		String prefixes = new String();
-//		for (Map.Entry<String, String> entry : modelNameSpaces.getNsPrefixMap().entrySet())
-//		{
-//			prefixes = prefixes + "PREFIX " + entry.getKey() + ": <" + entry.getValue() + "> \n";
-//		}
-//		
-//		return prefixes;
-//	}
-	
 	/**
 	 * 
 	 * @return A list of all geographic layers of a given SPARQL Endpoint.
@@ -98,7 +74,7 @@ public class FactoryJena {
 
 		logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs);
+		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs, GlobalSettings.default_SPARQLEndpoint);
 		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
 		
 		String CRS = new String();
@@ -141,7 +117,6 @@ public class FactoryJena {
 		 * Adding dynamic layers based on SPARQL Queries saved in the sparql directory.
 		 */
 		
-		//ArrayList<GeographicLayer> dynamicLayers = new ArrayList<GeographicLayer>();
 		dynamicLayers = DynamicLayers.loadDynamicLayers(GlobalSettings.getSparqlDirectory());
 		
 		for (int i = 0; i < dynamicLayers.size(); i++) {
@@ -275,6 +250,8 @@ public class FactoryJena {
 				result = true; 
 				layer.setQuery(dynamicLayers.get(i).getQuery());
 				layer.setGeometryVariable(dynamicLayers.get(i).getGeometryVariable());
+				layer.setEndpoint(dynamicLayers.get(i).getEndpoint());
+				
 			}
 			
 		}
@@ -427,7 +404,7 @@ public class FactoryJena {
 
 		logger.info("Listing available predicates for " + layer.getName() + " ...");
 	
-		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())), GlobalSettings.default_SPARQLEndpoint);
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
 				
@@ -467,7 +444,7 @@ public class FactoryJena {
 		logger.info("Getting geometry type for " + layer.getName() + " ...");
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
-		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())),GlobalSettings.default_SPARQLEndpoint);
 		//System.out.println("DELETE ME --> "+SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String geometryCoordinates = new String();
 		
@@ -506,24 +483,20 @@ public class FactoryJena {
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
 		
-		ArrayList<Triple> predicates = new ArrayList<Triple>();
-		
-		
-		logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
-		
-		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + " \n" + this.generateGetFeatureSPARQL(layer, predicates));
-		
+		ArrayList<Triple> predicates = new ArrayList<Triple>();					
 		ResultSet rs;
 				
 		if(isDynamic(layer)){
-
+			
+			logger.info("Performing query at " + layer.getEndpoint()  + " to retrieve all geometries of " + layer.getName() + "  ...");
 			predicates = this.getPredicatesDynamicLayers(layer);
-			rs = jn.executeQuery(layer.getQuery());
+			rs = jn.executeQuery(layer.getQuery().toString(),layer.getEndpoint());
 			
 		} else {
-			
+		
+			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
 			predicates = this.getPredicatesStandardLayers(layer);					
-			rs = jn.executeQuery(this.generateGetFeatureSPARQL(layer, predicates));
+			rs = jn.executeQuery(this.generateGetFeatureSPARQL(layer, predicates),GlobalSettings.default_SPARQLEndpoint);
 			
 		}
 		
@@ -729,6 +702,7 @@ public class FactoryJena {
 			}
 			
 			if (modelLayers.getNsURIPrefix(layers.get(i).getName().substring(0, position+1))==null) {
+				
 				if (layers.get(i).isDynamic()){
 					
 					//modelLayers.setNsPrefix("sparql"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );

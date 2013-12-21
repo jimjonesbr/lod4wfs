@@ -5,6 +5,7 @@
  "name":"http://sparql.lod4wfs.de/cool_countries",
  "keywords":"Cool, Countries",
  "geometryVariable":"?wkt",
+ "endpoint":"http://recife:8080/openrdf-sesame/repositories/lod4wfs",
  "query":"prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
 		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
 		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  

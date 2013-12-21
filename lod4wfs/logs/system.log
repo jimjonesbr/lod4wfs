@@ -7700,3 +7700,1046 @@ java.net.BindException: Address already in use
 [2013-12-20 01:13:07,102] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
 [2013-12-20 01:13:07,248] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
 [2013-12-20 01:13:07,259] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 01:17:10,955] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:17:11,482] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:17:11,531] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-20 01:17:11,593] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-20 01:17:19,820] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 01:17:19,820] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:17:19,976] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:17:19,994] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 01:17:25,940] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-20 01:17:25,940] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 01:17:25,965] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-20 01:17:25,970] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-20 01:17:25,974] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-20 01:17:25,975] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-20 01:17:25,975] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 01:17:26,112] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-20 01:17:26,367] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-20 01:17:26,389] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-20 01:17:26,398] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 01:17:26,398] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:17:26,542] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:17:26,555] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 01:17:39,846] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 01:17:39,847] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:17:40,004] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:17:40,017] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 01:17:43,444] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-20 01:17:43,444] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 01:17:43,452] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-20 01:17:43,457] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-20 01:17:43,460] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-20 01:17:43,460] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-20 01:17:43,460] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 01:17:43,580] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-20 01:17:43,768] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-20 01:17:43,783] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-20 01:17:43,792] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 01:17:43,793] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:17:43,937] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:17:43,953] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 01:18:27,855] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:18:28,378] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:18:28,429] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-20 01:18:28,497] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-20 01:18:32,036] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 01:18:32,036] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:18:32,192] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:18:32,208] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 01:18:34,890] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-20 01:18:34,891] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 01:18:34,915] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-20 01:18:34,921] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-20 01:18:34,925] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-20 01:18:34,925] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-20 01:18:34,925] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 01:18:35,046] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-20 01:18:35,291] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-20 01:18:35,312] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-20 01:18:35,321] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 01:18:35,322] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 01:18:35,470] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 01:18:35,482] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 10:50:49,970] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 10:50:50,498] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 10:50:50,558] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-20 10:50:50,621] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-20 10:51:08,067] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 10:51:08,067] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 10:51:08,219] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 10:51:08,237] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-20 10:51:13,535] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-20 10:51:13,535] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 10:51:13,559] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-20 10:51:13,565] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-20 10:51:13,570] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-20 10:51:13,570] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-20 10:51:13,570] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-20 10:51:13,847] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-20 10:51:14,108] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-20 10:51:14,129] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-20 10:51:14,138] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-20 10:51:14,138] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-20 10:51:14,283] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-20 10:51:14,295] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:21:49,341] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:21:49,897] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:21:49,948] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:21:50,015] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:22:11,656] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:22:11,656] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:22:11,813] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:22:11,829] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:22:30,254] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries2 ...
+[2013-12-21 19:22:30,255] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries2 ...
+[2013-12-21 19:22:30,291] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries2 ...
+[2013-12-21 19:22:30,299] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:22:30,303] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries2 ...
+[2013-12-21 19:22:30,304] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries2  ...
+[2013-12-21 19:22:30,304] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries2 ...
+[2013-12-21 19:22:30,762] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries2...
+[2013-12-21 19:22:31,033] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 19:22:31,056] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:22:31,066] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:22:31,066] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:22:31,214] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:22:31,225] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:23:05,654] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:23:06,200] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:23:06,252] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:23:06,320] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:23:07,887] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:23:07,888] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:23:08,058] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:23:08,074] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:23:19,213] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:23:19,213] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:23:19,237] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 19:23:19,245] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:23:19,249] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 19:23:19,249] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 19:23:19,249] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:23:19,405] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 19:23:19,555] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 19:23:19,559] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:23:19,566] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:23:19,566] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:23:19,714] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:23:19,738] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:23:58,167] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:23:58,167] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:23:58,316] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:23:58,332] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:24:02,700] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:24:02,700] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:24:02,707] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 19:24:02,712] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:24:02,717] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 19:24:02,717] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 19:24:02,717] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:24:02,847] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 19:24:02,971] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 19:24:02,973] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:24:02,977] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:24:02,977] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:24:03,124] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:24:03,137] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:27:38,813] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:27:39,393] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:27:39,454] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:27:39,512] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 19:27:39,514] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@4bf0c8d4: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 19:27:45,793] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:27:46,328] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:27:46,387] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:27:46,454] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:27:47,956] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:27:47,956] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:27:48,106] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:27:48,126] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:27:51,466] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:27:51,466] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:27:51,490] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 19:27:51,496] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:27:51,500] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 19:27:51,501] INFO  [Factory]  - Performing query at null to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 19:27:51,501] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:27:51,647] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 19:27:51,768] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 19:27:51,771] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:27:51,777] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:27:51,777] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:27:51,943] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:27:51,962] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:30:04,026] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:30:04,567] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:30:04,619] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:30:04,684] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:30:06,305] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:30:06,305] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:30:06,460] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:30:06,477] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:30:11,710] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:30:11,710] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:30:11,735] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 19:30:11,741] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:30:11,745] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 19:30:11,745] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wf to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 19:30:11,745] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:30:11,900] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 19:30:12,158] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 19:30:12,179] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:30:12,189] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:30:12,189] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:30:12,347] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:30:12,359] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:40:29,207] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:40:29,740] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:40:29,795] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:40:29,865] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:40:33,088] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:40:33,088] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:40:33,244] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:40:33,264] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:40:35,362] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature gl0:world ...
+[2013-12-21 19:40:35,362] INFO  [Factory]  - Listing available predicates for gl0:world ...
+[2013-12-21 19:40:35,449] INFO  [Factory]  - Creating DescribeFeatureType XML document for gl0:world ...
+[2013-12-21 19:40:35,452] INFO  [Factory]  - Getting geometry type for gl0:world ...
+[2013-12-21 19:40:35,576] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:40:35,580] INFO  [Web-Interface]  - Processing GetFeature request for the feature gl0:world ...
+[2013-12-21 19:40:35,580] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of gl0:world  ...
+[2013-12-21 19:40:35,580] INFO  [Factory]  - Listing available predicates for gl0:world ...
+[2013-12-21 19:40:35,751] INFO  [Factory]  - Creating GetFeature XML document for gl0:world...
+[2013-12-21 19:40:36,972] INFO  [Factory]  - XML Document with 245 features successfully created.
+[2013-12-21 19:40:37,145] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:40:37,249] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:40:37,249] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:40:37,393] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:40:37,408] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:40:44,167] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:40:44,167] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:40:44,318] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:40:44,327] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:40:46,669] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:40:46,670] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:40:46,687] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 19:40:46,691] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:40:46,694] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 19:40:46,694] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wf to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 19:40:46,695] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:40:46,796] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: 404 Not Found
+Unknown repository: lod4wf
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:439)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:41)
+	at de.ifgi.lod4wfs.factory.FactoryJena.getFeature(FactoryJena.java:494)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:29)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:724)
+[2013-12-21 19:41:08,093] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:41:08,093] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:41:08,244] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:41:08,254] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:41:10,018] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:41:10,018] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:41:10,026] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 19:41:10,032] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:41:10,035] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 19:41:10,036] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 19:41:10,036] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:41:10,167] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 19:41:10,297] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 19:41:10,300] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:41:10,312] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:41:10,312] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:41:10,470] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:41:10,479] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:44:15,264] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:44:15,794] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:44:15,848] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:44:15,916] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:44:19,099] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:44:19,099] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:44:19,267] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:44:19,283] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:44:20,959] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:44:20,959] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:44:20,963] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+com.hp.hpl.jena.query.QueryParseException: Lexical error at line 11, column 24.  Encountered: " " (32), after : "refix"
+	at com.hp.hpl.jena.sparql.lang.ParserSPARQL11.perform(ParserSPARQL11.java:111)
+	at com.hp.hpl.jena.sparql.lang.ParserSPARQL11.parse$(ParserSPARQL11.java:53)
+	at com.hp.hpl.jena.sparql.lang.SPARQLParser.parse(SPARQLParser.java:37)
+	at com.hp.hpl.jena.query.QueryFactory.parse(QueryFactory.java:156)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:79)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:52)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:40)
+	at de.ifgi.lod4wfs.factory.FactoryJena.getPredicatesDynamicLayers(FactoryJena.java:388)
+	at de.ifgi.lod4wfs.factory.FactoryJena.describeFeatureType(FactoryJena.java:274)
+	at de.ifgi.lod4wfs.facade.Facade.describeFeatureType(Facade.java:34)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:150)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:724)
+[2013-12-21 19:46:45,632] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:46:46,213] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:46:46,264] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:46:46,326] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:46:50,575] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:46:50,575] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:46:50,732] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:46:50,748] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:50:34,054] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:50:34,597] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:50:34,646] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 19:50:34,712] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 19:50:36,151] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:50:36,151] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:50:36,304] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:50:36,321] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 19:50:39,876] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 19:50:39,876] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:50:39,901] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 19:50:39,908] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 19:50:39,915] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 19:50:39,915] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 19:50:39,915] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 19:50:40,061] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 19:50:40,317] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 19:50:40,340] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 19:50:40,347] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 19:50:40,347] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 19:50:40,520] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 19:50:40,531] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:26:40,939] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:26:41,483] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:26:41,531] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:26:41,591] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:26:48,560] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:26:48,561] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:26:48,719] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:26:48,735] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:26:58,406] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:26:58,407] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:26:58,558] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query.
+[2013-12-21 20:26:58,559] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:26:58,566] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:26:58,580] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:29:50,605] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:29:51,125] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query.
+[2013-12-21 20:29:51,126] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:29:51,132] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:29:51,183] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:29:51,248] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:29:59,192] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:29:59,192] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:29:59,346] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query.
+[2013-12-21 20:29:59,346] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:29:59,351] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:29:59,366] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:30:00,171] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:30:00,171] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:30:00,322] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query.
+[2013-12-21 20:30:00,322] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:30:00,330] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:30:00,344] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:30:01,553] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:30:01,554] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:30:01,706] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query.
+[2013-12-21 20:30:01,706] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:30:01,711] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:30:01,723] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:32:12,740] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:32:12,740] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:32:12,934] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:32:12,948] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:32:15,587] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 20:32:15,588] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 20:32:15,596] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 20:32:15,602] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 20:32:15,605] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 20:32:15,605] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 20:32:15,605] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 20:32:15,897] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 20:32:16,161] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 20:32:16,175] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 20:32:16,187] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:32:16,187] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:32:16,336] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:32:16,350] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:33:46,278] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:33:46,815] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query at cool_countries.sparql
+[2013-12-21 20:33:46,815] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:33:46,822] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:33:46,871] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:33:46,918] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:33:46,921] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@4bac96cd: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:33:53,950] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:33:54,473] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query at cool_countries.sparql
+[2013-12-21 20:33:54,474] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:33:54,480] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:33:54,530] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:33:54,592] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:34:48,742] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:34:49,278] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query at cool_countries.sparql.
+[2013-12-21 20:34:49,278] ERROR [DynamicLayers-Module]  - 
+prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:34:49,285] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:34:49,335] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:34:49,383] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:34:49,385] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@35089735: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:35:58,638] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:35:59,179] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query at cool_countries.sparql. The correspondent layer won't be listed in the Capabilities Document.
+[2013-12-21 20:35:59,179] ERROR [DynamicLayers-Module]  - 
+prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:35:59,186] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:35:59,236] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:35:59,284] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:35:59,286] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@4bac96cd: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:36:26,510] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:36:27,030] ERROR [DynamicLayers-Module]  - Invalid SPARQL Query at cool_countries.sparql. The correspondent layer won't be listed in the Capabilities Document.
+
+[2013-12-21 20:36:27,030] ERROR [DynamicLayers-Module]  - prefix geo:  <http://www.opengis.net/ont/geosparql/1.0#>  
+		  prefix my:   <http://ifgi.lod4wfs.de/resource/>  
+		  prefix dbpedia-owl:  <http://dbpedia.org/ontology/>  
+		  prefix dbpedia-prop: <http://dbpedia.org/property/>  
+		  prefix dbpedia:	  <http://dbpedia.org/resource/> 
+		  prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>  
+		  prefix dct: <http://purl.org/dc/terms/> 
+		  prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+		  prefix sf:   <http://www.opengis.net/ont/sf#>  
+		  prefix dc:   <http://purl.org/dc/elements/1.1/>  
+		  refix rdfs:				<http://www.w3.org/2000/01/rdf-schema#> 
+		
+		  SELECT ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language 
+		  WHERE {
+			    GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries> { 
+			    	   ?geometry a geo:Geometry .
+			    	   ?geometry rdf:ID ?id .
+			    	   ?geometry dc:description ?description .
+			    	   ?geometry geo:asWKT ?wkt .
+			    	   ?geometry rdfs:seeAlso ?external
+			    }			 
+			  SERVICE <http://dbpedia.org/sparql/> {
+			  		 ?external dbpedia-prop:drivesOn ?drivesOn .
+			         ?external dbpedia-owl:officialLanguage ?languageObj .
+			         ?languageObj rdfs:label ?language .
+			         FILTER(LANGMATCHES(LANG(?language), 'EN'))
+			         ?external dbpedia-owl:capital ?capitalObj .
+			         ?capitalObj rdfs:label ?capital .
+					 FILTER(LANGMATCHES(LANG(?capital), 'EN'))			  
+			}
+	}
+[2013-12-21 20:36:27,037] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:36:27,085] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:36:27,134] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:36:27,136] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@40f6a33b: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:37:59,115] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:37:59,639] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:37:59,690] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:37:59,737] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:37:59,738] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@67a3677b: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:38:26,844] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:38:27,371] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:38:27,419] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:38:27,465] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:38:27,467] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@61285ffb: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:58)
+[2013-12-21 20:38:33,665] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:38:34,188] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:38:34,244] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:38:34,311] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:39:12,986] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:39:13,509] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:39:13,557] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:39:13,617] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:41:54,506] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:41:55,027] ERROR [DynamicLayers-Module]  - Error when parsing cool_countries.sparql.
+[2013-12-21 20:41:55,027] ERROR [DynamicLayers-Module]  - Unterminated object at line 4 column 3
+[2013-12-21 20:41:55,038] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:41:55,100] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:41:55,173] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:43:30,293] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:43:30,824] ERROR [DynamicLayers-Module]  - Error when parsing cool_countries.sparql.
+[2013-12-21 20:43:30,824] ERROR [DynamicLayers-Module]  - Unterminated object at line 4 column 3
+[2013-12-21 20:43:30,825] ERROR [DynamicLayers-Module]  - [Ljava.lang.StackTraceElement;@7118a4
+[2013-12-21 20:43:30,832] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:43:30,882] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:43:30,956] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:44:22,902] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:44:23,420] ERROR [DynamicLayers-Module]  - Error when parsing cool_countries.sparql.
+[2013-12-21 20:44:23,420] ERROR [DynamicLayers-Module]  - Unterminated object at line 4 column 3
+[2013-12-21 20:44:23,421] ERROR [DynamicLayers-Module]  - 
+[2013-12-21 20:44:23,428] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:44:23,480] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:44:23,543] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:44:43,770] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:44:44,284] ERROR [DynamicLayers-Module]  - Error when parsing cool_countries.sparql.
+[2013-12-21 20:44:44,284] ERROR [DynamicLayers-Module]  - Unterminated object at line 4 column 3
+[2013-12-21 20:44:44,284] ERROR [DynamicLayers-Module]  - com.google.gson.stream.MalformedJsonException: Unterminated object at line 4 column 3
+[2013-12-21 20:44:44,292] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:44:44,341] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2013-12-21 20:44:44,405] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2013-12-21 20:45:28,026] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:45:28,026] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:45:28,168] ERROR [DynamicLayers-Module]  - Error when parsing cool_countries.sparql.
+[2013-12-21 20:45:28,168] ERROR [DynamicLayers-Module]  - Unterminated object at line 4 column 3
+[2013-12-21 20:45:28,168] ERROR [DynamicLayers-Module]  - com.google.gson.stream.MalformedJsonException: Unterminated object at line 4 column 3
+[2013-12-21 20:45:28,174] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:45:28,190] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:45:28,894] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:45:28,894] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:45:29,040] ERROR [DynamicLayers-Module]  - Error when parsing cool_countries.sparql.
+[2013-12-21 20:45:29,041] ERROR [DynamicLayers-Module]  - Unterminated object at line 4 column 3
+[2013-12-21 20:45:29,041] ERROR [DynamicLayers-Module]  - com.google.gson.stream.MalformedJsonException: Unterminated object at line 4 column 3
+[2013-12-21 20:45:29,049] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:45:29,062] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:45:56,032] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:45:56,032] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:45:56,212] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:45:56,226] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:46:00,422] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature gl1:historicmaps ...
+[2013-12-21 20:46:00,422] INFO  [Factory]  - Listing available predicates for gl1:historicmaps ...
+[2013-12-21 20:46:00,498] INFO  [Factory]  - Creating DescribeFeatureType XML document for gl1:historicmaps ...
+[2013-12-21 20:46:00,510] INFO  [Factory]  - Getting geometry type for gl1:historicmaps ...
+[2013-12-21 20:46:00,592] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 20:46:00,595] INFO  [Web-Interface]  - Processing GetFeature request for the feature gl1:historicmaps ...
+[2013-12-21 20:46:00,595] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of gl1:historicmaps  ...
+[2013-12-21 20:46:00,595] INFO  [Factory]  - Listing available predicates for gl1:historicmaps ...
+[2013-12-21 20:46:00,747] INFO  [Factory]  - Creating GetFeature XML document for gl1:historicmaps...
+[2013-12-21 20:46:00,756] INFO  [Factory]  - XML Document with 1 features successfully created.
+[2013-12-21 20:46:00,757] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 20:46:00,763] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:46:00,763] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:46:00,916] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:46:00,934] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:46:04,714] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:46:04,714] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:46:04,879] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:46:04,892] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2013-12-21 20:46:06,659] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:cool_countries ...
+[2013-12-21 20:46:06,659] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 20:46:06,666] INFO  [Factory]  - Creating DescribeFeatureType XML document for sparql:cool_countries ...
+[2013-12-21 20:46:06,671] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2013-12-21 20:46:06,674] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2013-12-21 20:46:06,674] INFO  [Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2013-12-21 20:46:06,675] INFO  [Factory]  - Listing available predicates for the dynamic layer sparql:cool_countries ...
+[2013-12-21 20:46:06,810] INFO  [Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2013-12-21 20:46:07,030] INFO  [Factory]  - XML Document with 3 features successfully created.
+[2013-12-21 20:46:07,042] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2013-12-21 20:46:07,051] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2013-12-21 20:46:07,051] INFO  [Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2013-12-21 20:46:07,201] INFO  [Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
+[2013-12-21 20:46:07,213] INFO  [Web-Interface]  - GetCapabilities request delivered. 
