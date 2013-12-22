@@ -16,7 +16,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import de.ifgi.lod4wfs.core.GeographicLayer;
-import de.ifgi.lod4wfs.factory.FactoryJena;
+import de.ifgi.lod4wfs.factory.FactoryWFSJena;
 
 public class TestNamedGraphMapping {
 

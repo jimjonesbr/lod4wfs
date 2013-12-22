@@ -13,11 +13,11 @@ import com.hp.hpl.jena.query.QueryFactory;
 import de.ifgi.lod4wfs.core.GeographicLayer;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 
-public class DynamicLayers {
+public class FactoryDynamicFeatures {
 	
-	private static Logger logger = Logger.getLogger("DynamicLayers-Module");
+	private static Logger logger = Logger.getLogger("DynamicFeatures-Factory");
 
-	public DynamicLayers() {
+	public FactoryDynamicFeatures() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

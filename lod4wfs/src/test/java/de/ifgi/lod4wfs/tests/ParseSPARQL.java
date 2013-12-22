@@ -50,23 +50,32 @@ public class ParseSPARQL {
 		  "    	   ?capitalObj rdfs:label ?capital .  " +
 		  "    	   FILTER(LANGMATCHES(LANG(?capital), 'EN'))}}";  
 		
-		Query query = QueryFactory.create(sparql);		
 		
-		
-		
-		
-		ArrayList<Triple> result = new ArrayList<Triple>();
-		
-		for (int i = 0; i < query.getResultVars().size(); i++) {
+		//System.out.println(QueryFactory.read(sparql));
+		try {
+			Query query = QueryFactory.create(sparql);
 			
-			Triple triple = new Triple();
-			triple.setObjectDataType(GlobalSettings.defaultLiteralType);
-			triple.setPredicate(query.getResultVars().get(i).toString());
-			result.add(triple);
+			System.out.println(query.getQueryType());
 			
-			System.out.println(triple.getPredicate());
-			System.out.println();
+			ArrayList<Triple> result = new ArrayList<Triple>();
+			
+			for (int i = 0; i < query.getResultVars().size(); i++) {
+				
+				Triple triple = new Triple();
+				triple.setObjectDataType(GlobalSettings.defaultLiteralType);
+				triple.setPredicate(query.getResultVars().get(i).toString());
+				result.add(triple);
+				
+				System.out.println(triple.getPredicate());
+				System.out.println();
+			}
+		} catch (Exception e) {
+			System.out.println("Problem!!");
 		}
+				
+		
+		
+
 		
 		
 		

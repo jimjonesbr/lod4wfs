@@ -58,9 +58,9 @@ public class Start{
 		server.start();
 			
 		System.out.println("" +
-				"\nLOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.3\n" +
-				"Institut für Geoinformatik der Westfälische Wilhelms-Universität Münster\n" +
-				"Visit us at: http://ifgi.uni-muenster.de/\n\n" +
+				"\nLOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4\n" +
+				"Institut für Geoinformatik, Westfälische Wilhelms-Universität Münster\n" +
+				"http://ifgi.uni-muenster.de/\n\n" +
 				
 				"Startup time: " + startTime + "\n" +
 				"Port: " + GlobalSettings.defaultPort + "\n");

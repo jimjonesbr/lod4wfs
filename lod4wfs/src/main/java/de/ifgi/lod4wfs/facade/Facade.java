@@ -1,7 +1,7 @@
 package de.ifgi.lod4wfs.facade;
 
 import de.ifgi.lod4wfs.core.GeographicLayer;
-import de.ifgi.lod4wfs.factory.FactoryJena;
+import de.ifgi.lod4wfs.factory.FactoryWFSJena;
 
 /**
  * 
@@ -11,10 +11,10 @@ import de.ifgi.lod4wfs.factory.FactoryJena;
 public class Facade {
 
 	private static Facade instance;
-	private FactoryJena factory;
+	private FactoryWFSJena factory;
 
 	public Facade(){
-		factory = new FactoryJena();
+		factory = new FactoryWFSJena();
 	}
 
 	public static Facade getInstance() {

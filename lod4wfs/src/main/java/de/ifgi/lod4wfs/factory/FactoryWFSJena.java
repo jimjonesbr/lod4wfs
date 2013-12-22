@@ -1,7 +1,6 @@
 package de.ifgi.lod4wfs.factory;
 
 import it.cutruzzula.lwkt.WKTParser;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -29,9 +28,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -49,16 +45,15 @@ import de.ifgi.lod4wfs.infrastructure.JenaConnector;
  * Class responsible for establishing communication with the triple store and providing the XML documents to the facade.
  */
 
-public class FactoryJena {
+public class FactoryWFSJena {
 
 	private static JenaConnector jn;
-//	private static Model modelNameSpaces = ModelFactory.createDefaultModel();
 	private static Model modelLayers;	
-	private static ArrayList<GeographicLayer> dynamicLayers;
+	private static ArrayList<GeographicLayer> dynamicFeatures;
 	
-	private static Logger logger = Logger.getLogger("Factory");
+	private static Logger logger = Logger.getLogger("WFS-Factory");
 	
-	public FactoryJena(){
+	public FactoryWFSJena(){
 		jn = new JenaConnector();
 		
 		//Load variables defined at the settings file.
@@ -117,11 +112,11 @@ public class FactoryJena {
 		 * Adding dynamic layers based on SPARQL Queries saved in the sparql directory.
 		 */
 		
-		dynamicLayers = DynamicLayers.loadDynamicLayers(GlobalSettings.getSparqlDirectory());
+		dynamicFeatures = FactoryDynamicFeatures.loadDynamicLayers(GlobalSettings.getSparqlDirectory());
 		
-		for (int i = 0; i < dynamicLayers.size(); i++) {
+		for (int i = 0; i < dynamicFeatures.size(); i++) {
 			
-			result.add(dynamicLayers.get(i));
+			result.add(dynamicFeatures.get(i));
 
 		}
 		
@@ -244,13 +239,13 @@ public class FactoryJena {
 		/**
 		 * Checks if the selected layer is dynamic (based on pre-defined SPARQL Query)
 		 */
-		for (int i = 0; i < dynamicLayers.size(); i++) {
+		for (int i = 0; i < dynamicFeatures.size(); i++) {
 			
-			if(dynamicLayers.get(i).getName().equals(modelLayers.expandPrefix(layer.getName()))){
+			if(dynamicFeatures.get(i).getName().equals(modelLayers.expandPrefix(layer.getName()))){
 				result = true; 
-				layer.setQuery(dynamicLayers.get(i).getQuery());
-				layer.setGeometryVariable(dynamicLayers.get(i).getGeometryVariable());
-				layer.setEndpoint(dynamicLayers.get(i).getEndpoint());
+				layer.setQuery(dynamicFeatures.get(i).getQuery());
+				layer.setGeometryVariable(dynamicFeatures.get(i).getGeometryVariable());
+				layer.setEndpoint(dynamicFeatures.get(i).getEndpoint());
 				
 			}
 			
@@ -383,15 +378,15 @@ public class FactoryJena {
 	
 	private ArrayList<Triple> getPredicatesDynamicLayers(GeographicLayer layer){
 		
-		logger.info("Listing available predicates for the dynamic layer " + layer.getName() + " ...");
-		Query query = QueryFactory.create(layer.getQuery());		
+		logger.info("Listing available predicates for the dynamic feature " + layer.getName() + " ...");
+		
 		ArrayList<Triple> result = new ArrayList<Triple>();
 		
-		for (int i = 0; i < query.getResultVars().size(); i++) {
+		for (int i = 0; i < layer.getQuery().getResultVars().size(); i++) {
 			
 			Triple triple = new Triple();
 			triple.setObjectDataType(GlobalSettings.defaultLiteralType);
-			triple.setPredicate(query.getResultVars().get(i).toString());
+			triple.setPredicate(layer.getQuery().getResultVars().get(i).toString());
 			result.add(triple);
 		
 		}
@@ -417,7 +412,6 @@ public class FactoryJena {
 			triple.setPredicate(soln.getResource("?predicate").toString());
 
 			//System.out.println("Predicate from getPredicatesStandard" + triple.getPredicate());
-			
 			
 			if (soln.get("?dataType")==null) {
 
