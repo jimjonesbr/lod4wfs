@@ -16,7 +16,7 @@ import com.hp.hpl.jena.reasoner.rulesys.builtins.IsDType;
 
 public class JenaConnector {
 
-	static Logger  logger = Logger.getLogger("JenaConnector.class");
+	static Logger  logger = Logger.getLogger("JenaConnector");
 	
 	public JenaConnector() {
 		super();
@@ -25,7 +25,7 @@ public class JenaConnector {
 	public ResultSet executeQuery(String SPARQL, String endpoint){
 		
 		Query query = QueryFactory.create(SPARQL);
-		
+		logger.info("Query fired -> " + SPARQL);
 		
 		QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
 		ResultSet results = qexec.execSelect();

@@ -3,7 +3,10 @@ package de.ifgi.lod4wfs.web;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import de.ifgi.lod4wfs.core.GlobalSettings;
@@ -38,7 +41,6 @@ public class Start{
 			
 		Server server = new Server(GlobalSettings.defaultPort);
 		
-		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
 		startTime = dateFormat.format(date);
@@ -46,12 +48,21 @@ public class Start{
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context.setContextPath("/"+GlobalSettings.defaultServiceName);
 		
-		server.setHandler(context);
+    	server.setHandler(context);
 		
 		context.addServlet(new ServletHolder(new ServletWFS()),"/*");
-//		context.addServlet(new ServletHolder(new ServletGUI("Buongiorno Mondo")),"/it/*");
-
-		//context.addServlet(new ServletHolder(new ServletWFS("Service started at: " + startTime )),"/wfs/*");
+		
+//***************
+	    
+		ContextHandler contextGUI = new ContextHandler("/admin");
+	    contextGUI.setHandler(new HandlerGUI("Bonjoir"));
+	        
+		ContextHandlerCollection contexts = new ContextHandlerCollection();
+        contexts.setHandlers(new Handler[] { context, contextGUI});
+        
+        server.setHandler(contexts);	
+        
+//*******************		
 		
 		Facade.getInstance().getCapabilities("1.0.0");
 		

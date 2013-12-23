@@ -120,7 +120,6 @@ public class FactoryWFSJena {
 
 		}
 		
-		
 		return result;
 	}
 
@@ -192,11 +191,9 @@ public class FactoryWFSJena {
 					p.appendChild(BBOX);
 			        
 					myNodeList.item(1).getParentNode().insertBefore(p, myNodeList.item(1));
-					
-					
+										
 				}
-				
-					        
+									        
 				resultCapabilities = this.printXMLDocument(document);
 			}
 
@@ -214,6 +211,7 @@ public class FactoryWFSJena {
 		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.defaultPort));
 		resultCapabilities = resultCapabilities.replace("PARAM_HOST", GlobalSettings.getCanonicalHostName());
 		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
+		
 		return resultCapabilities;
 
 	}
