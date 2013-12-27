@@ -4,13 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import org.apache.log4j.Logger;
 import com.google.gson.stream.JsonReader;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
-
-import de.ifgi.lod4wfs.core.GeographicLayer;
+import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 
 public class FactoryDynamicFeatures {
@@ -19,16 +19,15 @@ public class FactoryDynamicFeatures {
 
 	public FactoryDynamicFeatures() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
-	public static ArrayList<GeographicLayer> loadDynamicLayers(String path) {
+	public static ArrayList<WFSFeature> listDynamicFeatures(String path) {
 
 		File[] files = new File(path).listFiles();
 		boolean isValidQuery = false;
 		
-		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
+		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
 		
 		for (File file : files) {
 			//logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
@@ -36,7 +35,7 @@ public class FactoryDynamicFeatures {
 			if(file.getName().endsWith(".sparql")){
 				//System.out.println("File: " + path + file.getName());
 
-				GeographicLayer layer = new GeographicLayer();
+				WFSFeature layer = new WFSFeature();
 				
 				try {
 
@@ -93,7 +92,8 @@ public class FactoryDynamicFeatures {
 						layer.setUpperCorner(GlobalSettings.defaultUpperCorner);
 						layer.setDefaultCRS(GlobalSettings.defautlCRS);
 						layer.setDynamic(true);
-						
+						layer.setFileName(file.getName());
+					
 					}
 					
 					
@@ -123,6 +123,41 @@ public class FactoryDynamicFeatures {
 	}
 
 
+	public boolean existsFeature(String name){
+		
+		return false;
+		
+	}
 
+	public void updateFeature(WFSFeature layer){
+		
+		
+	}
+	
+	public void deleteFeature(WFSFeature layer){
+		
+		
+	}
 
+	public boolean isQueryValid(String query){
+		
+		boolean result;
+	
+		try {
+			QueryFactory.create(query);
+			result = true;
+		} catch (Exception e) {
+			result = false;
+		}
+				
+		
+		return result;
+		
+	}
+	
+	public void addFeature(WFSFeature layer){
+	
+		
+	}
+	
 }

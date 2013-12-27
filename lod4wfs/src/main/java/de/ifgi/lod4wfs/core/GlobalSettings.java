@@ -93,8 +93,7 @@ public class GlobalSettings {
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            sparqlDirectory = ini.get("Server", "SPARQLDirectory");
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
-	           
-	            
+	           	            
 	        } catch (InvalidFileFormatException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {

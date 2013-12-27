@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import de.ifgi.lod4wfs.core.GeographicLayer;
+import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.facade.Facade;
 
 /**
@@ -122,7 +122,7 @@ public class ServletWFS extends HttpServlet
 
 			} else if (currentRequest.toUpperCase().equals("GETFEATURE")) {
 
-				GeographicLayer layer = new GeographicLayer();
+				WFSFeature layer = new WFSFeature();
 				layer.setName(currentTypeName);
 				response.setContentType("text/xml");
 				response.setStatus(HttpServletResponse.SC_OK);
@@ -140,7 +140,7 @@ public class ServletWFS extends HttpServlet
 				
 			} else if (currentRequest.toUpperCase().equals("DESCRIBEFEATURETYPE")) {
 
-				GeographicLayer layer = new GeographicLayer();
+				WFSFeature layer = new WFSFeature();
 				layer.setName(currentTypeName);
 				response.setContentType("text/xml");
 				response.setStatus(HttpServletResponse.SC_OK);	

@@ -9,6 +9,8 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.webapp.WebAppContext;
+
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.facade.Facade;
 
@@ -52,13 +54,29 @@ public class Start{
 		
 		context.addServlet(new ServletHolder(new ServletWFS()),"/*");
 		
+		
+		
+		
+		
+		
+//#####################		
+		
+        WebAppContext webAppContext = new WebAppContext();
+        //webContext.setDefaultsDescriptor("webapp/WEB-INF/webdefault.xml");
+        webAppContext.setDescriptor("webapp/WEB-INF/web.xml");
+        webAppContext.setResourceBase("webapp/");
+        webAppContext.setContextPath("/");
+		
+		
+		
 //***************
 	    
+		
 		ContextHandler contextGUI = new ContextHandler("/admin");
 	    contextGUI.setHandler(new HandlerGUI("Bonjoir"));
 	        
 		ContextHandlerCollection contexts = new ContextHandlerCollection();
-        contexts.setHandlers(new Handler[] { context, contextGUI});
+        contexts.setHandlers(new Handler[] { context, contextGUI, webAppContext});
         
         server.setHandler(contexts);	
         

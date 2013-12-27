@@ -34,7 +34,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import de.ifgi.lod4wfs.core.SPARQL;
 import de.ifgi.lod4wfs.core.GlobalSettings;
-import de.ifgi.lod4wfs.core.GeographicLayer;
+import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
@@ -49,7 +49,7 @@ public class FactoryWFSJena {
 
 	private static JenaConnector jn;
 	private static Model modelLayers;	
-	private static ArrayList<GeographicLayer> dynamicFeatures;
+	private static ArrayList<WFSFeature> dynamicFeatures;
 	
 	private static Logger logger = Logger.getLogger("WFS-Factory");
 	
@@ -65,17 +65,17 @@ public class FactoryWFSJena {
 	 * @return A list of all geographic layers of a given SPARQL Endpoint.
 	 */
 	
-	private ArrayList<GeographicLayer> listGeographicLayers(){
+	private ArrayList<WFSFeature> listWFSFeatures(){
 
 		logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
 		
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs, GlobalSettings.default_SPARQLEndpoint);
-		ArrayList<GeographicLayer> result = new ArrayList<GeographicLayer>();
+		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
 		
 		String CRS = new String();
 		
 		while (rs.hasNext()) {
-			GeographicLayer layer = new GeographicLayer();
+			WFSFeature layer = new WFSFeature();
 			QuerySolution soln = rs.nextSolution();
 			layer.setName(soln.get("?graphName").toString());
 			layer.setTitle(soln.getLiteral("?title").getValue().toString());
@@ -112,7 +112,7 @@ public class FactoryWFSJena {
 		 * Adding dynamic layers based on SPARQL Queries saved in the sparql directory.
 		 */
 		
-		dynamicFeatures = FactoryDynamicFeatures.loadDynamicLayers(GlobalSettings.getSparqlDirectory());
+		dynamicFeatures = FactoryDynamicFeatures.listDynamicFeatures(GlobalSettings.getSparqlDirectory());
 		
 		for (int i = 0; i < dynamicFeatures.size(); i++) {
 			
@@ -134,8 +134,8 @@ public class FactoryWFSJena {
 
 		String resultCapabilities = new String();
 
-		ArrayList<GeographicLayer> layers = new ArrayList<GeographicLayer>(); 
-		layers = this.listGeographicLayers();
+		ArrayList<WFSFeature> layers = new ArrayList<WFSFeature>(); 
+		layers = this.listWFSFeatures();
 		this.generateLayersPrefixes(layers);
 		try {
 
@@ -230,7 +230,7 @@ public class FactoryWFSJena {
 						
 	}
 	
-	private boolean isDynamic(GeographicLayer layer){
+	private boolean isDynamic(WFSFeature layer){
 		
 		boolean result = false;
 		
@@ -253,7 +253,7 @@ public class FactoryWFSJena {
 		
 	}
 	
-	public String describeFeatureType(GeographicLayer layer){
+	public String describeFeatureType(WFSFeature layer){
 
 
 		boolean isDynamic = isDynamic(layer);
@@ -263,11 +263,11 @@ public class FactoryWFSJena {
 		
 		if(isDynamic){
 			
-			predicates = this.getPredicatesDynamicLayers(layer);
+			predicates = this.getPredicatesDynamicFeatures(layer);
 			
 		} else { 
 				
-			predicates = this.getPredicatesStandardLayers(layer);
+			predicates = this.getPredicatesStandardFeatures(layer);
 		}
 		
 		try {
@@ -374,7 +374,7 @@ public class FactoryWFSJena {
 	 * @return Lists all predicates (properties) related to a given feature.  
 	 */
 	
-	private ArrayList<Triple> getPredicatesDynamicLayers(GeographicLayer layer){
+	private ArrayList<Triple> getPredicatesDynamicFeatures(WFSFeature layer){
 		
 		logger.info("Listing available predicates for the dynamic feature " + layer.getName() + " ...");
 		
@@ -393,7 +393,7 @@ public class FactoryWFSJena {
 		
 	}
 	
-	private ArrayList<Triple> getPredicatesStandardLayers(GeographicLayer layer){
+	private ArrayList<Triple> getPredicatesStandardFeatures(WFSFeature layer){
 
 		logger.info("Listing available predicates for " + layer.getName() + " ...");
 	
@@ -431,7 +431,7 @@ public class FactoryWFSJena {
 	 * @param layer geographic feature 
 	 * @return Data type of a given feature.
 	 */
-	private String getFeatureType (GeographicLayer layer){
+	private String getFeatureType (WFSFeature layer){
 
 		logger.info("Getting geometry type for " + layer.getName() + " ...");
 		
@@ -470,7 +470,7 @@ public class FactoryWFSJena {
 	 * @param layer geographic feature to be retrieved.
 	 * @return XML Document containing the WFS GetFeature response with all geometries of a given feature together with their attribute table.
 	 */
-	public String getFeature(GeographicLayer layer) {
+	public String getFeature(WFSFeature layer) {
 
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
@@ -481,13 +481,13 @@ public class FactoryWFSJena {
 		if(isDynamic(layer)){
 			
 			logger.info("Performing query at " + layer.getEndpoint()  + " to retrieve all geometries of " + layer.getName() + "  ...");
-			predicates = this.getPredicatesDynamicLayers(layer);
+			predicates = this.getPredicatesDynamicFeatures(layer);
 			rs = jn.executeQuery(layer.getQuery().toString(),layer.getEndpoint());
 			
 		} else {
 		
 			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
-			predicates = this.getPredicatesStandardLayers(layer);					
+			predicates = this.getPredicatesStandardFeatures(layer);					
 			rs = jn.executeQuery(this.generateGetFeatureSPARQL(layer, predicates),GlobalSettings.default_SPARQLEndpoint);
 			
 		}
@@ -624,7 +624,7 @@ public class FactoryWFSJena {
 	 * @param predicates list of predicates from the feature of interest.
 	 * @return SPARQL query for retrieving all geometries of a given feature and their related attributes.
 	 */
-	private String generateGetFeatureSPARQL(GeographicLayer layer, ArrayList<Triple> predicates){
+	private String generateGetFeatureSPARQL(WFSFeature layer, ArrayList<Triple> predicates){
 
 		String selectClause = new String();
 		String whereClause = new String();
@@ -665,7 +665,7 @@ public class FactoryWFSJena {
 	 * 
 	 */
 	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
-	private void generateLayersPrefixes(ArrayList<GeographicLayer> layers){
+	private void generateLayersPrefixes(ArrayList<WFSFeature> layers){
 		
 		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
 		modelLayers = ModelFactory.createDefaultModel();

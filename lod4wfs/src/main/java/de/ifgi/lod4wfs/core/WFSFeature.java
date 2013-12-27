@@ -2,7 +2,7 @@ package de.ifgi.lod4wfs.core;
 
 import com.hp.hpl.jena.query.Query;
 
-public class GeographicLayer {
+public class WFSFeature {
 
 	private String name;
 	private String title;
@@ -16,21 +16,18 @@ public class GeographicLayer {
 	private Query query;
 	private String geometryVariable;
 	private String endpoint;
+	private String fileName;
 	
-	public GeographicLayer() {
+	public WFSFeature() {
 		super();
 
 	}
 
-	
-	
 
-
-
-	public GeographicLayer(String name, String title, String keywords,
+	public WFSFeature(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
 			String upperCorner, boolean dynamic, Query query,
-			String geometryVariable, String endpoint) {
+			String geometryVariable, String endpoint, String fileName) {
 		super();
 		this.name = name;
 		this.title = title;
@@ -43,9 +40,8 @@ public class GeographicLayer {
 		this.query = query;
 		this.geometryVariable = geometryVariable;
 		this.endpoint = endpoint;
+		this.fileName = fileName;
 	}
-
-
 
 
 	public String getName() {
@@ -134,6 +130,14 @@ public class GeographicLayer {
 
 	public void setEndpoint(String endpoint) {
 		this.endpoint = endpoint;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	

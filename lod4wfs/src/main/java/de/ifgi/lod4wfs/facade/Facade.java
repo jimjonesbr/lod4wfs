@@ -1,6 +1,10 @@
 package de.ifgi.lod4wfs.facade;
 
-import de.ifgi.lod4wfs.core.GeographicLayer;
+import java.util.ArrayList;
+
+import de.ifgi.lod4wfs.core.WFSFeature;
+import de.ifgi.lod4wfs.core.GlobalSettings;
+import de.ifgi.lod4wfs.factory.FactoryDynamicFeatures;
 import de.ifgi.lod4wfs.factory.FactoryWFSJena;
 
 /**
@@ -24,12 +28,12 @@ public class Facade {
 		return instance;
 	}
 
-	public String getFeature(GeographicLayer layer){
+	public String getFeature(WFSFeature layer){
 
 		return factory.getFeature(layer);
 	}
 
-	public String describeFeatureType(GeographicLayer geographicLayer){
+	public String describeFeatureType(WFSFeature geographicLayer){
 
 		return factory.describeFeatureType(geographicLayer);
 	}
@@ -39,4 +43,9 @@ public class Facade {
 		return factory.getCapabilities(version);
 	}
 
+	public ArrayList<WFSFeature> listDynamicFeatures(){
+		
+		return FactoryDynamicFeatures.listDynamicFeatures(GlobalSettings.getSparqlDirectory());
+		
+	}
 }
