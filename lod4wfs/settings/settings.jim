@@ -18,6 +18,7 @@ stringLiteral = <http://www.w3.org/2001/XMLSchema#string>
 integerLiteral = <http://www.w3.org/2001/XMLSchema#integer>
 RDFNamespace = <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 defaultCRS = EPSG:4326
+dynamicFeaturesNameSpace = http://sparql.lod4wfs.de/
 
 [Server]
 defaultPort = 8088

@@ -46,6 +46,40 @@ public class Facade {
 	public ArrayList<WFSFeature> listDynamicFeatures(){
 		
 		return FactoryDynamicFeatures.listDynamicFeatures(GlobalSettings.getSparqlDirectory());
+	}
+	
+	public void addFeature(WFSFeature feature){		
 		
+		FactoryDynamicFeatures.addFeature(feature);	
+		
+	}
+	
+	public boolean isQueryValid(String query){
+		
+		return FactoryDynamicFeatures.isQueryValid(query);
+		
+	}
+	
+	public boolean isVariableValid(WFSFeature feature){
+		
+		return FactoryDynamicFeatures.isVariableValid(feature);
+		
+	}
+	
+	public boolean isEndpointValid(String endpoint){
+		
+		return FactoryDynamicFeatures.isEndpointValid(endpoint);
+		
+	}
+	
+	public boolean isFeatureNameValid(String featureName){
+		
+		return FactoryDynamicFeatures.isFeatureNameValid(featureName);
+		
+	}
+	
+	public boolean existsFeature(String featureName){
+		
+		return FactoryDynamicFeatures.existsFeature(featureName);
 	}
 }

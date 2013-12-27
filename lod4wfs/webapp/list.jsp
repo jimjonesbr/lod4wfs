@@ -8,8 +8,12 @@
 <HEAD>
 <TITLE>LOD4WFS Administration Interface</TITLE>
 </HEAD>
-<h1>SPARQL Queries available</h1>
+
 <BODY>
+	<a href="index.jsp">Home</a>
+	<a href="new.jsp">Create New Query</a>
+<h1>SPARQL Queries available</h1>
+
 <table border="1">
 	<tr>
 		<td>Name</td>
@@ -35,7 +39,7 @@
 			%><td><%out.println(dynamicFeatures.get(i).getQuery().toString()); %></td><%
 			%></tr><%
 			
-			out.println(dynamicFeatures.get(i).getQuery().toString());
+			//out.println(dynamicFeatures.get(i).getQuery().toString());
 		}
 	%>
 

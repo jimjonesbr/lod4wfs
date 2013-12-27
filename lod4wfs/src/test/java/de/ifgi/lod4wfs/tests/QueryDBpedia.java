@@ -33,7 +33,7 @@ public class QueryDBpedia {
         ResultSet results = qexec.execSelect();
        //Iterating over the SPARQL Query results
         
-        System.out.println(query.getResultURIs().get(0).toString());
+       
         
         while (results.hasNext()) {
             QuerySolution soln = results.nextSolution();

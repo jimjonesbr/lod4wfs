@@ -43,9 +43,9 @@ public class Start{
 			
 		Server server = new Server(GlobalSettings.defaultPort);
 		
-		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date date = new Date();
-		startTime = dateFormat.format(date);
+		GlobalSettings.startupTime = dateFormat.format(date);
 
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context.setContextPath("/"+GlobalSettings.defaultServiceName);
@@ -53,10 +53,6 @@ public class Start{
     	server.setHandler(context);
 		
 		context.addServlet(new ServletHolder(new ServletWFS()),"/*");
-		
-		
-		
-		
 		
 		
 //#####################		

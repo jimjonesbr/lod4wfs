@@ -21,6 +21,7 @@ public class GlobalSettings {
 	public static String defaultLiteralType = "xsd:string";
 	
 	public static String xsdNameSpace = "";
+	public static String startupTime = "";
 //	public static String sfNameSpace = "http://www.opengis.net/ont/sf#";
 //	public static String dublinCoreNameSpace = "http://purl.org/dc/elements/1.1/";
 //	public static String geoSPARQLNameSpace = "http://www.opengis.net/ont/geosparql/1.0#";
@@ -41,7 +42,12 @@ public class GlobalSettings {
 	    private static String geometryClass ="";
 	    private static String geometryVariable ="";
 	    private static String sparqlDirectory ="";
-
+	    private static String dynamicFeaturesNameSpace = "";
+	    
+	    public static String getDynamicFeaturesNameSpace(){
+	    	return dynamicFeaturesNameSpace;
+	    }
+	    
 	    public static String getSparqlDirectory(){
 	        return sparqlDirectory;
 	    }
@@ -89,7 +95,7 @@ public class GlobalSettings {
 	            geometryVariable = ini.get("Geometry", "geometryVariable");
 	            
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
-	            
+	            dynamicFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            sparqlDirectory = ini.get("Server", "SPARQLDirectory");
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));

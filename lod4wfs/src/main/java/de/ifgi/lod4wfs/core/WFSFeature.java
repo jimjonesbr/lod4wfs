@@ -13,7 +13,7 @@ public class WFSFeature {
 	private String upperCorner;
 	
 	private boolean dynamic;
-	private Query query;
+	private String query;
 	private String geometryVariable;
 	private String endpoint;
 	private String fileName;
@@ -26,7 +26,7 @@ public class WFSFeature {
 
 	public WFSFeature(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
-			String upperCorner, boolean dynamic, Query query,
+			String upperCorner, boolean dynamic, String query,
 			String geometryVariable, String endpoint, String fileName) {
 		super();
 		this.name = name;
@@ -108,11 +108,11 @@ public class WFSFeature {
 		this.dynamic = dynamic;
 	}
 
-	public Query getQuery() {
+	public String getQuery() {
 		return query;
 	}
 
-	public void setQuery(Query query) {
+	public void setQuery(String query) {
 		this.query = query;
 	}
 

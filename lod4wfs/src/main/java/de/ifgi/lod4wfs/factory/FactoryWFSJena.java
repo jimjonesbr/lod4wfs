@@ -28,6 +28,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -48,7 +51,7 @@ import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 public class FactoryWFSJena {
 
 	private static JenaConnector jn;
-	private static Model modelLayers;	
+	private static Model modelFeatures;	
 	private static ArrayList<WFSFeature> dynamicFeatures;
 	
 	private static Logger logger = Logger.getLogger("WFS-Factory");
@@ -134,9 +137,9 @@ public class FactoryWFSJena {
 
 		String resultCapabilities = new String();
 
-		ArrayList<WFSFeature> layers = new ArrayList<WFSFeature>(); 
-		layers = this.listWFSFeatures();
-		this.generateLayersPrefixes(layers);
+		ArrayList<WFSFeature> features = new ArrayList<WFSFeature>(); 
+		features = this.listWFSFeatures();
+		this.generateLayersPrefixes(features);
 		try {
 
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -153,7 +156,7 @@ public class FactoryWFSJena {
 				
 				Element requestElement = document.getDocumentElement(); 
 								
-				for (Map.Entry<String, String> entry : modelLayers.getNsPrefixMap().entrySet())
+				for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
 				{
 					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 				}
@@ -163,18 +166,18 @@ public class FactoryWFSJena {
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
 
-				for (int i = 0; i < layers.size(); i++) {
+				for (int i = 0; i < features.size(); i++) {
 								
 					Element name = document.createElement("Name");
-					name.appendChild(document.createTextNode(modelLayers.shortForm(layers.get(i).getName())));
+					name.appendChild(document.createTextNode(modelFeatures.shortForm(features.get(i).getName())));
 					Element title = document.createElement("Title");
-					title.appendChild(document.createTextNode(layers.get(i).getTitle()));
+					title.appendChild(document.createTextNode(features.get(i).getTitle()));
 					Element featureAbstract = document.createElement("Abstract");
-					featureAbstract.appendChild(document.createTextNode(layers.get(i).getFeatureAbstract()));
+					featureAbstract.appendChild(document.createTextNode(features.get(i).getFeatureAbstract()));
 					Element keywords = document.createElement("Keywords");
-					keywords.appendChild(document.createTextNode(layers.get(i).getKeywords()));
+					keywords.appendChild(document.createTextNode(features.get(i).getKeywords()));
 					Element SRS = document.createElement("SRS");
-					SRS.appendChild(document.createTextNode(layers.get(i).getCRS()));
+					SRS.appendChild(document.createTextNode(features.get(i).getCRS()));
 					
 					Element BBOX = document.createElement("LatLongBoundingBox");
 					BBOX.setAttribute("maxy", "83.6274");
@@ -239,7 +242,7 @@ public class FactoryWFSJena {
 		 */
 		for (int i = 0; i < dynamicFeatures.size(); i++) {
 			
-			if(dynamicFeatures.get(i).getName().equals(modelLayers.expandPrefix(layer.getName()))){
+			if(dynamicFeatures.get(i).getName().equals(modelFeatures.expandPrefix(layer.getName()))){
 				result = true; 
 				layer.setQuery(dynamicFeatures.get(i).getQuery());
 				layer.setGeometryVariable(dynamicFeatures.get(i).getGeometryVariable());
@@ -283,13 +286,13 @@ public class FactoryWFSJena {
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
 
-			String layerPrefix = modelLayers.shortForm(layer.getName());
+			String layerPrefix = modelFeatures.shortForm(layer.getName());
 			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":")+1);			
 						
 			Element requestElement = document.getDocumentElement(); 						
-			requestElement.setAttribute("targetNamespace", modelLayers.expandPrefix(layerPrefix));
+			requestElement.setAttribute("targetNamespace", modelFeatures.expandPrefix(layerPrefix));
 			
-			for (Map.Entry<String, String> entry : modelLayers.getNsPrefixMap().entrySet())
+			for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
 			{
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 				
@@ -370,21 +373,23 @@ public class FactoryWFSJena {
 	}
 
 	/**
-	 * @param layer geographic feature 
+	 * @param feature geographic feature 
 	 * @return Lists all predicates (properties) related to a given feature.  
 	 */
 	
-	private ArrayList<Triple> getPredicatesDynamicFeatures(WFSFeature layer){
+	private ArrayList<Triple> getPredicatesDynamicFeatures(WFSFeature feature){
 		
-		logger.info("Listing available predicates for the dynamic feature " + layer.getName() + " ...");
+		logger.info("Listing available predicates for the dynamic feature " + feature.getName() + " ...");
 		
 		ArrayList<Triple> result = new ArrayList<Triple>();
 		
-		for (int i = 0; i < layer.getQuery().getResultVars().size(); i++) {
-			
+		Query query = QueryFactory.create(feature.getQuery());
+		
+		//for (int i = 0; i < feature.getQuery().getResultVars().size(); i++) {
+		for (int i = 0; i < query.getResultVars().size(); i++) {	
 			Triple triple = new Triple();
 			triple.setObjectDataType(GlobalSettings.defaultLiteralType);
-			triple.setPredicate(layer.getQuery().getResultVars().get(i).toString());
+			triple.setPredicate(query.getResultVars().get(i).toString());
 			result.add(triple);
 		
 		}
@@ -397,7 +402,7 @@ public class FactoryWFSJena {
 
 		logger.info("Listing available predicates for " + layer.getName() + " ...");
 	
-		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())), GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelFeatures.expandPrefix(layer.getName())), GlobalSettings.default_SPARQLEndpoint);
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
 				
@@ -436,7 +441,7 @@ public class FactoryWFSJena {
 		logger.info("Getting geometry type for " + layer.getName() + " ...");
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
-		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())),GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelFeatures.expandPrefix(layer.getName())),GlobalSettings.default_SPARQLEndpoint);
 		//System.out.println("DELETE ME --> "+SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String geometryCoordinates = new String();
 		
@@ -492,7 +497,7 @@ public class FactoryWFSJena {
 			
 		}
 		
-		layerPrefix = modelLayers.shortForm(layer.getName());
+		layerPrefix = modelFeatures.shortForm(layer.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
 		
@@ -508,7 +513,7 @@ public class FactoryWFSJena {
 			//Build Name Spaces in the XML header.
 			Element requestElement = document.getDocumentElement(); 
 			
-			for (Map.Entry<String, String> entry : modelLayers.getNsPrefixMap().entrySet())
+			for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
 			{
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 			}			
@@ -526,7 +531,7 @@ public class FactoryWFSJena {
 				QuerySolution soln = rs.nextSolution();
 				
 				String currentGeometryName = soln.getResource("?geometry").getLocalName();
-				Element currentGeometryElement = document.createElement(modelLayers.shortForm(layer.getName()));
+				Element currentGeometryElement = document.createElement(modelFeatures.shortForm(layer.getName()));
 				
 				
 				currentGeometryElement.setAttribute("fid", currentGeometryName + "." + countIteration);				
@@ -653,7 +658,7 @@ public class FactoryWFSJena {
 		String SPARQL = new String();
 
 		SPARQL = " SELECT ?geometry \n" + selectClause +
-				" WHERE { GRAPH <"+ modelLayers.expandPrefix(layer.getName()) + "> {" +
+				" WHERE { GRAPH <"+ modelFeatures.expandPrefix(layer.getName()) + "> {" +
 				"?geometry a " + GlobalSettings.getGeometryClass() + " . \n" + whereClause + "}}";
 
 		return SPARQL;
@@ -668,7 +673,7 @@ public class FactoryWFSJena {
 	private void generateLayersPrefixes(ArrayList<WFSFeature> layers){
 		
 		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
-		modelLayers = ModelFactory.createDefaultModel();
+		modelFeatures = ModelFactory.createDefaultModel();
 		
 		for (int i = 0; i < layers.size(); i++) {
 						
@@ -693,16 +698,16 @@ public class FactoryWFSJena {
 				size--;
 			}
 			
-			if (modelLayers.getNsURIPrefix(layers.get(i).getName().substring(0, position+1))==null) {
+			if (modelFeatures.getNsURIPrefix(layers.get(i).getName().substring(0, position+1))==null) {
 				
 				if (layers.get(i).isDynamic()){
 					
 					//modelLayers.setNsPrefix("sparql"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );
-					modelLayers.setNsPrefix("sparql", layers.get(i).getName().substring(0, position+1) );
+					modelFeatures.setNsPrefix("sparql", layers.get(i).getName().substring(0, position+1) );
 					
 				} else {
 					
-					modelLayers.setNsPrefix("gl"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );
+					modelFeatures.setNsPrefix("ts"+ modelFeatures.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );
 			
 				}
 			}

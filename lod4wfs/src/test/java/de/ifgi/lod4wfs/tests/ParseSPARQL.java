@@ -53,17 +53,14 @@ public class ParseSPARQL {
 		
 		//System.out.println(QueryFactory.read(sparql));
 		try {
-			Query query = QueryFactory.create(sparql);
-			
-			System.out.println(query.getQueryType());
-			
+			Query query = QueryFactory.create(sparql);				
 			ArrayList<Triple> result = new ArrayList<Triple>();
 			
 			for (int i = 0; i < query.getResultVars().size(); i++) {
 				
 				Triple triple = new Triple();
 				triple.setObjectDataType(GlobalSettings.defaultLiteralType);
-				triple.setPredicate(query.getResultVars().get(i).toString());
+				triple.setPredicate("?"+query.getResultVars().get(i).toString());
 				result.add(triple);
 				
 				System.out.println(triple.getPredicate());
@@ -73,6 +70,8 @@ public class ParseSPARQL {
 			System.out.println("Problem!!");
 		}
 				
+		
+		
 		
 		
 
