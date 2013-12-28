@@ -87,7 +87,7 @@ public class Start{
 				"Institut für Geoinformatik, Westfälische Wilhelms-Universität Münster\n" +
 				"http://ifgi.uni-muenster.de/\n\n" +
 				
-				"Startup time: " + startTime + "\n" +
+				"Startup time: " + GlobalSettings.startupTime + "\n" +
 				"Port: " + GlobalSettings.defaultPort + "\n");
 		
 		server.join();

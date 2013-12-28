@@ -9,7 +9,7 @@ import java.util.Enumeration;
 public class Test {
     public static void main(String[] args) throws Exception {
         InetAddress localHost = InetAddress.getLocalHost();
-
+        //%><td><input type="submit" value="<%=dynamicFeatures.get(i).getFileName()%>" name="delete"';"/><%
         printInetAddress("localHost", localHost);
         
         String hostName = localHost.getHostName();

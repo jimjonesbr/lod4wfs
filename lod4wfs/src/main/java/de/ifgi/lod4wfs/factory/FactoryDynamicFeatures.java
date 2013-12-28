@@ -179,14 +179,17 @@ public class FactoryDynamicFeatures {
 
 	}
 
-	public void updateFeature(WFSFeature feature){
+	public static void updateFeature(WFSFeature feature){
 
 
 	}
 
-	public void deleteFeature(WFSFeature feature){
+	public static void deleteFeature(WFSFeature feature){
 
-
+		File file = new File(feature.getFileName());
+		
+		file.delete();
+				
 	}
 
 	public static boolean isQueryValid(String query){
@@ -264,6 +267,7 @@ public class FactoryDynamicFeatures {
 
 			//gson.toJson("query:"+feature.getQuery().toString(), writer);
 			//gson.toJson(feature.getQuery(), String.class, writer);
+			
 			System.out.println("\"name\":\"http://sparql.lod4wfs.de/" + feature.getName().toLowerCase() + "\",\n");
 			writer.write("{\n");
 			writer.write("\"name\":\"http://sparql.lod4wfs.de/" + feature.getName() + "\",\n");
@@ -272,7 +276,7 @@ public class FactoryDynamicFeatures {
 			writer.write("\"keywords\":\"" + feature.getKeywords() + "\",\n");
 			writer.write("\"geometryVariable\":\"" + feature.getGeometryVariable() + "\",\n");
 			writer.write("\"endpoint\":\"" + feature.getEndpoint() + "\",\n");
-			writer.write("\"query\":\"" + feature.getQuery() + "\"");
+			writer.write("\"query\":\"" + feature.getQuery().replace("\"", "'") + "\"");
 			writer.write("\n}");
 			writer.close();
 

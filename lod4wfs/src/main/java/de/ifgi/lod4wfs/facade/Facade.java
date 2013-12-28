@@ -82,4 +82,9 @@ public class Facade {
 		
 		return FactoryDynamicFeatures.existsFeature(featureName);
 	}
+	
+	public void deleteFeature(WFSFeature feature){
+		
+		FactoryDynamicFeatures.deleteFeature(feature);
+	}
 }

@@ -24,7 +24,7 @@
             String file = "sparql/cool_countries.sparql";
         %>
 	SPARQL Endpoint: <b><% out.println(GlobalSettings.default_SPARQLEndpoint); %></b><br>
-	Server Started at: <b><% out.println(GlobalSettings.startupTime); %></b>
+	Application Started on: <b><% out.println(GlobalSettings.startupTime); %></b>
 </BODY>
 
 </HTML>

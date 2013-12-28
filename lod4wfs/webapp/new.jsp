@@ -23,19 +23,19 @@
 				</tr>				
 				<tr>
 					<td>Feature Name </td>
-					<td><input style="width: 500px; type="TEXT" value="Name" name=txtName><br></td>
+					<td><input style="width: 500px; type="TEXT" value="FeatrureName" name=txtName><br></td>
 				</tr>
 				<tr>
  					<td>Title </td> 					
- 					<td><input style="width: 500px; type="TEXT" value="Title" name=txtTitle><br></td>
+ 					<td><input style="width: 500px; type="TEXT" value="" name=txtTitle><br></td>
 			 	</tr>
 			 	<tr>
 			 		<td>Abstract </td>
-			 		<td><input style="width: 500px; type="TEXT" value="Abstract" name=txtAbstract><br></td>
+			 		<td><input style="width: 500px; type="TEXT" value="" name=txtAbstract><br></td>
 			 	</tr>
 			 	<tr>
 			 		<td>Key-words </td>
-			 		<td><input style="width: 500px; type="TEXT" value="Key-words" name=txtKeywords><br></td>
+			 		<td><input style="width: 500px; type="TEXT" value="" name=txtKeywords><br></td>
 			 	</tr>
 				<tr>
 					<td>Geometry Variable </td>

@@ -483,11 +483,15 @@ public class FactoryWFSJena {
 		ArrayList<Triple> predicates = new ArrayList<Triple>();					
 		ResultSet rs;
 				
+		
+		
 		if(isDynamic(layer)){
 			
 			logger.info("Performing query at " + layer.getEndpoint()  + " to retrieve all geometries of " + layer.getName() + "  ...");
 			predicates = this.getPredicatesDynamicFeatures(layer);
 			rs = jn.executeQuery(layer.getQuery().toString(),layer.getEndpoint());
+			
+			System.out.println("Endpoint --> "+layer.getEndpoint());
 			
 		} else {
 		
@@ -530,7 +534,8 @@ public class FactoryWFSJena {
 				
 				QuerySolution soln = rs.nextSolution();
 				
-				String currentGeometryName = soln.getResource("?geometry").getLocalName();
+//				String currentGeometryName = soln.getResource("?geometry").getLocalName();
+				String currentGeometryName = "GEO_";
 				Element currentGeometryElement = document.createElement(modelFeatures.shortForm(layer.getName()));
 				
 				
