@@ -23,7 +23,7 @@
             //String file = application.getRealPath("/") + "sparql/cool_countries.sparql";
             String file = "sparql/cool_countries.sparql";
         %>
-	SPARQL Endpoint: <b><% out.println(GlobalSettings.default_SPARQLEndpoint); %></b><br>
+	Default SPARQL Endpoint: <b><% out.println(GlobalSettings.default_SPARQLEndpoint); %></b><br>
 	Application Started on: <b><% out.println(GlobalSettings.startupTime); %></b>
 </BODY>
 

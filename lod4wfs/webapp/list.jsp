@@ -24,7 +24,6 @@
 			<td>Keywords</td>
 			<td>Endpoint</td>
 			<td>Query</td>
-			<td>Delete</td>
 		</tr>
 		<%
 	        
@@ -40,7 +39,8 @@
 				%><td><%out.println(dynamicFeatures.get(i).getKeywords());%></td><%
 				%><td><%out.println(dynamicFeatures.get(i).getEndpoint());%></td><%
 				%><td><%out.println(dynamicFeatures.get(i).getQuery().toString()); %></td><%				
-				%><td><a href="list.jsp?delete=<%=dynamicFeatures.get(i).getFileName()%>"> Delete Query </a></td><%
+				%><td><a href="list.jsp?delete=<%=dynamicFeatures.get(i).getFileName()%>"> Delete</a></td><%
+				%><td>Edit</td><%
 				%></tr><%
 				
 				//out.println(dynamicFeatures.get(i).getQuery().toString());

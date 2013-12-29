@@ -1,0 +1,18 @@
+{
+"name":"http://sparql.lod4wfs.de/dbpedia",
+"title":"no title given",
+"abstract":"no abstract given",
+"keywords":"no keywords given",
+"geometryVariable":"?wkt",
+"endpoint":"http://dbpedia.org/sparql",
+"query":"PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  dbo:  <http://dbpedia.org/ontology/>
+
+SELECT  ?s ?lat ?long (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt)
+WHERE
+  { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> dbo:Place .
+    ?s geo:lat ?lat .
+    ?s geo:long ?long
+  }
+LIMIT   5000"
+}
