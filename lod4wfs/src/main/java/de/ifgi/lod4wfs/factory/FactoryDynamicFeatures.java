@@ -125,7 +125,6 @@ public class FactoryDynamicFeatures {
 		return result;
 	}
 
-
 	public static boolean existsFeature(String featureName){
 
 		File[] files = new File(GlobalSettings.getSparqlDirectory()).listFiles();
@@ -251,7 +250,7 @@ public class FactoryDynamicFeatures {
 	}
 
 	public static boolean isFeatureNameValid(String featureName){
-
+		System.out.println(featureName);
 		return featureName.matches("([A-Za-z0-9-_]+)");
 
 	}
@@ -264,13 +263,12 @@ public class FactoryDynamicFeatures {
 			//String json = gson.toJson(feature); 		
 
 			//writer.write(json);
-
 			//gson.toJson("query:"+feature.getQuery().toString(), writer);
 			//gson.toJson(feature.getQuery(), String.class, writer);
 			
 			System.out.println("\"name\":\"http://sparql.lod4wfs.de/" + feature.getName().toLowerCase() + "\",\n");
 			writer.write("{\n");
-			writer.write("\"name\":\"http://sparql.lod4wfs.de/" + feature.getName() + "\",\n");
+			writer.write("\"name\":\"http://sparql.lod4wfs.de/" + feature.getName().toLowerCase() + "\",\n");
 			writer.write("\"title\":\"" + feature.getTitle() + "\",\n");			
 			writer.write("\"abstract\":\"" + feature.getFeatureAbstract() + "\",\n");
 			writer.write("\"keywords\":\"" + feature.getKeywords() + "\",\n");
