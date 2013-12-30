@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,15 +14,20 @@ import org.apache.log4j.Logger;
 import com.google.gson.stream.JsonReader;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.ResultSet;
+
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
+import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
 public class FactoryDynamicFeatures {
 
 	private static Logger logger = Logger.getLogger("DynamicFeatures-Factory");
-
+	private static JenaConnector jn;
+	
 	public FactoryDynamicFeatures() {
-		super();
+		jn = new JenaConnector();
+		
 	}
 
 
@@ -239,18 +245,28 @@ public class FactoryDynamicFeatures {
 		try {
 
 			URL url = new URL(endpoint);
-
+			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+			
+			int responseCode = huc.getResponseCode();
+			
+			if (responseCode == 404) {
+				System.out.println("URL canno be resolved -> " + endpoint);
+				result = false;
+			}
+			
 		} catch (MalformedURLException e) {
 			result = false;
-			System.out.println("Invalid URL.");
-		}
+			System.out.println("Malformed URL. " + endpoint);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
 
 		return result;
 
 	}
-
+	
 	public static boolean isFeatureNameValid(String featureName){
-		System.out.println(featureName);
+		
 		return featureName.matches("([A-Za-z0-9-_]+)");
 
 	}
@@ -288,4 +304,9 @@ public class FactoryDynamicFeatures {
 
 	}
 
+	public ResultSet executeQuery(String SPARQL, String endpoint){
+		
+		return jn.executeQuery(SPARQL, endpoint);
+		
+	}
 }

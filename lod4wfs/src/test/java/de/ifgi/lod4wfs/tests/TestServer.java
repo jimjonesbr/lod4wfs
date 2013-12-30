@@ -1,7 +1,12 @@
 package de.ifgi.lod4wfs.tests;
 
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,41 +26,30 @@ public class TestServer {
 		  }
 		}
 	
-	public static void main(String[] args) throws Exception
+	public static void main(String[] args) 
 	{
 
 		
-        Writer writer = new FileWriter("/home/jones/Desktop/Output.json");
-//
-//        Gson gson = new GsonBuilder().create();
-//        
-//        gson.toJson("Hello", writer);
-//        gson.toJson(123, writer);
-//        gson.toJson(1, writer);
-//        
-//        		writer.close();
-
-      
-					WFSFeature feature = new WFSFeature();
-					
-					feature.setName("name_sipuada");
-
-        			
-        			Gson gson = new Gson();
-        			String json = gson.toJson(feature); 
-        				
-        			//gson.toJson(json,writer);
-        			writer.write(json);
-        			writer.close();
-        			
-        			System.out.println(Facade.getInstance().isFeatureNameValid("name"));
-        			
+	
 		
-        			System.out.println(Facade.getInstance().existsFeature("cool_countries"));
+		try {	
+			URL url = new URL("http://www.dbpedia.org/sparql");
+			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+			
+			int responseCode = huc.getResponseCode();
+			
+			if (responseCode != 404) {
+				System.out.println("GOOD");
+			} else {
+				System.out.println("BAD");
+			}
+		} catch (IOException e) {
+		
+			e.printStackTrace();
+		}
+
 	
+
+		
 	}
-
-
-	
-
 }

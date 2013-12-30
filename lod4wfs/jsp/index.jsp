@@ -17,7 +17,7 @@
 	<a href="paper/index_jones.html">Making the Web of Data Available via Web Feature Services</a><br />
 	<a href="list.jsp">List Queries</a><br>
 	<a href="new.jsp">Create New Query</a>
-	<a href="preview.jsp">Preview Test</a>
+	
 
 	<h3>Server Information</h3>
 	<%

@@ -59,11 +59,13 @@ public class Start{
 		
         WebAppContext webAppContext = new WebAppContext();
         //webContext.setDefaultsDescriptor("webapp/WEB-INF/webdefault.xml");
-        webAppContext.setDescriptor("webapp/WEB-INF/web.xml");
-        webAppContext.setResourceBase("webapp/");
+//        webAppContext.setDescriptor("webapp/WEB-INF/web.xml");
+//        webAppContext.setResourceBase("webapp/");
+//        webAppContext.setContextPath("/");
+		
+        webAppContext.setDescriptor("jsp/xml/web.xml");
+        webAppContext.setResourceBase("jsp/");
         webAppContext.setContextPath("/");
-		
-		
 		
 //***************
 	    

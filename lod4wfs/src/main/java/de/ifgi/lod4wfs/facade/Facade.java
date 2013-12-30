@@ -2,6 +2,8 @@ package de.ifgi.lod4wfs.facade;
 
 import java.util.ArrayList;
 
+import com.hp.hpl.jena.query.ResultSet;
+
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.factory.FactoryDynamicFeatures;
@@ -15,10 +17,12 @@ import de.ifgi.lod4wfs.factory.FactoryWFSJena;
 public class Facade {
 
 	private static Facade instance;
-	private FactoryWFSJena factory;
+	private FactoryWFSJena factoryWFS;
+	private FactoryDynamicFeatures factorySPARQL;
 
 	public Facade(){
-		factory = new FactoryWFSJena();
+		factoryWFS = new FactoryWFSJena();
+		factorySPARQL = new FactoryDynamicFeatures();
 	}
 
 	public static Facade getInstance() {
@@ -30,17 +34,17 @@ public class Facade {
 
 	public String getFeature(WFSFeature layer){
 
-		return factory.getFeature(layer);
+		return factoryWFS.getFeature(layer);
 	}
 
 	public String describeFeatureType(WFSFeature geographicLayer){
 
-		return factory.describeFeatureType(geographicLayer);
+		return factoryWFS.describeFeatureType(geographicLayer);
 	}
 
 	public String getCapabilities(String version){
 
-		return factory.getCapabilities(version);
+		return factoryWFS.getCapabilities(version);
 	}
 
 	public ArrayList<WFSFeature> listDynamicFeatures(){
@@ -86,5 +90,11 @@ public class Facade {
 	public void deleteFeature(WFSFeature feature){
 		
 		FactoryDynamicFeatures.deleteFeature(feature);
+	}
+	
+	public ResultSet executeQuery(String SPARQL, String endpoint){
+		
+		return factorySPARQL.executeQuery(SPARQL, endpoint);
+		
 	}
 }
