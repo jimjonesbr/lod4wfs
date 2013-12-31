@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.text.CharacterIterator;
+import java.text.StringCharacterIterator;
 import java.util.Enumeration;
 
 import org.ini4j.InvalidFileFormatException;
@@ -35,52 +37,52 @@ public class GlobalSettings {
 
 	
 	
-	 	private static String abstractPredicate ="";
-	    private static String titlePredicate ="";
-	    private static String keywordsPredicate ="";
-	    private static String geometryPredicate ="";
-	    private static String geometryClass ="";
-	    private static String geometryVariable ="";
-	    private static String sparqlDirectory ="";
-	    private static String dynamicFeaturesNameSpace = "";
-	    
-	    public static String getDynamicFeaturesNameSpace(){
-	    	return dynamicFeaturesNameSpace;
-	    }
-	    
-	    public static String getSparqlDirectory(){
-	        return sparqlDirectory;
-	    }
-	    
-	    public static String getAbstractPredicate(){
-	        return abstractPredicate;
-	    }
-	   
-	    public static String getTitlePredicate(){
-	        return titlePredicate;
-	    }
+ 	private static String abstractPredicate ="";
+    private static String titlePredicate ="";
+    private static String keywordsPredicate ="";
+    private static String geometryPredicate ="";
+    private static String geometryClass ="";
+    private static String geometryVariable ="";
+    private static String sparqlDirectory ="";
+    private static String dynamicFeaturesNameSpace = "";
+    
+    public static String getDynamicFeaturesNameSpace(){
+    	return dynamicFeaturesNameSpace;
+    }
+    
+    public static String getSparqlDirectory(){
+        return sparqlDirectory;
+    }
+    
+    public static String getAbstractPredicate(){
+        return abstractPredicate;
+    }
+   
+    public static String getTitlePredicate(){
+        return titlePredicate;
+    }
 
-	    public static String getKeywordsPredicate(){
-	        return keywordsPredicate;
-	    }
-	   
-	    public static String getGeometryPredicate(){
-	        return geometryPredicate;
-	    }
-	   
-	    public static String getGeometryClass(){
-	        return geometryClass;
-	    }
+    public static String getKeywordsPredicate(){
+        return keywordsPredicate;
+    }
+   
+    public static String getGeometryPredicate(){
+        return geometryPredicate;
+    }
+   
+    public static String getGeometryClass(){
+        return geometryClass;
+    }
 
-	    public static String getXsdNameSpace(){
-	        return xsdNameSpace;
-	    }
-	    
-	    public static String getGeometryVariable(){
-	        return geometryVariable;
-	    }
-	    
-	    public static void loadVariables(){
+    public static String getXsdNameSpace(){
+        return xsdNameSpace;
+    }
+    
+    public static String getGeometryVariable(){
+        return geometryVariable;
+    }
+    
+    public static void loadVariables(){
 	       
 	        Wini ini;
 	        try {
@@ -108,7 +110,6 @@ public class GlobalSettings {
 	       
 	       
 	    }	
-	
 	
 
 	public static String getCanonicalHostName(){
@@ -145,4 +146,6 @@ public class GlobalSettings {
 
 		return result;
 	}
+
+	
 }

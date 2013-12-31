@@ -1,0 +1,12 @@
+{
+"name":"http://sparql.lod4wfs.de/feature_name",
+"title":"a modified title 2",
+"abstract":"a modified abstract 2",
+"keywords":"some, keywords also modified 2",
+"geometryVariable":"?wkt",
+"endpoint":"http://recife:8080/openrdf-sesame/repositories/lod4wfs",
+"query":"SELECT  ?wkt
+WHERE
+  { ?wkt ?p ?o }
+"
+}

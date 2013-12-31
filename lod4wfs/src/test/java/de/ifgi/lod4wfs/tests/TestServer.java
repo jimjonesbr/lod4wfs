@@ -11,8 +11,10 @@ import java.net.URL;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.facade.Facade;
+import de.ifgi.lod4wfs.factory.FactorySPARQLFeatures;
 
 
 public class TestServer {
@@ -30,23 +32,7 @@ public class TestServer {
 	{
 
 		
-	
-		
-		try {	
-			URL url = new URL("http://www.dbpedia.org/sparql");
-			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-			
-			int responseCode = huc.getResponseCode();
-			
-			if (responseCode != 404) {
-				System.out.println("GOOD");
-			} else {
-				System.out.println("BAD");
-			}
-		} catch (IOException e) {
-		
-			e.printStackTrace();
-		}
+		System.out.println(FactorySPARQLFeatures.isFeatureNameValid("heiß"));
 
 	
 

@@ -20,20 +20,28 @@
 		boolean isValidEntry = true;
 		
 		if(Facade.getInstance().isFeatureNameValid(request.getParameter("feature"))){
-			
-			if(Facade.getInstance().existsFeature(request.getParameter("feature"))){
+							
+			if(Facade.getInstance().existsFeature(request.getParameter("feature")) && 
+					request.getParameter("store")==null &&
+					request.getParameter("operation")==null){
+					
 				isValidEntry = false;
-				out.println("Invalid Feature Name. The feature '" + request.getParameter("feature") + "' already exists. <br>" );
+				out.println("Invalid Feature Name. The feature '" + request.getParameter("feature") + "' already exists. <br>" );						
 				
-			} else {
-				feature.setName(request.getParameter("feature"));				
+			}  else {
+								
+				feature.setName(request.getParameter("feature").toLowerCase());
+									
 			}
-			
+		
+		
+	
 		} else {
-			isValidEntry = false;
-			out.println("Invalid Feature Name. It must contain either alphanumeric characters or '_'. <br>");
-			
+		
+			isValidEntry = false;			
+			out.println("Invalid Feature Name. It must contain either alphanumeric characters or '_'. <br>");			
 		}
+		
 		
 		if(Facade.getInstance().isEndpointValid(request.getParameter("endpoint"))){
 			feature.setEndpoint(request.getParameter("endpoint"));	
@@ -79,7 +87,7 @@
 	
 		if(isValidEntry){
 			
-				%>
+		%>
 			<a href="index.jsp">Home</a>
 			<h1>Feature Preview</h1>
 			
@@ -92,7 +100,7 @@
 					</tr>				
 					<tr>
 						<td>Feature Name </td>
-						<td><INPUT style="width: 800px; TYPE="text" NAME="feature" value="<%=feature.getName()%>" readonly/></td>
+						<td><INPUT style="width: 800px; TYPE="text" NAME="feature" value="<%=feature.getName().toLowerCase()%>" readonly/></td>
 					</tr>
 					<tr>
 	 					<td>Title </td> 					
@@ -118,7 +126,7 @@
 				</table>
 
 		
-			<input type="submit" id="btnCreate" name="store" value="Store" />
+			<input type="submit" id="btnCreate" name="store" value="Save" />
 			
 			</FORM>
 				
@@ -137,48 +145,44 @@
 		 	                     
 		 	        if(!query.hasLimit()){
 		 	        	query.setLimit(10);
-		 	        	out.println("* Constraint to the first 10 records.");
+		 	        			 	        	
+		 	        } else if (query.getLimit()>10){
+		 	        	query.setLimit(10);
 		 	        }
 		 	        
-		 	        
-		 	        //QueryExecution qexec = QueryExecutionFactory.sparqlService(request.getParameter("endpoint"), query);
-		 	        //ResultSet results = qexec.execSelect();
+		 	       out.println("* Limited to the first 10 records.");
+
 	 	        	 	       
-		 	        ResultSet results = Facade.getInstance().executeQuery(request.getParameter("query"), request.getParameter("endpoint"));
+		 	        ResultSet results = Facade.getInstance().executeQuery(query.toString(), request.getParameter("endpoint"));
 	 				        
-		 			%> 
-		 			<table border="1">
-		 				<tr>
-		 			<% 
+		 			
+		 			out.println("<table border=\"1\">");
+		 			out.println("<tr>");
 		 			
 		 			for (int i = 0; i < query.getResultVars().size(); i++) {	
 	
 		 				out.println("<td><b>"+query.getResultVars().get(i).toString()+"</b></td>");
 			 			
 		 			}
-		 			%> 
-			 			</tr>
-			 		<%
-		 	        while (results.hasNext()) {
+		 			
+		 			out.println("</tr>");
+		 			
+		 			while (results.hasNext()) {
 		 	            
 		 	        	QuerySolution soln = results.nextSolution();
 		 	        	
-		 	 			%> 
-		 	 			<tr>
-		 	 			<% 
-		 	    		for (int i = 0; i < query.getResultVars().size(); i++) {	
+		 	 			
+		 	 			out.println("<tr>");
+
+		 	 			for (int i = 0; i < query.getResultVars().size(); i++) {	
 	
 		 	    			out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>"); 	    			
 		 	    		}
-		 	 			%> 
-		 	 			</tr>
-		 	 			<%  	           
+		 	 			out.println("</tr>");
+    
 		 	        }
-		 			%> 
-		 			</table>
-		 			<%
+		 			out.println("</table>");
 		 				 	         	        
-		 	        //qexec.close();
 	
 		 		}
 	

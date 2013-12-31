@@ -53,12 +53,12 @@ public class FactoryWFSJena {
 	private static JenaConnector jn;
 	private static Model modelFeatures;	
 	private static ArrayList<WFSFeature> dynamicFeatures;
-	
+	private static FactorySPARQLFeatures factorySPARQL;
 	private static Logger logger = Logger.getLogger("WFS-Factory");
 	
 	public FactoryWFSJena(){
 		jn = new JenaConnector();
-		
+		factorySPARQL = new FactorySPARQLFeatures();
 		//Load variables defined at the settings file.
 		GlobalSettings.loadVariables();
 	}
@@ -115,7 +115,7 @@ public class FactoryWFSJena {
 		 * Adding dynamic layers based on SPARQL Queries saved in the sparql directory.
 		 */
 		
-		dynamicFeatures = FactoryDynamicFeatures.listDynamicFeatures(GlobalSettings.getSparqlDirectory());
+		dynamicFeatures = factorySPARQL.listSPARQLFeatures(GlobalSettings.getSparqlDirectory());
 		
 		for (int i = 0; i < dynamicFeatures.size(); i++) {
 			

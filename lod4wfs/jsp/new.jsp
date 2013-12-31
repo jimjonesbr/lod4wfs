@@ -24,7 +24,7 @@
 				</tr>				
 				<tr>
 					<td>Feature Name </td>
-					<td><input style="width: 500px; type="TEXT" value="FeatrureName" name="feature"><br></td>
+					<td><input style="width: 500px; type="TEXT" value="feature_name" name="feature"><br></td>
 				</tr>
 				<tr>
  					<td>Title </td> 					

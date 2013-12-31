@@ -12,8 +12,13 @@
 <BODY>
 	<a href="index.jsp">Home</a>
 	<a href="new.jsp">Create New Query</a>
-<h1>SPARQL Queries available</h1>
-
+	
+	<%
+    ArrayList<WFSFeature> dynamicFeatures = new ArrayList<WFSFeature>();
+	
+	dynamicFeatures = Facade.getInstance().listDynamicFeatures();
+	out.println("<h1>SPARQL Queries available (" + dynamicFeatures.size() +  ")</h1>");
+	%>
 
 <FORM NAME="form1" >
 	<table border="1">
@@ -26,29 +31,25 @@
 			<td>Query</td>
 		</tr>
 		<%
-	        
-	        ArrayList<WFSFeature> dynamicFeatures = new ArrayList<WFSFeature>();
-			
-			dynamicFeatures = Facade.getInstance().listDynamicFeatures();
 			
 			for (int i = 0; i < dynamicFeatures.size(); i++) {
-				%><tr><%
-				%><td><%out.println(dynamicFeatures.get(i).getName());%></td><%
-				%><td><%out.println(dynamicFeatures.get(i).getTitle());%></td><%
-				%><td><%out.println(dynamicFeatures.get(i).getFeatureAbstract());%></td><%
-				%><td><%out.println(dynamicFeatures.get(i).getKeywords());%></td><%
-				%><td><%out.println(dynamicFeatures.get(i).getEndpoint());%></td><%
-				%><td><%out.println(dynamicFeatures.get(i).getQuery().toString()); %></td><%				
-				%><td><a href="list.jsp?delete=<%=dynamicFeatures.get(i).getFileName()%>"> Delete</a></td><%
-				%><td>Edit</td><%
-				%></tr><%
+				out.println("<tr>");
+				out.println("<td>"+dynamicFeatures.get(i).getName()+"</td>");
+				out.println("<td>"+dynamicFeatures.get(i).getTitle()+"</td>");
+				out.println("<td>"+dynamicFeatures.get(i).getFeatureAbstract()+"</td>");
+				out.println("<td>"+dynamicFeatures.get(i).getKeywords()+"</td>");
+				out.println("<td>"+dynamicFeatures.get(i).getEndpoint()+"</td>");
+				out.println("<td>"+ Facade.getInstance().forHTML(dynamicFeatures.get(i).getQuery().toString())+"</td>"); 								
+				out.println("<td><a href=\"list.jsp?delete="+ dynamicFeatures.get(i).getFileName()+ "\"> Delete</a></td>");
+				out.println("<td><a href=\"edit.jsp?edit="+ dynamicFeatures.get(i).getFileName()+ "\"> Edit</a></td>");
+				out.println("</tr>");
 				
-				//out.println(dynamicFeatures.get(i).getQuery().toString());
-				 
 			}
+
 		%>
 	
 	</table>
+		
 </FORM>
 
 		<script type="text/javascript">
@@ -66,8 +67,6 @@
 		}
 		
 		</script>
-
-	
 		
  		<%
 		

@@ -10,7 +10,6 @@ import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.webapp.WebAppContext;
-
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.facade.Facade;
 

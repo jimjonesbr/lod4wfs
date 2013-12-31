@@ -4,9 +4,10 @@ import java.util.ArrayList;
 
 import com.hp.hpl.jena.query.ResultSet;
 
+import de.ifgi.lod4wfs.core.EscapeChars;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
-import de.ifgi.lod4wfs.factory.FactoryDynamicFeatures;
+import de.ifgi.lod4wfs.factory.FactorySPARQLFeatures;
 import de.ifgi.lod4wfs.factory.FactoryWFSJena;
 
 /**
@@ -18,11 +19,11 @@ public class Facade {
 
 	private static Facade instance;
 	private FactoryWFSJena factoryWFS;
-	private FactoryDynamicFeatures factorySPARQL;
+	private FactorySPARQLFeatures factorySPARQL;
 
 	public Facade(){
 		factoryWFS = new FactoryWFSJena();
-		factorySPARQL = new FactoryDynamicFeatures();
+		factorySPARQL = new FactorySPARQLFeatures();
 	}
 
 	public static Facade getInstance() {
@@ -49,52 +50,64 @@ public class Facade {
 
 	public ArrayList<WFSFeature> listDynamicFeatures(){
 		
-		return FactoryDynamicFeatures.listDynamicFeatures(GlobalSettings.getSparqlDirectory());
+		return factorySPARQL.listSPARQLFeatures(GlobalSettings.getSparqlDirectory());
 	}
 	
 	public void addFeature(WFSFeature feature){		
 		
-		FactoryDynamicFeatures.addFeature(feature);	
+		FactorySPARQLFeatures.addFeature(feature);	
 		
 	}
 	
 	public boolean isQueryValid(String query){
 		
-		return FactoryDynamicFeatures.isQueryValid(query);
+		return FactorySPARQLFeatures.isQueryValid(query);
 		
 	}
 	
 	public boolean isVariableValid(WFSFeature feature){
 		
-		return FactoryDynamicFeatures.isVariableValid(feature);
+		return FactorySPARQLFeatures.isVariableValid(feature);
 		
 	}
 	
 	public boolean isEndpointValid(String endpoint){
 		
-		return FactoryDynamicFeatures.isEndpointValid(endpoint);
+		return FactorySPARQLFeatures.isEndpointValid(endpoint);
 		
 	}
 	
 	public boolean isFeatureNameValid(String featureName){
 		
-		return FactoryDynamicFeatures.isFeatureNameValid(featureName);
+		return FactorySPARQLFeatures.isFeatureNameValid(featureName);
 		
 	}
 	
 	public boolean existsFeature(String featureName){
 		
-		return FactoryDynamicFeatures.existsFeature(featureName);
+		return FactorySPARQLFeatures.existsFeature(featureName);
 	}
 	
 	public void deleteFeature(WFSFeature feature){
 		
-		FactoryDynamicFeatures.deleteFeature(feature);
+		FactorySPARQLFeatures.deleteFeature(feature);
 	}
 	
 	public ResultSet executeQuery(String SPARQL, String endpoint){
 		
 		return factorySPARQL.executeQuery(SPARQL, endpoint);
+		
+	}
+	
+	public WFSFeature getSPARQLFeature(String fileName){
+		
+		return factorySPARQL.getSPARQLFeature(fileName);
+		
+	}
+	
+	public String forHTML(String string){
+		
+		return EscapeChars.forHTML(string);
 		
 	}
 }
