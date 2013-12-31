@@ -346,7 +346,8 @@ public class FactorySPARQLFeatures {
 
 								} else if (name.equals("name")) {
 
-									feature.setName(jsonReader.nextString().replace(GlobalSettings.getDynamicFeaturesNameSpace(), ""));
+									//feature.setName(jsonReader.nextString().replace(GlobalSettings.getDynamicFeaturesNameSpace(), ""));
+									feature.setName(jsonReader.nextString());
 
 								} else if (name.equals("query")) {
 

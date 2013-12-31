@@ -39,7 +39,7 @@
 					</tr>				
 					<tr>
 						<td>Feature Name </td>
-						<td><INPUT style="width: 800px; TYPE="text" NAME="feature" value="<%=feature.getName()%>" readonly/></td>
+						<td><INPUT style="width: 800px; TYPE="text" NAME="feature" value="<%=feature.getName().replace(GlobalSettings.getDynamicFeaturesNameSpace(), "")%>" readonly/></td>
 					</tr>
 					<tr>
 	 					<td>Title </td> 					
@@ -66,6 +66,7 @@
 				
 				* Feature name cannot be modified.<br/>
 		<input type="hidden" id="hiddenId" name="operation" value ="edit" >
+		
 		<input type="submit" id="btnSave" name="update" value="Preview" />
 		
 		</FORM>

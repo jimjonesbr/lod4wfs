@@ -502,6 +502,7 @@ public class FactoryWFSJena {
 		}
 		
 		layerPrefix = modelFeatures.shortForm(layer.getName());
+		System.out.println(layerPrefix);
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
 		

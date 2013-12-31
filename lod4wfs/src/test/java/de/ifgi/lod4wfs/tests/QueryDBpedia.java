@@ -35,25 +35,17 @@ public class QueryDBpedia {
 									" ?s geo:lat ?lat ." +
 									"  ?s geo:long ?long . " +
 									//"BIND (CONCAT('POINT(',?long, ' ', ?lat, ')') as ?wkt)" +
-									"} ";
+									"} limit 10";
 
         Query query = QueryFactory.create(sparqlQueryString2);
         ARQ.getContext().setTrue(ARQ.useSAX);
        
-        byte ptext[] = sparqlQueryString2.getBytes("ISO-8859-1"); 
-        String value = new String(ptext, "UTF-8"); 
-        
-        System.out.println(value);
-                     
-        if(!query.hasLimit()){
-        	query.setLimit(2);
-        }
-        
-        QueryExecution qexec = QueryExecutionFactory.sparqlService("http://DBpedia.org/sparql", query);
+       
+        QueryExecution qexec = QueryExecutionFactory.sparqlService("http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sparql", query);
         ResultSet results = qexec.execSelect();
 
 		
-		System.out.println(query.hasLimit());
+	
         
         while (results.hasNext()) {
             

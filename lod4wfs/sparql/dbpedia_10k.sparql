@@ -5,21 +5,22 @@
 "keywords":"dbpedia, places",
 "geometryVariable":"?wkt",
 "endpoint":"http://dbpedia.org/sparql",
-"query":"PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+"query":"PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX  dbo:  <http://dbpedia.org/ontology/>
-PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX  dbpedia-owl:  <http://dbpedia.org/ontology/>
 
-SELECT DISTINCT ?label ?population ?abstract ?lat ?long (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt)
+SELECT DISTINCT  ?label ?population ?abstract ?lat ?long (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt)
 WHERE
-  { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> dbo:Place .
+  { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> dbpedia-owl:Place .
     ?s geo:lat ?lat .
     ?s geo:long ?long .
     ?s rdfs:label ?label .
-    ?s dbpedia-owl:abstract ?abstract .
-    FILTER(LANGMATCHES(LANG(?abstract), 'EN'))
-    ?s dbpedia-owl:populationTotal ?population .
-    FILTER(LANGMATCHES(LANG(?label), 'EN'))
+    ?s dbpedia-owl:abstract ?abstract
+    FILTER langMatches(lang(?abstract), 'EN')
+    ?s dbpedia-owl:populationTotal ?population
+    FILTER langMatches(lang(?label), 'EN')
   }
-LIMIT   10000"
+LIMIT   10000
+"
 }

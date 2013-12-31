@@ -120,7 +120,7 @@
 					</tr>
 					<tr>
 						<td>SPARQL Query </td>
-						<td><textarea style="width: 800px; height: 400px; TYPE="text" NAME="query" value="<%=feature.getQuery()%>" readonly><%=feature.getQuery()%></textarea></td>
+						<td><textarea style="width: 800px; height: 400px; TYPE="text" NAME="query" value="<%=Facade.getInstance().forHTML(feature.getQuery())%>" readonly><%=feature.getQuery()%></textarea></td>
 					</tr>  
 								
 				</table>

@@ -1,0 +1,20 @@
+{
+"name":"http://sparql.lod4wfs.de/gb_codes",
+"title":"GSS Codes and Unit ID of GB",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sparql",
+"query":"PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
+
+SELECT  ?name (concat('POINT(', xsd:string(?long), ' ', xsd:string(?lat), ')') AS ?wkt) ?gss ?unitid
+WHERE
+  { ?x <http://www.w3.org/2000/01/rdf-schema#label> ?name .
+    ?x <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .
+    ?x <http://www.w3.org/2003/01/geo/wgs84_pos#long> ?long .
+    ?x <http://data.ordnancesurvey.co.uk/ontology/admingeo/gssCode> ?gss .
+    ?x <http://data.ordnancesurvey.co.uk/ontology/admingeo/hasUnitID> ?unitid .
+    ?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://data.ordnancesurvey.co.uk/ontology/admingeo/District>
+  }
+"
+}
