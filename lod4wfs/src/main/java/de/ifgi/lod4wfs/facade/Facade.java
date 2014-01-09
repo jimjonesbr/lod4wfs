@@ -110,4 +110,15 @@ public class Facade {
 		return EscapeChars.forHTML(string);
 		
 	}
+	
+	public String getGeomeryType(String wkt){
+		
+		return FactorySPARQLFeatures.getGeometryType(wkt);
+		
+	}
+	
+	public int getPreviewLimit(){
+		
+		return GlobalSettings.getPreviewLimit();
+	}
 }

@@ -34,8 +34,7 @@
 									
 			}
 		
-		
-	
+			
 		} else {
 		
 			isValidEntry = false;			
@@ -143,14 +142,16 @@
 		 	        Query query = QueryFactory.create(request.getParameter("query"));
 		 	        ARQ.getContext().setTrue(ARQ.useSAX); 	       	        
 		 	                     
+		 	        int previewLimit = GlobalSettings.getPreviewLimit();
+		 	        
 		 	        if(!query.hasLimit()){
-		 	        	query.setLimit(10);
+		 	        	query.setLimit(previewLimit);
 		 	        			 	        	
-		 	        } else if (query.getLimit()>10){
-		 	        	query.setLimit(10);
+		 	        } else if (query.getLimit()>previewLimit){
+		 	        	query.setLimit(previewLimit);
 		 	        }
 		 	        
-		 	       out.println("* Limited to the first 10 records.");
+		 	       out.println("* Limited to the first " + previewLimit + " records.");
 
 	 	        	 	       
 		 	        ResultSet results = Facade.getInstance().executeQuery(query.toString(), request.getParameter("endpoint"));
@@ -161,7 +162,7 @@
 		 			
 		 			for (int i = 0; i < query.getResultVars().size(); i++) {	
 	
-		 				out.println("<td><b>"+query.getResultVars().get(i).toString()+"</b></td>");
+		 				out.println("<th>"+query.getResultVars().get(i).toString()+"</th>");
 			 			
 		 			}
 		 			
@@ -175,23 +176,31 @@
 		 	 			out.println("<tr>");
 
 		 	 			for (int i = 0; i < query.getResultVars().size(); i++) {	
-	
-		 	    			out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>"); 	    			
+								
+		 	    			
+		 	    			if(("?"+query.getResultVars().get(i).toString()).equals(feature.getGeometryVariable())){
+		 	    				
+		 	    				String geometryType = Facade.getInstance().getGeomeryType(soln.get("?" + query.getResultVars().get(i)).toString());
+
+		 	    				out.println("<td><img src = \"img/" + geometryType.toLowerCase() + 
+		 	    						      ".png\" alt = \"" + geometryType + 
+		 	    						        "\" title = \"" + geometryType + "\"" +
+		 	    						        "  height = 51 width = 51> </td>");	
+		 	    				
+		 	    			} else {
+		 	    				out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>");			 	    				
+		 	    			}
+		 	    			
 		 	    		}
 		 	 			out.println("</tr>");
     
 		 	        }
 		 			out.println("</table>");
-		 				 	         	        
-	
+
 		 		}
 	
 			}	
  		%>
- 		
- 		
- 
-		
 		
 </BODY>
 

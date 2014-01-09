@@ -23,12 +23,12 @@
 <FORM NAME="form1" >
 	<table border="1">
 		<tr>
-			<td>Name</td>
-			<td>Title</td>
-			<td>Abstract</td>
-			<td>Keywords</td>
-			<td>Endpoint</td>
-			<td>Query</td>
+			<th>Name</th>
+			<th>Title</th>
+			<th>Abstract</th>
+			<th>Keywords</th>
+			<th>Endpoint</th>
+			<th>Query</th>
 		</tr>
 		<%
 			

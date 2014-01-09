@@ -45,6 +45,7 @@ public class GlobalSettings {
     private static String geometryVariable ="";
     private static String sparqlDirectory ="";
     private static String dynamicFeaturesNameSpace = "";
+    private static int previewLimit = 5;
     
     public static String getDynamicFeaturesNameSpace(){
     	return dynamicFeaturesNameSpace;
@@ -81,6 +82,10 @@ public class GlobalSettings {
     public static String getGeometryVariable(){
         return geometryVariable;
     }
+
+    public static int getPreviewLimit(){
+        return previewLimit;
+    }
     
     public static void loadVariables(){
 	       
@@ -101,7 +106,9 @@ public class GlobalSettings {
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            sparqlDirectory = ini.get("Server", "SPARQLDirectory");
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
-	           	            
+	           	
+	            previewLimit = Integer.valueOf(ini.get("WebInterface", "PreviewLimit"));
+	            
 	        } catch (InvalidFileFormatException e) {
 	            e.printStackTrace();
 	        } catch (IOException e) {

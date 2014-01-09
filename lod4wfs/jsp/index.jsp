@@ -13,7 +13,7 @@
 	<h1 style="text-align: center;">LOD4WFS Administration Interface</h1>
 	<h2 style="text-align: center;">(Under Construction)</h2>
 	
-	<a href="list.jsp">List Queries</a><br>
+	<a href="list.jsp">Manage Queries</a><br>
 	<a href="new.jsp">Create New Query</a>
 
 	<h3>Server Information</h3>
