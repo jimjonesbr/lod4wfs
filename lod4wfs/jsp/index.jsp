@@ -18,9 +18,14 @@
 
 	<h3>Server Information</h3>
 
-	Default SPARQL Endpoint: <b><% out.println(GlobalSettings.default_SPARQLEndpoint); %></b><br>
-	Application Started on: <b><% out.println(GlobalSettings.startupTime); %></b>
-	<br><br><a href="paper/index_jones.html">Making the Web of Data Available via Web Feature Services</a><br />
+	<%
+	
+	out.println("Default SPARQL Endpoint: <b> "+ GlobalSettings.default_SPARQLEndpoint + "</b><br>");
+	out.println("Application Started on: <b> "+ GlobalSettings.startupTime + "</b><br>");
+		
+	%>
+	
+	<br><br><a href="paper/index_jones.html">Making the Web of Data Available via Web Feature Services (Draft)</a><br />
 </BODY>
 
 </HTML>

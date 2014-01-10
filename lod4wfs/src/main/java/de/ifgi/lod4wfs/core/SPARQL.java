@@ -8,17 +8,7 @@ package de.ifgi.lod4wfs.core;
  * 
  */
 public class SPARQL {
-		
-
-//	public static String listSpatialObjectsKeywords= 
-//											"SELECT ?keyword WHERE { " +
-//											"<PARAM_SPOBJ> dct:subject ?keyword}";
-//	
-//	public static String getFeature = 
-//											" SELECT ?geometry ?wkt WHERE { " +
-//											" 	<PARAM_SPOBJ> geo:hasGeometry ?geometry . " + 
-//											"	?geometry geo:asWKT ?wkt } ";
-		
+			
 	public static String listGeometryPredicates = 
 										" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) " +
 										" WHERE { GRAPH <PARAM_LAYER> { " +

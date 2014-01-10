@@ -201,13 +201,6 @@ public class FactorySPARQLFeatures {
 		try {
 			Writer writer = new FileWriter(GlobalSettings.getSparqlDirectory() + feature.getName() + ".sparql");
 
-			//String json = gson.toJson(feature); 		
-
-			//writer.write(json);
-			//gson.toJson("query:"+feature.getQuery().toString(), writer);
-			//gson.toJson(feature.getQuery(), String.class, writer);
-			
-			//System.out.println("\"name\":\"http://sparql.lod4wfs.de/" + feature.getName().toLowerCase() + "\",\n");
 			writer.write("{\n");
 			writer.write("\"name\":\""+ GlobalSettings.getDynamicFeaturesNameSpace() + feature.getName().toLowerCase() + "\",\n");
 			writer.write("\"title\":\"" + feature.getTitle() + "\",\n");			
@@ -219,7 +212,6 @@ public class FactorySPARQLFeatures {
 			writer.write("\n}");
 			writer.close();
 
-			//System.out.println("JSON Created -> " + json);
 
 		} catch (IOException e) {
 			e.printStackTrace();
