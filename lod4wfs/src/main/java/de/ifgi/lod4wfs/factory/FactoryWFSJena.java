@@ -78,15 +78,15 @@ public class FactoryWFSJena {
 		String CRS = new String();
 		
 		while (rs.hasNext()) {
-			WFSFeature layer = new WFSFeature();
+			WFSFeature feature = new WFSFeature();
 			QuerySolution soln = rs.nextSolution();
-			layer.setName(soln.get("?graphName").toString());
-			layer.setTitle(soln.getLiteral("?title").getValue().toString());
-			layer.setFeatureAbstract(soln.getLiteral("?abstract").getValue().toString());
-			layer.setKeywords(soln.getLiteral("?keywords").getValue().toString());
-			layer.setLowerCorner(GlobalSettings.defaultLowerCorner);
-			layer.setUpperCorner(GlobalSettings.defaultUpperCorner);
-			layer.setDynamic(false);
+			feature.setName(soln.get("?graphName").toString());
+			feature.setTitle(soln.getLiteral("?title").getValue().toString());
+			feature.setFeatureAbstract(soln.getLiteral("?abstract").getValue().toString());
+			feature.setKeywords(soln.getLiteral("?keywords").getValue().toString());
+			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
+			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
+			feature.setDynamic(false);
 			
 			CRS = soln.get("?wkt").toString();
 
@@ -98,15 +98,15 @@ public class FactoryWFSJena {
 				CRS = CRS.replace("<", "");
 				CRS = CRS.replace(">", "");
 				
-				layer.setDefaultCRS(CRS);
+				feature.setDefaultCRS(CRS);
 			
 			} else {
 			
-				layer.setDefaultCRS(GlobalSettings.defautlCRS);
+				feature.setDefaultCRS(GlobalSettings.defautlCRS);
 				
 			}
 			
-			result.add(layer);
+			result.add(feature);
 			
 		}
 		
@@ -233,7 +233,7 @@ public class FactoryWFSJena {
 						
 	}
 	
-	private boolean isDynamic(WFSFeature layer){
+	private boolean isDynamic(WFSFeature feature){
 		
 		boolean result = false;
 		
@@ -242,11 +242,11 @@ public class FactoryWFSJena {
 		 */
 		for (int i = 0; i < dynamicFeatures.size(); i++) {
 			
-			if(dynamicFeatures.get(i).getName().equals(modelFeatures.expandPrefix(layer.getName()))){
+			if(dynamicFeatures.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
 				result = true; 
-				layer.setQuery(dynamicFeatures.get(i).getQuery());
-				layer.setGeometryVariable(dynamicFeatures.get(i).getGeometryVariable());
-				layer.setEndpoint(dynamicFeatures.get(i).getEndpoint());
+				feature.setQuery(dynamicFeatures.get(i).getQuery());
+				feature.setGeometryVariable(dynamicFeatures.get(i).getGeometryVariable());
+				feature.setEndpoint(dynamicFeatures.get(i).getEndpoint());
 				
 			}
 			
@@ -256,21 +256,21 @@ public class FactoryWFSJena {
 		
 	}
 	
-	public String describeFeatureType(WFSFeature layer){
+	public String describeFeatureType(WFSFeature feature){
 
 
-		boolean isDynamic = isDynamic(layer);
+		boolean isDynamic = isDynamic(feature);
 			
 		String describeFeatureTypeResponse = new String(); 
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 		
 		if(isDynamic){
 			
-			predicates = this.getPredicatesDynamicFeatures(layer);
+			predicates = this.getPredicatesDynamicFeatures(feature);
 			
 		} else { 
 				
-			predicates = this.getPredicatesStandardFeatures(layer);
+			predicates = this.getPredicatesStandardFeatures(feature);
 		}
 		
 		try {
@@ -281,12 +281,12 @@ public class FactoryWFSJena {
 			//Document document = documentBuilder.parse("src/main/resources/wfs/DescribeFeature_100.xml");
 			Document document = documentBuilder.parse("wfs/DescribeFeature_100.xml");
 					
-			logger.info("Creating DescribeFeatureType XML document for " + layer.getName() + " ...");
+			logger.info("Creating DescribeFeatureType XML document for " + feature.getName() + " ...");
 
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
 
-			String layerPrefix = modelFeatures.shortForm(layer.getName());
+			String layerPrefix = modelFeatures.shortForm(feature.getName());
 			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":")+1);			
 						
 			Element requestElement = document.getDocumentElement(); 						
@@ -319,7 +319,7 @@ public class FactoryWFSJena {
 				
 				if(predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))){
 					String featureType = new String();
-					featureType = this.getFeatureType(layer);
+					featureType = this.getFeatureType(feature);
 			
 					if(featureType.equals("gml:MultiPolygon") || featureType.equals("gml:Polygon")){
 						sequence.setAttribute("type","gml:MultiPolygonPropertyType");
@@ -334,7 +334,7 @@ public class FactoryWFSJena {
 					}
 
 
-				} else if(isDynamic && (predicates.get(i).getPredicate().equals(layer.getGeometryVariable()))){
+				} else if(isDynamic && (predicates.get(i).getPredicate().equals(feature.getGeometryVariable()))){
 					
 					//TODO: create function to identify geometry type!!!
 					sequence.setAttribute("type","gml:MultiPointPropertyType");
@@ -351,8 +351,8 @@ public class FactoryWFSJena {
 
 			describeFeatureTypeResponse = this.printXMLDocument(document);
 
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", layer.getName().substring(layer.getName().indexOf(":")+1, layer.getName().length()));
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_TYPE", layer.getName());
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", feature.getName().substring(feature.getName().indexOf(":")+1, feature.getName().length()));
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_TYPE", feature.getName());
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.defaultPort));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER", java.net.InetAddress.getLocalHost().getHostName());
@@ -398,11 +398,11 @@ public class FactoryWFSJena {
 		
 	}
 	
-	private ArrayList<Triple> getPredicatesStandardFeatures(WFSFeature layer){
+	private ArrayList<Triple> getPredicatesStandardFeatures(WFSFeature feature){
 
-		logger.info("Listing available predicates for " + layer.getName() + " ...");
+		logger.info("Listing available predicates for " + feature.getName() + " ...");
 	
-		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelFeatures.expandPrefix(layer.getName())), GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())), GlobalSettings.default_SPARQLEndpoint);
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
 				
@@ -433,15 +433,15 @@ public class FactoryWFSJena {
 	}
 
 	/**
-	 * @param layer geographic feature 
+	 * @param feature geographic feature 
 	 * @return Data type of a given feature.
 	 */
-	private String getFeatureType (WFSFeature layer){
+	private String getFeatureType (WFSFeature feature){
 
-		logger.info("Getting geometry type for " + layer.getName() + " ...");
+		logger.info("Getting geometry type for " + feature.getName() + " ...");
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
-		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelFeatures.expandPrefix(layer.getName())),GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())),GlobalSettings.default_SPARQLEndpoint);
 		//System.out.println("DELETE ME --> "+SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		String geometryCoordinates = new String();
 		
@@ -472,10 +472,10 @@ public class FactoryWFSJena {
 
 	/**
 	 * @see OGC Specification for WFS http://www.opengeospatial.org/standards/wfs
-	 * @param layer geographic feature to be retrieved.
+	 * @param feature geographic feature to be retrieved.
 	 * @return XML Document containing the WFS GetFeature response with all geometries of a given feature together with their attribute table.
 	 */
-	public String getFeature(WFSFeature layer) {
+	public String getFeature(WFSFeature feature) {
 
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
@@ -485,23 +485,23 @@ public class FactoryWFSJena {
 				
 		
 		
-		if(isDynamic(layer)){
+		if(isDynamic(feature)){
 			
-			logger.info("Performing query at " + layer.getEndpoint()  + " to retrieve all geometries of " + layer.getName() + "  ...");
-			predicates = this.getPredicatesDynamicFeatures(layer);
-			rs = jn.executeQuery(layer.getQuery().toString(),layer.getEndpoint());
+			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of " + feature.getName() + "  ...");
+			predicates = this.getPredicatesDynamicFeatures(feature);
+			rs = jn.executeQuery(feature.getQuery().toString(),feature.getEndpoint());
 			
-			System.out.println("Endpoint --> "+layer.getEndpoint());
+			System.out.println("Endpoint --> "+feature.getEndpoint());
 			
 		} else {
 		
-			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + layer.getName() + "  ...");
-			predicates = this.getPredicatesStandardFeatures(layer);					
-			rs = jn.executeQuery(this.generateGetFeatureSPARQL(layer, predicates),GlobalSettings.default_SPARQLEndpoint);
+			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + feature.getName() + "  ...");
+			predicates = this.getPredicatesStandardFeatures(feature);					
+			rs = jn.executeQuery(this.generateGetFeatureSPARQL(feature, predicates),GlobalSettings.default_SPARQLEndpoint);
 			
 		}
 		
-		layerPrefix = modelFeatures.shortForm(layer.getName());
+		layerPrefix = modelFeatures.shortForm(feature.getName());
 		System.out.println(layerPrefix);
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
@@ -525,7 +525,7 @@ public class FactoryWFSJena {
 			
 			long countIteration = 0;
 			
-			logger.info("Creating GetFeature XML document for " + layer.getName() + "...");
+			logger.info("Creating GetFeature XML document for " + feature.getName() + "...");
 
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
@@ -537,7 +537,7 @@ public class FactoryWFSJena {
 				
 //				String currentGeometryName = soln.getResource("?geometry").getLocalName();
 				String currentGeometryName = "GEO_";
-				Element currentGeometryElement = document.createElement(modelFeatures.shortForm(layer.getName()));
+				Element currentGeometryElement = document.createElement(modelFeatures.shortForm(feature.getName()));
 				
 				
 				currentGeometryElement.setAttribute("fid", currentGeometryName + "." + countIteration);				
@@ -546,21 +546,20 @@ public class FactoryWFSJena {
 								
 				for (int i = 0; i < predicates.size(); i++) {
 
-					if(isDynamic(layer)){
+					if(isDynamic(feature)){
 						
 						Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
 						
-						if(predicates.get(i).getPredicate().equals(layer.getGeometryVariable())){
-							
-							
-							String gml = this.convertWKTtoGML(soln.getLiteral("?"+layer.getGeometryVariable()).toString());											
+						if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
+														
+							String gml = this.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).toString());											
 							Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 							Node dup = document.importNode(GMLnode, true);
 							elementGeometryPredicate.appendChild(dup);						
 							rootGeometry.appendChild(elementGeometryPredicate);												
 							currentGeometryElement.appendChild(elementGeometryPredicate);						
 							rootGeometry.appendChild(currentGeometryElement);					
-
+							
 						} else {
 							
 							Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
@@ -575,25 +574,32 @@ public class FactoryWFSJena {
 						
 						
 						String predicateWithoutPrefix = new String();
-						
-						//predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());					
+											
 						predicateWithoutPrefix =  this.removePredicateURL(predicates.get(i).getPredicate());
 						
-						//Element elementGeometryPredicate = document.createElement(GlobalSettings.defaultServiceName + ":" + predicateWithoutPrefix);
 						Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
 																				
 						//if (predicates.get(i).getPredicate().equals("geo:asWKT")) {			
 						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 							
 							//TODO: Automatic generate getGeometryVariable
-							String gml = this.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().toString());											
-							Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
-							Node dup = document.importNode(GMLnode, true);
-							elementGeometryPredicate.appendChild(dup);						
-							rootGeometry.appendChild(elementGeometryPredicate);												
-							currentGeometryElement.appendChild(elementGeometryPredicate);						
-							rootGeometry.appendChild(currentGeometryElement);					
+							
+							if(!FactorySPARQLFeatures.getGeometryType(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
+															
+								String gml = this.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
+								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
+								Node dup = document.importNode(GMLnode, true);
+								elementGeometryPredicate.appendChild(dup);						
+								rootGeometry.appendChild(elementGeometryPredicate);												
+								currentGeometryElement.appendChild(elementGeometryPredicate);						
+								rootGeometry.appendChild(currentGeometryElement);					
 		
+							} else {
+								
+								logger.error("The feature [" + soln.get("?geometry") + "] has an invalid geometry literal.");
+								
+							}
+							
 						} else {
 	
 							Element elementAttribute = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
@@ -631,11 +637,11 @@ public class FactoryWFSJena {
 	}
 
 	/**
-	 * @param layer geographic feature
+	 * @param feature geographic feature
 	 * @param predicates list of predicates from the feature of interest.
 	 * @return SPARQL query for retrieving all geometries of a given feature and their related attributes.
 	 */
-	private String generateGetFeatureSPARQL(WFSFeature layer, ArrayList<Triple> predicates){
+	private String generateGetFeatureSPARQL(WFSFeature feature, ArrayList<Triple> predicates){
 
 		String selectClause = new String();
 		String whereClause = new String();
@@ -645,9 +651,6 @@ public class FactoryWFSJena {
 
 			String SPARQL_Variable = new String();
 			SPARQL_Variable = this.removePredicateURL(predicates.get(i).getPredicate());
-			
-		
-			//tmp = predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length()) ;
 			
 			//Check if more than one variable with the same name is generated.
 			if(variables.contains(SPARQL_Variable)){
@@ -664,7 +667,7 @@ public class FactoryWFSJena {
 		String SPARQL = new String();
 
 		SPARQL = " SELECT ?geometry \n" + selectClause +
-				" WHERE { GRAPH <"+ modelFeatures.expandPrefix(layer.getName()) + "> {" +
+				" WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" +
 				"?geometry a " + GlobalSettings.getGeometryClass() + " . \n" + whereClause + "}}";
 
 		return SPARQL;
@@ -672,25 +675,25 @@ public class FactoryWFSJena {
 	}
 
 	/**
-	 * @param layers list of geographic features
+	 * @param features list of geographic features
 	 * 
 	 */
 	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
-	private void generateLayersPrefixes(ArrayList<WFSFeature> layers){
+	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
 		
 		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
 		modelFeatures = ModelFactory.createDefaultModel();
 		
-		for (int i = 0; i < layers.size(); i++) {
+		for (int i = 0; i < features.size(); i++) {
 						
 			boolean scape = false;
 
-			int size = layers.get(i).getName().length()-1;
+			int size = features.get(i).getName().length()-1;
 			int position = 0;
 
 			while ((scape == false) && (size >= 0)) {
 
-				Matcher matcher = pattern.matcher(Character.toString(layers.get(i).getName().charAt(size)));
+				Matcher matcher = pattern.matcher(Character.toString(features.get(i).getName().charAt(size)));
 
 				boolean finder = matcher.find();
 
@@ -704,16 +707,16 @@ public class FactoryWFSJena {
 				size--;
 			}
 			
-			if (modelFeatures.getNsURIPrefix(layers.get(i).getName().substring(0, position+1))==null) {
+			if (modelFeatures.getNsURIPrefix(features.get(i).getName().substring(0, position+1))==null) {
 				
-				if (layers.get(i).isDynamic()){
+				if (features.get(i).isDynamic()){
 					
 					//modelLayers.setNsPrefix("sparql"+ modelLayers.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );
-					modelFeatures.setNsPrefix("sparql", layers.get(i).getName().substring(0, position+1) );
+					modelFeatures.setNsPrefix("sparql", features.get(i).getName().substring(0, position+1) );
 					
 				} else {
 					
-					modelFeatures.setNsPrefix("ts"+ modelFeatures.getNsPrefixMap().size(), layers.get(i).getName().substring(0, position+1) );
+					modelFeatures.setNsPrefix("ts"+ modelFeatures.getNsPrefixMap().size(), features.get(i).getName().substring(0, position+1) );
 			
 				}
 			}
