@@ -8,6 +8,15 @@
 <%@ page import="java.net.URLEncoder"%>
 
 <HTML>
+	<link rel="stylesheet" href="http://data.uni-muenster.de/php/sparql/lib/codemirror/codemirror.css">
+    <script src="http://data.uni-muenster.de/php/sparql/lib/codemirror/codemirror.js"></script>
+    <link rel="stylesheet" href="http://data.uni-muenster.de/php/sparql/lib/codemirror/theme/default.css">
+    <script src="http://data.uni-muenster.de/php/sparql/lib/codemirror/mode.sparql.js"></script>
+    
+    <link rel="stylesheet" href="http://data.uni-muenster.de/php/sparql/lodum.sparqleditor.css">
+	<script src="http://data.uni-muenster.de/php/sparql/lib/jquery.getUrlParam.js"></script>
+	<script src="http://data.uni-muenster.de/php/sparql/lodum.sparqleditor.js"></script>
+	
 <HEAD>
 <TITLE>LOD4WFS Administration Interface</TITLE>
 </HEAD>
@@ -26,7 +35,7 @@
 	%>
 	
 <BODY>
-	
+		
 		<a href="index.jsp">Home</a>
 		<h1>Feature Update</h1>
 		
@@ -71,6 +80,11 @@
 		
 		</FORM>
 		
+		
+
+
+
+
 		<%
 		
 /* 		if(request.getParameter("update")!=null){
