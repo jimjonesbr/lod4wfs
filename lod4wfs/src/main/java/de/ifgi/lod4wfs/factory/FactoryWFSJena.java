@@ -54,7 +54,7 @@ public class FactoryWFSJena {
 	private static ArrayList<WFSFeature> dynamicFeatures;
 	private static FactorySPARQLFeatures factorySPARQL;
 	private static Logger logger = Logger.getLogger("WFS-Factory");
-	
+		
 	public FactoryWFSJena(){
 		jn = new JenaConnector();
 		factorySPARQL = new FactorySPARQLFeatures();
@@ -583,7 +583,7 @@ public class FactoryWFSJena {
 							
 							//TODO: Automatic generate getGeometryVariable
 							
-							if(!FactorySPARQLFeatures.getGeometryType(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
+							if(!FactorySPARQLFeatures.getGeometryType(removeReferenceSystem(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString())).equals("INVALID")){
 															
 								String gml = this.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
@@ -656,8 +656,8 @@ public class FactoryWFSJena {
 				SPARQL_Variable = SPARQL_Variable + i;
 			}
 			
-			selectClause = selectClause + " ?" + SPARQL_Variable + " \n" ;
-			whereClause = whereClause + "?geometry <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" .\n"; 
+			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.crlf ;
+			whereClause = whereClause + "	?geometry <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.crlf ; 
 
 			
 			variables.add(SPARQL_Variable);
@@ -665,9 +665,9 @@ public class FactoryWFSJena {
 
 		String SPARQL = new String();
 
-		SPARQL = " SELECT ?geometry \n" + selectClause +
-				" WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" +
-				"?geometry a " + GlobalSettings.getGeometryClass() + " . \n" + whereClause + "}}";
+		SPARQL = " SELECT ?geometry "+ GlobalSettings.crlf + selectClause +
+				 " WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" + GlobalSettings.crlf +
+				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . "+ GlobalSettings.crlf + whereClause + " }}";
 
 		return SPARQL;
 		
@@ -759,6 +759,18 @@ public class FactoryWFSJena {
 	 * @param wkt Well Known Text geometry to be converted.
 	 * @return GML encoding of a given Well Known Text literal.
 	 */
+	
+	private String removeReferenceSystem(String wkt){
+	
+		if(wkt.contains("<") && wkt.contains(">")){
+			
+			wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+
+		}
+
+		return wkt;
+	}
+	
 	private String convertWKTtoGML(String wkt){
 		
 		String gml = new String();
@@ -770,7 +782,8 @@ public class FactoryWFSJena {
 				
 				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));// .replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
 				
-				wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+				//wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+				wkt = removeReferenceSystem(wkt);
 				
 				gml = WKTParser.parseToGML2(wkt,CRS);
 				

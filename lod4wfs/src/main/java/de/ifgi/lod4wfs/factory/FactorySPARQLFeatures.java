@@ -343,7 +343,7 @@ public class FactorySPARQLFeatures {
 	public static String getGeometryType(String wkt){
 		
 		String result = new String();
-		
+						
 		if(isGeometryValid(wkt.toUpperCase())){
 			
 			try {

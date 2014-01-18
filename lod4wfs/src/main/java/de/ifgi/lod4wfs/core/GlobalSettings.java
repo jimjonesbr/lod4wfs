@@ -36,7 +36,7 @@ public class GlobalSettings {
 	//public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
 
 	
-	
+	public static String crlf = System.getProperty("line.separator");
  	private static String abstractPredicate ="";
     private static String titlePredicate ="";
     private static String keywordsPredicate ="";
