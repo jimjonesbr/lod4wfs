@@ -15,6 +15,7 @@ public class SPARQL {
 										" WHERE { GRAPH <PARAM_LAYER> { " + GlobalSettings.crlf +
 										"        ?geometry ?predicate ?object . " + GlobalSettings.crlf +
 										"        ?geometry a " + GlobalSettings.getGeometryClass() + " .}  " + GlobalSettings.crlf +
+										"		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) " + GlobalSettings.crlf +
 										" } " + GlobalSettings.crlf  ; 
 	
 	public static String listNamedGraphs =  
