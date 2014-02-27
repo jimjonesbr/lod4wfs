@@ -551,7 +551,11 @@ public class FactoryWFSJena {
 						
 						if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
 														
-							String gml = this.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).toString());											
+							System.out.println("FACTORY: DELETE-ME ->> " + soln.get("?"+feature.getGeometryVariable()));
+							System.out.println("?"+feature.getGeometryVariable());
+							//String gml = this.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).toString());		
+							String gml = this.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
+							
 							Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 							Node dup = document.importNode(GMLnode, true);
 							elementGeometryPredicate.appendChild(dup);						

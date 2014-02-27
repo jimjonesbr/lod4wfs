@@ -1,0 +1,18 @@
+{
+"name":"http://sparql.lod4wfs.de/humanitarian",
+"title":"HXL Repo",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://hxl.humanitarianresponse.info/sparql",
+"query":"prefix hxl: <http://hxl.humanitarianresponse.info/ns/#> 	 
+prefix geo: <http://www.opengis.net/ont/geosparql#>     
+SELECT ?apl ?wkt WHERE {     	
+?apl a hxl:APL .     	
+?apl hxl:atLocation ?location  . 		
+?location geo:hasGeometry ?geometry .		
+?geometry geo:hasSerialization ?wkt .   
+ } ORDER BY ?name
+
+"
+}

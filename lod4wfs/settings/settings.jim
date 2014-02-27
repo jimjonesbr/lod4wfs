@@ -22,7 +22,7 @@ dynamicFeaturesNameSpace = http://sparql.lod4wfs.de/
 
 [Server]
 defaultPort = 8088
-SPARQLEndpointURL = http://recife:8080/openrdf-sesame/repositories/lod4wfs
+SPARQLEndpointURL = http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs
 SPARQLDirectory = sparql/
 
 [WebInterface]
