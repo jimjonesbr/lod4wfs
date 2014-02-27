@@ -8886,3 +8886,3235 @@ java.net.BindException: Address already in use
 [2013-12-22 21:20:25,354] INFO  [WFS-Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
 [2013-12-22 21:20:25,499] INFO  [WFS-Factory]  - Creating Capabilities Document of localhost:8088/lod4wfs/wfs ...
 [2013-12-22 21:20:25,509] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-12 23:15:19,550] INFO  [WFS-Factory]  - Listing geographic layers at http://recife:8080/openrdf-sesame/repositories/lod4wfs ...
+[2014-02-12 23:15:19,923] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-12 23:15:59,220] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/lod4wfs ...
+[2014-02-12 23:15:59,511] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-12 23:18:21,890] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-12 23:18:22,188] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-12 23:18:22,466] INFO  [WFS-Factory]  - Creating Capabilities Document of :8088/lod4wfs/wfs ...
+[2014-02-12 23:18:22,627] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-12 23:18:22,840] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-12 23:19:51,873] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-12 23:19:51,873] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-12 23:19:51,874] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-12 23:19:52,157] INFO  [WFS-Factory]  - Creating Capabilities Document of :8088/lod4wfs/wfs ...
+[2014-02-12 23:19:52,168] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-12 23:19:59,071] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature ts0:brazil_municipalities ...
+[2014-02-12 23:19:59,071] INFO  [WFS-Factory]  - Listing available predicates for ts0:brazil_municipalities ...
+[2014-02-12 23:19:59,074] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-12 23:20:00,740] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for ts0:brazil_municipalities ...
+[2014-02-12 23:20:00,743] INFO  [WFS-Factory]  - Getting geometry type for ts0:brazil_municipalities ...
+[2014-02-12 23:20:00,744] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?wkt 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> { 
+ 	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+ 	?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt 
+ }} LIMIT 1 
+
+
+
+[2014-02-12 23:20:00,859] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-12 23:20:00,873] INFO  [Web-Interface]  - Processing GetFeature request for the feature ts0:brazil_municipalities ...
+[2014-02-12 23:20:00,873] INFO  [WFS-Factory]  - Performing query at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs to retrieve all geometries of ts0:brazil_municipalities  ...
+[2014-02-12 23:20:00,874] INFO  [WFS-Factory]  - Listing available predicates for ts0:brazil_municipalities ...
+[2014-02-12 23:20:00,875] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-12 23:20:02,657] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?geometry 
+	?asWKT
+	?mslink
+	?mapid
+	?codigo
+	?geocodigo
+	?area
+	?nome
+	?perimetro
+	?sede
+	?latitudese
+	?longitudese
+	?total
+	?area12
+	?len
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> {
+	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+	?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?asWKT .
+	?geometry <http://test.vocabulary.com/mslink> ?mslink .
+	?geometry <http://test.vocabulary.com/mapid> ?mapid .
+	?geometry <http://test.vocabulary.com/codigo> ?codigo .
+	?geometry <http://test.vocabulary.com/geocodigo> ?geocodigo .
+	?geometry <http://test.vocabulary.com/area_1> ?area .
+	?geometry <http://test.vocabulary.com/nome> ?nome .
+	?geometry <http://test.vocabulary.com/perimetro> ?perimetro .
+	?geometry <http://test.vocabulary.com/sede> ?sede .
+	?geometry <http://test.vocabulary.com/latitudese> ?latitudese .
+	?geometry <http://test.vocabulary.com/longitudese> ?longitudese .
+	?geometry <http://test.vocabulary.com/area_total> ?total .
+	?geometry <http://test.vocabulary.com/shape_area> ?area12 .
+	?geometry <http://test.vocabulary.com/shape_len> ?len .
+ }}
+
+
+[2014-02-12 23:20:02,770] INFO  [WFS-Factory]  - Creating GetFeature XML document for ts0:brazil_municipalities...
+[2014-02-12 23:20:27,702] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-12 23:20:27,703] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-12 23:20:27,707] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-12 23:20:28,176] INFO  [WFS-Factory]  - Creating Capabilities Document of :8088/lod4wfs/wfs ...
+[2014-02-12 23:20:28,187] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-12 23:20:37,251] INFO  [WFS-Factory]  - XML Document with 5799 features successfully created.
+[2014-02-12 23:20:37,494] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-12 23:20:39,712] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:dbpedia_10k ...
+[2014-02-12 23:20:39,713] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:dbpedia_10k ...
+[2014-02-12 23:20:39,715] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:dbpedia_10k ...
+[2014-02-12 23:20:39,718] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-12 23:20:39,721] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:dbpedia_10k ...
+[2014-02-12 23:20:39,721] INFO  [WFS-Factory]  - Performing query at http://dbpedia.org/sparql to retrieve all geometries of sparql:dbpedia_10k  ...
+[2014-02-12 23:20:39,721] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:dbpedia_10k ...
+[2014-02-12 23:20:39,723] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  dbo:  <http://dbpedia.org/ontology/>
+
+SELECT DISTINCT  ?label ?population ?abstract ?lat ?long (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> dbpedia-owl:Place .
+    ?s geo:lat ?lat .
+    ?s geo:long ?long .
+    ?s rdfs:label ?label .
+    ?s dbpedia-owl:abstract ?abstract
+    FILTER langMatches(lang(?abstract), "EN")
+    ?s dbpedia-owl:populationTotal ?population
+    FILTER langMatches(lang(?label), "EN")
+  }
+LIMIT   10000
+
+
+
+[2014-02-12 23:20:44,493] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:dbpedia_10k...
+[2014-02-12 23:20:58,590] INFO  [WFS-Factory]  - XML Document with 10000 features successfully created.
+[2014-02-12 23:20:59,094] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-12 23:20:59,536] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-12 23:20:59,536] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-12 23:20:59,538] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-12 23:20:59,754] INFO  [WFS-Factory]  - Creating Capabilities Document of :8088/lod4wfs/wfs ...
+[2014-02-12 23:20:59,762] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-26 15:56:20,072] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-26 15:56:20,500] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-26 15:56:20,684] INFO  [WFS-Factory]  - Creating Capabilities Document of WL-POOL1-PNT-01381.UNI-MUENSTER.DE:8088/lod4wfs/wfs ...
+[2014-02-26 15:56:20,819] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-26 15:56:21,040] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-26 15:56:33,362] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-26 15:56:33,362] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-26 15:56:33,364] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-26 15:56:33,397] INFO  [WFS-Factory]  - Creating Capabilities Document of WL-POOL1-PNT-01381.UNI-MUENSTER.DE:8088/lod4wfs/wfs ...
+[2014-02-26 15:56:33,409] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:03:40,337] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:03:40,619] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:03:41,048] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:03:41,150] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:03:41,299] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:11:11,059] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:11:11,355] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:11:11,793] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:11:11,911] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:11:12,083] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:11:28,210] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:11:28,210] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:11:28,212] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:11:28,252] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:11:28,265] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:12:02,313] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:12:02,314] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:12:02,316] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:12:02,359] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:12:02,370] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:12:06,159] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:12:06,159] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:12:06,162] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:12:06,166] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:12:06,169] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:12:06,170] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/hxl/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:12:06,170] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:12:06,173] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:12:06,425] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:12:36,827] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:12:36,827] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:12:36,832] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:12:36,867] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:12:36,880] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:12:40,914] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:12:40,914] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:12:40,917] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:12:40,923] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:12:40,925] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:12:40,926] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:12:40,926] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:12:40,928] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:12:41,146] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:13:17,347] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:13:17,636] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:13:18,088] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:13:18,192] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:13:18,376] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:13:22,496] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:13:22,497] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:13:22,498] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:13:22,542] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:13:22,555] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:13:27,112] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:13:27,112] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:13:27,116] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:13:27,121] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:13:27,124] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:13:27,125] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:13:27,125] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:13:27,128] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:13:27,349] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:13:45,867] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:13:45,867] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:13:45,867] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:13:45,870] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:13:46,094] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:14:20,082] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:14:20,082] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:14:20,082] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:14:20,087] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:14:20,307] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:14:21,106] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:14:21,106] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:14:21,106] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:14:21,113] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:14:21,336] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:14:21,848] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:14:21,849] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:14:21,849] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:14:21,852] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:14:22,072] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:14:33,161] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:14:33,162] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:14:33,162] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:14:33,167] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  *
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:14:33,404] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:15:15,738] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:15:16,026] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:15:16,154] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:15:16,261] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:15:16,430] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:15:32,601] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:15:32,601] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:15:32,602] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:15:32,752] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:15:32,771] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:15:35,896] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:15:35,896] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:15:35,899] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:15:35,903] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:15:35,906] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:15:35,906] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:15:35,906] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:15:35,909] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:15:36,133] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:15:41,684] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:15:41,685] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:15:41,685] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:15:41,688] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:15:41,908] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:15:42,713] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:15:42,714] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:15:42,714] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:15:42,719] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:15:42,937] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:15:43,002] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:15:43,002] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:15:43,002] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:15:43,006] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:15:43,227] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:16:21,062] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:feature_name ...
+[2014-02-27 12:16:21,062] INFO  [WFS-Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:feature_name  ...
+[2014-02-27 12:16:21,062] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:feature_name ...
+[2014-02-27 12:16:21,063] INFO  [JenaConnector]  - Query fired -> 
+
+SELECT  ?wkt
+WHERE
+  { ?wkt ?p ?o }
+
+
+
+[2014-02-27 12:16:21,133] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:feature_name...
+[2014-02-27 12:16:21,136] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:16:35,468] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:cool_countries ...
+[2014-02-27 12:16:35,469] INFO  [WFS-Factory]  - Performing query at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs to retrieve all geometries of sparql:cool_countries  ...
+[2014-02-27 12:16:35,469] INFO  [WFS-Factory]  - Listing available predicates for sparql:cool_countries ...
+[2014-02-27 12:16:35,472] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://sparql.lod4wfs.de/cool_countries> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-27 12:16:35,481] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?geometry 
+ WHERE { GRAPH <http://sparql.lod4wfs.de/cool_countries> {
+	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+ }}
+
+
+[2014-02-27 12:16:35,491] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:cool_countries...
+[2014-02-27 12:16:35,492] INFO  [WFS-Factory]  - XML Document with 0 features successfully created.
+[2014-02-27 12:16:35,494] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:16:55,026] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:16:55,027] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:16:55,032] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:16:55,275] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:16:55,286] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:16:59,740] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:countries ...
+[2014-02-27 12:16:59,741] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:countries ...
+[2014-02-27 12:16:59,745] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:countries ...
+[2014-02-27 12:16:59,749] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:16:59,752] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:countries ...
+[2014-02-27 12:16:59,752] INFO  [WFS-Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:countries  ...
+[2014-02-27 12:16:59,752] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:countries ...
+[2014-02-27 12:16:59,759] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql/1.0#>
+PREFIX  dbpedia-prop: <http://dbpedia.org/property/>
+PREFIX  dct:  <http://purl.org/dc/terms/>
+PREFIX  dbpedia: <http://dbpedia.org/resource/>
+PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX  sf:   <http://www.opengis.net/ont/sf#>
+PREFIX  my:   <http://ifgi.lod4wfs.de/resource/>
+
+SELECT  ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language
+WHERE
+  { GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries>
+      { ?geometry rdf:type geo:Geometry .
+        ?geometry rdf:ID ?id .
+        ?geometry dc:description ?description .
+        ?geometry geo:asWKT ?wkt .
+        ?geometry rdfs:seeAlso ?external
+      }
+    SERVICE <http://dbpedia.org/sparql/>
+      { ?external dbpedia-prop:drivesOn ?drivesOn .
+        ?external dbpedia-owl:officialLanguage ?languageObj .
+        ?languageObj rdfs:label ?language
+        FILTER langMatches(lang(?language), "EN")
+        ?external dbpedia-owl:capital ?capitalObj .
+        ?capitalObj rdfs:label ?capital
+        FILTER langMatches(lang(?capital), "EN")
+      }
+  }
+
+
+
+[2014-02-27 12:17:00,298] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:countries...
+[2014-02-27 12:17:00,557] INFO  [WFS-Factory]  - XML Document with 3 features successfully created.
+[2014-02-27 12:17:00,576] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:17:00,589] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:17:00,589] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:17:00,591] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:17:00,632] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:17:00,642] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:17:11,921] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:17:11,921] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:17:11,921] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:17:11,927] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:17:12,152] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:17:13,346] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:17:13,346] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql/ to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:17:13,346] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:17:13,348] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:17:13,849] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+HttpException: java.nio.charset.MalformedInputException: Input length = 1: java.nio.charset.MalformedInputException: Input length = 1
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:525)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execGet(HttpQuery.java:289)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.exec(HttpQuery.java:240)
+	at com.hp.hpl.jena.sparql.engine.http.QueryEngineHTTP.execSelect(QueryEngineHTTP.java:203)
+	at de.ifgi.lod4wfs.infrastructure.JenaConnector.executeQuery(JenaConnector.java:30)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getFeature(FactoryWFSJena.java:491)
+	at de.ifgi.lod4wfs.facade.Facade.getFeature(Facade.java:38)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:133)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+Caused by: java.nio.charset.MalformedInputException: Input length = 1
+	at java.nio.charset.CoderResult.throwException(CoderResult.java:277)
+	at sun.nio.cs.StreamDecoder.implRead(StreamDecoder.java:338)
+	at sun.nio.cs.StreamDecoder.read(StreamDecoder.java:177)
+	at java.io.InputStreamReader.read(InputStreamReader.java:184)
+	at java.io.BufferedReader.read1(BufferedReader.java:203)
+	at java.io.BufferedReader.read(BufferedReader.java:279)
+	at java.io.Reader.read(Reader.java:140)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:457)
+	at com.hp.hpl.jena.util.FileUtils.readWholeFileAsUTF8(FileUtils.java:441)
+	at com.hp.hpl.jena.sparql.engine.http.HttpQuery.execCommon(HttpQuery.java:438)
+	... 31 more
+[2014-02-27 12:18:31,759] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:18:31,759] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:18:31,763] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:18:31,905] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:18:31,923] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:18:34,768] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:18:34,768] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:18:34,770] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:18:34,774] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:18:34,776] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:18:34,776] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:18:34,776] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:18:34,778] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:18:35,115] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:18:35,236] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:18:35,247] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:18:35,247] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:18:35,248] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:18:35,282] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:18:35,300] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:20:36,366] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:20:36,366] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:20:36,366] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:20:36,368] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:20:36,634] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:20:36,742] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:25:01,615] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:25:01,906] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:25:02,352] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:25:02,471] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:25:02,641] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:25:06,847] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:25:06,848] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:25:06,848] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:25:06,851] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:25:07,132] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:25:07,281] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:28:25,526] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:28:25,847] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:28:26,297] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:28:26,398] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:28:26,585] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:28:42,786] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:28:42,786] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:28:42,788] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:28:42,822] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:28:42,836] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:29:07,587] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:countries ...
+[2014-02-27 12:29:07,588] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:countries ...
+[2014-02-27 12:29:07,594] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:countries ...
+[2014-02-27 12:29:07,598] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:29:07,601] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:countries ...
+[2014-02-27 12:29:07,601] INFO  [WFS-Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:countries  ...
+[2014-02-27 12:29:07,601] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:countries ...
+[2014-02-27 12:29:07,609] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql/1.0#>
+PREFIX  dbpedia-prop: <http://dbpedia.org/property/>
+PREFIX  dct:  <http://purl.org/dc/terms/>
+PREFIX  dbpedia: <http://dbpedia.org/resource/>
+PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX  sf:   <http://www.opengis.net/ont/sf#>
+PREFIX  my:   <http://ifgi.lod4wfs.de/resource/>
+
+SELECT  ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language
+WHERE
+  { GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries>
+      { ?geometry rdf:type geo:Geometry .
+        ?geometry rdf:ID ?id .
+        ?geometry dc:description ?description .
+        ?geometry geo:asWKT ?wkt .
+        ?geometry rdfs:seeAlso ?external
+      }
+    SERVICE <http://dbpedia.org/sparql/>
+      { ?external dbpedia-prop:drivesOn ?drivesOn .
+        ?external dbpedia-owl:officialLanguage ?languageObj .
+        ?languageObj rdfs:label ?language
+        FILTER langMatches(lang(?language), "EN")
+        ?external dbpedia-owl:capital ?capitalObj .
+        ?capitalObj rdfs:label ?capital
+        FILTER langMatches(lang(?capital), "EN")
+      }
+  }
+
+
+
+[2014-02-27 12:29:07,893] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:countries...
+[2014-02-27 12:29:08,129] INFO  [WFS-Factory]  - XML Document with 3 features successfully created.
+[2014-02-27 12:29:08,158] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:29:08,171] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:29:08,171] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:29:08,173] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:29:08,218] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:29:08,230] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:29:11,886] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:29:11,886] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:29:11,890] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:29:11,919] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:29:11,930] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:29:16,404] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:29:16,405] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:29:16,408] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:29:16,413] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:29:16,416] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:29:16,416] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:29:16,416] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:29:16,419] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:29:16,771] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:29:16,899] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:29:16,903] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:29:16,903] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:29:16,905] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:29:16,968] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:29:16,982] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:29:36,889] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:29:36,889] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:29:36,893] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:29:36,926] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:29:36,935] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:29:39,799] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:countries ...
+[2014-02-27 12:29:39,799] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:countries ...
+[2014-02-27 12:29:39,804] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:countries ...
+[2014-02-27 12:29:39,809] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:29:39,812] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:countries ...
+[2014-02-27 12:29:39,812] INFO  [WFS-Factory]  - Performing query at http://recife:8080/openrdf-sesame/repositories/lod4wfs to retrieve all geometries of sparql:countries  ...
+[2014-02-27 12:29:39,812] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:countries ...
+[2014-02-27 12:29:39,816] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  dc:   <http://purl.org/dc/elements/1.1/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql/1.0#>
+PREFIX  dbpedia-prop: <http://dbpedia.org/property/>
+PREFIX  dct:  <http://purl.org/dc/terms/>
+PREFIX  dbpedia: <http://dbpedia.org/resource/>
+PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX  rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX  sf:   <http://www.opengis.net/ont/sf#>
+PREFIX  my:   <http://ifgi.lod4wfs.de/resource/>
+
+SELECT  ?geometry ?id ?description ?wkt ?capital ?drivesOn ?language
+WHERE
+  { GRAPH <http://ifgi.lod4wfs.de/layer/cool_countries>
+      { ?geometry rdf:type geo:Geometry .
+        ?geometry rdf:ID ?id .
+        ?geometry dc:description ?description .
+        ?geometry geo:asWKT ?wkt .
+        ?geometry rdfs:seeAlso ?external
+      }
+    SERVICE <http://dbpedia.org/sparql/>
+      { ?external dbpedia-prop:drivesOn ?drivesOn .
+        ?external dbpedia-owl:officialLanguage ?languageObj .
+        ?languageObj rdfs:label ?language
+        FILTER langMatches(lang(?language), "EN")
+        ?external dbpedia-owl:capital ?capitalObj .
+        ?capitalObj rdfs:label ?capital
+        FILTER langMatches(lang(?capital), "EN")
+      }
+  }
+
+
+
+[2014-02-27 12:29:39,852] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:countries...
+[2014-02-27 12:29:39,979] INFO  [WFS-Factory]  - XML Document with 3 features successfully created.
+[2014-02-27 12:29:39,987] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:29:39,995] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:29:39,997] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:29:39,999] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:29:40,037] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:29:40,052] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:32:24,100] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:32:24,452] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:32:24,901] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:32:25,010] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:32:25,194] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:32:34,021] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:32:34,022] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:32:34,023] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:32:34,067] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:32:34,081] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:32:36,865] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:32:36,865] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:32:36,869] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:32:36,873] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:32:36,876] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:32:36,876] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:32:36,876] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:32:36,879] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:32:37,431] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:32:37,580] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:32:37,585] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:32:37,585] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:32:37,587] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:32:37,625] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:32:37,639] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:33:20,124] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:33:20,438] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:33:20,590] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:33:20,707] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:33:20,885] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:33:27,835] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:33:27,836] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:33:27,836] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:33:27,839] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:33:28,115] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:33:28,218] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:33:47,300] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:33:47,301] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:33:47,303] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:33:47,341] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:33:47,352] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:33:51,076] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:33:51,076] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:33:51,079] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:33:51,082] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:33:51,085] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:33:51,085] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:33:51,085] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:33:51,088] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:33:53,042] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:33:53,148] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:33:53,153] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:33:53,153] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:33:53,154] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:33:53,196] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:33:53,211] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:34:11,819] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:34:11,819] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:34:11,823] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:34:11,859] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:34:11,870] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:34:26,140] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:34:26,140] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:34:26,143] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:34:26,147] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:34:26,149] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:34:26,149] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:34:26,149] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:34:26,151] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:34:26,465] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:34:26,571] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:34:26,577] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:34:26,578] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:34:26,579] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:34:26,631] INFO  [WFS-Factory]  - Creating Capabilities Document of groningen.local:8088/lod4wfs/wfs ...
+[2014-02-27 12:34:26,644] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:38:46,070] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:38:46,362] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:38:46,802] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:38:46,896] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:38:47,071] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:38:53,612] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:38:53,612] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:38:53,614] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:38:53,656] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:38:53,669] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:38:59,994] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:38:59,994] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:38:59,997] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:39:00,001] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:39:00,004] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:39:00,004] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:39:00,004] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:39:00,007] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:39:00,276] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:39:00,427] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:39:00,455] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:39:00,456] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:39:00,457] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:39:00,505] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:39:00,528] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:39:49,537] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:39:49,881] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:39:50,035] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:39:50,147] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:39:50,319] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:39:51,812] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:39:51,812] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:39:51,813] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:39:51,853] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:39:51,867] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:39:54,121] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:39:54,121] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:39:54,125] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:39:54,128] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:39:54,131] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:39:54,131] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:39:54,132] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:39:54,134] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:39:54,401] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:39:54,554] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:39:54,578] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:39:54,578] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:39:54,579] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:39:54,632] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:39:54,645] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:42:57,350] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:42:57,656] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:42:58,109] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:42:58,213] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:42:58,387] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:43:02,414] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:43:02,414] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:43:02,416] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:43:02,464] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:43:02,476] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:43:05,239] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:43:05,239] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:43:05,243] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:43:05,248] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:43:05,251] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:43:05,251] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:43:05,251] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:43:05,254] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:43:05,530] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:43:05,694] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:43:05,711] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:43:05,712] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:43:05,713] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:43:05,761] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:43:05,777] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:43:50,998] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:43:51,283] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:43:51,428] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:43:51,528] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:43:51,695] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:43:54,977] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:43:54,978] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:43:54,979] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:43:55,023] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:43:55,037] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:43:57,282] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:43:57,282] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:43:57,286] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:43:57,291] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:43:57,294] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:43:57,294] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:43:57,294] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:43:57,297] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:43:57,557] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:43:58,064] INFO  [WFS-Factory]  - XML Document with 32 features successfully created.
+[2014-02-27 12:43:58,141] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:43:58,147] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:43:58,147] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:43:58,149] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:43:58,209] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:43:58,223] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:44:23,460] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:44:23,755] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:44:23,904] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:44:24,010] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 12:44:24,212] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 12:44:34,389] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:44:34,389] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:44:34,391] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:44:34,432] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:44:34,445] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:44:37,086] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature ts0:world ...
+[2014-02-27 12:44:37,086] INFO  [WFS-Factory]  - Listing available predicates for ts0:world ...
+[2014-02-27 12:44:37,091] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/world> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-27 12:44:37,170] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for ts0:world ...
+[2014-02-27 12:44:37,173] INFO  [WFS-Factory]  - Getting geometry type for ts0:world ...
+[2014-02-27 12:44:37,174] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?wkt 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/world> { 
+ 	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+ 	?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt 
+ }} LIMIT 1 
+
+
+
+[2014-02-27 12:44:37,197] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:44:40,207] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature ts0:world ...
+[2014-02-27 12:44:40,207] INFO  [WFS-Factory]  - Listing available predicates for ts0:world ...
+[2014-02-27 12:44:40,208] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/world> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-27 12:44:40,292] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for ts0:world ...
+[2014-02-27 12:44:40,293] INFO  [WFS-Factory]  - Getting geometry type for ts0:world ...
+[2014-02-27 12:44:40,294] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?wkt 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/world> { 
+ 	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+ 	?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt 
+ }} LIMIT 1 
+
+
+
+[2014-02-27 12:44:40,310] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:44:40,313] INFO  [Web-Interface]  - Processing GetFeature request for the feature ts0:world ...
+[2014-02-27 12:44:40,313] INFO  [WFS-Factory]  - Performing query at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs to retrieve all geometries of ts0:world  ...
+[2014-02-27 12:44:40,314] INFO  [WFS-Factory]  - Listing available predicates for ts0:world ...
+[2014-02-27 12:44:40,315] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/world> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-27 12:44:40,407] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?geometry 
+	?asWKT
+	?ID
+	?description
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/world> {
+	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+	?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?asWKT .
+	?geometry <http://www.w3.org/1999/02/22-rdf-syntax-ns#ID> ?ID .
+	?geometry <http://purl.org/dc/elements/1.1/description> ?description .
+ }}
+
+
+[2014-02-27 12:44:40,430] INFO  [WFS-Factory]  - Creating GetFeature XML document for ts0:world...
+[2014-02-27 12:44:41,749] INFO  [WFS-Factory]  - XML Document with 245 features successfully created.
+[2014-02-27 12:44:41,917] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:44:42,016] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:44:42,016] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:44:42,018] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:44:42,051] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:44:42,062] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:44:45,109] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:44:45,110] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:44:45,111] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:44:45,150] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:44:45,160] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:44:47,281] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature ts0:brazil_municipalities ...
+[2014-02-27 12:44:47,282] INFO  [WFS-Factory]  - Listing available predicates for ts0:brazil_municipalities ...
+[2014-02-27 12:44:47,283] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-27 12:44:49,165] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for ts0:brazil_municipalities ...
+[2014-02-27 12:44:49,167] INFO  [WFS-Factory]  - Getting geometry type for ts0:brazil_municipalities ...
+[2014-02-27 12:44:49,168] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?wkt 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> { 
+ 	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+ 	?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt 
+ }} LIMIT 1 
+
+
+
+[2014-02-27 12:44:49,182] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:44:49,185] INFO  [Web-Interface]  - Processing GetFeature request for the feature ts0:brazil_municipalities ...
+[2014-02-27 12:44:49,185] INFO  [WFS-Factory]  - Performing query at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs to retrieve all geometries of ts0:brazil_municipalities  ...
+[2014-02-27 12:44:49,185] INFO  [WFS-Factory]  - Listing available predicates for ts0:brazil_municipalities ...
+[2014-02-27 12:44:49,186] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) 
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> { 
+        ?geometry ?predicate ?object . 
+        ?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> .}  
+		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) 
+ } 
+
+
+
+[2014-02-27 12:44:50,746] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?geometry 
+	?asWKT
+	?mslink
+	?mapid
+	?codigo
+	?geocodigo
+	?area
+	?nome
+	?perimetro
+	?sede
+	?latitudese
+	?longitudese
+	?total
+	?area12
+	?len
+ WHERE { GRAPH <http://ifgi.lod4wfs.de/layer/brazil_municipalities> {
+	?geometry a <http://www.opengis.net/ont/geosparql/1.0#Geometry> . 
+	?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?asWKT .
+	?geometry <http://test.vocabulary.com/mslink> ?mslink .
+	?geometry <http://test.vocabulary.com/mapid> ?mapid .
+	?geometry <http://test.vocabulary.com/codigo> ?codigo .
+	?geometry <http://test.vocabulary.com/geocodigo> ?geocodigo .
+	?geometry <http://test.vocabulary.com/area_1> ?area .
+	?geometry <http://test.vocabulary.com/nome> ?nome .
+	?geometry <http://test.vocabulary.com/perimetro> ?perimetro .
+	?geometry <http://test.vocabulary.com/sede> ?sede .
+	?geometry <http://test.vocabulary.com/latitudese> ?latitudese .
+	?geometry <http://test.vocabulary.com/longitudese> ?longitudese .
+	?geometry <http://test.vocabulary.com/area_total> ?total .
+	?geometry <http://test.vocabulary.com/shape_area> ?area12 .
+	?geometry <http://test.vocabulary.com/shape_len> ?len .
+ }}
+
+
+[2014-02-27 12:44:50,769] INFO  [WFS-Factory]  - Creating GetFeature XML document for ts0:brazil_municipalities...
+[2014-02-27 12:45:01,717] INFO  [WFS-Factory]  - XML Document with 5799 features successfully created.
+[2014-02-27 12:45:02,075] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:45:03,140] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:45:03,140] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:45:03,141] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:45:03,468] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:45:03,474] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:45:07,254] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:45:07,254] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:45:07,257] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:45:07,281] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:45:07,286] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 12:45:09,111] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:humanitarian ...
+[2014-02-27 12:45:09,111] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:45:09,113] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:humanitarian ...
+[2014-02-27 12:45:09,116] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 12:45:09,118] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:humanitarian ...
+[2014-02-27 12:45:09,118] INFO  [WFS-Factory]  - Performing query at http://hxl.humanitarianresponse.info/sparql to retrieve all geometries of sparql:humanitarian  ...
+[2014-02-27 12:45:09,118] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:humanitarian ...
+[2014-02-27 12:45:09,120] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  hxl:  <http://hxl.humanitarianresponse.info/ns/#>
+
+SELECT  ?apl ?wkt
+WHERE
+  { ?apl <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> hxl:APL .
+    ?apl hxl:atLocation ?location .
+    ?location geo:hasGeometry ?geometry .
+    ?geometry geo:hasSerialization ?wkt
+  }
+ORDER BY ?name
+
+
+
+[2014-02-27 12:45:09,627] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:humanitarian...
+[2014-02-27 12:45:09,954] INFO  [WFS-Factory]  - XML Document with 32 features successfully created.
+[2014-02-27 12:45:09,961] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 12:45:09,981] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 12:45:09,981] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 12:45:09,982] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 12:45:10,013] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 12:45:10,021] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 15:06:01,473] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:06:01,769] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:06:01,885] ERROR [SPARQLFeatures-Factory]  - Invalid SPARQL Query at piracy.sparql. The correspondent layer won't be listed in the Capabilities Document.
+[2014-02-27 15:06:01,885] ERROR [SPARQLFeatures-Factory]  - 
+
+SELECT ?place (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt) 
+   WHERE {
+     ?event sem:eventType ?event_type .
+     ?event sem:hasPlace ?place .
+     ?place wgs84:lat ?lat .
+     ?place wgs84:long ?long .
+   }
+
+
+[2014-02-27 15:06:02,210] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:06:02,316] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:06:02,505] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 15:06:10,746] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 15:06:10,746] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:06:10,747] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:06:10,767] ERROR [SPARQLFeatures-Factory]  - Invalid SPARQL Query at piracy.sparql. The correspondent layer won't be listed in the Capabilities Document.
+[2014-02-27 15:06:10,767] ERROR [SPARQLFeatures-Factory]  - 
+
+SELECT ?place (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt) 
+   WHERE {
+     ?event sem:eventType ?event_type .
+     ?event sem:hasPlace ?place .
+     ?place wgs84:lat ?lat .
+     ?place wgs84:long ?long .
+   }
+
+
+[2014-02-27 15:06:10,784] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:06:10,798] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 15:06:14,739] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:piracy ...
+[2014-02-27 15:06:14,739] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:06:14,740] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+java.lang.NullPointerException
+	at com.hp.hpl.jena.sparql.lang.SPARQLParser.parse(SPARQLParser.java:35)
+	at com.hp.hpl.jena.query.QueryFactory.parse(QueryFactory.java:156)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:79)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:52)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:40)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getPredicatesDynamicFeatures(FactoryWFSJena.java:385)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.describeFeatureType(FactoryWFSJena.java:268)
+	at de.ifgi.lod4wfs.facade.Facade.describeFeatureType(Facade.java:43)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:150)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+[2014-02-27 15:07:03,261] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 15:07:03,261] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:07:03,266] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:07:03,302] ERROR [SPARQLFeatures-Factory]  - Invalid SPARQL Query at piracy.sparql. The correspondent layer won't be listed in the Capabilities Document.
+[2014-02-27 15:07:03,302] ERROR [SPARQLFeatures-Factory]  - SELECT ?place (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt) 
+   WHERE {
+     ?event sem:eventType ?event_type .
+     ?event sem:hasPlace ?place .
+     ?place wgs84:lat ?lat .
+     ?place wgs84:long ?long .
+   }
+
+[2014-02-27 15:07:03,319] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:07:03,330] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 15:07:05,383] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:piracy ...
+[2014-02-27 15:07:05,383] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:07:05,383] WARN  [org.eclipse.jetty.servlet.ServletHandler]  - /lod4wfs/wfs
+java.lang.NullPointerException
+	at com.hp.hpl.jena.sparql.lang.SPARQLParser.parse(SPARQLParser.java:35)
+	at com.hp.hpl.jena.query.QueryFactory.parse(QueryFactory.java:156)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:79)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:52)
+	at com.hp.hpl.jena.query.QueryFactory.create(QueryFactory.java:40)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.getPredicatesDynamicFeatures(FactoryWFSJena.java:385)
+	at de.ifgi.lod4wfs.factory.FactoryWFSJena.describeFeatureType(FactoryWFSJena.java:268)
+	at de.ifgi.lod4wfs.facade.Facade.describeFeatureType(Facade.java:43)
+	at de.ifgi.lod4wfs.web.ServletWFS.doGet(ServletWFS.java:150)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:735)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:848)
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:669)
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:457)
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:229)
+	at org.eclipse.jetty.server.handler.ContextHandler.doHandle(ContextHandler.java:1075)
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:384)
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:193)
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1009)
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:135)
+	at org.eclipse.jetty.server.handler.ContextHandlerCollection.handle(ContextHandlerCollection.java:255)
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:116)
+	at org.eclipse.jetty.server.Server.handle(Server.java:368)
+	at org.eclipse.jetty.server.AbstractHttpConnection.handleRequest(AbstractHttpConnection.java:489)
+	at org.eclipse.jetty.server.AbstractHttpConnection.headerComplete(AbstractHttpConnection.java:942)
+	at org.eclipse.jetty.server.AbstractHttpConnection$RequestHandler.headerComplete(AbstractHttpConnection.java:1004)
+	at org.eclipse.jetty.http.HttpParser.parseNext(HttpParser.java:640)
+	at org.eclipse.jetty.http.HttpParser.parseAvailable(HttpParser.java:235)
+	at org.eclipse.jetty.server.AsyncHttpConnection.handle(AsyncHttpConnection.java:82)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint.handle(SelectChannelEndPoint.java:628)
+	at org.eclipse.jetty.io.nio.SelectChannelEndPoint$1.run(SelectChannelEndPoint.java:52)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:608)
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$3.run(QueuedThreadPool.java:543)
+	at java.lang.Thread.run(Thread.java:744)
+[2014-02-27 15:10:33,796] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:10:34,077] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:10:34,506] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:10:34,620] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:10:34,782] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 15:10:37,810] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 15:10:37,811] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:10:37,812] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:10:37,859] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:10:37,872] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 15:10:40,231] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:piracy ...
+[2014-02-27 15:10:40,231] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:10:40,235] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:piracy ...
+[2014-02-27 15:10:40,239] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 15:10:40,241] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:10:40,241] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:10:40,241] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:10:40,245] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:10:45,387] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:10:45,392] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:10:45,397] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 15:10:45,397] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:10:45,399] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:10:45,441] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:10:45,456] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 15:11:22,356] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:11:22,356] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:11:22,356] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:11:22,359] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:11:27,478] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:11:27,480] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:11:56,823] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:11:57,113] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:11:57,268] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:11:57,370] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:11:57,558] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 15:11:58,810] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:11:58,811] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:11:58,811] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:11:58,816] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:12:03,943] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:12:03,951] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:12:36,890] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:12:37,194] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:12:37,621] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:12:37,721] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:12:37,881] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 15:12:40,224] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:12:40,225] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:12:40,225] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:12:40,229] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:12:45,358] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:12:45,364] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:13:26,483] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:13:26,767] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:13:26,908] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:13:27,011] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:13:27,180] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 15:13:28,683] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:13:28,685] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:13:28,685] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:13:28,688] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:13:34,252] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:13:34,260] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:14:35,701] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:14:35,701] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:14:35,701] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:14:35,706] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:14:40,829] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:14:40,835] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:15:20,380] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:15:20,668] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:15:21,157] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:15:21,258] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:15:21,438] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 15:15:22,192] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:15:22,193] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:15:22,193] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:15:22,197] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", ?long, " ", ?lat, ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:15:27,323] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:15:27,329] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:19:19,277] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:19:19,574] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:19:20,010] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:19:20,117] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:19:20,260] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED SelectChannelConnector@0.0.0.0:8088: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:84)
+[2014-02-27 15:19:20,262] WARN  [org.eclipse.jetty.util.component.AbstractLifeCycle]  - FAILED org.eclipse.jetty.server.Server@489d5505: java.net.BindException: Address already in use
+java.net.BindException: Address already in use
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Net.java:444)
+	at sun.nio.ch.Net.bind(Net.java:436)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(ServerSocketChannelImpl.java:214)
+	at sun.nio.ch.ServerSocketAdaptor.bind(ServerSocketAdaptor.java:74)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.open(SelectChannelConnector.java:187)
+	at org.eclipse.jetty.server.AbstractConnector.doStart(AbstractConnector.java:316)
+	at org.eclipse.jetty.server.nio.SelectChannelConnector.doStart(SelectChannelConnector.java:265)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at org.eclipse.jetty.server.Server.doStart(Server.java:291)
+	at org.eclipse.jetty.util.component.AbstractLifeCycle.start(AbstractLifeCycle.java:64)
+	at de.ifgi.lod4wfs.web.Start.main(Start.java:84)
+[2014-02-27 15:19:25,377] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:19:25,681] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:19:25,821] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:19:25,919] INFO  [org.eclipse.jetty.server.Server]  - jetty-8.1.10.v20130312
+[2014-02-27 15:19:26,085] INFO  [org.eclipse.jetty.server.AbstractConnector]  - Started SelectChannelConnector@0.0.0.0:8088
+[2014-02-27 15:19:28,264] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 15:19:28,264] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:19:28,266] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:19:28,317] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:19:28,329] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 15:19:37,227] INFO  [Web-Interface]  - Processing DescribeFeatureType request for the feature sparql:piracy ...
+[2014-02-27 15:19:37,227] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:19:37,232] INFO  [WFS-Factory]  - Creating DescribeFeatureType XML document for sparql:piracy ...
+[2014-02-27 15:19:37,236] INFO  [Web-Interface]  - DescribeFeatureType request delivered.
+[2014-02-27 15:19:37,239] INFO  [Web-Interface]  - Processing GetFeature request for the feature sparql:piracy ...
+[2014-02-27 15:19:37,239] INFO  [WFS-Factory]  - Performing query at http://semanticweb.cs.vu.nl/lop/sparql/ to retrieve all geometries of sparql:piracy  ...
+[2014-02-27 15:19:37,239] INFO  [WFS-Factory]  - Listing available predicates for the dynamic feature sparql:piracy ...
+[2014-02-27 15:19:37,242] INFO  [JenaConnector]  - Query fired -> 
+
+PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT  ?place (concat("POINT(", str(?long), " ", str(?lat), ")") AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+
+
+
+[2014-02-27 15:19:42,378] INFO  [WFS-Factory]  - Creating GetFeature XML document for sparql:piracy...
+[2014-02-27 15:19:43,836] INFO  [WFS-Factory]  - XML Document with 2426 features successfully created.
+[2014-02-27 15:19:44,024] INFO  [Web-Interface]  - GetFeature request delivered. 
+
+[2014-02-27 15:19:44,097] INFO  [Web-Interface]  - Processing GetCapabilities  ...
+[2014-02-27 15:19:44,098] INFO  [WFS-Factory]  - Listing geographic layers at http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/agile-lod4wfs ...
+[2014-02-27 15:19:44,100] INFO  [JenaConnector]  - Query fired -> 
+
+ SELECT ?graphName ?abstract ?keywords ?title ?wkt 
+ WHERE { GRAPH ?graph { 
+	?graphName <http://purl.org/dc/terms/abstract> ?abstract . 
+	?graphName <http://purl.org/dc/terms/title> ?title . 
+	?graphName <http://purl.org/dc/terms/subject> ?keywords  . 
+	{ SELECT DISTINCT ?wkt WHERE { 
+		GRAPH ?graph {?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt} } LIMIT 1 }} 
+ }
+
+
+
+[2014-02-27 15:19:44,135] INFO  [WFS-Factory]  - Creating Capabilities Document of 192.168.17.1:8088/lod4wfs/wfs ...
+[2014-02-27 15:19:44,146] INFO  [Web-Interface]  - GetCapabilities request delivered. 
+[2014-02-27 18:11:26,071] INFO  [SPARQLFeatures-Factory]  - URL cannot be resolved -> http://hxl.humanitarianresponse.info/sparql

@@ -172,13 +172,14 @@ public class FactorySPARQLFeatures {
 			URL url = new URL(endpoint);
 			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
 			
-//			int responseCode = huc.getResponseCode();
+			int responseCode = huc.getResponseCode();
 			
-			//TODO: Implement function to validate endpoint.
-//			if (responseCode == 404) {
-//				System.out.println("URL cannot be resolved -> " + endpoint);
-//				//result = false;
-//			}
+			//TODO: Implement function to validate Endpoint
+			if (responseCode == 404) {
+				
+				logger.info("URL cannot be resolved -> " + endpoint);
+				//result = false;
+			}
 			
 		} catch (MalformedURLException e) {
 			result = false;
