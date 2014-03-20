@@ -6,15 +6,24 @@
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="com.hp.hpl.jena.query.ARQ"%>
 <%@ page import="java.net.URLEncoder"%>
-
-<HTML>
-<HEAD>
-<TITLE>LOD4WFS Administration Interface</TITLE>
-</HEAD>
-
-<BODY>
-	
-	<%
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>LOD4WFS Administration Interface</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+</head>
+<body>
+<div class="bs-docs-featurette">
+  <div class="container">
+    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.1)</small></h2>
+    <hr />
+    <p> <a href="index.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-home"></span> Home</a> <a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Manage Layers</a> </p>
+    <hr />
+    <div class="panel panel-primary">
+      <div class="panel-heading"> Feature Preview </div>
+      <div class="panel-body">
+        <%
  			
 		WFSFeature feature = new WFSFeature();
 		boolean isValidEntry = true;
@@ -87,49 +96,65 @@
 		if(isValidEntry){
 			
 		%>
-			<a href="index.jsp">Home</a>
-			<h1>Feature Preview</h1>
-			
-			<FORM NAME="form1" method ="POST">
-	
-				<table border="1">
-					<tr>				
-						<td>SPARQL Endpoint </td>
-						<td><INPUT style="width: 800px; TYPE="text" NAME="endpoint" value="<%=feature.getEndpoint()%>" readonly/></td>
-					</tr>				
-					<tr>
-						<td>Feature Name </td>
-						<td><INPUT style="width: 800px; TYPE="text" NAME="feature" value="<%=feature.getName().toLowerCase()%>" readonly/></td>
-					</tr>
-					<tr>
-	 					<td>Title </td> 					
-	 					<td><INPUT style="width: 800px; TYPE="text" NAME="title" value="<%=feature.getTitle()%>" readonly/></td>
-				 	</tr>
-				 	<tr>
-				 		<td>Abstract </td>
-				 		<td><INPUT style="width: 800px; TYPE="text" NAME="abstract" value="<%=feature.getFeatureAbstract()%>" readonly/></td>
-				 	</tr>
-				 	<tr>
-				 		<td>Key-words </td>
-				 		<td><INPUT style="width: 800px; TYPE="text" NAME="keywords" value="<%=feature.getKeywords()%>" readonly/></td>
-				 	</tr>
-					<tr>
-						<td>Geometry Variable </td>
-						<td><INPUT style="width: 800px; TYPE="text" NAME="variable" value="<%=feature.getGeometryVariable()%>" readonly/></td>
-					</tr>
-					<tr>
-						<td>SPARQL Query </td>
-						<td><textarea style="width: 800px; height: 400px; TYPE="text" NAME="query" value="<%=Facade.getInstance().forHTML(feature.getQuery())%>" readonly><%=feature.getQuery()%></textarea></td>
-					</tr>  
-								
-				</table>
-
-		
-			<input type="submit" id="btnCreate" name="store" value="Save" />
-			
-			</FORM>
-				
-				<% 
+        <FORM NAME="form1" method="POST" class="form-horizontal">
+          <div class="form-group">
+            <label for="endpoint" class="col-sm-2 control-label">SPARQL Endpoint</label>
+            <div class="col-sm-10">
+              <%-- <input type="text" id="endpoint" class="form-control" name="endpoint" value="<%=feature.getEndpoint()%>" readonly/> --%>
+              <code ><%=feature.getEndpoint()%></code>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="feature" class="col-sm-2 control-label">Feature Name</label>
+            <div class="col-sm-10">
+              <%-- <input type="text" id="feature" name="feature" class="form-control" value="<%=feature.getName().toLowerCase()%>" readonly/> --%>
+              <code ><%=feature.getName().toLowerCase()%></code>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title" class="col-sm-2 control-label">Title</label>
+            <div class="col-sm-10">
+              <%-- <input type="text" id="title" name="title" class="form-control" value="<%=feature.getTitle()%>" readonly/> --%>
+              <code ><%=feature.getTitle()%></code>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="abstract" class="col-sm-2 control-label">Abstract</label>
+            <div class="col-sm-10">
+              <%-- <input type="text" id="abstract" name="abstract" class="form-control" value="<%=feature.getFeatureAbstract()%>" readonly/> --%>
+              <code ><%=feature.getFeatureAbstract()%></code>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="keywords" class="col-sm-2 control-label">Key-words</label>
+            <div class="col-sm-10">
+              <%-- <input type="text" id="keywords" name="keywords" class="form-control" value="<%=feature.getKeywords()%>" readonly/> --%>
+              <code "><%=feature.getKeywords()%></code>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="variable" class="col-sm-2 control-label">Geometry Variable</label>
+            <div class="col-sm-10">
+              <%-- <input type="text" id="variable" name="variable" class="form-control" value="<%=feature.getGeometryVariable()%>" readonly/> --%>
+              <code "><%=feature.getGeometryVariable()%></code>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="query" class="col-sm-2 control-label">SPARQL Query</label>
+            <div class="col-sm-10">
+              <textarea id="query" name="query" class="form-control" rows="13" readonly><%=feature.getQuery()%></textarea>
+              <%-- <code><%=feature.getQuery()%></code> --%>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <input type="submit" id="btnCreate" name="store" value="Save" class="btn btn-success"/>
+            </div>
+          </div>
+        </FORM>
+      </div>
+    </div>
+   <div class="row"> <div class="col-md-offset-2 col-md-8"><% 
 				
 				if(request.getParameter("store")!=null){
 					
@@ -151,14 +176,14 @@
 		 	        	query.setLimit(previewLimit);
 		 	        }
 		 	        
-		 	       out.println("* Limited to the first " + previewLimit + " records.");
+		 	       out.println("<p>* Limited to the first " + previewLimit + " records.</p>");
 
 	 	        	 	       
 		 	        ResultSet results = Facade.getInstance().executeQuery(query.toString(), request.getParameter("endpoint"));
 	 				        
 		 			
-		 			out.println("<table border=\"1\">");
-		 			out.println("<tr>");
+		 			out.println("<table border=\"1\" class='table table-condensed table-hover table-striped table-bordered'>");
+		 			out.println("<thead><tr>");
 		 			
 		 			for (int i = 0; i < query.getResultVars().size(); i++) {	
 	
@@ -166,7 +191,7 @@
 			 			
 		 			}
 		 			
-		 			out.println("</tr>");
+		 			out.println("</tr></thead><tbody>");
 		 			
 		 			while (results.hasNext()) {
 		 	            
@@ -195,13 +220,15 @@
 		 	 			out.println("</tr>");
     
 		 	        }
-		 			out.println("</table>");
+		 			out.println("</tbody></table>");
 
 		 		}
 	
 			}	
- 		%>
-		
+ 		%></div></div>
+         <hr />
+    
+  </div>
+</div>
 </BODY>
-
 </HTML>
