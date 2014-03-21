@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -270,6 +272,13 @@ public class FactoryWFSJena {
 		} else { 
 				
 			predicates = this.getPredicatesStandardFeatures(feature);
+			
+			//TODO: Verify the need of manual input of geometry predicate
+			Triple triple = new Triple();
+			triple.setPredicate(GlobalSettings.getGeometryPredicate().replace("<", "").replace(">", ""));
+			
+			predicates.add(triple);
+			
 		}
 		
 		try {
@@ -277,7 +286,6 @@ public class FactoryWFSJena {
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
 			
-			//Document document = documentBuilder.parse("src/main/resources/wfs/DescribeFeature_100.xml");
 			Document document = documentBuilder.parse("wfs/DescribeFeature_100.xml");
 					
 			logger.info("Creating DescribeFeatureType XML document for " + feature.getName() + " ...");
@@ -401,19 +409,15 @@ public class FactoryWFSJena {
 
 		logger.info("Listing available predicates for " + feature.getName() + " ...");
 	
-		ResultSet rs = jn.executeQuery(SPARQL.listGeometryPredicates.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())), GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.listFeaturePredicates.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())), GlobalSettings.default_SPARQLEndpoint);
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
 				
 		while (rs.hasNext()) {
 
 			Triple triple = new Triple();
-
 			QuerySolution soln = rs.nextSolution();
-			//triple.setPredicate(modelNameSpaces.shortForm(soln.getResource("?predicate").toString()));
 			triple.setPredicate(soln.getResource("?predicate").toString());
-
-			//System.out.println("Predicate from getPredicatesStandard" + triple.getPredicate());
 			
 			if (soln.get("?dataType")==null) {
 
@@ -421,13 +425,15 @@ public class FactoryWFSJena {
 
 			} else {
 
-				//triple.setObjectDataType(modelNameSpaces.shortForm(soln.getResource("?dataType").getURI()));
 				triple.setObjectDataType(soln.getResource("?dataType").toString().replace(GlobalSettings.getXsdNameSpace(), "xsd:"));
 			}
 
+		
 			result.add(triple);			   
 		}
 
+
+		
 		return result;
 	}
 
@@ -439,7 +445,6 @@ public class FactoryWFSJena {
 
 		logger.info("Getting geometry type for " + feature.getName() + " ...");
 		
-		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())),GlobalSettings.default_SPARQLEndpoint);
 
 		String geometryCoordinates = new String();
@@ -490,18 +495,22 @@ public class FactoryWFSJena {
 			predicates = this.getPredicatesDynamicFeatures(feature);
 			rs = jn.executeQuery(feature.getQuery().toString(),feature.getEndpoint());
 			
-			System.out.println("Endpoint --> "+feature.getEndpoint());
+			//System.out.println("Endpoint --> "+feature.getEndpoint());
 			
 		} else {
 		
 			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + feature.getName() + "  ...");
-			predicates = this.getPredicatesStandardFeatures(feature);					
+			predicates = this.getPredicatesStandardFeatures(feature);	
+			
+			
 			rs = jn.executeQuery(this.generateGetFeatureSPARQL(feature, predicates),GlobalSettings.default_SPARQLEndpoint);
 			
 		}
 		
+		
+		
 		layerPrefix = modelFeatures.shortForm(feature.getName());
-		System.out.println(layerPrefix);
+		//System.out.println(layerPrefix);
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
 		
@@ -529,6 +538,13 @@ public class FactoryWFSJena {
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
 
+			
+			if(!isDynamic(feature)){
+				Triple triple = new Triple();
+				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+				predicates.add(triple);		
+			}
+			
 			while (rs.hasNext()) {
 				countIteration++;
 				
@@ -539,15 +555,17 @@ public class FactoryWFSJena {
 				Element currentGeometryElement = document.createElement(modelFeatures.shortForm(feature.getName()));
 				
 				
-				currentGeometryElement.setAttribute("fid", currentGeometryName + "." + countIteration);				
+				currentGeometryElement.setAttribute("fid", currentGeometryName + "" + countIteration);				
 
 				Element rootGeometry = document.createElement("gml:featureMember");
 								
+				
 				for (int i = 0; i < predicates.size(); i++) {
 
 					if(isDynamic(feature)){
 						
 						Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
+												
 						
 						if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
 														
@@ -583,12 +601,13 @@ public class FactoryWFSJena {
 						
 						Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
 																				
-						//if (predicates.get(i).getPredicate().equals("geo:asWKT")) {			
+						//TODO: Add
+						
 						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 							
 							//TODO: Automatic generate getGeometryVariable
 							
-							if(!FactorySPARQLFeatures.getGeometryType(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
+							if(!FactorySPARQLFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 															
 								String gml = this.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
@@ -662,7 +681,7 @@ public class FactoryWFSJena {
 			}
 			
 			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.crlf ;
-			whereClause = whereClause + "	?geometry <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.crlf ; 
+			whereClause = whereClause + "	?feature <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.crlf ; 
 
 			
 			variables.add(SPARQL_Variable);
@@ -670,9 +689,15 @@ public class FactoryWFSJena {
 
 		String SPARQL = new String();
 
-		SPARQL = " SELECT ?geometry "+ GlobalSettings.crlf + selectClause +
+		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.crlf ;
+		
+		SPARQL = " SELECT ?geometry " + GlobalSettings.crlf + selectClause +
 				 " WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" + GlobalSettings.crlf +
-				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . "+ GlobalSettings.crlf + whereClause + " }}";
+				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.crlf +
+				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.crlf +
+				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.crlf + 
+				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.crlf +
+				 whereClause + " }}";
 
 		return SPARQL;
 		
@@ -784,12 +809,23 @@ public class FactoryWFSJena {
 		
 			if(wkt.contains("<") && wkt.contains(">")){
 				String CRS = new String();
+			
 				
-				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));// .replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
+				//Extracting Reference System
+				if(wkt.contains("<") && wkt.contains(">")){
+					
+					CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));// .replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
+					wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+					
+				}
 				
-				//HERE			
-				//wkt = removeReferenceSystem(wkt);
-				
+				//Removing Literal Type
+				if(wkt.contains("^^")){
+					
+					wkt = wkt.substring(0, wkt.indexOf("^^"));
+					
+				}
+								
 				gml = WKTParser.parseToGML2(wkt,CRS);
 				
 				

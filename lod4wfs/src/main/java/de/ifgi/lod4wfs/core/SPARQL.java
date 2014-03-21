@@ -10,12 +10,14 @@ package de.ifgi.lod4wfs.core;
 public class SPARQL {
 	
 	
-	public static String listGeometryPredicates = 
+	public static String listFeaturePredicates = 
 										" SELECT DISTINCT ?predicate (datatype(?object) AS ?dataType) " + GlobalSettings.crlf +
 										" WHERE { GRAPH <PARAM_LAYER> { " + GlobalSettings.crlf +
 										"        ?geometry ?predicate ?object . " + GlobalSettings.crlf +
-										"        ?geometry a " + GlobalSettings.getGeometryClass() + " .}  " + GlobalSettings.crlf +
-										"		 FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) " + GlobalSettings.crlf +
+										"		?geometry a <http://www.opengis.net/ont/geosparql/1.0#Feature>. " + GlobalSettings.crlf +
+										"		} " +
+										"		FILTER(?predicate != <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ) " + GlobalSettings.crlf +
+										"		FILTER(?predicate != " + GlobalSettings.getFeatureConnector() + " ) " + GlobalSettings.crlf +
 										" } " + GlobalSettings.crlf  ; 
 	
 	public static String listNamedGraphs =  
@@ -35,42 +37,3 @@ public class SPARQL {
 											" }} LIMIT 1 " + GlobalSettings.crlf ;
 			
 }
-
-
-/*
-PREFIX geo:  <http://www.opengis.net/spec/geosparql/1.0#> 
-PREFIX dct: <http://purl.org/dc/terms/> 
-
-SELECT ?feature ?title ?abstract ?keywords WHERE {
-   ?feature a geo:SpatialObject .
-   ?feature dct:abstract ?abstract .
-   ?feature dct:title ?title .
-   ?feature dct:subject ?keywords
-}
-
-
-#List spatial objects and counts its geometries
-PREFIX geo:  <http://www.opengis.net/spec/geosparql/1.0#> 
-PREFIX dct: <http://purl.org/dc/terms/> 
-
-SELECT ?feature (COUNT(?geometries) AS ?numberGeometries) WHERE {
-   ?feature a geo:SpatialObject .
-   ?feature geo:hasGeometry ?geometries .
-} GROUP BY ?feature
-
-
-# calculating bbox and envelope
-
-PREFIX geo:  <http://www.opengis.net/ont/geosparql/1.0#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-PREFIX sf: <http://www.opengis.net/ont/sf#>
-
-SELECT 
-*
-WHERE {
-   ?geom geo:asWKT ?wkt .
-   BIND(geof:boundary(?wkt) as ?bbox) .
-   BIND(geof:envelope(?wkt) as ?envelope) .
-} LIMIT 10
-
-*/

@@ -45,6 +45,9 @@ public class GlobalSettings {
     private static String geometryVariable ="";
     private static String sparqlDirectory ="";
     private static String dynamicFeaturesNameSpace = "";
+    private static String predicatesContainer = "";
+    private static String featureConnector= "";
+    
     private static int previewLimit = 5;
     
     public static String getDynamicFeaturesNameSpace(){
@@ -86,11 +89,22 @@ public class GlobalSettings {
     public static int getPreviewLimit(){
         return previewLimit;
     }
+
+    public static String getPredicatesContainer(){
+        return predicatesContainer;
+    }
+
+    public static String getFeatureConnector(){
+        return featureConnector;
+    }
+    
     
     public static void loadVariables(){
 	       
 	        Wini ini;
+	        
 	        try {
+	        	
 	            ini = new Wini(new File("settings/settings.jim"));
 
 	            titlePredicate = ini.get("GetCapabilities", "title");           
@@ -100,6 +114,8 @@ public class GlobalSettings {
 	            geometryPredicate = ini.get("Geometry", "geometryPredicate");
 	            geometryClass = ini.get("Geometry", "geometryClass");
 	            geometryVariable = ini.get("Geometry", "geometryVariable");
+	            predicatesContainer = ini.get("Geometry", "predicatesContainer");
+	            featureConnector = ini.get("Geometry", "featureConnector");
 	            
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
 	            dynamicFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");

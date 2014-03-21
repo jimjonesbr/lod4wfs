@@ -43,7 +43,7 @@
      	</tr>
      </table>
     
-    <hr/>     Copyright © Institut f&#252;r Geoinformatik, 2014
+    <hr/>     Copyright © Institut f&#252;r Geoinformatik 2014
 </div>
 	
 </body>

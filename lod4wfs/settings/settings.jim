@@ -7,7 +7,8 @@ keywords = <http://purl.org/dc/terms/subject>
 geometryPredicate = <http://www.opengis.net/ont/geosparql/1.0#asWKT>
 geometryVariable = asWKT
 geometryClass = <http://www.opengis.net/ont/geosparql/1.0#Geometry>
-featureConnector = http://www.opengis.net/ont/geosparql/1.0#hasGeometry
+predicatesContainer = <http://www.opengis.net/ont/geosparql/1.0#Feature>
+featureConnector = <http://www.opengis.net/ont/geosparql/1.0#hasGeometry>
 wktLiteral = <http://www.opengis.net/ont/sf#wktLiteral>
 
 ## Don't touch the [SystemDefaults] variables, unless you really know what you're doing.
