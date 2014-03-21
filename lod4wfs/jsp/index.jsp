@@ -34,10 +34,15 @@
     </div>
      <hr />
      A project of: <br><br>
-    <a href="http://lodum.de/life" target="_blank"><img width="145" height="90" src="img/life_logo.png" /></a>
-    <a href="http://lodum.de" target="_blank"><img width="220" height="90" src="img/lodum_logo.png" /></a>
-    <a href="http://ifgi.uni-muenster.de" target="_blank"><img width="240" height="90" src="img/ifgi_logo.jpg" /></a>
-    <a href="http://www.uni-muenster.de/de/" target="_blank"><img width="340" height="85" src="img/wwu_logo.jpg" /></a>
+     <table>
+     	<tr>
+     		<td width="400" align="center"><a href="http://lodum.de/life" target="_blank"><img width="145" height="90" src="img/life_logo.png" /></a></td>
+     		<td width="400" align="center"><a href="http://lodum.de" target="_blank"><img width="220" height="90" src="img/lodum_logo.png" /></a></td>
+     		<td width="400" align="center"><a href="http://ifgi.uni-muenster.de" target="_blank"><img width="240" height="90" src="img/ifgi_logo.jpg" /></a></td>
+     		<td width="400" align="center"><a href="http://www.uni-muenster.de/de/" target="_blank"><img width="340" height="85" src="img/wwu_logo.jpg" /></a></td>
+     	</tr>
+     </table>
+    
     <hr/>     Copyright © Institut f&#252;r Geoinformatik, 2014
 </div>
 	
