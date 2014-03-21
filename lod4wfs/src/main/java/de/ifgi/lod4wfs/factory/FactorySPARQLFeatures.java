@@ -74,8 +74,6 @@ public class FactorySPARQLFeatures {
 					JsonReader jsonReader = new JsonReader(fileReader);
 					jsonReader.beginObject();
 						
-					//System.out.println(file.getName());
-
 					while (jsonReader.hasNext()) {
 
 						String record = jsonReader.nextName();
@@ -333,6 +331,7 @@ public class FactorySPARQLFeatures {
 		
 		try {
 			WKTParser.parseToGML2(wkt);
+			
 			}
 		catch(Exception e) {
 			result = false;
@@ -342,10 +341,35 @@ public class FactorySPARQLFeatures {
 		
 	}
 	
+	
+//	private String removeReferenceSystem(String wkt){
+//		
+//		if(wkt.contains("<") && wkt.contains(">")){
+//			
+//			wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+//
+//		}
+//
+//		return wkt;
+//	}
+
+	
 	public static String getGeometryType(String wkt){
 		
 		String result = new String();
 						
+		if(wkt.contains("<") && wkt.contains(">")){
+			
+			wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+
+		}
+		
+		if(wkt.contains("^^")){
+			
+			wkt = wkt.substring(0, wkt.indexOf("^^"));
+			
+		}
+		
 		if(isGeometryValid(wkt.toUpperCase())){
 			
 			try {

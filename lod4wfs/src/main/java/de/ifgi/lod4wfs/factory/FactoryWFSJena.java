@@ -441,7 +441,7 @@ public class FactoryWFSJena {
 		
 		//ResultSet rs = jn.executeQuery(this.getPrefixes(modelNameSpaces) + SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())),GlobalSettings.default_SPARQLEndpoint);
-		//System.out.println("DELETE ME --> "+SPARQL.getFeatureType.replace("PARAM_LAYER", modelLayers.expandPrefix(layer.getName())));
+
 		String geometryCoordinates = new String();
 		
 		
@@ -588,7 +588,7 @@ public class FactoryWFSJena {
 							
 							//TODO: Automatic generate getGeometryVariable
 							
-							if(!FactorySPARQLFeatures.getGeometryType(removeReferenceSystem(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString())).equals("INVALID")){
+							if(!FactorySPARQLFeatures.getGeometryType(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 															
 								String gml = this.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
@@ -765,16 +765,16 @@ public class FactoryWFSJena {
 	 * @return GML encoding of a given Well Known Text literal.
 	 */
 	
-	private String removeReferenceSystem(String wkt){
-	
-		if(wkt.contains("<") && wkt.contains(">")){
-			
-			wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
-
-		}
-
-		return wkt;
-	}
+//	private String removeReferenceSystem(String wkt){
+//		
+//		if(wkt.contains("<") && wkt.contains(">")){
+//			
+//			wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+//
+//		}
+//
+//		return wkt;
+//	}
 	
 	private String convertWKTtoGML(String wkt){
 		
@@ -787,8 +787,8 @@ public class FactoryWFSJena {
 				
 				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));// .replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
 				
-				//wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
-				wkt = removeReferenceSystem(wkt);
+				//HERE			
+				//wkt = removeReferenceSystem(wkt);
 				
 				gml = WKTParser.parseToGML2(wkt,CRS);
 				
