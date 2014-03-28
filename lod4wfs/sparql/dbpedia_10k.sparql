@@ -1,6 +1,6 @@
 {
 "name":"http://sparql.lod4wfs.de/dbpedia_10k",
-"title":"10k places in DBpedia",
+"title":"10k entries in DBpedia",
 "abstract":"10k random places in DBpedia. Retrieved via SPARQL.",
 "keywords":"dbpedia, places",
 "geometryVariable":"?wkt",

@@ -100,43 +100,43 @@
           <div class="form-group">
             <label for="endpoint" class="col-sm-2 control-label">SPARQL Endpoint</label>
             <div class="col-sm-10">
-              <%-- <input type="text" id="endpoint" class="form-control" name="endpoint" value="<%=feature.getEndpoint()%>" readonly/> --%>
-              <code ><%=feature.getEndpoint()%></code>
+              <input type="text" id="endpoint" class="form-control" name="endpoint" value="<%=feature.getEndpoint()%>" readonly/> 
+              <%--<code ><%=feature.getEndpoint()%></code> --%>
             </div>
           </div>
           <div class="form-group">
             <label for="feature" class="col-sm-2 control-label">Feature Name</label>
             <div class="col-sm-10">
-              <%-- <input type="text" id="feature" name="feature" class="form-control" value="<%=feature.getName().toLowerCase()%>" readonly/> --%>
-              <code ><%=feature.getName().toLowerCase()%></code>
+              <input type="text" id="feature" name="feature" class="form-control" value="<%=feature.getName().toLowerCase()%>" readonly/>
+              <%-- <code ><%=feature.getName().toLowerCase()%></code> --%>
             </div>
           </div>
           <div class="form-group">
             <label for="title" class="col-sm-2 control-label">Title</label>
             <div class="col-sm-10">
-              <%-- <input type="text" id="title" name="title" class="form-control" value="<%=feature.getTitle()%>" readonly/> --%>
-              <code ><%=feature.getTitle()%></code>
+              <input type="text" id="title" name="title" class="form-control" value="<%=feature.getTitle()%>" readonly/>
+              <%-- <code ><%=feature.getTitle()%></code> --%>
             </div>
           </div>
           <div class="form-group">
             <label for="abstract" class="col-sm-2 control-label">Abstract</label>
             <div class="col-sm-10">
-              <%-- <input type="text" id="abstract" name="abstract" class="form-control" value="<%=feature.getFeatureAbstract()%>" readonly/> --%>
-              <code ><%=feature.getFeatureAbstract()%></code>
+              <input type="text" id="abstract" name="abstract" class="form-control" value="<%=feature.getFeatureAbstract()%>" readonly/> 
+              <%-- <code ><%=feature.getFeatureAbstract()%></code>--%>
             </div>
           </div>
           <div class="form-group">
             <label for="keywords" class="col-sm-2 control-label">Key-words</label>
             <div class="col-sm-10">
-              <%-- <input type="text" id="keywords" name="keywords" class="form-control" value="<%=feature.getKeywords()%>" readonly/> --%>
-              <code "><%=feature.getKeywords()%></code>
+               <input type="text" id="keywords" name="keywords" class="form-control" value="<%=feature.getKeywords()%>" readonly/> 
+              <%-- <code "><%=feature.getKeywords()%></code>--%>
             </div>
           </div>
           <div class="form-group">
             <label for="variable" class="col-sm-2 control-label">Geometry Variable</label>
             <div class="col-sm-10">
-              <%-- <input type="text" id="variable" name="variable" class="form-control" value="<%=feature.getGeometryVariable()%>" readonly/> --%>
-              <code "><%=feature.getGeometryVariable()%></code>
+               <input type="text" id="variable" name="variable" class="form-control" value="<%=feature.getGeometryVariable()%>" readonly/> 
+              <%--<code "><%=feature.getGeometryVariable()%></code>--%>
             </div>
           </div>
           <div class="form-group">

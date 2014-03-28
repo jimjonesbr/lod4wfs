@@ -14,7 +14,7 @@ import com.google.gson.GsonBuilder;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.facade.Facade;
-import de.ifgi.lod4wfs.factory.FactorySPARQLFeatures;
+import de.ifgi.lod4wfs.factory.FactoryFDAFeatures;
 
 
 public class TestServer {
@@ -32,7 +32,7 @@ public class TestServer {
 	{
 
 		
-		System.out.println(FactorySPARQLFeatures.isFeatureNameValid("heiß"));
+		System.out.println(FactoryFDAFeatures.isFeatureNameValid("heiß"));
 
 	
 

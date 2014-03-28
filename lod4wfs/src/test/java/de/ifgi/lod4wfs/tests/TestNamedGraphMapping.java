@@ -16,7 +16,6 @@ import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 
 import de.ifgi.lod4wfs.core.WFSFeature;
-import de.ifgi.lod4wfs.factory.FactoryWFSJena;
 
 public class TestNamedGraphMapping {
 

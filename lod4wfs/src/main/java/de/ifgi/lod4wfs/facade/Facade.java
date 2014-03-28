@@ -7,8 +7,8 @@ import com.hp.hpl.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.EscapeChars;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
-import de.ifgi.lod4wfs.factory.FactorySPARQLFeatures;
-import de.ifgi.lod4wfs.factory.FactoryWFSJena;
+import de.ifgi.lod4wfs.factory.FactoryFDAFeatures;
+import de.ifgi.lod4wfs.factory.FactoryWFS;
 
 /**
  * 
@@ -18,12 +18,12 @@ import de.ifgi.lod4wfs.factory.FactoryWFSJena;
 public class Facade {
 
 	private static Facade instance;
-	private FactoryWFSJena factoryWFS;
-	private FactorySPARQLFeatures factorySPARQL;
+	private FactoryFDAFeatures factoryFDA;
+	private FactoryWFS factoryWFS;
 
 	public Facade(){
-		factoryWFS = new FactoryWFSJena();
-		factorySPARQL = new FactorySPARQLFeatures();
+		factoryFDA = new FactoryFDAFeatures();
+		factoryWFS = new FactoryWFS();
 	}
 
 	public static Facade getInstance() {
@@ -33,75 +33,89 @@ public class Facade {
 		return instance;
 	}
 
+	
+	//Methods for the WFS Interface
+	
 	public String getFeature(WFSFeature layer){
 
+		//return factorySDA.getFeature(layer);
 		return factoryWFS.getFeature(layer);
 	}
 
-	public String describeFeatureType(WFSFeature geographicLayer){
+	public String describeFeatureType(WFSFeature feature){
 
-		return factoryWFS.describeFeatureType(geographicLayer);
+		//return factorySDA.describeFeatureType(feature);
+		return factoryWFS.describeFeatureType(feature);
 	}
 
 	public String getCapabilities(String version){
 
+		//return factorySDA.getCapabilities(version);
 		return factoryWFS.getCapabilities(version);
 	}
 
-	public ArrayList<WFSFeature> listDynamicFeatures(){
+	
+	
+
+	
+	
+	//Methods for the Web Interface
+	
+	public ArrayList<WFSFeature> listFDAFeatures(){
 		
-		return factorySPARQL.listSPARQLFeatures(GlobalSettings.getSparqlDirectory());
+		return factoryFDA.listFDAFeatures(GlobalSettings.getSparqlDirectory());
 	}
 	
 	public void addFeature(WFSFeature feature){		
 		
-		FactorySPARQLFeatures.addFeature(feature);	
+		FactoryFDAFeatures.addFeature(feature);	
 		
 	}
 	
 	public boolean isQueryValid(String query){
 		
-		return FactorySPARQLFeatures.isQueryValid(query);
+		return FactoryFDAFeatures.isQueryValid(query);
 		
 	}
 	
 	public boolean isVariableValid(WFSFeature feature){
 		
-		return FactorySPARQLFeatures.isVariableValid(feature);
+		return FactoryFDAFeatures.isVariableValid(feature);
 		
 	}
 	
 	public boolean isEndpointValid(String endpoint){
 		
-		return FactorySPARQLFeatures.isEndpointValid(endpoint);
+		return FactoryFDAFeatures.isEndpointValid(endpoint);
 		
 	}
 	
 	public boolean isFeatureNameValid(String featureName){
 		
-		return FactorySPARQLFeatures.isFeatureNameValid(featureName);
+		System.out.println("DELETE ME FACTORY >> "+featureName);
+		return FactoryFDAFeatures.isFeatureNameValid(featureName);
 		
 	}
 	
 	public boolean existsFeature(String featureName){
 		
-		return FactorySPARQLFeatures.existsFeature(featureName);
+		return FactoryFDAFeatures.existsFeature(featureName);
 	}
 	
 	public void deleteFeature(WFSFeature feature){
 		
-		FactorySPARQLFeatures.deleteFeature(feature);
+		FactoryFDAFeatures.deleteFeature(feature);
 	}
 	
 	public ResultSet executeQuery(String SPARQL, String endpoint){
 		
-		return factorySPARQL.executeQuery(SPARQL, endpoint);
+		return factoryFDA.executeQuery(SPARQL, endpoint);
 		
 	}
 	
 	public WFSFeature getSPARQLFeature(String fileName){
 		
-		return factorySPARQL.getSPARQLFeature(fileName);
+		return factoryFDA.getFDAFeature(fileName);
 		
 	}
 	
@@ -113,7 +127,7 @@ public class Facade {
 	
 	public String getGeomeryType(String wkt){
 		
-		return FactorySPARQLFeatures.getGeometryType(wkt);
+		return FactoryFDAFeatures.getGeometryType(wkt);
 		
 	}
 	

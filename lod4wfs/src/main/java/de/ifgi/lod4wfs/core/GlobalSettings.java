@@ -2,13 +2,6 @@ package de.ifgi.lod4wfs.core;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.text.CharacterIterator;
-import java.text.StringCharacterIterator;
-import java.util.Enumeration;
-
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
 
@@ -20,21 +13,10 @@ public class GlobalSettings {
 	public static String defaultLowerCorner = "-180.0 -78.11";
 	public static String defaultUpperCorner = "180.0 83.57";
 	public static String defaultServiceName = "lod4wfs";
-	public static String defaultLiteralType = "xsd:string";
-	
+	public static String defaultLiteralType = "xsd:string";	
 	public static String xsdNameSpace = "";
 	public static String startupTime = "";
-//	public static String sfNameSpace = "http://www.opengis.net/ont/sf#";
-//	public static String dublinCoreNameSpace = "http://purl.org/dc/elements/1.1/";
-//	public static String geoSPARQLNameSpace = "http://www.opengis.net/ont/geosparql/1.0#";
-//	public static String RDFNameSpace = "http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-//	public static String dublinCoreTermsNameSpace =  "http://purl.org/dc/terms/";
-//	public static String testVocabulary =  "http://test.vocabulary.com/";
-	
 	//TODO Fix bounding box in the Capabilities Document!
-	
-	//public static String BBOX ="LatLongBoundingBox maxx=\"-73.90782\" maxy=\"40.882078\" minx=\"-74.047185\" miny=\"40.679648\"";
-
 	
 	public static String crlf = System.getProperty("line.separator");
  	private static String abstractPredicate ="";
@@ -47,6 +29,8 @@ public class GlobalSettings {
     private static String dynamicFeaturesNameSpace = "";
     private static String predicatesContainer = "";
     private static String featureConnector= "";
+    private static String sdaPrefix= "";
+    private static String fdaPrefix= "";
     
     private static int previewLimit = 5;
     
@@ -98,6 +82,13 @@ public class GlobalSettings {
         return featureConnector;
     }
     
+    public static String getSDAPrefix(){
+        return sdaPrefix;
+    }
+
+    public static String getFDAPrefix(){
+        return fdaPrefix;
+    }
     
     public static void loadVariables(){
 	       
@@ -118,6 +109,8 @@ public class GlobalSettings {
 	            featureConnector = ini.get("Geometry", "featureConnector");
 	            
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
+	            fdaPrefix = ini.get("SystemDefaults", "fdaPrefix");
+	            sdaPrefix = ini.get("SystemDefaults", "sdaPrefix");
 	            dynamicFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            sparqlDirectory = ini.get("Server", "SPARQLDirectory");
@@ -133,42 +126,6 @@ public class GlobalSettings {
 	       
 	       
 	    }	
-	
-
-	public static String getCanonicalHostName(){
-		
-		String result = new String();
-		
-		try {
-			
-			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
-
-			for (int networkInterfaceNumber = 0; en.hasMoreElements(); networkInterfaceNumber++) {
-				
-				NetworkInterface intf = en.nextElement();
-				Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
-
-				for (int addressNumber = 0; enumIpAddr.hasMoreElements(); addressNumber++) {
-					
-					InetAddress ipAddr = enumIpAddr.nextElement();
-					
-					if(networkInterfaceNumber==2 && addressNumber==1){
-
-						result = ipAddr.getCanonicalHostName();
-						
-					}
-				}
-
-
-			}
-
-		} catch (SocketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return result;
-	}
 
 	
 }

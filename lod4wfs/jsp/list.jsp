@@ -20,11 +20,11 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <%
-    ArrayList<WFSFeature> dynamicFeatures = new ArrayList<WFSFeature>();
-	
-	dynamicFeatures = Facade.getInstance().listDynamicFeatures();
-	out.println("Layers available (" + dynamicFeatures.size() +  ")");
-	%>
+        	ArrayList<WFSFeature> dynamicFeatures = new ArrayList<WFSFeature>();
+        	
+        	dynamicFeatures = Facade.getInstance().listFDAFeatures();
+        	out.println("Layers available (" + dynamicFeatures.size() +  ")");
+        %>
       </div>
       <div class="panel-body">
         <FORM NAME="form1" >

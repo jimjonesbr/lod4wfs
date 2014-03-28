@@ -1,6 +1,5 @@
 package de.ifgi.lod4wfs.core;
 
-import com.hp.hpl.jena.query.Query;
 
 public class WFSFeature {
 
@@ -100,11 +99,11 @@ public class WFSFeature {
 		this.upperCorner = upperCorner;
 	}
 
-	public boolean isDynamic() {
+	public boolean isFDAFeature() {
 		return dynamic;
 	}
 
-	public void setDynamic(boolean dynamic) {
+	public void setAsFDA(boolean dynamic) {
 		this.dynamic = dynamic;
 	}
 
