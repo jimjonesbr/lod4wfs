@@ -1,8 +1,12 @@
 package de.ifgi.lod4wfs.factory;
 
+import it.cutruzzula.lwkt.WKTParser;
+
 import java.io.ByteArrayInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -26,6 +30,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
@@ -279,24 +286,27 @@ public class FactoryWFS {
 
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
+		Query query = new Query();
 		
 		ArrayList<Triple> predicates = new ArrayList<Triple>();					
 		ResultSet rs;
-					
+				
 		if(isFDAFeature(feature)){
 			
 			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of " + feature.getName() + "  ...");
 			predicates = factoryFDA.getPredicatesFDAFeatures(feature);
+			
+			query = QueryFactory.create(feature.getQuery().toString());
 			rs = jn.executeQuery(feature.getQuery().toString(),feature.getEndpoint());
 						
 		} else {
 		
 			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + feature.getName() + "  ...");
 			
-			//DELETE
 			String featureName = modelFeatures.expandPrefix(feature.getName());
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);	
 					
+			query = QueryFactory.create(factorySDA.generateGetFeatureSPARQL(featureName, predicates));
 			rs = jn.executeQuery(factorySDA.generateGetFeatureSPARQL(featureName, predicates),GlobalSettings.default_SPARQLEndpoint);
 			
 		}
@@ -304,30 +314,159 @@ public class FactoryWFS {
 		layerPrefix = modelFeatures.shortForm(feature.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
+		//>>>>>>>>>>>>>>>>>>>>>>>>>>>> generateOutput
 		
-		try {
-
-			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder documentBuilder;
-
-			documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			Document document = documentBuilder.parse("wfs/GetFeature_100.xml");
-
-			//Build Name Spaces in the XML header.
-			Element requestElement = document.getDocumentElement(); 
+		
+		
+		
+		if(feature.getOutputFormat().equals("xml")){
+		
+			try {
+	
+				DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+				DocumentBuilder documentBuilder;
+	
+				documentBuilder = documentBuilderFactory.newDocumentBuilder();
+				Document document = documentBuilder.parse("wfs/GetFeature_100.xml");
+	
+				//Build Name Spaces in the XML header.
+				Element requestElement = document.getDocumentElement(); 
+				
+				for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
+				{
+					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
+				}			
+				
+				long countIteration = 0;
+				
+				logger.info("Creating GetFeature XML document for " + feature.getName() + "...");
+	
+				XPath xpath = XPathFactory.newInstance().newXPath();
+				NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
+	
+				
+				if(!isFDAFeature(feature)){
+					Triple triple = new Triple();
+					triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+					predicates.add(triple);		
+				}
+				
+	
+				while (rs.hasNext()) {
+					countIteration++;
+					
+					QuerySolution soln = rs.nextSolution();
+					String currentGeometryName = "GEO_";
+					Element currentGeometryElement = document.createElement(modelFeatures.shortForm(feature.getName()));
+					
+					
+					currentGeometryElement.setAttribute("fid", currentGeometryName + "" + countIteration);				
+	
+					Element rootGeometry = document.createElement("gml:featureMember");
+									
+					
+					for (int i = 0; i < predicates.size(); i++) {
+	
+						if(isFDAFeature(feature)){
+							
+							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
+													
+							
+							if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){														
+	
+								//TODO: Check if literal is already GML
+								
+								String gml = Utils.convertLiteraltoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
+								
+								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
+								Node dup = document.importNode(GMLnode, true);
+								elementGeometryPredicate.appendChild(dup);						
+								rootGeometry.appendChild(elementGeometryPredicate);												
+								currentGeometryElement.appendChild(elementGeometryPredicate);						
+								rootGeometry.appendChild(currentGeometryElement);					
+								
+							} else {
+								
+								Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
+								elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicates.get(i).getPredicate()).toString()));														
+								currentGeometryElement.appendChild(elementAttribute);
+	
+							}
+							
+													
+						} else {
+							
+							
+							String predicateWithoutPrefix = new String();
+												
+							predicateWithoutPrefix =  this.removePredicateURL(predicates.get(i).getPredicate());
+							
+							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
+							
+							if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
+														
+								if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
+																
+									String gml = Utils.convertLiteraltoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
+									Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
+									Node dup = document.importNode(GMLnode, true);
+									elementGeometryPredicate.appendChild(dup);						
+									rootGeometry.appendChild(elementGeometryPredicate);												
+									currentGeometryElement.appendChild(elementGeometryPredicate);						
+									rootGeometry.appendChild(currentGeometryElement);					
 			
-			for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
-			{
-				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
-			}			
-			
-			long countIteration = 0;
-			
-			logger.info("Creating GetFeature XML document for " + feature.getName() + "...");
+								} else {
+									
+									logger.error("The feature [" + soln.get("?geometry") + "] has an invalid geometry literal.");
+									
+								}
+								
+							} else {
+		
+								Element elementAttribute = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
+								elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicateWithoutPrefix).toString()));
+							
+								currentGeometryElement.appendChild(elementAttribute);
+								
+							}
+		
+						}
+						
+						myNodeList.item(1).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
+					}
+				}
+	
+				logger.info("XML Document with " + countIteration + " features successfully created.");
+				
+				getFeatureResponse = this.printXMLDocument(document);
+				
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+			} catch (SAXException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (XPathExpressionException e) {
+				e.printStackTrace();
+			}  catch (Exception e) {
+				e.printStackTrace();
+			}
 
-			XPath xpath = XPathFactory.newInstance().newXPath();
-			NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
-
+		}
+		
+		
+		
+		if(feature.getOutputFormat().equals("geojson")){
+			
+			String geojson = new String();
+			
+			String properties = new String();
+			String coordinates = new String();
+			
+			int counter=0;
+			
+			geojson = "{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[\n" ;
+			
 			
 			if(!isFDAFeature(feature)){
 				Triple triple = new Triple();
@@ -335,114 +474,75 @@ public class FactoryWFS {
 				predicates.add(triple);		
 			}
 			
-			while (rs.hasNext()) {
-				countIteration++;
-				
-				QuerySolution soln = rs.nextSolution();
-				String currentGeometryName = "GEO_";
-				Element currentGeometryElement = document.createElement(modelFeatures.shortForm(feature.getName()));
-				
-				
-				currentGeometryElement.setAttribute("fid", currentGeometryName + "" + countIteration);				
-
-				Element rootGeometry = document.createElement("gml:featureMember");
-								
-				
-				for (int i = 0; i < predicates.size(); i++) {
-
-					if(isFDAFeature(feature)){
-						
-						Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
-												
-						
-						if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){														
-
-							//TODO: Check if literal is already GML
+			logger.info("Creating GeoJSON document for " + feature.getName() + "...");
+			
+	        while (rs.hasNext()) {
+	            
+	        	counter++;
+	            QuerySolution soln = rs.nextSolution();
+	        	geojson = geojson + "{\"type\":\"Feature\",\"id\":\"FEATURE_"+ counter +"\",\"geometry\":";
+	        	properties = "\"properties\": {";
+	        	
+	        	for (int i = 0; i < predicates.size(); i++) {
+	        		
+		        	if(isFDAFeature(feature)){
+		        		
+		        		if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
+		        			
+		        			geojson = geojson+ this.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString());		        		
+		        		} else {
+		        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
+		        					     "\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\",";
+		        			
+		        			
+		        		}
+		        		
+		        	} else {
+		        		
+		        		
+		        		if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 							
-							String gml = Utils.convertLiteraltoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
-							
-							Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
-							Node dup = document.importNode(GMLnode, true);
-							elementGeometryPredicate.appendChild(dup);						
-							rootGeometry.appendChild(elementGeometryPredicate);												
-							currentGeometryElement.appendChild(elementGeometryPredicate);						
-							rootGeometry.appendChild(currentGeometryElement);					
-							
-						} else {
-							
-							Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
-							elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicates.get(i).getPredicate()).toString()));														
-							currentGeometryElement.appendChild(elementAttribute);
-
-						}
-						
-						
-						
-					} else {
-						
-						
-						String predicateWithoutPrefix = new String();
-											
-						predicateWithoutPrefix =  this.removePredicateURL(predicates.get(i).getPredicate());
-						
-						Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
-						
-						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
-													
 							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
-															
-								String gml = Utils.convertLiteraltoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
-								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
-								Node dup = document.importNode(GMLnode, true);
-								elementGeometryPredicate.appendChild(dup);						
-								rootGeometry.appendChild(elementGeometryPredicate);												
-								currentGeometryElement.appendChild(elementGeometryPredicate);						
-								rootGeometry.appendChild(currentGeometryElement);					
-		
-							} else {
-								
-								logger.error("The feature [" + soln.get("?geometry") + "] has an invalid geometry literal.");
-								
+								geojson = geojson + this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",";
 							}
-							
-						} else {
-	
-							Element elementAttribute = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
-							elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicateWithoutPrefix).toString()));
-						
-							currentGeometryElement.appendChild(elementAttribute);
-							
-						}
-	
-					}
-					
-					myNodeList.item(1).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
-				}
-			}
+		        		}
+		        	}
+		        	
+	        	}
+	        	
+	        	properties= properties.substring(0, properties.length()-1);
+	        	geojson = geojson + properties+"}},";
+	        	//\"properties\": {\"prop0\": \"value0\"}},
+	        	
+	        	
+	    		//for (int i = 0; i < query.getResultVars().size(); i++) {	
+	    		
+	    			//System.out.println(query.getResultVars().get(i) + " " + soln.get("?" + query.getResultVars().get(i).toString()));
+	    			
+	    			//geojson = geojson + "\"" + query.getResultVars().get(i) + "\":\"" + soln.get("?" + query.getResultVars().get(i).toString())+"\"," ;
 
-			logger.info("XML Document with " + countIteration + " features successfully created.");
+
+	    			
+	    		//}
+	           
+	        }
 			
-			getFeatureResponse = this.printXMLDocument(document);
+	        geojson = geojson.substring(0, geojson.length()-1);
+	        geojson = geojson + "]}";
+			geojson = geojson.replace("[PARAM_FEATURES]", Integer.toString(counter));
 			
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		} catch (SAXException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (XPathExpressionException e) {
-			e.printStackTrace();
-		}  catch (Exception e) {
-			e.printStackTrace();
+	        getFeatureResponse = geojson;
 		}
-
+		
+		
+		logger.info("GeoJSON document for " + feature.getName() + " successfully created.");
+		
 		return getFeatureResponse;
 
 	}
 	
 	
-	
-	
+
 	
 	
 	
@@ -451,6 +551,104 @@ public class FactoryWFS {
 	 ** Private Methods.
 	 **/
 
+	
+	private String convertWKTtoGeoJSON(String wkt){
+		
+		
+		
+		if(wkt.contains("<") && wkt.contains(">")){
+			String CRS = new String();
+		
+			
+			//Extracting Reference System
+			if(wkt.contains("<") && wkt.contains(">")){
+				
+				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));
+				wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+				
+			}
+			
+			//Removing Literal Type
+			if(wkt.contains("^^")){
+				
+				wkt = wkt.substring(0, wkt.indexOf("^^"));
+				
+			}
+							
+		}
+		
+		
+		String geojson = wkt.replace("(", "[").replace(")", "]").replace(", ",","); 
+		String geoType = geojson.substring(0, geojson.indexOf("[")).trim();
+
+		geojson = geojson.substring(geojson.indexOf("["),geojson.length()).trim();
+
+		boolean flagNumber = false;
+
+		String res = new String();
+
+		for (int i = 0; i < geojson.length(); i++) {
+
+			if(geojson.charAt(i)=='[' || 
+					geojson.charAt(i)==']' ||	
+					geojson.charAt(i)=='.'){
+
+				res = res + geojson.charAt(i);
+
+			}  
+
+			if(Character.isDigit(geojson.charAt(i)) && flagNumber==false){
+				if (!geoType.toUpperCase().equals("POINT")){
+					res = res + "[";
+				}
+				flagNumber = true;
+				res = res + geojson.charAt(i);
+			} else 
+
+				if(Character.isDigit(geojson.charAt(i)) && flagNumber==true){
+					res = res + geojson.charAt(i);
+				}
+
+			if(geojson.charAt(i)==' '){
+				res = res + ",";
+
+			} 
+
+			if(geojson.charAt(i)==','){
+				res = res + "],[";
+				//res = res + ",";
+				//res = res + "[";	
+			}
+
+		}
+
+		if (!geoType.toUpperCase().equals("POINT")){
+			res = res + "]";
+		}
+
+		if (geoType.toUpperCase().equals("POINT")){
+			geoType = "Point";
+		} else if (geoType.toUpperCase().equals("MULTIPOLYGON")){
+			geoType = "MultiPolygon";
+		} else if (geoType.toUpperCase().equals("POLYGON")){
+			geoType = "Polygon";
+		} else if (geoType.toUpperCase().equals("MULTIPOINT")){
+			geoType = "MultiPoint";
+		} else if (geoType.toUpperCase().equals("LINESTRING")){
+			geoType = "LineString";
+		} else if (geoType.toUpperCase().equals("MULTILINESTRING")){
+			geoType = "MultiLineString";
+		} else if (geoType.toUpperCase().equals("GEOMETRYCOLLECTION")){
+			geoType = "GeometryCollection";
+		}
+		
+		geojson = "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},";
+		//geojson = "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},\"properties\": {\"prop0\": \"value0\"}},";
+
+		return geojson;
+
+	
+	}
 	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
 	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
 		

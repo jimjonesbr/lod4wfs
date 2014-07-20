@@ -44,6 +44,8 @@ public class ServletWFS extends HttpServlet
 		String currentService = new String();
 		String currentTypeName = new String();
 		String currentSRSName = new String();
+		String currentFormat = new String();
+		String currentOptionsFormat = new String();
 
 		System.out.println("\nIncoming request:\n");
 		
@@ -83,6 +85,16 @@ public class ServletWFS extends HttpServlet
 				currentService=request.getParameter(parameter);
 			}
 
+			if(parameter.toUpperCase().equals("FORMAT")){
+
+				currentFormat=request.getParameter(parameter);
+			}
+			
+			if(parameter.toUpperCase().equals("FORMAT_OPTIONS")){
+
+				currentOptionsFormat=request.getParameter(parameter);
+			}
+			
 		}
 		
 		/**
@@ -90,7 +102,7 @@ public class ServletWFS extends HttpServlet
 		 */
 
 		String validRequest = new String();
-		validRequest = this.validateRequest(currentVersion,currentRequest, currentService,currentTypeName,currentSRSName);
+		validRequest = this.validateRequest(currentVersion, currentRequest, currentService, currentTypeName, currentSRSName, currentFormat, currentOptionsFormat);
 
 		if(validRequest.equals("valid")){
 
@@ -124,7 +136,19 @@ public class ServletWFS extends HttpServlet
 
 				WFSFeature layer = new WFSFeature();
 				layer.setName(currentTypeName);
-				response.setContentType("text/xml");
+				
+				
+				if (currentFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")) {
+					
+					layer.setOutputFormat("geojson");
+					response.setContentType("text/plain");
+					
+				} else {
+					
+					response.setContentType("text/xml");
+					layer.setOutputFormat("xml");
+				}
+				
 				response.setStatus(HttpServletResponse.SC_OK);
 
 
@@ -162,7 +186,7 @@ public class ServletWFS extends HttpServlet
 	}
 
 
-	private String validateRequest(String version, String request, String service, String typeName, String SRS){
+	private String validateRequest(String version, String request, String service, String typeName, String SRS, String format, String formatOptions){
 
 		String result = new String();
 		boolean valid = true;
@@ -229,6 +253,13 @@ public class ServletWFS extends HttpServlet
 				logger.error("No feature provided for " + request + ".");
 				valid = false;
 
+			} else if (!format.toUpperCase().equals("TEXT/JAVASCRIPT") && !format.isEmpty()){
+				System.out.println(format);
+
+				result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ".");
+				result = result.replace("PARAM_CODE", "InvalidOutputFormat");
+				logger.error("Invalid output format for " + request + ".");
+				valid = false;
 			}
 
 			if(!valid){

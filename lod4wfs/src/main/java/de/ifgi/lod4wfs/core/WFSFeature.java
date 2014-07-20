@@ -16,6 +16,7 @@ public class WFSFeature {
 	private String geometryVariable;
 	private String endpoint;
 	private String fileName;
+	private String outputFormat;
 	
 	public WFSFeature() {
 		super();
@@ -139,7 +140,13 @@ public class WFSFeature {
 		this.fileName = fileName;
 	}
 
-	
+	public String getOutputFormat() {
+		return outputFormat;
+	}
+
+	public void setOutputFormat(String outputFormat) {
+		this.outputFormat = outputFormat;
+	}
 	
 }
 
