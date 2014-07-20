@@ -314,10 +314,6 @@ public class FactoryWFS {
 		layerPrefix = modelFeatures.shortForm(feature.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 		
-		//>>>>>>>>>>>>>>>>>>>>>>>>>>>> generateOutput
-		
-		
-		
 		
 		if(feature.getOutputFormat().equals("xml")){
 		
@@ -504,6 +500,10 @@ public class FactoryWFS {
 							
 							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 								geojson = geojson + this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",";
+							} else {
+			        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
+		        					     "\": \""+soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().replace("\"", "'")+"\",";
+
 							}
 		        		}
 		        	}
@@ -513,17 +513,6 @@ public class FactoryWFS {
 	        	properties= properties.substring(0, properties.length()-1);
 	        	geojson = geojson + properties+"}},";
 	        	//\"properties\": {\"prop0\": \"value0\"}},
-	        	
-	        	
-	    		//for (int i = 0; i < query.getResultVars().size(); i++) {	
-	    		
-	    			//System.out.println(query.getResultVars().get(i) + " " + soln.get("?" + query.getResultVars().get(i).toString()));
-	    			
-	    			//geojson = geojson + "\"" + query.getResultVars().get(i) + "\":\"" + soln.get("?" + query.getResultVars().get(i).toString())+"\"," ;
-
-
-	    			
-	    		//}
 	           
 	        }
 			
