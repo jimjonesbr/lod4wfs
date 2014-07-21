@@ -454,15 +454,16 @@ public class FactoryWFS {
 		
 		if(feature.getOutputFormat().equals("geojson")){
 			
-			String geojson = new String();
+			//String geojson = new String();
+			StringBuilder geojson2 = new StringBuilder();
 			
 			String properties = new String();
-			String coordinates = new String();
+			//String coordinates = new String();
 			
 			int counter=0;
 			
-			geojson = "{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[\n" ;
-			
+			//geojson = "{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[\n" ;
+			geojson2.append("{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[\n") ;
 			
 			if(!isFDAFeature(feature)){
 				Triple triple = new Triple();
@@ -476,7 +477,8 @@ public class FactoryWFS {
 	            
 	        	counter++;
 	            QuerySolution soln = rs.nextSolution();
-	        	geojson = geojson + "{\"type\":\"Feature\",\"id\":\"FEATURE_"+ counter +"\",\"geometry\":";
+	        	//geojson = geojson + "{\"type\":\"Feature\",\"id\":\"FEATURE_"+ counter +"\",\"geometry\":";
+	            geojson2.append("{\"type\":\"Feature\",\"id\":\"FEATURE_"+ counter +"\",\"geometry\":");
 	        	properties = "\"properties\": {";
 	        	
 	        	for (int i = 0; i < predicates.size(); i++) {
@@ -485,7 +487,8 @@ public class FactoryWFS {
 		        		
 		        		if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
 		        			
-		        			geojson = geojson+ this.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString());		        		
+		        			//geojson = geojson+ this.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString());		        		
+		        			geojson2.append(this.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString()));
 		        		} else {
 		        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
 		        					     "\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\",";
@@ -499,7 +502,8 @@ public class FactoryWFS {
 		        		if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 							
 							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
-								geojson = geojson + this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",";
+								//geojson = geojson + this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",";
+								geojson2.append(this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",");
 							} else {
 			        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
 		        					     "\": \""+soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().replace("\"", "'")+"\",";
@@ -511,16 +515,20 @@ public class FactoryWFS {
 	        	}
 	        	
 	        	properties= properties.substring(0, properties.length()-1);
-	        	geojson = geojson + properties+"}},";
+	        	//geojson = geojson + properties+"}},";
+	        	geojson2.append(properties+"}},");
 	        	//\"properties\": {\"prop0\": \"value0\"}},
 	           
 	        }
 			
-	        geojson = geojson.substring(0, geojson.length()-1);
-	        geojson = geojson + "]}";
-			geojson = geojson.replace("[PARAM_FEATURES]", Integer.toString(counter));
+	        //geojson = geojson.substring(0, geojson.length()-1);
+	        geojson2.deleteCharAt(geojson2.length()-1);
+	        //geojson = geojson + "]}";
+	        geojson2.append("]}");
+			//geojson = geojson.replace("[PARAM_FEATURES]", Integer.toString(counter));
+	        
 			
-	        getFeatureResponse = geojson;
+	        getFeatureResponse = geojson2.toString().replace("[PARAM_FEATURES]", Integer.toString(counter));
 		}
 		
 		
@@ -567,52 +575,63 @@ public class FactoryWFS {
 		}
 		
 		
-		String geojson = wkt.replace("(", "[").replace(")", "]").replace(", ",","); 
-		String geoType = geojson.substring(0, geojson.indexOf("[")).trim();
+		//String geojson = wkt.replace("(", "[").replace(")", "]").replace(", ",","); 
+		StringBuilder geojson2 = new StringBuilder();
+		geojson2.append(wkt.replace("(", "[").replace(")", "]").replace(", ",","));
+		//String geoType = geojson.substring(0, geojson.indexOf("[")).trim();
+		String geoType = geojson2.substring(0, geojson2.indexOf("[")).trim();
 
-		geojson = geojson.substring(geojson.indexOf("["),geojson.length()).trim();
-
+		//geojson = geojson.substring(geojson.indexOf("["),geojson.length()).trim();
+		//geojson2.append(geojson2.substring(geojson2.indexOf("["),geojson2.length()).trim());
+		geojson2.delete(geojson2.indexOf("[")-1, geojson2.indexOf("["));
 		boolean flagNumber = false;
 
-		String res = new String();
+		//String res = new String();
+		StringBuilder res = new StringBuilder();
 
-		for (int i = 0; i < geojson.length(); i++) {
+		//for (int i = 0; i < geojson.length(); i++) {
+		for (int i = 0; i < geojson2.length(); i++) {
+			
+			if(geojson2.charAt(i)=='[' || 
+					geojson2.charAt(i)==']' ||	
+					geojson2.charAt(i)=='.'){
 
-			if(geojson.charAt(i)=='[' || 
-					geojson.charAt(i)==']' ||	
-					geojson.charAt(i)=='.'){
-
-				res = res + geojson.charAt(i);
+				//res = res + geojson2.charAt(i);
+				res.append(geojson2.charAt(i));
 
 			}  
 
-			if(Character.isDigit(geojson.charAt(i)) && flagNumber==false){
+			if(Character.isDigit(geojson2.charAt(i)) && flagNumber==false){
 				if (!geoType.toUpperCase().equals("POINT")){
-					res = res + "[";
+					//res = res + "[";
+					res.append("[");
 				}
 				flagNumber = true;
-				res = res + geojson.charAt(i);
+				//res = res + geojson2.charAt(i);
+				res.append(geojson2.charAt(i));
 			} else 
 
-				if(Character.isDigit(geojson.charAt(i)) && flagNumber==true){
-					res = res + geojson.charAt(i);
+				if(Character.isDigit(geojson2.charAt(i)) && flagNumber==true){
+					//res = res + geojson2.charAt(i);
+					res.append(geojson2.charAt(i));
 				}
 
-			if(geojson.charAt(i)==' '){
-				res = res + ",";
+			if(geojson2.charAt(i)==' '){
+				//res = res + ",";
+				res.append(",");
 
 			} 
 
-			if(geojson.charAt(i)==','){
-				res = res + "],[";
-				//res = res + ",";
-				//res = res + "[";	
+			if(geojson2.charAt(i)==','){
+				//res = res + "],[";
+				res.append("],[");
 			}
 
 		}
 
 		if (!geoType.toUpperCase().equals("POINT")){
-			res = res + "]";
+			//res = res + "]";
+			res.append("]");
 		}
 
 		if (geoType.toUpperCase().equals("POINT")){
@@ -631,10 +650,10 @@ public class FactoryWFS {
 			geoType = "GeometryCollection";
 		}
 		
-		geojson = "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},";
-		//geojson = "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},\"properties\": {\"prop0\": \"value0\"}},";
+//		geojson = "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},";
 
-		return geojson;
+
+		return  "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},";
 
 	
 	}

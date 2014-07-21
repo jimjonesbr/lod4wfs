@@ -44,7 +44,7 @@ public class ServletWFS extends HttpServlet
 		String currentService = new String();
 		String currentTypeName = new String();
 		String currentSRSName = new String();
-		String currentFormat = new String();
+		String currentOutputFormat = new String();
 		String currentOptionsFormat = new String();
 
 		System.out.println("\nIncoming request:\n");
@@ -85,9 +85,9 @@ public class ServletWFS extends HttpServlet
 				currentService=request.getParameter(parameter);
 			}
 
-			if(parameter.toUpperCase().equals("FORMAT")){
+			if(parameter.toUpperCase().equals("OUTPUTFORMAT")){
 
-				currentFormat=request.getParameter(parameter);
+				currentOutputFormat=request.getParameter(parameter);
 			}
 			
 			if(parameter.toUpperCase().equals("FORMAT_OPTIONS")){
@@ -102,7 +102,7 @@ public class ServletWFS extends HttpServlet
 		 */
 
 		String validRequest = new String();
-		validRequest = this.validateRequest(currentVersion, currentRequest, currentService, currentTypeName, currentSRSName, currentFormat, currentOptionsFormat);
+		validRequest = this.validateRequest(currentVersion, currentRequest, currentService, currentTypeName, currentSRSName, currentOutputFormat, currentOptionsFormat);
 
 		if(validRequest.equals("valid")){
 
@@ -138,7 +138,7 @@ public class ServletWFS extends HttpServlet
 				layer.setName(currentTypeName);
 				
 				
-				if (currentFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")) {
+				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")) {
 					
 					layer.setOutputFormat("geojson");
 					response.setContentType("text/plain");
