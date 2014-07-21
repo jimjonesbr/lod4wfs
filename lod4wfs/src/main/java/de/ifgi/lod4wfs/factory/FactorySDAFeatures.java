@@ -175,7 +175,7 @@ public class FactorySDAFeatures {
 
 			//TODO: Check if literal already is GML. 
 			
-			geometryCoordinates = Utils.convertLiteraltoGML(geometryCoordinates);
+			geometryCoordinates = Utils.convertWKTtoGML(geometryCoordinates);
 			
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();

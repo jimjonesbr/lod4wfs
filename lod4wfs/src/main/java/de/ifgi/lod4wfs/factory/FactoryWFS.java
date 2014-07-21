@@ -372,7 +372,7 @@ public class FactoryWFS {
 	
 								//TODO: Check if literal is already GML
 								
-								String gml = Utils.convertLiteraltoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
+								String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
 								
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 								Node dup = document.importNode(GMLnode, true);
@@ -403,7 +403,7 @@ public class FactoryWFS {
 														
 								if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 																
-									String gml = Utils.convertLiteraltoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
+									String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
 									Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 									Node dup = document.importNode(GMLnode, true);
 									elementGeometryPredicate.appendChild(dup);						
@@ -488,7 +488,7 @@ public class FactoryWFS {
 		        		if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
 		        			
 		        			//geojson = geojson+ this.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString());		        		
-		        			geojson2.append(this.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString()));
+		        			geojson2.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString()));
 		        		} else {
 		        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
 		        					     "\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\",";
@@ -503,7 +503,7 @@ public class FactoryWFS {
 							
 							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 								//geojson = geojson + this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",";
-								geojson2.append(this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",");
+								geojson2.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",");
 							} else {
 			        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
 		        					     "\": \""+soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().replace("\"", "'")+"\",";
@@ -549,114 +549,6 @@ public class FactoryWFS {
 	 **/
 
 	
-	private String convertWKTtoGeoJSON(String wkt){
-		
-		
-		
-		if(wkt.contains("<") && wkt.contains(">")){
-			String CRS = new String();
-		
-			
-			//Extracting Reference System
-			if(wkt.contains("<") && wkt.contains(">")){
-				
-				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));
-				wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
-				
-			}
-			
-			//Removing Literal Type
-			if(wkt.contains("^^")){
-				
-				wkt = wkt.substring(0, wkt.indexOf("^^"));
-				
-			}
-							
-		}
-		
-		
-		//String geojson = wkt.replace("(", "[").replace(")", "]").replace(", ",","); 
-		StringBuilder geojson2 = new StringBuilder();
-		geojson2.append(wkt.replace("(", "[").replace(")", "]").replace(", ",","));
-		//String geoType = geojson.substring(0, geojson.indexOf("[")).trim();
-		String geoType = geojson2.substring(0, geojson2.indexOf("[")).trim();
-
-		//geojson = geojson.substring(geojson.indexOf("["),geojson.length()).trim();
-		//geojson2.append(geojson2.substring(geojson2.indexOf("["),geojson2.length()).trim());
-		geojson2.delete(geojson2.indexOf("[")-1, geojson2.indexOf("["));
-		boolean flagNumber = false;
-
-		//String res = new String();
-		StringBuilder res = new StringBuilder();
-
-		//for (int i = 0; i < geojson.length(); i++) {
-		for (int i = 0; i < geojson2.length(); i++) {
-			
-			if(geojson2.charAt(i)=='[' || 
-					geojson2.charAt(i)==']' ||	
-					geojson2.charAt(i)=='.'){
-
-				//res = res + geojson2.charAt(i);
-				res.append(geojson2.charAt(i));
-
-			}  
-
-			if(Character.isDigit(geojson2.charAt(i)) && flagNumber==false){
-				if (!geoType.toUpperCase().equals("POINT")){
-					//res = res + "[";
-					res.append("[");
-				}
-				flagNumber = true;
-				//res = res + geojson2.charAt(i);
-				res.append(geojson2.charAt(i));
-			} else 
-
-				if(Character.isDigit(geojson2.charAt(i)) && flagNumber==true){
-					//res = res + geojson2.charAt(i);
-					res.append(geojson2.charAt(i));
-				}
-
-			if(geojson2.charAt(i)==' '){
-				//res = res + ",";
-				res.append(",");
-
-			} 
-
-			if(geojson2.charAt(i)==','){
-				//res = res + "],[";
-				res.append("],[");
-			}
-
-		}
-
-		if (!geoType.toUpperCase().equals("POINT")){
-			//res = res + "]";
-			res.append("]");
-		}
-
-		if (geoType.toUpperCase().equals("POINT")){
-			geoType = "Point";
-		} else if (geoType.toUpperCase().equals("MULTIPOLYGON")){
-			geoType = "MultiPolygon";
-		} else if (geoType.toUpperCase().equals("POLYGON")){
-			geoType = "Polygon";
-		} else if (geoType.toUpperCase().equals("MULTIPOINT")){
-			geoType = "MultiPoint";
-		} else if (geoType.toUpperCase().equals("LINESTRING")){
-			geoType = "LineString";
-		} else if (geoType.toUpperCase().equals("MULTILINESTRING")){
-			geoType = "MultiLineString";
-		} else if (geoType.toUpperCase().equals("GEOMETRYCOLLECTION")){
-			geoType = "GeometryCollection";
-		}
-		
-//		geojson = "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},";
-
-
-		return  "{\"type\":\""+ geoType + "\",\"coordinates\":" +res+"},";
-
-	
-	}
 	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
 	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
 		
