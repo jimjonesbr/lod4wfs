@@ -141,7 +141,7 @@ public class ServletWFS extends HttpServlet
 				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")) {
 					
 					layer.setOutputFormat("geojson");
-					response.setContentType("text/plain");
+					response.setContentType("text/javascript");
 					
 				} else {
 					
