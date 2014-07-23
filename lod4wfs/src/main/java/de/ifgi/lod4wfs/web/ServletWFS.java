@@ -128,9 +128,9 @@ public class ServletWFS extends HttpServlet
 
 				logger.info(currentRequest +  " request delivered. ");
 
-				/**
-				 * GetFeature request
-				 */
+			/**
+			 * GetFeature request
+			 */
 
 			} else if (currentRequest.toUpperCase().equals("GETFEATURE")) {
 
@@ -154,9 +154,10 @@ public class ServletWFS extends HttpServlet
 
 				logger.info("Processing " + currentRequest +  " request for the feature "+ layer.getName() + " ...");
 				
-				//Wrapping response with the callback function for JSONP javascript requests.
-				if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")){
-					
+				
+				if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON") &&
+					currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT")){
+					//Wrapping response with the callback function for JSONP javascript requests.	
 					response.getWriter().println("loadGeoJson("+Facade.getInstance().getFeature(layer)+")");
 					
 				} else {
@@ -164,6 +165,7 @@ public class ServletWFS extends HttpServlet
 					response.getWriter().println(Facade.getInstance().getFeature(layer));
 					
 				}
+				
 				logger.info(currentRequest +  " request delivered. \n");
 
 				/**
@@ -194,7 +196,7 @@ public class ServletWFS extends HttpServlet
 	}
 
 
-	private String validateRequest(String version, String request, String service, String typeName, String SRS, String format, String formatOptions){
+	private String validateRequest(String version, String request, String service, String typeName, String SRS, String outputFormat, String formatOptions){
 
 		String result = new String();
 		boolean valid = true;
@@ -260,13 +262,19 @@ public class ServletWFS extends HttpServlet
 				result = result.replace("PARAM_CODE", "FeatureNotProvided");
 				logger.error("No feature provided for " + request + ".");
 				valid = false;
-
-			} else if (!format.toUpperCase().equals("TEXT/JAVASCRIPT") && !format.isEmpty()){
-				System.out.println(format);
-
-				result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ".");
+			
+			/*
+			 * Supported output formats:
+			 * 	GeoJSON (text/javascript)
+			 * 	GML2     
+			*/
+			} else if (!outputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && 
+					   !outputFormat.isEmpty() && //GML2 is assumed for requests without an explicit output format. 
+					   !outputFormat.toUpperCase().equals("GML2")){
+				
+				result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ". The output format '"+ outputFormat + "' is not supported.");
 				result = result.replace("PARAM_CODE", "InvalidOutputFormat");
-				logger.error("Invalid output format for " + request + ".");
+				logger.error("Invalid output format for " + request + ". The output format "+ outputFormat + " is not supported.");
 				valid = false;
 			}
 
