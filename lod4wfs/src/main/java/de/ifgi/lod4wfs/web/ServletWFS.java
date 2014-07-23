@@ -138,7 +138,7 @@ public class ServletWFS extends HttpServlet
 				layer.setName(currentTypeName);
 				
 				
-				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")) {
+				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT")) {
 					
 					layer.setOutputFormat("geojson");
 					response.setContentType("text/javascript");
@@ -153,9 +153,17 @@ public class ServletWFS extends HttpServlet
 
 
 				logger.info("Processing " + currentRequest +  " request for the feature "+ layer.getName() + " ...");
-							
-				response.getWriter().println(Facade.getInstance().getFeature(layer));
-			
+				
+				//Wrapping response with the callback function for JSONP javascript requests.
+				if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")){
+					
+					response.getWriter().println("loadGeoJson("+Facade.getInstance().getFeature(layer)+")");
+					
+				} else {
+					
+					response.getWriter().println(Facade.getInstance().getFeature(layer));
+					
+				}
 				logger.info(currentRequest +  " request delivered. \n");
 
 				/**
