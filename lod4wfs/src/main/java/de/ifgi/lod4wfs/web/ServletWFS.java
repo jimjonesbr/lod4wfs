@@ -1,15 +1,22 @@
 package de.ifgi.lod4wfs.web;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Scanner;
+import java.util.zip.ZipOutputStream;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.IO;
+
+import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.facade.Facade;
 
@@ -136,35 +143,134 @@ public class ServletWFS extends HttpServlet
 
 				WFSFeature layer = new WFSFeature();
 				layer.setName(currentTypeName);
-				
-				
-				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT")) {
-					
-					layer.setOutputFormat("geojson");
-					response.setContentType("text/javascript");
-					
-				} else {
-					
-					response.setContentType("text/xml");
-					layer.setOutputFormat("xml");
-				}
-				
+
+				logger.info("Processing " + currentRequest +  " request for the feature " + layer.getName() + " ...");
+
 				response.setStatus(HttpServletResponse.SC_OK);
 
 
-				logger.info("Processing " + currentRequest +  " request for the feature "+ layer.getName() + " ...");
-				
-				
-				if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON") &&
-					currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT")){
-					//Wrapping response with the callback function for JSONP javascript requests.	
-					response.getWriter().println("loadGeoJson("+Facade.getInstance().getFeature(layer)+")");
+				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT")) {
+
+					layer.setOutputFormat("geojson");
 					
-				} else {
+					if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")){
+						
+						response.setContentType("text/javascript");
+						response.getWriter().println("loadGeoJson(" + Facade.getInstance().getFeature(layer) + ")");
+
+					} else if (currentOptionsFormat.toUpperCase().equals("ZIP")){
+
+						response.setContentType("application/zip");
+												
+						File zipFile = Utils.compressFile(Facade.getInstance().getFeature(layer), layer.getName().replace(":", "_")+".json");						
+						byte[] buffer = new byte[128];
+						
+						logger.info("Feature " + layer.getName() + " successfully compressed.");
+						
+						FileInputStream fileInput = new FileInputStream(zipFile);
+						response.setHeader("Content-Disposition", "attachment;filename=\"" + layer.getName().replace(":", "_") + ".zip\"");
+						
+						int totalRead = 0;
+						int readBytes = 0;
+											
+						while(totalRead < zipFile.length()) {
+
+							if(zipFile.length()-totalRead > 128) {
+								
+								readBytes = fileInput.read(buffer, 0, 128);
+								totalRead += readBytes;
+								
+							} else {
+								
+								readBytes=fileInput.read(buffer,0,(int)zipFile.length() - totalRead);
+								totalRead= totalRead+readBytes; }
+								response.getOutputStream().write(buffer, 0, readBytes);
+								
+						}
+						
+						fileInput.close();
+						
+					} else {
+
+						response.getWriter().println(Facade.getInstance().getFeature(layer));
+					}
+
+
+				} else if (currentOutputFormat.toUpperCase().equals("GML2") || 
+						currentOutputFormat.toUpperCase().isEmpty()) {
+
+						layer.setOutputFormat("xml");
 					
-					response.getWriter().println(Facade.getInstance().getFeature(layer));
+					if (currentOptionsFormat.toUpperCase().equals("ZIP")){
+						
+						response.setContentType("application/zip");
+						
+						File zipFile = Utils.compressFile(Facade.getInstance().getFeature(layer), layer.getName().replace(":", "_")+".xml");						
+						byte[] buffer = new byte[128];
+						
+						logger.info("Feature " + layer.getName() + " successfully compressed.");
+						
+						FileInputStream fileInput = new FileInputStream(zipFile);
+						response.setHeader("Content-Disposition", "attachment;filename=\"" + layer.getName().replace(":", "_") + ".zip\"");
+						
+						int totalRead = 0;
+						int readBytes = 0;
+											
+						while(totalRead < zipFile.length()) {
+
+							if(zipFile.length()-totalRead > 128) {
+								
+								readBytes = fileInput.read(buffer, 0, 128);
+								totalRead += readBytes;
+								
+							} else {
+								
+								readBytes=fileInput.read(buffer,0,(int)zipFile.length() - totalRead);
+								totalRead= totalRead+readBytes; }
+								response.getOutputStream().write(buffer, 0, readBytes);
+								
+						}
+						
+						fileInput.close();		
+						
+					} else {
+						
+						response.setContentType("text/xml");
+						response.getWriter().println(Facade.getInstance().getFeature(layer));
+						
+					}
 					
+
 				}
+				
+				
+
+
+				
+				
+//				
+//				
+//				if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")){
+//					/**
+//					 * Wrapping response with the callback function for JSONP javascript requests.	
+//					 */
+//					response.getWriter().println("loadGeoJson(" + Facade.getInstance().getFeature(layer) + ")");
+//					
+//				} else if (currentOutputFormat.toUpperCase().equals("APPLICATION/ZIP")){
+//					
+//					response.getWriter().println(Utils.compressFile(Facade.getInstance().getFeature(layer), layer.getName()) );
+//					
+//				} else {
+//					
+//					response.getWriter().println(Facade.getInstance().getFeature(layer));
+//					
+//				}
+				
+				
+					
+				
+					
+				
 				
 				logger.info(currentRequest +  " request delivered. \n");
 
@@ -263,7 +369,7 @@ public class ServletWFS extends HttpServlet
 				logger.error("No feature provided for " + request + ".");
 				valid = false;
 			
-			/*
+			/**
 			 * Supported output formats:
 			 * 	GeoJSON (text/javascript)
 			 * 	GML2     

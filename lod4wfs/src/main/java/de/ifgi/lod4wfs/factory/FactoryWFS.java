@@ -3,6 +3,7 @@ package de.ifgi.lod4wfs.factory;
 import it.cutruzzula.lwkt.WKTParser;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -454,21 +455,20 @@ public class FactoryWFS {
 		
 		if(feature.getOutputFormat().equals("geojson")){
 			
-			//String geojson = new String();
 			StringBuilder geojson2 = new StringBuilder();
 			
 			String properties = new String();
-			//String coordinates = new String();
-			
+						
 			int counter=0;
 			
-			//geojson = "{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[\n" ;
 			geojson2.append("{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[\n") ;
 			
 			if(!isFDAFeature(feature)){
+				
 				Triple triple = new Triple();
 				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
-				predicates.add(triple);		
+				predicates.add(triple);
+				
 			}
 			
 			logger.info("Creating GeoJSON document for " + feature.getName() + "...");
@@ -477,7 +477,6 @@ public class FactoryWFS {
 	            
 	        	counter++;
 	            QuerySolution soln = rs.nextSolution();
-	        	//geojson = geojson + "{\"type\":\"Feature\",\"id\":\"FEATURE_"+ counter +"\",\"geometry\":";
 	            geojson2.append("{\"type\":\"Feature\",\"id\":\"FEATURE_"+ counter +"\",\"geometry\":");
 	        	properties = "\"properties\": {";
 	        	
@@ -486,10 +485,11 @@ public class FactoryWFS {
 		        	if(isFDAFeature(feature)){
 		        		
 		        		if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
-		        			
-		        			//geojson = geojson+ this.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString());		        		
+		        			        		
 		        			geojson2.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString()));
+		        			
 		        		} else {
+		        			
 		        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
 		        					     "\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\",";
 		        			
@@ -502,11 +502,13 @@ public class FactoryWFS {
 		        		if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 							
 							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
-								//geojson = geojson + this.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",";
+
 								geojson2.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",");
+							
 							} else {
+								
 			        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
-		        					     "\": \""+soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().replace("\"", "'")+"\",";
+		        					         "\": \""+soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().replace("\"", "'")+"\",";
 
 							}
 		        		}
@@ -515,20 +517,16 @@ public class FactoryWFS {
 	        	}
 	        	
 	        	properties= properties.substring(0, properties.length()-1);
-	        	//geojson = geojson + properties+"}},";
 	        	geojson2.append(properties+"}},");
-	        	//\"properties\": {\"prop0\": \"value0\"}},
 	           
 	        }
 			
-	        //geojson = geojson.substring(0, geojson.length()-1);
 	        geojson2.deleteCharAt(geojson2.length()-1);
-	        //geojson = geojson + "]}";
 	        geojson2.append("]}");
-			//geojson = geojson.replace("[PARAM_FEATURES]", Integer.toString(counter));
-	        
 			
 	        getFeatureResponse = geojson2.toString().replace("[PARAM_FEATURES]", Integer.toString(counter));
+	        	       
+	        
 		}
 		
 		
@@ -547,7 +545,6 @@ public class FactoryWFS {
 	/**
 	 ** Private Methods.
 	 **/
-
 	
 	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
 	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
@@ -628,7 +625,9 @@ public class FactoryWFS {
 				
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
 
-		//Adding FDA Features to the Capabilities Document.
+		/**
+		 * Adding FDA Features to the Capabilities Document.
+		 */
 		fdaFeatures = factoryFDA.listFDAFeatures(GlobalSettings.getSparqlDirectory());
 		
 		for (int i = 0; i < fdaFeatures.size(); i++) {
@@ -637,7 +636,9 @@ public class FactoryWFS {
 
 		}
 		
-		//Adding SDA Features to the Capabilities Document. 
+		/**
+		 * Adding SDA Features to the Capabilities Document. 
+		 */		 
 		sdaFeatures = factorySDA.listSDAFeatures();
 		
 		for (int i = 0; i < sdaFeatures.size(); i++) {
@@ -654,7 +655,7 @@ public class FactoryWFS {
 		boolean result = false;
 		
 		/**
-		 * Checks if the selected layer is FDA (based on pre-defined SPARQL Query)
+		 * Checks if the selected layer is created via FDA (based on pre-defined SPARQL Query)
 		 */
 		for (int i = 0; i < fdaFeatures.size(); i++) {
 			

@@ -1,9 +1,19 @@
 package de.ifgi.lod4wfs.core;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Enumeration;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import it.cutruzzula.lwkt.WKTParser;
 
@@ -101,45 +111,45 @@ public class Utils {
 
 			} else {
 
-			if(Character.isDigit(geoJSONStringBuilder.charAt(i)) && flagNumber==false){
-				
-				if (!geoType.toUpperCase().equals("POINT")){
-					
-					//Checking if the coordinate has negative values.
-					if(geoJSONStringBuilder.charAt(i-1)=='-'){
-						//Closes the pair of coordinates with a squared bracket '['
-						geoJSONOutuput.insert(geoJSONOutuput.length()-1, '[');
-						
-					} else {
-					
-						geoJSONOutuput.append("[");
-						
+				if(Character.isDigit(geoJSONStringBuilder.charAt(i)) && flagNumber==false){
+
+					if (!geoType.toUpperCase().equals("POINT")){
+
+						//Checking if the coordinate has negative values.
+						if(geoJSONStringBuilder.charAt(i-1)=='-'){
+							//Closes the pair of coordinates with a squared bracket '['
+							geoJSONOutuput.insert(geoJSONOutuput.length()-1, '[');
+
+						} else {
+
+							geoJSONOutuput.append("[");
+
+						}
 					}
-				}
-				
-				flagNumber = true;
 
-				geoJSONOutuput.append(geoJSONStringBuilder.charAt(i));
-				
-			} else
-
-				if(Character.isDigit(geoJSONStringBuilder.charAt(i)) && flagNumber==true){
+					flagNumber = true;
 
 					geoJSONOutuput.append(geoJSONStringBuilder.charAt(i));
-					
+
+				} else
+
+					if(Character.isDigit(geoJSONStringBuilder.charAt(i)) && flagNumber==true){
+
+						geoJSONOutuput.append(geoJSONStringBuilder.charAt(i));
+
+					}
+
+				if(geoJSONStringBuilder.charAt(i)==' '){
+
+					geoJSONOutuput.append(",");
+
 				}
 
-			if(geoJSONStringBuilder.charAt(i)==' '){
+				if(geoJSONStringBuilder.charAt(i)==','){
 
-				geoJSONOutuput.append(",");
+					geoJSONOutuput.append("],[");
 
-			}
-
-			if(geoJSONStringBuilder.charAt(i)==','){
-
-				geoJSONOutuput.append("],[");
-				
-			}
+				}
 			}
 		}
 
@@ -190,6 +200,7 @@ public class Utils {
 
 	}
 
+	
 	public static String getCanonicalHostName(){
 
 		String result = new String();
@@ -223,5 +234,47 @@ public class Utils {
 		}
 
 		return result;
+	}
+
+	public static File compressFile(String fileContent, String fileName) throws IOException{
+
+		Path tempFile;
+
+
+		tempFile = Files.createTempFile(null, ".tmp");
+
+		//System.out.format("The temporary file has been created: %s%n", tempFile);
+
+		File file = new File(tempFile.toString());
+		FileWriter fw = new FileWriter(file);
+
+		BufferedWriter bw = new BufferedWriter(fw);
+		bw.write(fileContent);
+		bw.close();
+
+		byte[] buffer = new byte[1024];
+
+		File zipfile = new File(Files.createTempFile(null, ".zip").toString());
+		
+		FileOutputStream fos = new FileOutputStream(zipfile);
+		ZipOutputStream zos = new ZipOutputStream(fos);
+
+		ZipEntry ze= new ZipEntry(fileName);
+		zos.putNextEntry(ze);
+		FileInputStream in = new FileInputStream(file);
+
+		int len;
+
+		while ((len = in.read(buffer)) > 0) {
+			zos.write(buffer, 0, len);
+		}
+
+		in.close();
+		zos.closeEntry();
+		zos.close();
+
+		return zipfile;
+
+
 	}
 }
