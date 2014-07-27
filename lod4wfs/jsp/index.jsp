@@ -1,3 +1,4 @@
+<%@page import="de.ifgi.lod4wfs.core.Utils"%>
 <%@ page import="java.io.*"%>
 <%@ page import="de.ifgi.lod4wfs.core.GlobalSettings"%>
 <!DOCTYPE html>
@@ -13,7 +14,9 @@
     <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.3)</small></h2>
     <h4 class="bs-docs-featurette-title"><small>Linked Open Data for Web Feature Services</small></h4>
     <hr />
-    <p><a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-wrench"></span> Manage Layers</a> <a href="new.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Create New Layer</a></p>
+    <p><a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-wrench"></span> Manage Layers</a> 
+    <a href="new.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Create New Layer</a> 
+    <a href="http://<% out.println(Utils.getCanonicalHostName().toString()); %>:<%out.println(Integer.toString(GlobalSettings.defaultPort));%>/<%out.println(GlobalSettings.defaultServiceName);%>/wfs/?service=wfs&version=1.0.0&request=GetCapabilities" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Service Capabilities</a></p>
     <hr />
     <div class="panel panel-primary">
       <div class="panel-heading">System Information</div>
@@ -33,7 +36,7 @@
       </div>
     </div>
      <hr />
-     A project of: <br><br>
+     Powered by: <br><br>
      <table>
      	<tr>
      		<td width="400" align="center"><a href="http://lodum.de/life" target="_blank"><img width="145" height="90" src="img/life_logo.png" /></a></td>
