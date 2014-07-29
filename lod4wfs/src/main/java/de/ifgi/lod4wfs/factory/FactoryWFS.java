@@ -40,8 +40,6 @@ import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
 public class FactoryWFS {
 	
-	//TODO: To be implemented. Unified class to deal with WFS documents, independent of data access (FDA or SDA). 
-
 	private static FactoryWFS instance;
 	private FactorySDAFeatures factorySDA;
 	private FactoryFDAFeatures factoryFDA;
@@ -82,7 +80,9 @@ public class FactoryWFS {
 
 				Document document = documentBuilder.parse("wfs/CapabilitiesDocument_100.xml");		
 
-				 //Iterates through the layers' model and creates NameSpaces entries with the layers prefixes.
+				 /**
+				  * Iterates through the layers' model and creates NameSpaces entries with the layers prefixes.
+				  */
 
 				Element requestElement = document.getDocumentElement(); 
 								
@@ -185,7 +185,7 @@ public class FactoryWFS {
 			
 			Document document = documentBuilder.parse("wfs/DescribeFeature_100.xml");
 					
-			logger.info("Creating DescribeFeatureType XML document for " + feature.getName() + " ...");
+			logger.info("Creating DescribeFeatureType XML document for [" + feature.getName() + "] ...");
 
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
@@ -216,7 +216,9 @@ public class FactoryWFS {
 				sequence.setAttribute("name", predicateWithoutPrefix);
 				sequence.setAttribute("nillable","true");
 								
-				//Checks if predicate is the chosen geometry predicate in the settings file.
+				/**
+				 * Checks if predicate is the chosen geometry predicate in the settings file.
+				 */
 				if(predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))){
 					String featureType = new String();
 					featureType = factorySDA.getFeatureType(featureName);
@@ -288,7 +290,7 @@ public class FactoryWFS {
 				
 		if(isFDAFeature(feature)){
 			
-			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of " + feature.getName() + "  ...");
+			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of [" + feature.getName() + "]  ...");
 			predicates = factoryFDA.getPredicatesFDAFeatures(feature);
 			
 			query = QueryFactory.create(feature.getQuery().toString());
@@ -296,7 +298,7 @@ public class FactoryWFS {
 						
 		} else {
 		
-			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + feature.getName() + "  ...");
+			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of [" + feature.getName() + "] ...");
 			
 			String featureName = modelFeatures.expandPrefix(feature.getName());
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);	
@@ -320,7 +322,9 @@ public class FactoryWFS {
 				documentBuilder = documentBuilderFactory.newDocumentBuilder();
 				Document document = documentBuilder.parse("wfs/GetFeature_100.xml");
 	
-				//Build Name Spaces in the XML header.
+				/**
+				 * Build Name Spaces in the XML header.
+				 */
 				Element requestElement = document.getDocumentElement(); 
 				
 				for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
@@ -465,7 +469,7 @@ public class FactoryWFS {
 				
 			}
 			
-			logger.info("Creating GeoJSON document for " + feature.getName() + "...");
+			logger.info("Creating GeoJSON document for [" + feature.getName() + "]...");
 			
 	        while (rs.hasNext()) {
 	            
@@ -524,7 +528,7 @@ public class FactoryWFS {
 		}
 		
 		
-		logger.info("GeoJSON document for " + feature.getName() + " successfully created.");
+		logger.info("GeoJSON document for [" + feature.getName() + "] successfully created.");
 		
 		return getFeatureResponse;
 

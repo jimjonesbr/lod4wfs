@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 </head>
 <body>
-<div class="bs-docs-featurette">
+<div class="bs-docs-featurette"> 
   <div class="container">
     <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.3)</small></h2>
     <h4 class="bs-docs-featurette-title"><small>Linked Open Data for Web Feature Services</small></h4>
@@ -29,7 +29,6 @@
             out.println("<li>Java Runtime: <b> "+ System.getProperty("java.version") + "</b></li>");
             out.println("<li>Operating System: <b>" + System.getProperty("os.name") + " " + System.getProperty("os.version")+ " (" + System.getProperty("os.arch") + ")</b></li>");
             out.println("<li>Memory usage: <b>" + Runtime.getRuntime().freeMemory() / 1024/1024 + "MB </b></li>");
-            //out.println("<li>AGILE 2014 (Publication):  <a href=\"http://ifgi.uni-muenster.de/~j_jone02/publications/AGILE2014-LOD4WFS.pdf\">Making the Web of Data Available via Web Feature Services</a></li>");
             out.println("<li>AGILE 2014 (Publication):  <a href=\"http://www.researchgate.net/publication/260286637_Making_the_Web_of_Data_Available_via_Web_Feature_Services\">Making the Web of Data Available via Web Feature Services</a></li>");            
             %>
         </ul>

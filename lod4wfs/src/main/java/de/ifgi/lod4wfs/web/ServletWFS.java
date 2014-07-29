@@ -3,19 +3,14 @@ package de.ifgi.lod4wfs.web;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Scanner;
-import java.util.zip.ZipOutputStream;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.IO;
-
 import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.facade.Facade;
@@ -56,11 +51,6 @@ public class ServletWFS extends HttpServlet
 
 		System.out.println("\nIncoming request:\n");
 		
-//		System.out.println(request.getRequestURL());
-//		System.out.println(request.getRequestURI());
-//		System.out.println(request.getQueryString() + "\n");
-
-		// TODO Implement MAXFEATURE for GetFeature
 		
 		while (listParameters.hasMoreElements()) {
 			String parameter = (String) listParameters.nextElement();
@@ -208,7 +198,7 @@ public class ServletWFS extends HttpServlet
 						File zipFile = Utils.compressFile(Facade.getInstance().getFeature(layer), layer.getName().replace(":", "_")+".xml");						
 						byte[] buffer = new byte[128];
 						
-						logger.info("Feature " + layer.getName() + " successfully compressed.");
+						logger.info("Feature [" + layer.getName() + "] successfully compressed.");
 						
 						FileInputStream fileInput = new FileInputStream(zipFile);
 						response.setHeader("Content-Disposition", "attachment;filename=\"" + layer.getName().replace(":", "_") + ".zip\"");
@@ -243,35 +233,7 @@ public class ServletWFS extends HttpServlet
 
 				}
 				
-				
-
-
-				
-				
-//				
-//				
-//				if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")){
-//					/**
-//					 * Wrapping response with the callback function for JSONP javascript requests.	
-//					 */
-//					response.getWriter().println("loadGeoJson(" + Facade.getInstance().getFeature(layer) + ")");
-//					
-//				} else if (currentOutputFormat.toUpperCase().equals("APPLICATION/ZIP")){
-//					
-//					response.getWriter().println(Utils.compressFile(Facade.getInstance().getFeature(layer), layer.getName()) );
-//					
-//				} else {
-//					
-//					response.getWriter().println(Facade.getInstance().getFeature(layer));
-//					
-//				}
-				
-				
-					
-				
-					
-				
-				
+								
 				logger.info(currentRequest +  " request delivered. \n");
 
 				/**
@@ -285,7 +247,7 @@ public class ServletWFS extends HttpServlet
 				response.setContentType("text/xml");
 				response.setStatus(HttpServletResponse.SC_OK);	
 
-				logger.info("Processing " + currentRequest +  " request for the feature "+ layer.getName() + " ...");
+				logger.info("Processing " + currentRequest +  " request for the feature ["+ layer.getName() + "] ...");
 
 				response.getWriter().println(Facade.getInstance().describeFeatureType(layer));
 
@@ -308,7 +270,6 @@ public class ServletWFS extends HttpServlet
 		boolean valid = true;
 		try {
 
-			//result = new Scanner(new File("src/main/resources/wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
 			result = new Scanner(new File("wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
 
 			if(!service.toUpperCase().equals("WFS")){
@@ -373,15 +334,25 @@ public class ServletWFS extends HttpServlet
 			 * Supported output formats:
 			 * 	GeoJSON (text/javascript)
 			 * 	GML2     
-			*/
+			 */
 			} else if (!outputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && 
 					   !outputFormat.isEmpty() && //GML2 is assumed for requests without an explicit output format. 
 					   !outputFormat.toUpperCase().equals("GML2")){
 				
 				result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ". The output format '"+ outputFormat + "' is not supported.");
 				result = result.replace("PARAM_CODE", "InvalidOutputFormat");
-				logger.error("Invalid output format for " + request + ". The output format "+ outputFormat + " is not supported.");
+				logger.error("Invalid output format for " + request + ". The output format " + outputFormat + " is not supported.");
 				valid = false;
+			
+			} else if (!formatOptions.toUpperCase().equals("ZIP") &&
+					   !formatOptions.toUpperCase().equals("CALLBACK:LOADGEOJSON") &&
+					   !formatOptions.toUpperCase().isEmpty()){
+
+				result = result.replace("PARAM_REPORT", "Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
+				result = result.replace("PARAM_CODE", "InvalidOutputFormatOption");
+				logger.error("Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
+				valid = false;
+				
 			}
 
 			if(!valid){

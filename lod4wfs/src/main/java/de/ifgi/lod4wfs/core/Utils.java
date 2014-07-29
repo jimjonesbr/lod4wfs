@@ -31,7 +31,9 @@ public class Utils {
 					String CRS = new String();
 
 
-					//Extracting Reference System
+					/**
+					 * Extracting Reference System
+					 */
 					if(literal.contains("<") && literal.contains(">")){
 
 						CRS = literal.substring(literal.indexOf("<") + 1, literal.indexOf(">"));
@@ -39,7 +41,9 @@ public class Utils {
 
 					}
 
-					//Removing Literal Type
+					/**
+					 * Removing Literal Type
+					 */
 					if(literal.contains("^^")){
 
 						literal = literal.substring(0, literal.indexOf("^^"));
@@ -73,7 +77,9 @@ public class Utils {
 			String CRS = new String();
 
 
-			//Extracting Reference System
+			/**
+			 * Extracting Reference System
+			 */
 			if(wkt.contains("<") && wkt.contains(">")){
 
 				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));
@@ -81,7 +87,9 @@ public class Utils {
 
 			}
 
-			//Removing Literal Type
+			/**
+			 * Removing Literal Type
+			 */
 			if(wkt.contains("^^")){
 
 				wkt = wkt.substring(0, wkt.indexOf("^^"));
@@ -115,9 +123,13 @@ public class Utils {
 
 					if (!geoType.toUpperCase().equals("POINT")){
 
-						//Checking if the coordinate has negative values.
+						/**
+						 * Checking if the coordinate has negative values.
+						 */
 						if(geoJSONStringBuilder.charAt(i-1)=='-'){
-							//Closes the pair of coordinates with a squared bracket '['
+							/**
+							 * Closes the pair of coordinates with a squared bracket '['
+							 */
 							geoJSONOutuput.insert(geoJSONOutuput.length()-1, '[');
 
 						} else {
@@ -179,21 +191,21 @@ public class Utils {
 
 	}
 
-	//TODO: to be implemented
+	//TODO: isGML() to be implemented
 	public static boolean isGML(String literal){
 
 		return true;
 
 	}
 
-	//TODO: to be implemented
+	//TODO: isWKT() to be implemented
 	public static boolean isWKT(String literal){
 
 		return true;
 
 	}
 
-	//TODO: to be implemented
+	//TODO: isGeoJSON() to be implemented
 	public static boolean isGeoJSON(String literal){
 
 		return true;
@@ -218,7 +230,8 @@ public class Utils {
 
 					InetAddress ipAddr = enumIpAddr.nextElement();
 
-					if(networkInterfaceNumber==2 && addressNumber==1){
+					//if(networkInterfaceNumber==2 && addressNumber==1){
+					if(networkInterfaceNumber==0 && addressNumber==1){
 
 						result = ipAddr.getCanonicalHostName();
 
@@ -229,7 +242,6 @@ public class Utils {
 			}
 
 		} catch (SocketException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -242,8 +254,6 @@ public class Utils {
 
 
 		tempFile = Files.createTempFile(null, ".tmp");
-
-		//System.out.format("The temporary file has been created: %s%n", tempFile);
 
 		File file = new File(tempFile.toString());
 		FileWriter fw = new FileWriter(file);
@@ -266,7 +276,9 @@ public class Utils {
 		int len;
 
 		while ((len = in.read(buffer)) > 0) {
+			
 			zos.write(buffer, 0, len);
+			
 		}
 
 		in.close();

@@ -14,7 +14,7 @@
 <body>
 <div class="bs-docs-featurette">
   <div class="container">
-    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.2)</small></h2>
+    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.3)</small></h2>
     <hr />
     <p> <a href="index.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-home"></span> Home</a> <a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Manage Layers</a> </p>
     <hr />

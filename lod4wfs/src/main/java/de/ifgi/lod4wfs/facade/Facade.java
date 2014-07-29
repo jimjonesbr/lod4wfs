@@ -11,7 +11,6 @@ import de.ifgi.lod4wfs.factory.FactoryFDAFeatures;
 import de.ifgi.lod4wfs.factory.FactoryWFS;
 
 /**
- * 
  * @author jones
  * @version 1.0
  */
@@ -34,23 +33,22 @@ public class Facade {
 	}
 
 	
-	//Methods for the WFS Interface
+	/**
+	 * Methods for WFS Interface
+	 */
 	
 	public String getFeature(WFSFeature layer){
 
-		//return factorySDA.getFeature(layer);
 		return factoryWFS.getFeature(layer);
 	}
 
 	public String describeFeatureType(WFSFeature feature){
 
-		//return factorySDA.describeFeatureType(feature);
 		return factoryWFS.describeFeatureType(feature);
 	}
 
 	public String getCapabilities(String version){
 
-		//return factorySDA.getCapabilities(version);
 		return factoryWFS.getCapabilities(version);
 	}
 
@@ -59,7 +57,9 @@ public class Facade {
 
 	
 	
-	//Methods for the Web Interface
+	/**
+	 * Methods for Web Interface
+	 */
 	
 	public ArrayList<WFSFeature> listFDAFeatures(){
 		
@@ -92,7 +92,6 @@ public class Facade {
 	
 	public boolean isFeatureNameValid(String featureName){
 		
-		System.out.println("DELETE ME FACTORY >> "+featureName);
 		return FactoryFDAFeatures.isFeatureNameValid(featureName);
 		
 	}

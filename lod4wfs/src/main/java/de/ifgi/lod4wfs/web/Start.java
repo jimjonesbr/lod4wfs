@@ -27,13 +27,17 @@ public class Start{
 		
 		GlobalSettings.loadVariables();
 		
-		//First parameter: SPARQL Endpoint address. 
+		/**
+		 * First parameter: SPARQL Endpoint address. 
+		 */
 		if (args.length >= 1) {
 			
 			GlobalSettings.default_SPARQLEndpoint = args[0];
 		}
 		
-		//Second parameter: Server port
+		/**
+		 * Second parameter: Server port
+		 */
 		if (args.length == 2) {
 			
 			GlobalSettings.defaultPort = Integer.parseInt(args[1]);
