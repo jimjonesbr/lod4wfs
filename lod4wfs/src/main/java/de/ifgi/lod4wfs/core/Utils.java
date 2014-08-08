@@ -245,7 +245,7 @@ public class Utils {
 			e.printStackTrace();
 		}
 
-		return result;
+		return result.toLowerCase();
 	}
 
 	public static File compressFile(String fileContent, String fileName) throws IOException{
