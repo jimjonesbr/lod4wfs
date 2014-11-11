@@ -449,6 +449,68 @@ public class FactoryWFS {
 
 		}
 		
+		/*
+		 * Geometries are not enconded to 
+		 */
+		
+		
+		
+		if(feature.getOutputFormat().equals("json")){
+			
+			StringBuilder geojson2 = new StringBuilder();
+			
+			String jsonEntries = new String();
+						
+						
+			
+			
+			if(!isFDAFeature(feature)){
+				
+				Triple triple = new Triple();
+				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+				predicates.add(triple);	
+				
+			}
+			
+			jsonEntries = "[\n";
+			
+			while (rs.hasNext()) {
+			
+				QuerySolution soln = rs.nextSolution();
+				
+				jsonEntries = jsonEntries + "{\n";
+				for (int i = 0; i < predicates.size(); i++) {
+
+					//if(isFDAFeature(feature)){
+
+					jsonEntries = jsonEntries + "\"" +predicates.get(i).getPredicate().toString()+
+							"\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\"";
+
+					if(i != predicates.size()-1){
+						jsonEntries = jsonEntries + ",\n";
+					}
+
+					//}
+
+				}
+			
+				if(rs.hasNext()){
+					jsonEntries = jsonEntries + "\n},\n";
+				} else {
+					jsonEntries = jsonEntries + "\n}\n";
+				}
+			}
+        	
+			
+        	jsonEntries = jsonEntries + "\n]";
+        	
+        	geojson2.append(jsonEntries);
+        	
+        	getFeatureResponse = geojson2.toString();
+        			
+		}
+		
+		
 		
 		
 		if(feature.getOutputFormat().equals("geojson")){
@@ -465,7 +527,7 @@ public class FactoryWFS {
 				
 				Triple triple = new Triple();
 				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
-				predicates.add(triple);
+				predicates.add(triple);	
 				
 			}
 			
