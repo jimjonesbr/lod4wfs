@@ -457,7 +457,7 @@ public class FactoryWFS {
 		
 		if(feature.getOutputFormat().equals("json")){
 			
-			StringBuilder geojson2 = new StringBuilder();
+			StringBuilder json = new StringBuilder();
 			
 			String jsonEntries = new String();
 						
@@ -474,39 +474,71 @@ public class FactoryWFS {
 			
 			jsonEntries = "[\n";
 			
+			logger.info("Creating JSON document for [" + feature.getName() + "]...");
+			
 			while (rs.hasNext()) {
 			
 				QuerySolution soln = rs.nextSolution();
 				
-				jsonEntries = jsonEntries + "{\n";
+				jsonEntries = jsonEntries + " {\n";
 				for (int i = 0; i < predicates.size(); i++) {
 
 					//if(isFDAFeature(feature)){
 
-					jsonEntries = jsonEntries + "\"" +predicates.get(i).getPredicate().toString()+
-							"\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\"";
+					if(soln.get("?"+predicates.get(i).getPredicate()).isLiteral()){
+						
+						
 
+						if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatype() != null){
+
+							
+							/**
+							 * Checks if the literal is of type integer, long, byte or decimal.
+							 */
+							if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultDecimalType()) ||
+							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultLongType()) ||
+							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultIntegerType()) ||
+							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultByteType())) {
+																
+								jsonEntries = jsonEntries + "  \"" + predicates.get(i).getPredicate().toString() +
+										  "\": " + soln.getLiteral("?" + predicates.get(i).getPredicate()).getValue();
+
+							}
+
+						} else {
+						
+							jsonEntries = jsonEntries + "  \"" + predicates.get(i).getPredicate().toString() +
+									  "\": \"" + soln.getLiteral("?" + predicates.get(i).getPredicate()).getValue().toString().replace("\"", "'") + "\"";
+						}
+						
+					} else {
+						
+							jsonEntries = jsonEntries + "  \"" + predicates.get(i).getPredicate().toString() +
+								  "\": \"" + soln.get("?" + predicates.get(i).getPredicate()).toString().replace("\"", "'") + "\"";
+
+					}
+					
+					
 					if(i != predicates.size()-1){
 						jsonEntries = jsonEntries + ",\n";
 					}
 
-					//}
 
 				}
 			
 				if(rs.hasNext()){
-					jsonEntries = jsonEntries + "\n},\n";
+					jsonEntries = jsonEntries + "\n },\n";
 				} else {
-					jsonEntries = jsonEntries + "\n}\n";
+					jsonEntries = jsonEntries + "\n }\n";
 				}
 			}
         	
 			
         	jsonEntries = jsonEntries + "\n]";
         	
-        	geojson2.append(jsonEntries);
+        	json.append(jsonEntries);
         	
-        	getFeatureResponse = geojson2.toString();
+        	getFeatureResponse = json.toString();
         			
 		}
 		

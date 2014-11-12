@@ -14,6 +14,14 @@ public class GlobalSettings {
 	public static String defaultUpperCorner = "180.0 83.57";
 	public static String defaultServiceName = "lod4wfs";
 	public static String defaultLiteralType = "xsd:string";	
+	public static String defaultDecimalType = "";
+	public static String defaultIntegerType = "";
+	public static String defaultStringType = "";
+	public static String defaultLongType = "";
+	public static String defaultDateType = "";
+	public static String defaultWKTType = "";
+	public static String defaultByteType = "";
+	
 	public static String xsdNameSpace = "";
 	public static String startupTime = "";
 	//TODO Fix bounding box in the Capabilities Document!
@@ -31,6 +39,7 @@ public class GlobalSettings {
     private static String featureConnector= "";
     private static String sdaPrefix= "";
     private static String fdaPrefix= "";
+    
     
     private static int previewLimit = 5;
     
@@ -90,6 +99,34 @@ public class GlobalSettings {
         return fdaPrefix;
     }
     
+    public static String getDefaultDecimalType(){
+        return defaultDecimalType;
+    }
+
+    public static String getDefaultStringType(){
+        return defaultStringType;
+    }
+    
+    public static String getDefaultIntegerType(){
+        return defaultIntegerType;
+    }
+
+    public static String getDefaultDateType(){
+        return defaultDateType;
+    }
+    
+    public static String getDefaultLongType(){
+        return defaultLongType;
+    }
+
+    public static String getDefaultWKTType(){
+        return defaultWKTType;
+    }
+    
+    public static String getDefaultByteType(){
+        return defaultByteType;
+    }
+    
     public static void loadVariables(){
 	       
 	        Wini ini;
@@ -107,6 +144,7 @@ public class GlobalSettings {
 	            geometryVariable = ini.get("Geometry", "geometryVariable");
 	            predicatesContainer = ini.get("Geometry", "predicatesContainer");
 	            featureConnector = ini.get("Geometry", "featureConnector");
+	            featureConnector = ini.get("Geometry", "wktLiteral");
 	            
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
 	            fdaPrefix = ini.get("SystemDefaults", "fdaPrefix");
@@ -115,7 +153,12 @@ public class GlobalSettings {
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            sparqlDirectory = ini.get("Server", "SPARQLDirectory");
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
-	           	
+	            defaultDecimalType  = ini.get("SystemDefaults", "decimalLiteral").replace("<", "").replace(">", "");
+	            defaultStringType  = ini.get("SystemDefaults", "stringLiteral").replace("<", "").replace(">", "");
+	            defaultIntegerType  = ini.get("SystemDefaults", "integerLiteral").replace("<", "").replace(">", "");
+	            defaultLongType  = ini.get("SystemDefaults", "longLiteral").replace("<", "").replace(">", "");
+	            defaultDateType  = ini.get("SystemDefaults", "dateLiteral").replace("<", "").replace(">", "");
+	            
 	            previewLimit = Integer.valueOf(ini.get("WebInterface", "PreviewLimit"));
 	            
 	        } catch (InvalidFileFormatException e) {
