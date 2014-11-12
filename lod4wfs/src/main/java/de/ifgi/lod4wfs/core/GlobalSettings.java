@@ -21,6 +21,7 @@ public class GlobalSettings {
 	public static String defaultDateType = "";
 	public static String defaultWKTType = "";
 	public static String defaultByteType = "";
+	public static String defaultFloatType = "";
 	
 	public static String xsdNameSpace = "";
 	public static String startupTime = "";
@@ -127,6 +128,10 @@ public class GlobalSettings {
         return defaultByteType;
     }
     
+    public static String getDefaultFloatType(){
+        return defaultFloatType;
+    }
+    
     public static void loadVariables(){
 	       
 	        Wini ini;
@@ -157,7 +162,8 @@ public class GlobalSettings {
 	            defaultStringType  = ini.get("SystemDefaults", "stringLiteral").replace("<", "").replace(">", "");
 	            defaultIntegerType  = ini.get("SystemDefaults", "integerLiteral").replace("<", "").replace(">", "");
 	            defaultLongType  = ini.get("SystemDefaults", "longLiteral").replace("<", "").replace(">", "");
-	            defaultDateType  = ini.get("SystemDefaults", "dateLiteral").replace("<", "").replace(">", "");
+	            defaultFloatType  = ini.get("SystemDefaults", "floatLiteral").replace("<", "").replace(">", "");
+	            
 	            
 	            previewLimit = Integer.valueOf(ini.get("WebInterface", "PreviewLimit"));
 	            

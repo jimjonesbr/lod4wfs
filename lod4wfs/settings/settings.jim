@@ -21,6 +21,7 @@ decimalLiteral =<http://www.w3.org/2001/XMLSchema#decimal>
 longLiteral =<http://www.w3.org/2001/XMLSchema#long>
 dateLiteral =<http://www.w3.org/2001/XMLSchema#date>
 dateLiteral =<http://www.w3.org/2001/XMLSchema#byte>
+floatLiteral =<http://www.w3.org/2001/XMLSchema#float>
 RDFNamespace = <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 defaultCRS = EPSG:4326
 dynamicFeaturesNameSpace = http://sparql.lod4wfs.de/
