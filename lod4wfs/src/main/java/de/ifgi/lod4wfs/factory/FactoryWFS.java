@@ -382,8 +382,12 @@ public class FactoryWFS {
 								
 							} else {
 								
-								Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
-								elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicates.get(i).getPredicate()).toString()));														
+								Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());							
+								
+								if(soln.get("?"+predicates.get(i).getPredicate().toString()) != null){
+									elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicates.get(i).getPredicate()).toString()));	
+								}
+																						
 								currentGeometryElement.appendChild(elementAttribute);
 	
 							}
