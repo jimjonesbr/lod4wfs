@@ -1,5 +1,10 @@
 package de.ifgi.lod4wfs.factory;
 
+/**
+ * @author Jim Jones
+ * @description Provides all standard WFS functions (GetCapabilities, DescribeFeatureType and GetFeature) 
+ */
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -453,20 +458,16 @@ public class FactoryWFS {
 
 		}
 		
-		/*
-		 * Geometries are not enconded to 
+		
+		
+		/**
+		 * Generates a JSON file as output. Geometries are maintained as WKT.
 		 */
-		
-		
-		
+						
 		if(feature.getOutputFormat().equals("json")){
 			
-			StringBuilder json = new StringBuilder();
-			
+			StringBuilder json = new StringBuilder();			
 			String jsonEntries = new String();
-						
-						
-			
 			
 			if(!isFDAFeature(feature)){
 				
@@ -487,17 +488,12 @@ public class FactoryWFS {
 				jsonEntries = jsonEntries + " {\n";
 				for (int i = 0; i < predicates.size(); i++) {
 
-					//if(isFDAFeature(feature)){
-
 					if(soln.get("?"+predicates.get(i).getPredicate()).isLiteral()){
-						
-						
-
+												
 						if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatype() != null){
-
 							
 							/**
-							 * Checks if the literal is of type integer, long, byte or decimal.
+							 * Checks if the literal is of type integer, long, byte or decimal, in order to avoid quotation marks -> "".
 							 */
 							if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultDecimalType()) ||
 							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultLongType()) ||
@@ -549,6 +545,9 @@ public class FactoryWFS {
 		
 		
 		
+		/**
+		 * Generates a GeoJSON file as output. Geometries are encoded to GeoJSON.
+		 */
 		
 		if(feature.getOutputFormat().equals("geojson")){
 			
@@ -623,11 +622,10 @@ public class FactoryWFS {
 			
 	        getFeatureResponse = geojson2.toString().replace("[PARAM_FEATURES]", Integer.toString(counter));
 	        	       
+	        logger.info("GeoJSON document for [" + feature.getName() + "] successfully created.");
 	        
 		}
 		
-		
-		logger.info("GeoJSON document for [" + feature.getName() + "] successfully created.");
 		
 		return getFeatureResponse;
 
@@ -636,12 +634,10 @@ public class FactoryWFS {
 	
 
 	
-	
-	
-	
 	/**
 	 ** Private Methods.
 	 **/
+	
 	
 	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
 	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
@@ -691,7 +687,7 @@ public class FactoryWFS {
 		
 	 /** 
 	 * @param XML Document
-	 * @return string containing a given XML Document contents.
+	 * @return string containing the given XML Document contents.
 	 */
 	private String printXMLDocument(Document document){
 		

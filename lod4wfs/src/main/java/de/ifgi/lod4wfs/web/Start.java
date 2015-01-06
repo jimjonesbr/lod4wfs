@@ -14,9 +14,7 @@ import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.facade.Facade;
 
 /**
- * 
- * @author jones
- * @version 1.0
+ * @author Jim Jones
  */
 
 public class Start{

@@ -16,9 +16,6 @@ import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
-
-//TODO: change prefix in the capabilities document to SDA0 instead of TS0.
-
 public class FactorySDAFeatures {
 
 	private static Logger logger = Logger.getLogger("SDAFeatures-Factory");
