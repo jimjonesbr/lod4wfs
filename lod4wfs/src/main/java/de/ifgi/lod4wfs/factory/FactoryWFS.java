@@ -86,7 +86,7 @@ public class FactoryWFS {
 				Document document = documentBuilder.parse("wfs/CapabilitiesDocument_100.xml");		
 
 				 /**
-				  * Iterates through the layers' model and creates NameSpaces entries with the layers prefixes.
+				  * Iterates through the layers' model and creates NameSpaces' entries with the layers prefixes.
 				  */
 
 				Element requestElement = document.getDocumentElement(); 
@@ -175,7 +175,7 @@ public class FactoryWFS {
 			
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);
 			
-			//TODO: Verify the need of manual input of geometry predicate
+			//TODO: Verify the need of manual input of geometry predicate.
 			Triple triple = new Triple();
 			triple.setPredicate(GlobalSettings.getGeometryPredicate().replace("<", "").replace(">", ""));
 			
@@ -288,7 +288,7 @@ public class FactoryWFS {
 
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
-		Query query = new Query();
+		//Query query = new Query();
 		
 		ArrayList<Triple> predicates = new ArrayList<Triple>();					
 		ResultSet rs;
@@ -298,7 +298,7 @@ public class FactoryWFS {
 			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of [" + feature.getName() + "]  ...");
 			predicates = factoryFDA.getPredicatesFDAFeatures(feature);
 			
-			query = QueryFactory.create(feature.getQuery().toString());
+			//query = QueryFactory.create(feature.getQuery().toString());
 			rs = jn.executeQuery(feature.getQuery().toString(),feature.getEndpoint());
 						
 		} else {
@@ -308,15 +308,14 @@ public class FactoryWFS {
 			String featureName = modelFeatures.expandPrefix(feature.getName());
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);	
 					
-			query = QueryFactory.create(factorySDA.generateGetFeatureSPARQL(featureName, predicates));
+			//query = QueryFactory.create(factorySDA.generateGetFeatureSPARQL(featureName, predicates));
 			rs = jn.executeQuery(factorySDA.generateGetFeatureSPARQL(featureName, predicates),GlobalSettings.default_SPARQLEndpoint);
 			
 		}
 		
 		layerPrefix = modelFeatures.shortForm(feature.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
-		
-		
+				
 		if(feature.getOutputFormat().equals("xml")){
 		
 			try {
@@ -353,6 +352,7 @@ public class FactoryWFS {
 				
 	
 				while (rs.hasNext()) {
+					
 					countIteration++;
 					
 					QuerySolution soln = rs.nextSolution();
@@ -588,8 +588,7 @@ public class FactoryWFS {
 		        			
 		        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
 		        					     "\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\",";
-		        			
-		        			
+		        					        			
 		        		}
 		        		
 		        	} else {
