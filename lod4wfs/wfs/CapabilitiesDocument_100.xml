@@ -50,6 +50,9 @@
 			<GetFeature>
 				<ResultFormat>
 					<GML2 />
+					<GeoJSON />
+					<JSON />
+					<ZIP />
 				</ResultFormat>
 				<DCPType>
 					<HTTP>

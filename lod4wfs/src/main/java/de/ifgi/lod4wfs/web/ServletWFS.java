@@ -341,7 +341,8 @@ public class ServletWFS extends HttpServlet
 			/**
 			 * Supported output formats:
 			 * 	GeoJSON (text/javascript)
-			 * 	GML2     
+			 * 	GML2    
+			 *  ZIP 
 			 */
 			} else if (!outputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && 
 					   !outputFormat.isEmpty() && //GML2 is assumed for requests without an explicit output format. 
