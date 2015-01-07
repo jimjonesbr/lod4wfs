@@ -221,24 +221,47 @@ public class Utils {
 
 			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
 
-			for (int networkInterfaceNumber = 0; en.hasMoreElements(); networkInterfaceNumber++) {
+			String eth0 = "";
+			String wlan0 = "";
+			
+			while (en.hasMoreElements()) {
 
 				NetworkInterface intf = en.nextElement();
 				Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
 
-				for (int addressNumber = 0; enumIpAddr.hasMoreElements(); addressNumber++) {
-
-					InetAddress ipAddr = enumIpAddr.nextElement();
-
-					//if(networkInterfaceNumber==2 && addressNumber==1){
-					if(networkInterfaceNumber==0 && addressNumber==1){
-
-						result = ipAddr.getCanonicalHostName();
-
+				
+				if(intf.getName().equals("wlan0")){
+					
+					while (enumIpAddr.hasMoreElements()) {
+						
+						InetAddress inetAddress = enumIpAddr.nextElement();						
+						wlan0 = inetAddress.getCanonicalHostName();
+						
 					}
+					
 				}
 
-
+				if(intf.getName().equals("eth0")){
+					
+					while (enumIpAddr.hasMoreElements()) {
+						
+						InetAddress inetAddress = enumIpAddr.nextElement();						
+						eth0 = inetAddress.getCanonicalHostName();
+						
+					}
+					
+				}
+				
+			}
+			
+			
+			if (!eth0.equals("")) {
+				
+				result = eth0;
+				
+			} else {
+				
+				result = wlan0;
 			}
 
 		} catch (SocketException e) {
