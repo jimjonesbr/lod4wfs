@@ -38,13 +38,14 @@
       </div>
     </div>
      <hr />
-     Powered by: <br><br>
+     A project from: <br><br>
      <table>
      	<tr>
-     		<td width="400" align="center"><a href="http://lodum.de/life" target="_blank"><img width="145" height="90" src="img/life_logo.png" /></a></td>
-     		<td width="400" align="center"><a href="http://lodum.de" target="_blank"><img width="220" height="90" src="img/lodum_logo.png" /></a></td>
-     		<td width="400" align="center"><a href="http://ifgi.uni-muenster.de" target="_blank"><img width="240" height="90" src="img/ifgi_logo.jpg" /></a></td>
-     		<td width="400" align="center"><a href="http://www.uni-muenster.de/de/" target="_blank"><img width="340" height="85" src="img/wwu_logo.jpg" /></a></td>
+     		<td width="400" align="center"><a href="http://www.ulb.uni-muenster.de/" target="_blank"><img src="img/ulb_logo.gif" /></a></td>
+     		<td width="400" align="center"><a href="http://lodum.de/life" target="_blank"><img width="125" height="80" src="img/life_logo.png" /></a></td>
+     		<td width="400" align="center"><a href="http://lodum.de" target="_blank"><img width="200" height="80" src="img/lodum_logo.png" /></a></td>
+     		<td width="400" align="center"><a href="http://ifgi.uni-muenster.de" target="_blank"><img width="220" height="80" src="img/ifgi_logo.jpg" /></a></td>
+     		<td width="400" align="center"><a href="http://www.uni-muenster.de/de/" target="_blank"><img width="300" height="65" src="img/wwu_logo.jpg" /></a></td>
      	</tr>
      </table>
     
