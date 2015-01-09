@@ -84,7 +84,7 @@ public class WKTParser {
 		AbstractGeometry result;
 
 		if(input == null || !input.trim().matches("^(\\w+)(\\sZ){0,1}\\s*\\(\\s*(.*)\\s*\\)$")) {
-			System.out.println("DELETE-ME: - >> "+input);
+			
 			throw new Exception("Invalid input");
 		}
 

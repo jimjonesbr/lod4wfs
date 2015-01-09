@@ -190,7 +190,7 @@ public class FactoryFDAFeatures {
 	}
 	
 	public static boolean isFeatureNameValid(String featureName){
-		System.out.println("dELETE ME  >>  "+featureName);
+		
 		return featureName.matches("([A-Za-z0-9-_]+)");
 
 	}
