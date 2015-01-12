@@ -1,4 +1,4 @@
-<%@page import="de.ifgi.lod4wfs.core.Utils"%>
+<%@ page import="de.ifgi.lod4wfs.core.Utils"%>
 <%@ page import="java.io.*"%>
 <%@ page import="de.ifgi.lod4wfs.core.GlobalSettings"%>
 <!DOCTYPE html>

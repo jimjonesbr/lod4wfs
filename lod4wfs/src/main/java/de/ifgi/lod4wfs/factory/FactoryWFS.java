@@ -37,6 +37,8 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.sun.mail.util.CRLFOutputStream;
+
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.Utils;
@@ -500,10 +502,19 @@ public class FactoryWFS {
 							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultIntegerType()) ||
 							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultByteType()) ||
 							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultFloatType())) {
+								
 																
-								jsonEntries = jsonEntries + "  \"" + predicates.get(i).getPredicate().toString() +
-										  "\": " + soln.getLiteral("?" + predicates.get(i).getPredicate()).getValue();
-
+								if(!soln.getLiteral("?" + predicates.get(i).getPredicate()).getLexicalForm().toUpperCase().equals("NAN")){
+								
+									jsonEntries = jsonEntries + "  \"" + predicates.get(i).getPredicate().toString() +
+											  "\": " + soln.getLiteral("?" + predicates.get(i).getPredicate()).getValue();
+									
+								} else {
+									
+									jsonEntries = jsonEntries + "  \"" + predicates.get(i).getPredicate().toString() + "\": 0";
+									
+								}
+								
 							}
 
 						} else {
@@ -520,7 +531,7 @@ public class FactoryWFS {
 					}
 					
 					
-					if(i != predicates.size()-1){
+					if(i != predicates.size()-1 ){
 						jsonEntries = jsonEntries + ",\n";
 					}
 
@@ -528,9 +539,13 @@ public class FactoryWFS {
 				}
 			
 				if(rs.hasNext()){
+					
 					jsonEntries = jsonEntries + "\n },\n";
+					
 				} else {
+					
 					jsonEntries = jsonEntries + "\n }\n";
+					
 				}
 			}
         	
@@ -550,82 +565,127 @@ public class FactoryWFS {
 		 */
 		
 		if(feature.getOutputFormat().equals("geojson")){
-			
-			StringBuilder geojson2 = new StringBuilder();
-			
+
+			StringBuilder geojson = new StringBuilder();
+
 			String properties = new String();
-						
+
 			int counter=0;
-			
-			geojson2.append("{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[\n") ;
-			
+
+			geojson.append("{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[") ;
+
 			if(!isFDAFeature(feature)){
-				
+
 				Triple triple = new Triple();
 				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
 				predicates.add(triple);	
-				
-			}
-			
-			logger.info("Creating GeoJSON document for [" + feature.getName() + "]...");
-			
-	        while (rs.hasNext()) {
-	            
-	        	counter++;
-	            QuerySolution soln = rs.nextSolution();
-	            geojson2.append("{\"type\":\"Feature\",\"id\":\"FEATURE_"+ counter +"\",\"geometry\":");
-	        	properties = "\"properties\": {";
-	        	
-	        	for (int i = 0; i < predicates.size(); i++) {
-	        		
-		        	if(isFDAFeature(feature)){
-		        		
-		        		if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
-		        			        		
-		        			geojson2.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+feature.getGeometryVariable()).getString()));
-		        			
-		        		} else {
-		        			
-		        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
-		        					     "\": \""+soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'")+"\",";
-		        					        			
-		        		}
-		        		
-		        	} else {
-		        		
-		        		
-		        		if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
-							
-							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
-								geojson2.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) +",");
-							
+			}
+
+			logger.info("Creating GeoJSON document for [" + feature.getName() + "]...");
+
+			while (rs.hasNext()) {
+
+
+
+				counter++;
+				QuerySolution soln = rs.nextSolution();
+				geojson.append("\n{\"type\":\"Feature\",\n	\"id\":\"FEATURE_"+ counter +"\",	\n	\"geometry\":");
+				properties = "\n\"properties\": {\n";
+
+				for (int i = 0; i < predicates.size(); i++) {
+
+					boolean isGeometry = false;
+
+					if(isFDAFeature(feature)){
+
+						if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
+
+							geojson.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?" + feature.getGeometryVariable()).getString()));
+							isGeometry = true;
+							System.out.println(isGeometry);
+
+						} else {
+
+							/**
+							 * Checks if the literal is of type integer, long, byte or decimal, in order to avoid quotation marks -> "".
+							 */
+
+							if(soln.get("?"+predicates.get(i).getPredicate()).isLiteral()){
+
+
+								if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatype() != null){
+
+
+									if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultDecimalType()) ||
+										soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultLongType()) ||
+										soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultIntegerType()) ||
+										soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultByteType()) ||
+										soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultFloatType())) {
+
+
+										if(!soln.getLiteral("?" + predicates.get(i).getPredicate()).getLexicalForm().toUpperCase().equals("NAN")){
+
+											properties = properties + "\n	\"" +predicates.get(i).getPredicate().toString()+
+													"\": " + soln.getLiteral("?"+predicates.get(i).getPredicate()).getValue() + "," ;
+
+										}
+
+									} 
+
+								} else {
+									
+									properties = properties + "\n	\"" +predicates.get(i).getPredicate().toString()+
+											"\": \"" + soln.getLiteral("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'") + "\"," ;
+								}
+
 							} else {
-								
-			        			properties = properties + "\"" +predicates.get(i).getPredicate().toString()+
-		        					         "\": \""+soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().replace("\"", "'")+"\",";
+
+								properties = properties + "\n	\"" +predicates.get(i).getPredicate().toString()+
+										"\": \"" + soln.get("?"+predicates.get(i).getPredicate()).toString().replace("\"", "'") + "\"," ; 
 
 							}
-		        		}
-		        	}
-		        	
-	        	}
-	        	
-	        	properties= properties.substring(0, properties.length()-1);
-	        	geojson2.append(properties+"}},");
-	           
-	        }
-			
-	        geojson2.deleteCharAt(geojson2.length()-1);
-	        geojson2.append("]}");
-			
-	        getFeatureResponse = geojson2.toString().replace("[PARAM_FEATURES]", Integer.toString(counter));
-	        	       
-	        logger.info("GeoJSON document for [" + feature.getName() + "] successfully created.");
-	        
+
+						}
+
+
+					} else {
+
+
+						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
+
+							isGeometry = true;
+
+							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
+
+								geojson.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) );
+
+							} else {
+
+								properties = properties + "\"" +predicates.get(i).getPredicate().toString() +
+										"\": \"" + soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString().replace("\"", "'") ;
+
+							}
+						}
+					}		               			
+				}
+
+
+				properties = properties.substring(0, properties.length()-1);
+				geojson.append(properties+"}},");
+
+			}
+
+			geojson.deleteCharAt(geojson.length()-1);
+			geojson.append("]}");
+
+			getFeatureResponse = geojson.toString().replace("[PARAM_FEATURES]", Integer.toString(counter));
+
+			logger.info("GeoJSON document for [" + feature.getName() + "] successfully created.");
+
 		}
-		
-		
+
+
 		return getFeatureResponse;
 
 	}
