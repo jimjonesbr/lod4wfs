@@ -60,7 +60,7 @@ public class FactoryFDAFeatures {
 
 	public static boolean existsFeature(String featureName){
 
-		File[] files = new File(GlobalSettings.getSparqlDirectory()).listFiles();
+		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 		boolean result = false;
 		
 		for (File file : files) {
@@ -69,7 +69,7 @@ public class FactoryFDAFeatures {
 
 				try {
 
-					FileReader fileReader = new FileReader(GlobalSettings.getSparqlDirectory()+file.getName());
+					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory()+file.getName());
 					JsonReader jsonReader = new JsonReader(fileReader);
 					jsonReader.beginObject();
 						
@@ -198,7 +198,7 @@ public class FactoryFDAFeatures {
 	public static void addFeature(WFSFeature feature){
 
 		try {
-			Writer writer = new FileWriter(GlobalSettings.getSparqlDirectory() + feature.getName() + ".sparql");
+			Writer writer = new FileWriter(GlobalSettings.getFeatureDirectory() + feature.getName() + ".sparql");
 
 			writer.write("{\n");
 			writer.write("\"name\":\""+ GlobalSettings.getDynamicFeaturesNameSpace() + feature.getName().toLowerCase() + "\",\n");
@@ -228,7 +228,7 @@ public class FactoryFDAFeatures {
 
 	public WFSFeature getFDAFeature(String fileName){
 		
-		File[] files = new File(GlobalSettings.getSparqlDirectory()).listFiles();
+		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 		WFSFeature feature = new WFSFeature();
 		
 		for (File file : files) {
@@ -237,7 +237,7 @@ public class FactoryFDAFeatures {
 
 				try {
 
-					FileReader fileReader = new FileReader(GlobalSettings.getSparqlDirectory()+file.getName());
+					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory()+file.getName());
 					JsonReader jsonReader = new JsonReader(fileReader);
 					jsonReader.beginObject();
 															

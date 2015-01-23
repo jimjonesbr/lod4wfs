@@ -139,9 +139,7 @@ public class ServletWFS extends HttpServlet
 				response.setStatus(HttpServletResponse.SC_OK);
 
 
-				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT")) {
-
-					
+				if (currentOutputFormat.toUpperCase().equals("TEXT/JAVASCRIPT")) {				
 					
 					if (currentOptionsFormat.toUpperCase().equals("CALLBACK:LOADGEOJSON")){
 						

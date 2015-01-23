@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -14,6 +15,15 @@ import java.nio.file.Path;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Document;
 
 import it.cutruzzula.lwkt.WKTParser;
 
@@ -311,5 +321,34 @@ public class Utils {
 		return zipfile;
 
 
+	}
+
+	 /** 
+	 * @param XML Document
+	 * @return string containing the given XML Document contents.
+	 */
+	public static String printXMLDocument(Document document){
+		
+		String XMLString = new String();
+		StringWriter stringWriter = new StringWriter();		
+		DOMSource source = new DOMSource(document);
+		TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		Transformer transformer;
+		
+		try {
+			
+			transformer = transformerFactory.newTransformer();
+			StreamResult result = new StreamResult(stringWriter);
+			transformer.transform(source, result);
+			StringBuffer stringBuffer = stringWriter.getBuffer();
+			XMLString = stringBuffer.toString();
+			
+		} catch (TransformerConfigurationException e) {
+			e.printStackTrace();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+	
+		return XMLString;
 	}
 }

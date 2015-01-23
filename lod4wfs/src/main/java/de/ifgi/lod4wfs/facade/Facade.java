@@ -8,6 +8,7 @@ import de.ifgi.lod4wfs.core.EscapeChars;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.factory.FactoryFDAFeatures;
+import de.ifgi.lod4wfs.factory.FactoryLOD4WFS;
 import de.ifgi.lod4wfs.factory.FactoryWFS;
 
 /**
@@ -18,10 +19,14 @@ public class Facade {
 
 	private static Facade instance;
 	private FactoryFDAFeatures factoryFDA;
-	private FactoryWFS factoryWFS;
+	private FactoryLOD4WFS factoryLOD4WFS;
+	private FactoryLOD4WFS factorySOLR4WFS;
 
+	private FactoryWFS factoryWFS;
+	
 	public Facade(){
 		factoryFDA = new FactoryFDAFeatures();
+		factoryLOD4WFS = new FactoryLOD4WFS();
 		factoryWFS = new FactoryWFS();
 	}
 
@@ -39,17 +44,17 @@ public class Facade {
 	
 	public String getFeature(WFSFeature layer){
 
-		return factoryWFS.getFeature(layer);
+		return factoryLOD4WFS.getFeature(layer);
 	}
 
 	public String describeFeatureType(WFSFeature feature){
 
-		return factoryWFS.describeFeatureType(feature);
+		return FactoryWFS.getInstance().describeFeatureType(feature);
 	}
 
 	public String getCapabilities(String version){
 
-		return factoryWFS.getCapabilities(version);
+		return FactoryWFS.getInstance().getCapabilities(version);
 	}
 
 	
@@ -63,7 +68,7 @@ public class Facade {
 	
 	public ArrayList<WFSFeature> listFDAFeatures(){
 		
-		return factoryFDA.listFDAFeatures(GlobalSettings.getSparqlDirectory());
+		return factoryFDA.listFDAFeatures(GlobalSettings.getFeatureDirectory());
 	}
 	
 	public void addFeature(WFSFeature feature){		

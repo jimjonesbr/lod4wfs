@@ -95,15 +95,14 @@
 		
 		</script>
 <%
-		
- 		if(request.getParameter("delete")!= null){
-	 		String path = GlobalSettings.getSparqlDirectory()+request.getParameter("delete");
+	if(request.getParameter("delete")!= null){
+	 		String path = GlobalSettings.getFeatureDirectory()+request.getParameter("delete");
 	 		
-			WFSFeature feature = new WFSFeature();
+	WFSFeature feature = new WFSFeature();
 	 		feature.setFileName(path);
 	 		
-			Facade.getInstance().deleteFeature(feature);	
-		%>
+	Facade.getInstance().deleteFeature(feature);
+%>
 		
 <!-- <script type="text/javascript">
 			window.open("list.jsp","_self")

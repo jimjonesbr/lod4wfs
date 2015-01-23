@@ -34,12 +34,14 @@ public class GlobalSettings {
     private static String geometryPredicate ="";
     private static String geometryClass ="";
     private static String geometryVariable ="";
-    private static String sparqlDirectory ="";
+    private static String featureDirectory ="";
     private static String dynamicFeaturesNameSpace = "";
+    private static String solrFeaturesNameSpace = "";
     private static String predicatesContainer = "";
     private static String featureConnector= "";
     private static String sdaPrefix= "";
     private static String fdaPrefix= "";
+    private static String solrPrefix= "";
     
     
     private static int previewLimit = 5;
@@ -47,9 +49,13 @@ public class GlobalSettings {
     public static String getDynamicFeaturesNameSpace(){
     	return dynamicFeaturesNameSpace;
     }
+
+    public static String getSOLRFeaturesNameSpace(){
+    	return solrFeaturesNameSpace;
+    }
     
-    public static String getSparqlDirectory(){
-        return sparqlDirectory;
+    public static String getFeatureDirectory(){
+        return featureDirectory;
     }
     
     public static String getAbstractPredicate(){
@@ -98,6 +104,10 @@ public class GlobalSettings {
 
     public static String getFDAPrefix(){
         return fdaPrefix;
+    }
+
+    public static String getSOLRPrefix(){
+        return solrPrefix;
     }
     
     public static String getDefaultDecimalType(){
@@ -154,9 +164,11 @@ public class GlobalSettings {
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
 	            fdaPrefix = ini.get("SystemDefaults", "fdaPrefix");
 	            sdaPrefix = ini.get("SystemDefaults", "sdaPrefix");
+	            solrPrefix = ini.get("SystemDefaults", "solrPrefix");
 	            dynamicFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");
+	            solrFeaturesNameSpace = ini.get("SystemDefaults", "solrFeaturesNameSpace");
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
-	            sparqlDirectory = ini.get("Server", "SPARQLDirectory");
+	            featureDirectory = ini.get("Server", "SPARQLDirectory");
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
 	            defaultDecimalType  = ini.get("SystemDefaults", "decimalLiteral").replace("<", "").replace(">", "");
 	            defaultStringType  = ini.get("SystemDefaults", "stringLiteral").replace("<", "").replace(">", "");

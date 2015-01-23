@@ -69,7 +69,6 @@ public class Start{
         webAppContext.setContextPath("/");
 		
 //***************
-	    
 		
 		ContextHandler contextGUI = new ContextHandler("/admin");
 	    contextGUI.setHandler(new HandlerGUI("Bonjoir"));
@@ -87,8 +86,9 @@ public class Start{
 			
 		System.out.println("" +
 				"\nLOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4\n" +
-				"Institut für Geoinformatik, Westfälische Wilhelms-Universität Münster\n" +
-				"http://ifgi.uni-muenster.de/\n\n" +
+				"Institut für Geoinformatik | Universitäts- und Landesbibliothek \n" +
+				"Westfälische Wilhelms-Universität Münster\n" +
+				"http://www.uni-muenster.de/\n\n" +
 				
 				"Startup time: " + GlobalSettings.startupTime + "\n" +
 				"Port: " + GlobalSettings.defaultPort + "\n");
