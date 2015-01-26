@@ -17,6 +17,7 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.Triple;
+import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
@@ -36,7 +37,9 @@ public class FactoryFDAFeatures {
 		File[] files = new File(path).listFiles();
 
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
-
+                
+		logger.info("Listing features from the direcoty [application root]/" + GlobalSettings.getFeatureDirectory() + " ...");
+		
 		for (File file : files) {
 
 			if(file.getName().endsWith(".sparql")){
@@ -55,6 +58,8 @@ public class FactoryFDAFeatures {
 
 		}
 
+		logger.info("Total FDA Features: " + result.size());
+		
 		return result;
 	}
 
@@ -323,21 +328,6 @@ public class FactoryFDAFeatures {
 		return feature;
 	}
 
-	private static boolean isGeometryValid(String wkt){
-		
-		boolean result = true;
-		
-		try {
-			WKTParser.parseToGML2(wkt);
-			
-			}
-		catch(Exception e) {
-			result = false;
-		}
-				
-		return result;
-		
-	}
 	
 	public static String getGeometryType(String wkt){
 		
@@ -357,7 +347,7 @@ public class FactoryFDAFeatures {
 			
 		}
 		
-		if(isGeometryValid(wkt.toUpperCase())){
+		if(Utils.isWKT(wkt.toUpperCase())){
 			
 			try {
 				result = WKTParser.parse(wkt.toUpperCase()).getType().toString();

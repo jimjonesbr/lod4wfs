@@ -29,6 +29,24 @@ import it.cutruzzula.lwkt.WKTParser;
 
 public class Utils {
 
+	
+	public static boolean isWKT(String wkt){
+		
+		boolean result = true;
+		
+		try {
+			
+			WKTParser.parseToGML2(wkt);
+			
+			}
+		catch(Exception e) {
+			result = false;
+		}
+				
+		return result;
+		
+	}
+
 	public static String convertWKTtoGML(String literal){
 
 		String gml = new String();
@@ -208,12 +226,6 @@ public class Utils {
 
 	}
 
-	//TODO: isWKT() to be implemented
-	public static boolean isWKT(String literal){
-
-		return true;
-
-	}
 
 	//TODO: isGeoJSON() to be implemented
 	public static boolean isGeoJSON(String literal){

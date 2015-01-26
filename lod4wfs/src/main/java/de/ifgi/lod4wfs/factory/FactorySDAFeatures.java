@@ -29,7 +29,7 @@ public class FactorySDAFeatures {
 	
 	public ArrayList<WFSFeature> listSDAFeatures(){
 
-		logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
+		logger.info("Listing features from the SPARQL Endpoint " + GlobalSettings.default_SPARQLEndpoint + " ...");
 		
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs, GlobalSettings.default_SPARQLEndpoint);
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
@@ -69,12 +69,14 @@ public class FactorySDAFeatures {
 			
 		}
 				
+		logger.info("Total SDA Features: " + result.size());
+		
 		return result;
 	}
 	
 	public ArrayList<Triple> getPredicatesSDAFeatures(String feature){
 
-		logger.info("Listing available predicates for " + feature + " ...");
+		logger.info("Listing available predicates for [" + feature + "] ...");
 
 		ResultSet rs = jn.executeQuery(SPARQL.listFeaturePredicates.replace("PARAM_LAYER", feature), GlobalSettings.default_SPARQLEndpoint);
 		ArrayList<Triple> result = new ArrayList<Triple>();		
@@ -156,7 +158,7 @@ public class FactorySDAFeatures {
 	 */
 	public String getFeatureType (String feature){
 
-		logger.info("Getting geometry type for " + feature + " ...");
+		logger.info("Getting geometry type for [" + feature + "] ...");
 		
 		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", feature),GlobalSettings.default_SPARQLEndpoint);
 

@@ -1,24 +1,16 @@
 package de.ifgi.lod4wfs.infrastructure;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.apache.log4j.Logger;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
-
-import com.hp.hpl.jena.query.ResultSet;
-
-import de.ifgi.lod4wfs.core.GlobalSettings;
-import de.ifgi.lod4wfs.core.SOLRRecord;
 import de.ifgi.lod4wfs.core.WFSFeature;
 
 /**
  * 
- * @author jones
+ * @author Jim Jones
  * @version 1.0
  */
 
@@ -31,14 +23,20 @@ public class SOLRConnector {
 	}
 
 	public SolrDocumentList executeQuery(WFSFeature feature){
-
-
-
+		
 		HttpSolrServer solr = new HttpSolrServer(feature.getEndpoint());
 		SolrQuery query = new SolrQuery();
 		SolrDocumentList results = new SolrDocumentList();
 
 		try {
+			
+			logger.info("Performing query for the SOLR Feature [" + feature.getName() + "]:\n" +
+					"\nEndpoint: " + feature.getEndpoint() +
+					"\nSpatial Constraint: " + feature.getSOLRGeometryField()+ ":" + feature.getSOLRSpatialConstraint() + 
+					"\nFilter: " + feature.getSOLRFilter() + 
+					"\nFields: " + feature.getFields() +
+					"\nLimit: " + feature.getLimit() + "\n"
+					);
 			
 			query.setStart(0);    
 			query.setRows(feature.getLimit());
@@ -52,9 +50,10 @@ public class SOLRConnector {
 				fields = feature.getFields().split(",");
 
 				for (int i = 0; i < fields.length; i++) {
-
-					query.addField(fields[i]);
-
+					
+					query.setQuery("*");
+					query.addField(fields[i].trim());
+				
 				}
 
 			} else {
@@ -63,9 +62,12 @@ public class SOLRConnector {
 
 			}
 
+			
 			QueryResponse response = solr.query(query);
-			results= response.getResults();
-
+			results = response.getResults();
+			
+			System.out.println(results.size());
+		
 		} catch (SolrServerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

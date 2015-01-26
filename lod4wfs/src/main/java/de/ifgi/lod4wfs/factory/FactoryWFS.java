@@ -1,43 +1,27 @@
 package de.ifgi.lod4wfs.factory;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
-
 import de.ifgi.lod4wfs.core.GlobalSettings;
-import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
-import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
 public class FactoryWFS {
 
@@ -47,16 +31,12 @@ public class FactoryWFS {
 	private FactoryFDAFeatures factoryFDA;
 	private FactorySOLRFeatures factorySOLR;
 	
-	private FactoryLOD4WFS factoryLOD4WFS;
-	private FactorySOLR4WFS factorySOLR4WFS;
-	
 	private static Model modelFeatures;	
 
 	private static ArrayList<WFSFeature> fdaFeatureList;
 	private static ArrayList<WFSFeature> sdaFeatureList;
 	private static ArrayList<WFSFeature> solrFeatureList;
 	
-	private static JenaConnector jn;
 	private static Logger logger = Logger.getLogger("WFS-Factory");
 	
 	
@@ -66,8 +46,6 @@ public class FactoryWFS {
 		factoryFDA = new FactoryFDAFeatures();
 		factorySOLR = new FactorySOLRFeatures();
 		
-		factoryLOD4WFS = new FactoryLOD4WFS();
-		factorySOLR4WFS = new FactorySOLR4WFS();
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -127,7 +105,7 @@ public class FactoryWFS {
 					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 				}
 				
-				logger.info("Creating Capabilities Document of " + Utils.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
+				logger.info("Creating Capabilities Document from " + Utils.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
@@ -198,13 +176,13 @@ public class FactoryWFS {
 			
 		if(this.isSOLRFeature(feature)){
 			
-			describeFeatureTypeResponse = FactorySOLR4WFS.getInstance().describeFeatureType(feature);
+			describeFeatureTypeResponse = AdapterSOLR4WFS.getInstance().describeFeatureType(feature);
 		}
 		
 		
 		if(this.isFDAFeature(feature)){
 			
-			describeFeatureTypeResponse = FactoryLOD4WFS.getInstance().describeFeatureType(feature);
+			describeFeatureTypeResponse = AdapterLOD4WFS.getInstance().describeFeatureType(feature);
 			
 		} 		
 
@@ -221,13 +199,14 @@ public class FactoryWFS {
 		
 		if(this.isSOLRFeature(feature)){
 			
-			getFeatureResponse = FactorySOLR4WFS.getInstance().getFeature(feature);
+			getFeatureResponse = AdapterSOLR4WFS.getInstance().getFeature(feature);
+			
 		}
 		
 		
 		if(this.isFDAFeature(feature)){
 			
-			getFeatureResponse = FactoryLOD4WFS.getInstance().getFeature(feature);
+			getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
 			
 		} 
 		
@@ -235,9 +214,7 @@ public class FactoryWFS {
 	}
 	
 	
-	
-	
-	
+
 	
 	
 	
@@ -275,7 +252,7 @@ public class FactoryWFS {
 			if(features.get(i).isSOLRFeature()){
 				
 				modelFeatures.setNsPrefix(GlobalSettings.getSOLRPrefix(), features.get(i).getName().substring(0, position+1) );
-				System.out.println(features.get(i).getName().substring(0, position+1));
+				//System.out.println(features.get(i).getName().substring(0, position+1));
 			}
 			
 			if (modelFeatures.getNsURIPrefix(features.get(i).getName().substring(0, position+1))==null) {

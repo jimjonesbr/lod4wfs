@@ -8,7 +8,7 @@ import de.ifgi.lod4wfs.core.EscapeChars;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.factory.FactoryFDAFeatures;
-import de.ifgi.lod4wfs.factory.FactoryLOD4WFS;
+import de.ifgi.lod4wfs.factory.AdapterLOD4WFS;
 import de.ifgi.lod4wfs.factory.FactoryWFS;
 
 /**
@@ -18,15 +18,15 @@ import de.ifgi.lod4wfs.factory.FactoryWFS;
 public class Facade {
 
 	private static Facade instance;
-	private FactoryFDAFeatures factoryFDA;
-	private FactoryLOD4WFS factoryLOD4WFS;
-	private FactoryLOD4WFS factorySOLR4WFS;
-
+	
+	private FactoryFDAFeatures factoryFDA;	
+	private AdapterLOD4WFS factoryLOD4WFS;
+	private AdapterLOD4WFS factorySOLR4WFS;
 	private FactoryWFS factoryWFS;
 	
 	public Facade(){
 		factoryFDA = new FactoryFDAFeatures();
-		factoryLOD4WFS = new FactoryLOD4WFS();
+		factoryLOD4WFS = new AdapterLOD4WFS();
 		factoryWFS = new FactoryWFS();
 	}
 
@@ -44,7 +44,7 @@ public class Facade {
 	
 	public String getFeature(WFSFeature layer){
 
-		return factoryLOD4WFS.getFeature(layer);
+		return FactoryWFS.getInstance().getFeature(layer);
 	}
 
 	public String describeFeatureType(WFSFeature feature){

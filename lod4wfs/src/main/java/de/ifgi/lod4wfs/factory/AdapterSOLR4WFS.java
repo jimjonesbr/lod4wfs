@@ -1,10 +1,9 @@
 package de.ifgi.lod4wfs.factory;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,100 +12,93 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.log4j.Logger;
+import org.apache.solr.common.SolrDocumentList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.SOLRRecord;
 import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
+import de.ifgi.lod4wfs.infrastructure.SOLRConnector;
 
 
-public class FactorySOLR4WFS {
+public class AdapterSOLR4WFS {
 
-	private static FactorySOLR4WFS instance;
+	private static AdapterSOLR4WFS instance;
 	private FactorySOLRFeatures factorySOLR;
-	private static Logger logger = Logger.getLogger("SOLR4WFS-Factory");
-	private static Model modelFeatures;	
-	
-	public FactorySOLR4WFS(){
-		
+	private static Logger logger = Logger.getLogger("SOLR4WFS-Adapter");
+
+	public AdapterSOLR4WFS(){
+
 		factorySOLR = new FactorySOLRFeatures();
-		
+
 	}
-	
-	public static FactorySOLR4WFS getInstance() {
+
+	public static AdapterSOLR4WFS getInstance() {
 		if (instance == null) {
-			instance = new FactorySOLR4WFS();
+			instance = new AdapterSOLR4WFS();
 		}
 		return instance;
 	}
-	
 
-	public String getFeature(WFSFeature feature){
-		
-		
-		
-		return null;
-		
-	}
+
 
 	private WFSFeature expandSOLRFeature(WFSFeature feature){
-		
+
 		//TODO: verificar a necessidade de expandir prefixos!!!
 		String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));		
 		ArrayList<WFSFeature> solrFeatureList = new ArrayList<WFSFeature>();
-			
+
 		solrFeatureList = FactoryWFS.getInstance().getLoadedSOLRFeatures();
-		
+
 		for (int i = 0; i < solrFeatureList.size(); i++) {
-		
+
 			if (featureName.equals(solrFeatureList.get(i).getName())){
-				
+
 				feature = solrFeatureList.get(i);
-				
+
 			}
-			
+
 		}
-		
+
 		return feature;
 	}
-	
+
 	public String describeFeatureType(WFSFeature feature){
 
-		
+
 		//String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));
-		
+
 		String describeFeatureTypeResponse = new String(); 
 		ArrayList<SOLRRecord> fields = new ArrayList<SOLRRecord>();
-					
-//		ArrayList<WFSFeature> solrFeatureList = new ArrayList<WFSFeature>();
-//		solrFeatureList = FactoryWFS.getInstance().getLoadedSOLRFeatures();
-//		
-//		for (int i = 0; i < solrFeatureList.size(); i++) {
-//		
-//			if (featureName.equals(solrFeatureList.get(i).getName())){
-//				
-//				feature = solrFeatureList.get(i);
-//				
-//			}
-//			
-//		}
-		
+
+		//		ArrayList<WFSFeature> solrFeatureList = new ArrayList<WFSFeature>();
+		//		solrFeatureList = FactoryWFS.getInstance().getLoadedSOLRFeatures();
+		//		
+		//		for (int i = 0; i < solrFeatureList.size(); i++) {
+		//		
+		//			if (featureName.equals(solrFeatureList.get(i).getName())){
+		//				
+		//				feature = solrFeatureList.get(i);
+		//				
+		//			}
+		//			
+		//		}
+
 		feature = this.expandSOLRFeature(feature);
-		
+
 		fields = factorySOLR.getSOLRFeatureFields(feature);
-		
+
 		try {
 
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-			
+
 			Document document = documentBuilder.parse("wfs/DescribeFeature_100.xml");
-					
+
 			logger.info("Creating DescribeFeatureType XML document for [" + feature.getName() + "] ...");
 
 			XPath xpath = XPathFactory.newInstance().newXPath();
@@ -114,36 +106,36 @@ public class FactorySOLR4WFS {
 
 			String layerPrefix = FactoryWFS.getInstance().getLoadedModelFeature().shortForm(feature.getName());
 			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":")+1);			
-						
+
 			Element requestElement = document.getDocumentElement(); 						
 			requestElement.setAttribute("targetNamespace", FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(layerPrefix));
-			
+
 			for (Map.Entry<String, String> entry : FactoryWFS.getInstance().getLoadedModelFeature().getNsPrefixMap().entrySet())
 			{
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
-				
+
 			}
-			
-		
+
+
 			for (int i = 0; i < fields.size(); i++) {
-						
+
 				Element sequence = document.createElement("xsd:element");
 				sequence.setAttribute("maxOccurs","1");
 				sequence.setAttribute("minOccurs","0");
 				sequence.setAttribute("name", fields.get(i).getName());
 				sequence.setAttribute("nillable","true");
-								
+
 				/**
 				 * Checks if predicate is the chosen geometry predicate in the settings file.
 				 */
-				
-												
+
+
 				if(fields.get(i).getName().equals(feature.getSOLRGeometryField())){
-					
+
 					String featureType = new String();
-					
+
 					featureType = factorySOLR.getSOLRGeometryType(feature);
-			
+
 					if(featureType.equals("gml:MultiPolygon") || featureType.equals("gml:Polygon")){
 						sequence.setAttribute("type","gml:MultiPolygonPropertyType");
 					}
@@ -186,62 +178,153 @@ public class FactorySOLR4WFS {
 
 
 	}
-	
 
 
-	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
-	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
-		
-		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
-		modelFeatures = ModelFactory.createDefaultModel();
-		
-		for (int i = 0; i < features.size(); i++) {
-						
-			boolean scape = false;
 
-			int size = features.get(i).getName().length()-1;
-			int position = 0;
 
-			while ((scape == false) && (size >= 0)) {
 
-				Matcher matcher = pattern.matcher(Character.toString(features.get(i).getName().charAt(size)));
+	public String getFeature(WFSFeature feature) {
 
-				boolean finder = matcher.find();
+		String getFeatureResponse = new String();
+		String layerPrefix = new String();
 
-				if (finder==true) {
+		layerPrefix = "solr";
 
-					position = size;
-					scape=true;
-					
+		feature = this.expandSOLRFeature(feature);
+
+		ArrayList<SOLRRecord> fields = new ArrayList<SOLRRecord>();
+		fields = factorySOLR.getSOLRFeatureFields(feature);
+
+
+		logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve the geometries of [" + feature.getName() + "]  ...");
+		//predicates = factorySOLR.getPredicatesFDAFeatures(feature);
+
+
+		SolrDocumentList rs = new SolrDocumentList();
+
+		SOLRConnector solrConnector = new SOLRConnector();
+		rs = solrConnector.executeQuery(feature);
+
+
+		try {
+
+			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder documentBuilder;
+
+			documentBuilder = documentBuilderFactory.newDocumentBuilder();
+			Document document = documentBuilder.parse("wfs/GetFeature_100.xml");
+
+			/**
+			 * Build Name Spaces in the XML header.
+			 */
+			Element requestElement = document.getDocumentElement(); 
+
+			for (Map.Entry<String, String> entry : FactoryWFS.getInstance().getLoadedModelFeature().getNsPrefixMap().entrySet()) {
+
+				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
+
+			}			
+
+
+			logger.info("Creating GetFeature XML document with " + rs.size() +  " records for [" + feature.getName() + "] ...");
+
+			XPath xpath = XPathFactory.newInstance().newXPath();
+			NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
+
+
+			for (int i = 0; i < rs.size(); i++) {
+
+				String currentGeometryName = "SOLRGEO_";
+
+				Element currentGeometryElement = document.createElement(FactoryWFS.getInstance().getLoadedModelFeature().shortForm(feature.getName()));
+
+				currentGeometryElement.setAttribute("fid", currentGeometryName + "" + i);				
+
+				Element rootGeometry = document.createElement("gml:featureMember");
+
+
+				for (int j = 0; j < fields.size(); j++) {
+
+
+					Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + feature.getGeometryVariable());
+
+					if(fields.get(j).getName().equals(feature.getGeometryVariable())){														
+
+
+						String wkt = new String();
+						wkt = rs.get(i).getFieldValue(feature.getGeometryVariable()).toString().replace("[", "").replace("]", "");
+
+						if (Utils.isWKT(wkt)){
+
+							String gml = Utils.convertWKTtoGML(wkt);
+
+							Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
+							Node dup = document.importNode(GMLnode, true);
+							elementGeometryPredicate.appendChild(dup);						
+							rootGeometry.appendChild(elementGeometryPredicate);												
+							currentGeometryElement.appendChild(elementGeometryPredicate);						
+							rootGeometry.appendChild(currentGeometryElement);					
+
+						} else {
+
+							logger.error("Record skipped. Invalid WKT geometry for [" + feature.getName() + "]: " + wkt);
+						}
+
+					} else {
+
+						Element elementAttribute = document.createElement(layerPrefix + ":" + fields.get(j).getName());							
+
+						if(rs.get(i).getFieldValue(fields.get(j).getName().toString()) != null){
+
+							String fieldValue = new String();
+							fieldValue = rs.get(i).getFieldValue(fields.get(j).getName().toString()).toString().replace("[", "").replace("]", "");
+							elementAttribute.appendChild(document.createCDATASection(fieldValue));
+
+						} else {
+
+							elementAttribute.appendChild(document.createCDATASection("-"));
+						}
+
+						currentGeometryElement.appendChild(elementAttribute);
+
+					}
+
+
 				}
 
-				size--;
-			}
-			
-			
-			
-			if(features.get(i).isSOLRFeature()){
-				
-				modelFeatures.setNsPrefix(GlobalSettings.getSOLRPrefix(), features.get(i).getName().substring(0, position+1) );
-				System.out.println(features.get(i).getName().substring(0, position+1));
-			}
-			
-			if (modelFeatures.getNsURIPrefix(features.get(i).getName().substring(0, position+1))==null) {
-				
-				if (features.get(i).isFDAFeature()){
-					
-					modelFeatures.setNsPrefix(GlobalSettings.getFDAPrefix(), features.get(i).getName().substring(0, position+1) );
-					
-				} else {
-					
-					modelFeatures.setNsPrefix(GlobalSettings.getSDAPrefix() + modelFeatures.getNsPrefixMap().size(), features.get(i).getName().substring(0, position+1) );
-			
-				}
-				
+				myNodeList.item(1).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
 
 			}
-			
+
+			logger.info("XML Document for ["+ feature.getName() +"] successfully created.");
+
+			getFeatureResponse = Utils.printXMLDocument(document);
+
+		} catch (ParserConfigurationException e) {
+			e.printStackTrace();
+		} catch (SAXException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (XPathExpressionException e) {
+			e.printStackTrace();
+		}  catch (Exception e) {
+			e.printStackTrace();
 		}
-		
+
+
+
+
+
+
+
+		return getFeatureResponse;
+
 	}
+
+
 }
+
+
+
+

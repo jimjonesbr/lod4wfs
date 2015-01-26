@@ -134,7 +134,7 @@ public class ServletWFS extends HttpServlet
 				WFSFeature layer = new WFSFeature();
 				layer.setName(currentTypeName);
 
-				logger.info("Processing " + currentRequest +  " request for the feature " + layer.getName() + " ...");
+				logger.info("Processing " + currentRequest +  " request for the feature [" + layer.getName() + "] ...");
 
 				response.setStatus(HttpServletResponse.SC_OK);
 

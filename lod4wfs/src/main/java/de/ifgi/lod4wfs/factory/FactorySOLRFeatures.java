@@ -16,7 +16,6 @@ import org.apache.solr.common.SolrDocumentList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hp.hpl.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.SOLRRecord;
 import de.ifgi.lod4wfs.core.WFSFeature;
@@ -29,6 +28,8 @@ public class FactorySOLRFeatures {
 
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 
+		logger.info("Listing features from the direcoty [application root]/" + GlobalSettings.getFeatureDirectory() + " ...");
+		
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
 
 		for (File file : files) {
@@ -43,12 +44,12 @@ public class FactorySOLRFeatures {
 					result.add(feature);
 				}
 
-
-
 			}
 
 		}
 
+		logger.info("Total SOLR Features: " + result.size());
+		
 		return result;
 	}
 
@@ -93,19 +94,6 @@ public class FactorySOLRFeatures {
 
 
 		return feature;
-	}
-
-	public static boolean isFeatureNameValid(String featureName){
-
-		return featureName.matches("([A-Za-z0-9-_]+)");
-
-	}
-
-	public ResultSet executeQuery(String SPARQL, String endpoint){
-
-		//return jn.executeQuery(SPARQL, endpoint);
-		return null;
-
 	}
 
 	private static boolean isGeometryValid(String wkt){
@@ -164,7 +152,7 @@ public class FactorySOLRFeatures {
 
 	public ArrayList<SOLRRecord> getSOLRFeatureFields(WFSFeature feature){
 
-		logger.info("Listing available fields for the SOLR-Based feature " + feature.getName() + " ...");
+		logger.info("Listing available fields for the SOLR-Based feature [" + feature.getName() + "] ...");
 
 		ArrayList<SOLRRecord> result = new ArrayList<SOLRRecord>();		
 
@@ -173,15 +161,17 @@ public class FactorySOLRFeatures {
 
 		try {
 
-
+			
+			/**
+			 * Where "*" means all fields.
+			 */
 			if (feature.getFields().equals("*")){
-
 
 				query.setStart(0);    
 				query.setRows(1);			
-				query.addFilterQuery(feature.getSOLRGeometryField()+ ":\"" + feature.getSOLRSpatialConstraint() + "\"");
+				query.addFilterQuery(feature.getSOLRGeometryField() + ":\"" + feature.getSOLRSpatialConstraint() + "\"");
 			
-				query.setQuery("*");
+				query.setQuery(feature.getFields());
 								
 				QueryResponse response = solr.query(query);
 				SolrDocumentList results = response.getResults();
@@ -192,6 +182,9 @@ public class FactorySOLRFeatures {
 
 					SOLRRecord record = new SOLRRecord();
 
+					/**
+					 * Removing the [ and ] from the fields string.  
+					 */
 					record.setName(fieldsList.get(i).toString().replace("[", "").replace("]", "").trim());
 					record.setType(GlobalSettings.getDefaultStringType());
 
@@ -238,7 +231,7 @@ public class FactorySOLRFeatures {
 
 		//TODO: Implement function to retrieve Geometry Type from SOLRRecords.
 
-		logger.info("Getting geometry type for the SOLR-Based feature " + feature.getName() + " ...");
+		logger.info("Getting geometry type for the SOLR-Based feature [" + feature.getName() + "] ...");
 
 		return "gml:MultiPolygon";
 
