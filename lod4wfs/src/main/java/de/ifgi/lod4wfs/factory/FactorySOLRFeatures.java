@@ -55,7 +55,6 @@ public class FactorySOLRFeatures {
 
 	public WFSFeature getSOLRFeature(String fileName){
 
-		//File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 		WFSFeature feature = new WFSFeature();
 
 		try {
@@ -71,7 +70,7 @@ public class FactorySOLRFeatures {
 			feature.setKeywords(jObject.get("keywords").getAsString());
 			feature.setGeometryVariable(jObject.get("geometryVariable").getAsString()); 
 			feature.setEndpoint(jObject.get("endpoint").getAsString());
-			feature.setOrder(jObject.get("order").getAsString());
+			feature.setSOLRSorting(jObject.get("order").getAsString());
 			feature.setLimit(jObject.get("limit").getAsInt());
 			feature.setFields(jObject.get("fields").getAsString());
 			feature.setSOLRFilter(jObject.get("filter").getAsString());

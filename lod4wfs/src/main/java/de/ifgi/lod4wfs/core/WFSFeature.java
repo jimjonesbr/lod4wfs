@@ -12,33 +12,29 @@ public class WFSFeature {
 	private String defaultCRS;
 	private String lowerCorner;
 	private String upperCorner;
-	
+
 	private boolean dynamic;
 	private String query;
 	private String geometryVariable;
 	private String endpoint;
 	private String fileName;
 	private String outputFormat;
-	
-	
+
+
 	private int recordsLimit;
 	private String fields;
-	
-	private String recordsOrder;
-	
+
+	private String SOLRSorting;
+
 	private boolean isSOLR = false;
 	private String SOLRGeometryField;
 	private String SOLRFilter;
 	private String SOLRSpatialConstraint;
-	
+
 	public WFSFeature() {
 		super();
-		
+
 	}
-
-
-
-
 
 
 	public WFSFeature(String name, String title, String keywords,
@@ -47,7 +43,7 @@ public class WFSFeature {
 			String geometryVariable, String endpoint, String fileName,
 			String outputFormat, int recordsLimit, String fields,
 			String recordsOrder, boolean isSOLR, String sOLRGeometryField,
-			String sOLRFilter, String sOLRSpatialConstraint) {
+			String sOLRFilter, String sOLRSpatialConstraint, String sOLRSorting) {
 		super();
 		this.name = name;
 		this.title = title;
@@ -64,12 +60,14 @@ public class WFSFeature {
 		this.outputFormat = outputFormat;
 		this.recordsLimit = recordsLimit;
 		this.fields = fields;
-		this.recordsOrder = recordsOrder;
+		this.SOLRSorting = recordsOrder;
 		this.isSOLR = isSOLR;
 		this.SOLRGeometryField = sOLRGeometryField;
 		this.SOLRFilter = sOLRFilter;
 		this.SOLRSpatialConstraint = sOLRSpatialConstraint;
 	}
+
+
 
 
 
@@ -136,7 +134,7 @@ public class WFSFeature {
 		return dynamic;
 	}
 
-	
+
 	public boolean isSOLRFeature() {
 		return isSOLR;
 	}
@@ -144,7 +142,7 @@ public class WFSFeature {
 	public void setAsSOLRFeature(boolean solr) {
 		this.isSOLR = solr;
 	}
-	
+
 	public void setAsFDA(boolean dynamic) {
 		this.dynamic = dynamic;
 	}
@@ -152,7 +150,7 @@ public class WFSFeature {
 	public void setAsSOLR() {
 		this.isSOLR = true;
 	}
-	
+
 	public String getQuery() {
 		return query;
 	}
@@ -192,7 +190,7 @@ public class WFSFeature {
 	public void setOutputFormat(String outputFormat) {
 		this.outputFormat = outputFormat;
 	}
-	
+
 	public String getSOLRGeometryField() {
 		return SOLRGeometryField;
 	}
@@ -200,7 +198,7 @@ public class WFSFeature {
 	public void setSOLRGeometryField(String solrGeometryField) {
 		this.SOLRGeometryField = solrGeometryField;
 	}
-	
+
 	public String getSOLRSpatialConstraint() {
 		return SOLRSpatialConstraint;
 	}
@@ -220,13 +218,13 @@ public class WFSFeature {
 	}
 
 
-	public String getOrder() {
-		return recordsOrder;
+	public String getSOLRSorting() {
+		return SOLRSorting;
 	}
 
 
-	public void setOrder(String order) {
-		this.recordsOrder = order;
+	public void setSOLRSorting(String order) {
+		this.SOLRSorting = order;
 	}
 
 	public String getFields() {
@@ -248,9 +246,11 @@ public class WFSFeature {
 		SOLRFilter = sOLRFilter;
 	}
 
-	
-	
-	
+
+
+
+
+
 }
 
 

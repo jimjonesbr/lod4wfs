@@ -1,7 +1,7 @@
 {
     "name": "http://solr.lod4wfs.de/biothesaurus",
     "title": "Bio-Thesaurus: Records within Europe",
-    "abstract": "an abstract",
+    "abstract": "Bio-Thesaurus: Records within Europe (All fields)",
     "keywords": "solr, spatial-query, bio-thesaurus",
     "geometryVariable": "placeOfBirth_geom",
     "endpoint": "http://giv-lodum.uni-muenster.de:8983/solr/test",

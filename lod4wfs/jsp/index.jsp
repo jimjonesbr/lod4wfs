@@ -29,7 +29,7 @@
             out.println("<li>Java Runtime: <b> "+ System.getProperty("java.version") + "</b></li>");
             out.println("<li>Operating System: <b>" + System.getProperty("os.name") + " " + System.getProperty("os.version")+ " (" + System.getProperty("os.arch") + ")</b></li>");
             out.println("<li>Memory usage: <b>" + Runtime.getRuntime().freeMemory() / 1024/1024 + "MB </b></li>");                       
-            out.println("<li>LOD4WFS Documentation:  <a href=\"documentation/LOD4WFS_documentation.pdf\">User and Developer Manual</a></li>");
+            out.println("<li>LOD4WFS Documentation:  <a href=\"http://ifgi.uni-muenster.de/%7Ej_jone02/lod4wfs/LOD4WFS_documentation.pdf\">User and Developer Manual</a></li>");
             out.println("<li>Source Code:  <a href=\"https://github.com/jimjonesbr/lod4wfs\">GitHub Repository</a></li>");
             out.println("<li>Publication (AGILE 2014):  <a href=\"http://www.researchgate.net/publication/260286637_Making_the_Web_of_Data_Available_via_Web_Feature_Services\">Making the Web of Data Available via Web Feature Services</a></li>");
             //<a href="documentation/LOD4WFS_documentation.pdf" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-wrench"></span> LOD4WFS Documentation </a>

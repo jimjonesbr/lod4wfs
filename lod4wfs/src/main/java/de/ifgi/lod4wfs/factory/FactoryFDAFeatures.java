@@ -51,8 +51,6 @@ public class FactoryFDAFeatures {
 				if(feature != null){
 					result.add(feature);
 				}
-				
-
 
 			}
 

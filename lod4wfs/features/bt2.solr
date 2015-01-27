@@ -1,16 +1,16 @@
 {
     "name": "http://solr.lod4wfs.de/biothesaurus2",
-    "title": "Sub set of the Bio-Thesaurus Data Set (3 fields only)",
-    "abstract": "an abstract (3 fields only)",
+    "title": "Bio-Thesaurus Data Set",
+    "abstract": "Sub set of the Bio-Thesaurus Data Set (4 fields only)",
     "keywords": "solr, spatial-query, bio-thesaurus",
     "geometryVariable": "placeOfBirth_geom",
     "endpoint": "http://giv-lodum.uni-muenster.de:8983/solr/test",
-    "order": "",
+    "order": "dateOfBirth:asc",
     "limit": 100,
     "fields": "professionOrOccupation, dateOfBirth, placeOfBirth, placeOfBirth_geom",
-    "filter": "",
+    "filter": "placeOfBirth:frank*,professionOrOccupation:p*",
     "spatialFilter": {
         "geometryField": "placeOfBirth_geom",
-        "spatialConstraint": "IsWithin(POLYGON((7.501487508416176 51.87531348249126,7.501487508416176 52.054695483266386,7.787132039666176 52.054695483266386,7.787132039666176 51.87531348249126,7.501487508416176 51.87531348249126))) distErrPct=0"
+        "spatialConstraint": "IsWithin(POLYGON((49.04296875 61.53945432202169,49.04296875 33.019720207043974,-18.10546875 33.019720207043974,-18.10546875 61.53945432202169,49.04296875 61.53945432202169))) distErrPct=0"
     }
 }

@@ -214,7 +214,7 @@ public class Utils {
 			geoType = "GeometryCollection";
 		}
 
-		return "{\"type\":\""+ geoType + "\",\"coordinates\":" +geoJSONOutuput+"},";
+		return "{\"type\":\""+ geoType + "\",\"coordinates\":" + geoJSONOutuput + "},";
 
 
 	}

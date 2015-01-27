@@ -69,24 +69,8 @@ public class AdapterSOLR4WFS {
 
 	public String describeFeatureType(WFSFeature feature){
 
-
-		//String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));
-
 		String describeFeatureTypeResponse = new String(); 
 		ArrayList<SOLRRecord> fields = new ArrayList<SOLRRecord>();
-
-		//		ArrayList<WFSFeature> solrFeatureList = new ArrayList<WFSFeature>();
-		//		solrFeatureList = FactoryWFS.getInstance().getLoadedSOLRFeatures();
-		//		
-		//		for (int i = 0; i < solrFeatureList.size(); i++) {
-		//		
-		//			if (featureName.equals(solrFeatureList.get(i).getName())){
-		//				
-		//				feature = solrFeatureList.get(i);
-		//				
-		//			}
-		//			
-		//		}
 
 		feature = this.expandSOLRFeature(feature);
 
