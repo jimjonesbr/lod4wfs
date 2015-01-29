@@ -23,6 +23,10 @@ import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 
+/**
+ * @author Jim Jones
+ */
+
 public class FactoryWFS {
 
 	private static FactoryWFS instance;
@@ -62,10 +66,9 @@ public class FactoryWFS {
 
 		String resultCapabilities = new String();
 		ArrayList<WFSFeature> features = new ArrayList<WFSFeature>();
-		 
 		
 		solrFeatureList = factorySOLR.listSOLRFeatures();
-		fdaFeatureList = factoryFDA.listFDAFeatures(GlobalSettings.getFeatureDirectory());
+		fdaFeatureList = factoryFDA.listFDAFeatures();
 		sdaFeatureList = factorySDA.listSDAFeatures();
 		
 		for (int i = 0; i < fdaFeatureList.size(); i++) {
@@ -81,10 +84,7 @@ public class FactoryWFS {
 		}	
 		
 		this.generateLayersPrefixes(features);
-		
-
-
-		
+				
 		try {
 
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -186,6 +186,14 @@ public class FactoryWFS {
 			
 		} 		
 
+		
+		if(this.isSDAFeature(feature)){
+			
+			describeFeatureTypeResponse = AdapterLOD4WFS.getInstance().describeFeatureType(feature);
+			
+		} 
+		
+		
 		return describeFeatureTypeResponse;
 
 
@@ -209,6 +217,14 @@ public class FactoryWFS {
 			getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
 			
 		} 
+
+		
+		if(this.isSDAFeature(feature)){
+			
+			getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
+			
+		} 
+		
 		
 		return getFeatureResponse;
 	}
@@ -288,7 +304,30 @@ public class FactoryWFS {
 				feature.setQuery(fdaFeatureList.get(i).getQuery());
 				feature.setGeometryVariable(fdaFeatureList.get(i).getGeometryVariable());
 				feature.setEndpoint(fdaFeatureList.get(i).getEndpoint());
+				feature.setAsFDAFeature(true);
 				
+			}
+			
+		}
+		
+		return result;
+		
+	}
+	
+	private boolean isSDAFeature(WFSFeature feature){
+		
+		boolean result = false;
+		
+		/**
+		 * Checks if the selected layer is created via SDA.
+		 */
+		for (int i = 0; i < sdaFeatureList.size(); i++) {
+					
+			if(sdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+				result = true; 
+				feature.setGeometryVariable(sdaFeatureList.get(i).getGeometryVariable());
+				feature.setEndpoint(sdaFeatureList.get(i).getEndpoint());
+				feature.setAsSDAFeature(true);
 			}
 			
 		}

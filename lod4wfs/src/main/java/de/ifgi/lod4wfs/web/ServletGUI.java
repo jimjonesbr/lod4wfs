@@ -11,7 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ServletGUI extends HttpServlet
 {
-    private String greeting="Hello World";
+    /**
+	 * Automatically generated serial version UID
+	 */
+	private static final long serialVersionUID = -8413677464439331672L;
+	private String greeting="Hello World";
     public ServletGUI(){}
     public ServletGUI(String greeting)
     {

@@ -7,11 +7,11 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocumentList;
+import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.WFSFeature;
 
 /**
  * @author Jim Jones
- * @version 1.0
  */
 
 public class SOLRConnector {
@@ -33,14 +33,14 @@ public class SOLRConnector {
 
 		try {
 			
-			logger.info("Performing query for the SOLR Feature [" + feature.getName() + "]:\n" +
-					"\nTitle: " + feature.getTitle() +
-					"\nEndpoint: " + feature.getEndpoint() +					
-					"\nSpatial Constraint: \"" + feature.getSOLRGeometryField()+ ":" + feature.getSOLRSpatialConstraint() + "\"" +
-					"\nFilter: " + feature.getSOLRFilter() + 
-					"\nFields: " + feature.getFields() +
-					"\nSorting: " + feature.getSOLRSorting() +
-					"\nLimit: " + feature.getLimit() + "\n"
+			logger.info("Performing query for the SOLR Feature [" + feature.getName() + "]:" + GlobalSettings.crlf + GlobalSettings.crlf + 
+					"Title: " + feature.getTitle() + GlobalSettings.crlf +
+					"Endpoint: " + feature.getEndpoint() + GlobalSettings.crlf +					
+					"Spatial Constraint: \"" + feature.getSOLRGeometryField()+ ":" + feature.getSOLRSpatialConstraint() + "\"" + GlobalSettings.crlf +
+					"Filter: " + feature.getSOLRFilter() + GlobalSettings.crlf + 
+					"Fields: " + feature.getFields() + GlobalSettings.crlf +
+					"Sorting: " + feature.getSOLRSorting() + GlobalSettings.crlf +
+					"Limit: " + feature.getLimit() + GlobalSettings.crlf 
 					);
 			
 			query.setStart(0);    

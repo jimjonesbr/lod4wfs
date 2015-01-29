@@ -1,12 +1,9 @@
-/**
- * 
- */
 package de.ifgi.lod4wfs.core;
 
 /**
- * @author jones
- *
+ * @author Jim Jones
  */
+
 public class SOLRRecord {
 
 	private String type;

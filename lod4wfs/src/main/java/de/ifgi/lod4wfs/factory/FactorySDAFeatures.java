@@ -16,6 +16,10 @@ import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
+/**
+ * @author Jim Jones
+ */
+
 public class FactorySDAFeatures {
 
 	private static Logger logger = Logger.getLogger("SDAFeatures-Factory");
@@ -45,7 +49,8 @@ public class FactorySDAFeatures {
 			feature.setKeywords(soln.getLiteral("?keywords").getValue().toString());
 			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
 			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
-			feature.setAsFDA(false);
+			feature.setAsSDAFeature(true);
+			
 			
 			CRS = soln.get("?wkt").toString();
 
@@ -134,7 +139,6 @@ public class FactorySDAFeatures {
 		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.crlf ;
 		
 		SPARQL = " SELECT ?geometry " + GlobalSettings.crlf + selectClause +
-				 //" WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" + GlobalSettings.crlf +
 				" WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.crlf +
 				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.crlf +
 				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.crlf +

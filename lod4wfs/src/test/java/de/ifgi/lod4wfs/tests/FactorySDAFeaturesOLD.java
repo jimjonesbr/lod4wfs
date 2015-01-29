@@ -85,7 +85,7 @@ public class FactorySDAFeaturesOLD {
 			feature.setKeywords(soln.getLiteral("?keywords").getValue().toString());
 			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
 			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
-			feature.setAsFDA(false);
+			feature.setAsFDAFeature(false);
 			
 			CRS = soln.get("?wkt").toString();
 

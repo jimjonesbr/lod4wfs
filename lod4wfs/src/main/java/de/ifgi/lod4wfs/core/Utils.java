@@ -27,6 +27,10 @@ import org.w3c.dom.Document;
 
 import it.cutruzzula.lwkt.WKTParser;
 
+/**
+ * @author Jim Jones
+ */
+
 public class Utils {
 
 	
@@ -102,15 +106,14 @@ public class Utils {
 
 
 		if(wkt.contains("<") && wkt.contains(">")){
-			String CRS = new String();
-
+			//String CRS = new String();
 
 			/**
 			 * Extracting Reference System
 			 */
 			if(wkt.contains("<") && wkt.contains(">")){
 
-				CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));
+				//CRS = wkt.substring(wkt.indexOf("<") + 1, wkt.indexOf(">"));
 				wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
 
 			}

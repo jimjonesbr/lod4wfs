@@ -1,7 +1,8 @@
 package de.ifgi.lod4wfs.core;
 
-//TODO: Constructor with fields not including SOLR fields
-//TODO: Create a standard for isSOLR, isFDA and isSDA.
+/**
+ * @author Jim Jones
+ */
 
 public class WFSFeature {
 
@@ -13,13 +14,11 @@ public class WFSFeature {
 	private String lowerCorner;
 	private String upperCorner;
 
-	private boolean dynamic;
 	private String query;
 	private String geometryVariable;
 	private String endpoint;
 	private String fileName;
 	private String outputFormat;
-
 
 	private int recordsLimit;
 	private String fields;
@@ -27,6 +26,9 @@ public class WFSFeature {
 	private String SOLRSorting;
 
 	private boolean isSOLR = false;
+	private boolean isFDA = false;
+	private boolean isSDA = false;
+	
 	private String SOLRGeometryField;
 	private String SOLRFilter;
 	private String SOLRSpatialConstraint;
@@ -39,11 +41,11 @@ public class WFSFeature {
 
 	public WFSFeature(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
-			String upperCorner, boolean dynamic, String query,
-			String geometryVariable, String endpoint, String fileName,
-			String outputFormat, int recordsLimit, String fields,
-			String recordsOrder, boolean isSOLR, String sOLRGeometryField,
-			String sOLRFilter, String sOLRSpatialConstraint, String sOLRSorting) {
+			String upperCorner, String query, String geometryVariable,
+			String endpoint, String fileName, String outputFormat,
+			int recordsLimit, String fields, String sOLRSorting,
+			String sOLRGeometryField, String sOLRFilter,
+			String sOLRSpatialConstraint) {
 		super();
 		this.name = name;
 		this.title = title;
@@ -52,7 +54,6 @@ public class WFSFeature {
 		this.defaultCRS = defaultCRS;
 		this.lowerCorner = lowerCorner;
 		this.upperCorner = upperCorner;
-		this.dynamic = dynamic;
 		this.query = query;
 		this.geometryVariable = geometryVariable;
 		this.endpoint = endpoint;
@@ -60,12 +61,20 @@ public class WFSFeature {
 		this.outputFormat = outputFormat;
 		this.recordsLimit = recordsLimit;
 		this.fields = fields;
-		this.SOLRSorting = recordsOrder;
-		this.isSOLR = isSOLR;
+		this.SOLRSorting = sOLRSorting;
 		this.SOLRGeometryField = sOLRGeometryField;
 		this.SOLRFilter = sOLRFilter;
 		this.SOLRSpatialConstraint = sOLRSpatialConstraint;
+		this.isFDA = false;
+		this.isSDA = false;
+		this.isSOLR = false;
+		
 	}
+
+
+
+
+
 
 
 
@@ -131,9 +140,12 @@ public class WFSFeature {
 	}
 
 	public boolean isFDAFeature() {
-		return dynamic;
+		return isFDA;
 	}
 
+	public boolean isSDAFeature() {
+		return isSDA;
+	}
 
 	public boolean isSOLRFeature() {
 		return isSOLR;
@@ -143,14 +155,15 @@ public class WFSFeature {
 		this.isSOLR = solr;
 	}
 
-	public void setAsFDA(boolean dynamic) {
-		this.dynamic = dynamic;
+	public void setAsFDAFeature(boolean fda) {
+		this.isFDA = fda;
 	}
 
-	public void setAsSOLR() {
-		this.isSOLR = true;
+	public void setAsSDAFeature(boolean sda) {
+		this.isSDA = sda;
 	}
 
+	
 	public String getQuery() {
 		return query;
 	}
@@ -245,6 +258,10 @@ public class WFSFeature {
 	public void setSOLRFilter(String sOLRFilter) {
 		SOLRFilter = sOLRFilter;
 	}
+
+
+
+
 
 
 

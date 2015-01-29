@@ -7,20 +7,11 @@ package de.ifgi.lod4wfs.factory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -33,8 +24,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.Utils;
@@ -46,10 +35,9 @@ public class AdapterLOD4WFS {
 	private static AdapterLOD4WFS instance;
 	private FactorySDAFeatures factorySDA;
 	private FactoryFDAFeatures factoryFDA;
-	private static Model modelFeatures;	
-
-	private static ArrayList<WFSFeature> fdaFeatures;
-	private static ArrayList<WFSFeature> sdaFeatures;
+//	private static Model modelFeatures;	
+//	private static ArrayList<WFSFeature> fdaFeatures;
+//	private static ArrayList<WFSFeature> sdaFeatures;
 
 	private static JenaConnector jn;
 	private static Logger logger = Logger.getLogger("LOD4WFS-Adapter");
@@ -161,14 +149,14 @@ public class AdapterLOD4WFS {
 	public String describeFeatureType(WFSFeature feature){
 
 
-		boolean isFDA = isFDAFeature(feature);
+		//boolean isFDA = isFDAFeature(feature);
 
-		String featureName = modelFeatures.expandPrefix(feature.getName());
+		String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));	
 
 		String describeFeatureTypeResponse = new String(); 
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 
-		if(isFDA){
+		if(feature.isFDAFeature()){
 
 			predicates = factoryFDA.getPredicatesFDAFeatures(feature);
 
@@ -197,13 +185,13 @@ public class AdapterLOD4WFS {
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
 
-			String layerPrefix = modelFeatures.shortForm(feature.getName());
+			String layerPrefix = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));	
 			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":")+1);			
 
 			Element requestElement = document.getDocumentElement(); 						
-			requestElement.setAttribute("targetNamespace", modelFeatures.expandPrefix(layerPrefix));
+			requestElement.setAttribute("targetNamespace", FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(layerPrefix));	
 
-			for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
+			for (Map.Entry<String, String> entry : FactoryWFS.getInstance().getLoadedModelFeature().getNsPrefixMap().entrySet())
 			{
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 
@@ -243,7 +231,7 @@ public class AdapterLOD4WFS {
 					}
 
 
-				} else if(isFDA && (predicates.get(i).getPredicate().equals(feature.getGeometryVariable()))){
+				} else if(feature.isFDAFeature() && (predicates.get(i).getPredicate().equals(feature.getGeometryVariable()))){
 
 					//TODO: create function to identify geometry type!!!
 					sequence.setAttribute("type","gml:MultiPointPropertyType");
@@ -294,7 +282,7 @@ public class AdapterLOD4WFS {
 		ArrayList<Triple> predicates = new ArrayList<Triple>();					
 		ResultSet rs;
 
-		if(isFDAFeature(feature)){
+		if(feature.isFDAFeature()){
 
 			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of [" + feature.getName() + "]  ...");
 			predicates = factoryFDA.getPredicatesFDAFeatures(feature);
@@ -305,7 +293,7 @@ public class AdapterLOD4WFS {
 
 			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of [" + feature.getName() + "] ...");
 
-			String featureName = modelFeatures.expandPrefix(feature.getName());
+			String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName());
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);	
 
 			//query = QueryFactory.create(factorySDA.generateGetFeatureSPARQL(featureName, predicates));
@@ -313,7 +301,7 @@ public class AdapterLOD4WFS {
 
 		}
 
-		layerPrefix = modelFeatures.shortForm(feature.getName());
+		layerPrefix = FactoryWFS.getInstance().getLoadedModelFeature().shortForm(feature.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
 
 		if(feature.getOutputFormat().equals("xml")){
@@ -331,7 +319,7 @@ public class AdapterLOD4WFS {
 				 */
 				Element requestElement = document.getDocumentElement(); 
 
-				for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet()) {
+				for (Map.Entry<String, String> entry : FactoryWFS.getInstance().getLoadedModelFeature().getNsPrefixMap().entrySet()) {
 
 					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 
@@ -345,7 +333,7 @@ public class AdapterLOD4WFS {
 				NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
 
 
-				if(!isFDAFeature(feature)){
+				if(!feature.isFDAFeature()){
 					Triple triple = new Triple();
 					triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
 					predicates.add(triple);		
@@ -358,7 +346,7 @@ public class AdapterLOD4WFS {
 
 					QuerySolution soln = rs.nextSolution();
 					String currentGeometryName = "LODGEO_";
-					Element currentGeometryElement = document.createElement(modelFeatures.shortForm(feature.getName()));
+					Element currentGeometryElement = document.createElement(FactoryWFS.getInstance().getLoadedModelFeature().shortForm(feature.getName()));
 
 
 					currentGeometryElement.setAttribute("fid", currentGeometryName + "" + countIteration);				
@@ -368,7 +356,7 @@ public class AdapterLOD4WFS {
 
 					for (int i = 0; i < predicates.size(); i++) {
 
-						if(isFDAFeature(feature)){
+						if(feature.isFDAFeature()){
 
 							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
 
@@ -470,7 +458,7 @@ public class AdapterLOD4WFS {
 			StringBuilder json = new StringBuilder();			
 			String jsonEntries = new String();
 
-			if(!isFDAFeature(feature)){
+			if(!feature.isFDAFeature()){
 
 				Triple triple = new Triple();
 				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
@@ -573,7 +561,7 @@ public class AdapterLOD4WFS {
 
 			geojson.append("{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[") ;
 
-			if(!isFDAFeature(feature)){
+			if(!feature.isFDAFeature()){
 
 				Triple triple = new Triple();
 				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
@@ -594,14 +582,14 @@ public class AdapterLOD4WFS {
 
 				for (int i = 0; i < predicates.size(); i++) {
 
-					boolean isGeometry = false;
+//					boolean isGeometry = false;
 
-					if(isFDAFeature(feature)){
+					if(feature.isFDAFeature()){
 
 						if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
 
 							geojson.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?" + feature.getGeometryVariable()).getString()));
-							isGeometry = true;
+							//isGeometry = true;
 							//System.out.println(isGeometry);
 
 						} else {
@@ -653,7 +641,7 @@ public class AdapterLOD4WFS {
 
 						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 
-							isGeometry = true;
+							//isGeometry = true;
 
 							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
@@ -697,31 +685,31 @@ public class AdapterLOD4WFS {
 	 **/
 
 
-	private boolean isFDAFeature(WFSFeature feature){
-
-		boolean result = false;
-
-		/**
-		 * Checks if the selected layer is created via FDA (based on pre-defined SPARQL Query)
-		 */
-		fdaFeatures = FactoryWFS.getInstance().getLoadedFDAFeatures();
-		modelFeatures = FactoryWFS.getInstance().getLoadedModelFeature();
-
-		for (int i = 0; i < fdaFeatures.size(); i++) {
-
-			if(fdaFeatures.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
-				result = true; 
-				feature.setQuery(fdaFeatures.get(i).getQuery());
-				feature.setGeometryVariable(fdaFeatures.get(i).getGeometryVariable());
-				feature.setEndpoint(fdaFeatures.get(i).getEndpoint());
-
-			}
-
-		}
-
-		return result;
-
-	}
+//	private boolean isFDAFeature(WFSFeature feature){
+//
+//		boolean result = false;
+//
+//		/**
+//		 * Checks if the selected layer is created via FDA (based on pre-defined SPARQL Query)
+//		 */
+//		fdaFeatures = FactoryWFS.getInstance().getLoadedFDAFeatures();
+//		modelFeatures = FactoryWFS.getInstance().getLoadedModelFeature();
+//
+//		for (int i = 0; i < fdaFeatures.size(); i++) {
+//
+//			if(fdaFeatures.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+//				result = true; 
+//				feature.setQuery(fdaFeatures.get(i).getQuery());
+//				feature.setGeometryVariable(fdaFeatures.get(i).getGeometryVariable());
+//				feature.setEndpoint(fdaFeatures.get(i).getEndpoint());
+//
+//			}
+//
+//		}
+//
+//		return result;
+//
+//	}
 
 	private String removePredicateURL(String predicate){
 

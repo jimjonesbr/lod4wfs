@@ -5,24 +5,45 @@ import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 
+import de.ifgi.lod4wfs.core.Utils;
+
 
 public class Test {
     public static void main(String[] args) throws Exception {
+    	
+    	
+    	
+    	
+    	
+    	
+    		    //byte[] ipAddr2 = InetAddress.getLocalHost();
+    		    InetAddress addr = InetAddress.getLocalHost();
+    		    String hostnameCanonical = addr.getCanonicalHostName();
+    		  
+    		    
+    	
+    	System.out.println("Test " + addr.getHostName());
+    	System.out.println("-> "+ hostnameCanonical);
+    	System.out.println("-> "+ Utils.getCanonicalHostName());
+    	
         InetAddress localHost = InetAddress.getLocalHost();
         //%><td><input type="submit" value="<%=dynamicFeatures.get(i).getFileName()%>" name="delete"';"/><%
         printInetAddress("localHost", localHost);
         
         String hostName = localHost.getHostName();
         String canonicalHostName = localHost.getCanonicalHostName();
-        printByName("  by" + hostName, hostName);
-        printByName("  by" + canonicalHostName, canonicalHostName);
+        printByName("  by " + hostName, hostName);
+        printByName("  by " + canonicalHostName, canonicalHostName);
         
         System.out.println();
         
         System.out.println("Full list of Network Interfaces:");
         Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+        
         if (en == null) {
-            System.out.println("got null from NetworkInterface.getNetworkInterfaces()");
+            
+        	System.out.println("got null from NetworkInterface.getNetworkInterfaces()");
+        	
         } else for (int networkInterfaceNumber = 0; en.hasMoreElements(); networkInterfaceNumber++) {
           NetworkInterface intf = en.nextElement();
           
@@ -31,6 +52,8 @@ public class Test {
           System.out.println("  " + ifaceId + ".name: " + intf.getName());
           System.out.println("  " + ifaceId + ".displayName: " + intf.getDisplayName());
           
+
+                    
           Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
           
           for (int addressNumber = 0; enumIpAddr.hasMoreElements(); addressNumber++) {

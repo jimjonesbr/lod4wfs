@@ -1,4 +1,4 @@
-﻿<%@ page import="java.io.*"%>
+<%@ page import="java.io.*"%>
 <%@ page import="de.ifgi.lod4wfs.core.*"%>
 <%@ page import="de.ifgi.lod4wfs.facade.*"%>
 <%@ page import="de.ifgi.lod4wfs.factory.*"%>
@@ -45,7 +45,7 @@
           <div class="form-group">
             <label for="feature" class="col-sm-2 control-label">Feature Name</label>
             <div class="col-sm-10">
-              <input type="text" id="feature" name="feature"  class="form-control" value="<%=feature.getName().replace(GlobalSettings.getDynamicFeaturesNameSpace(), "")%>" readonly/>
+              <input type="text" id="feature" name="feature"  class="form-control" value="<%=feature.getName().replace(GlobalSettings.getFDAFeaturesNameSpace(), "")%>" readonly/>
             </div>
           </div>
           <div class="form-group">

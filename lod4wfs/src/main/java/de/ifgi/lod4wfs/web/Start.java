@@ -40,7 +40,6 @@ public class Start{
 			
 			GlobalSettings.defaultPort = Integer.parseInt(args[1]);
 		}
-
 			
 		Server server = new Server(GlobalSettings.defaultPort);
 		
@@ -59,11 +58,6 @@ public class Start{
 //#####################		
 		
         WebAppContext webAppContext = new WebAppContext();
-        //webContext.setDefaultsDescriptor("webapp/WEB-INF/webdefault.xml");
-//        webAppContext.setDescriptor("webapp/WEB-INF/web.xml");
-//        webAppContext.setResourceBase("webapp/");
-//        webAppContext.setContextPath("/");
-		
         webAppContext.setDescriptor("jsp/xml/web.xml");
         webAppContext.setResourceBase("jsp/");
         webAppContext.setContextPath("/");
@@ -84,14 +78,14 @@ public class Start{
 		
 		server.start();
 			
-		System.out.println("" +
-				"\nLOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4\n" +
-				"Institut für Geoinformatik | Universitäts- und Landesbibliothek \n" +
-				"Westfälische Wilhelms-Universität Münster\n" +
-				"http://www.uni-muenster.de/\n\n" +
+		System.out.println(GlobalSettings.crlf +
+				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4 " + GlobalSettings.crlf +
+				"Institut für Geoinformatik | Universitäts- und Landesbibliothek " + GlobalSettings.crlf +
+				"Westfälische Wilhelms-Universität Münster" + GlobalSettings.crlf +
+				"http://www.uni-muenster.de/" + GlobalSettings.crlf + GlobalSettings.crlf +
 				
-				"Startup time: " + GlobalSettings.startupTime + "\n" +
-				"Port: " + GlobalSettings.defaultPort + "\n");
+				"Startup time: " + GlobalSettings.startupTime + GlobalSettings.crlf +
+				"Port: " + GlobalSettings.defaultPort + GlobalSettings.crlf);
 		
 		server.join();
 

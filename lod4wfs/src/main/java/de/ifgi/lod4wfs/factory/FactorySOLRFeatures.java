@@ -20,6 +20,10 @@ import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.SOLRRecord;
 import de.ifgi.lod4wfs.core.WFSFeature;
 
+/**
+ * @author Jim Jones
+ */
+
 public class FactorySOLRFeatures {
 
 	private static Logger logger = Logger.getLogger("SOLRFeatures-Factory");
@@ -82,7 +86,7 @@ public class FactorySOLRFeatures {
 			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
 			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
 			feature.setDefaultCRS(GlobalSettings.defautlCRS);
-			feature.setAsSOLR();
+			
 			feature.setFileName(fileName);
 			feature.setAsSOLRFeature(true);
 

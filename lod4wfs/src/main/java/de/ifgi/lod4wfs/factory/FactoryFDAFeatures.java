@@ -22,6 +22,10 @@ import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
+/**
+ * @author Jim Jones
+ */
+
 public class FactoryFDAFeatures {
 
 	private static Logger logger = Logger.getLogger("FDAFeatures-Factory");
@@ -32,9 +36,9 @@ public class FactoryFDAFeatures {
 		
 	}
 
-	public ArrayList<WFSFeature> listFDAFeatures(String path) {
+	public ArrayList<WFSFeature> listFDAFeatures() {
 
-		File[] files = new File(path).listFiles();
+		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
                 
@@ -49,6 +53,7 @@ public class FactoryFDAFeatures {
 				feature = this.getFDAFeature(file.getName());
 				
 				if(feature != null){
+					feature.setAsFDAFeature(true);
 					result.add(feature);
 				}
 
@@ -82,7 +87,7 @@ public class FactoryFDAFeatures {
 						
 						if(record.equals("name")){
 							
-							if(jsonReader.nextString().equals(GlobalSettings.getDynamicFeaturesNameSpace() + featureName)){
+							if(jsonReader.nextString().equals(GlobalSettings.getFDAFeaturesNameSpace() + featureName)){
 								
 								result = true;
 								
@@ -204,7 +209,7 @@ public class FactoryFDAFeatures {
 			Writer writer = new FileWriter(GlobalSettings.getFeatureDirectory() + feature.getName() + ".sparql");
 
 			writer.write("{\n");
-			writer.write("\"name\":\""+ GlobalSettings.getDynamicFeaturesNameSpace() + feature.getName().toLowerCase() + "\",\n");
+			writer.write("\"name\":\""+ GlobalSettings.getFDAFeaturesNameSpace() + feature.getName().toLowerCase() + "\",\n");
 			writer.write("\"title\":\"" + feature.getTitle() + "\",\n");			
 			writer.write("\"abstract\":\"" + feature.getFeatureAbstract() + "\",\n");
 			writer.write("\"keywords\":\"" + feature.getKeywords() + "\",\n");
@@ -296,7 +301,7 @@ public class FactoryFDAFeatures {
 								feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
 								feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
 								feature.setDefaultCRS(GlobalSettings.defautlCRS);
-								feature.setAsFDA(true);
+								feature.setAsFDAFeature(true);
 								feature.setFileName(file.getName());
 
 							}

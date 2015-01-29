@@ -5,6 +5,10 @@ import java.io.IOException;
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
 
+/**
+ * @author Jim Jones
+ */
+
 public class GlobalSettings {
 
 	public static int defaultPort;
@@ -35,7 +39,7 @@ public class GlobalSettings {
     private static String geometryClass ="";
     private static String geometryVariable ="";
     private static String featureDirectory ="";
-    private static String dynamicFeaturesNameSpace = "";
+    private static String fdaFeaturesNameSpace = "";
     private static String solrFeaturesNameSpace = "";
     private static String predicatesContainer = "";
     private static String featureConnector= "";
@@ -46,8 +50,8 @@ public class GlobalSettings {
     
     private static int previewLimit = 5;
     
-    public static String getDynamicFeaturesNameSpace(){
-    	return dynamicFeaturesNameSpace;
+    public static String getFDAFeaturesNameSpace(){
+    	return fdaFeaturesNameSpace;
     }
 
     public static String getSOLRFeaturesNameSpace(){
@@ -165,7 +169,7 @@ public class GlobalSettings {
 	            fdaPrefix = ini.get("SystemDefaults", "fdaPrefix");
 	            sdaPrefix = ini.get("SystemDefaults", "sdaPrefix");
 	            solrPrefix = ini.get("SystemDefaults", "solrPrefix");
-	            dynamicFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");
+	            fdaFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");
 	            solrFeaturesNameSpace = ini.get("SystemDefaults", "solrFeaturesNameSpace");
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            featureDirectory = ini.get("Server", "SPARQLDirectory");
@@ -175,8 +179,7 @@ public class GlobalSettings {
 	            defaultIntegerType  = ini.get("SystemDefaults", "integerLiteral").replace("<", "").replace(">", "");
 	            defaultLongType  = ini.get("SystemDefaults", "longLiteral").replace("<", "").replace(">", "");
 	            defaultFloatType  = ini.get("SystemDefaults", "floatLiteral").replace("<", "").replace(">", "");
-	            
-	            
+	            	            
 	            previewLimit = Integer.valueOf(ini.get("WebInterface", "PreviewLimit"));
 	            
 	        } catch (InvalidFileFormatException e) {

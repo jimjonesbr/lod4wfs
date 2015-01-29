@@ -3,7 +3,6 @@ package de.ifgi.lod4wfs.core;
 /**
  * Default SPARQL Queries used in the system.
  * @author jones
- * @version 1.0
  * 
  */
 

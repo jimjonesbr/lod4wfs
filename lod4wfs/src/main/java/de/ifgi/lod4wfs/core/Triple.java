@@ -1,5 +1,9 @@
 package de.ifgi.lod4wfs.core;
 
+/**
+ * @author Jim Jones
+ */
+
 public class Triple {
 
 	private String subject;
