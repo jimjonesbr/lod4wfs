@@ -15,7 +15,6 @@ import java.nio.file.Path;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -366,4 +365,70 @@ public class Utils {
 	
 		return XMLString;
 	}
+	
+	
+	public static String getGeometryType(String wkt){
+		
+		String result = new String();
+						
+		/**
+		 * Removing Spatial Reference System, if applicable.
+		 */
+		if(wkt.contains("<") && wkt.contains(">")){
+			
+			wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
+
+		}
+		
+		/**
+		 * Removing WKT literal type, if applicable.
+		 */
+		
+		if(wkt.contains("^^")){
+			
+			wkt = wkt.substring(0, wkt.indexOf("^^"));
+			
+		}
+
+		/**
+		 * Removing squared brackets, if applicable.
+		 */
+		if(wkt.contains("[") || wkt.contains("]")){
+			
+			wkt = wkt.replace("[", "").replace("]", "");
+
+		}
+		
+		if(Utils.isWKT(wkt.toUpperCase())){
+			
+			try {
+				
+				result = WKTParser.parse(wkt.toUpperCase()).getType().toString();
+				
+				if(result.equals("POINT") || result.equals("MULTIPOINT")){
+					
+					result = "gml:MultiPointPropertyType";
+										
+				} else  if(result.equals("POLYGON") || result.equals("MULTIPOLYGON")){
+					
+					result = "gml:MultiPolygonPropertyType";
+				
+				} else  if(result.equals("LINESTRING") || result.equals("MULTILINESTRING")){
+					
+					result = "gml:MultiLineStringPropertyType";
+				
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		} else {
+			result = "INVALID";
+		}
+		
+		return result;
+	}
+	
+	
 }

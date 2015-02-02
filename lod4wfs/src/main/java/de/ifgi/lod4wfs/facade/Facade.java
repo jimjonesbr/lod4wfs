@@ -1,23 +1,21 @@
 package de.ifgi.lod4wfs.facade;
 
 import java.util.ArrayList;
-
 import com.hp.hpl.jena.query.ResultSet;
-
 import de.ifgi.lod4wfs.core.EscapeChars;
+import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.factory.FactoryFDAFeatures;
 import de.ifgi.lod4wfs.factory.FactoryWFS;
 
 /**
- * @author jones
- * @version 1.0
+ * @author Jim Jones
  */
+
 public class Facade {
 
 	private static Facade instance;
-	
 	private FactoryFDAFeatures factoryFDA;	
 //	private AdapterLOD4WFS factoryLOD4WFS;
 //	private AdapterLOD4WFS factorySOLR4WFS;
@@ -130,7 +128,7 @@ public class Facade {
 	
 	public String getGeomeryType(String wkt){
 		
-		return FactoryFDAFeatures.getGeometryType(wkt);
+		return Utils.getGeometryType(wkt);
 		
 	}
 	

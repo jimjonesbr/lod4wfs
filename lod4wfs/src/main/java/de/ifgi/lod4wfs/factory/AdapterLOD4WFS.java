@@ -279,7 +279,7 @@ public class AdapterLOD4WFS {
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
 
-		ArrayList<Triple> predicates = new ArrayList<Triple>();					
+		ArrayList<Triple> predicates = new ArrayList<Triple>();
 		ResultSet rs;
 
 		if(feature.isFDAFeature()){
@@ -398,7 +398,7 @@ public class AdapterLOD4WFS {
 
 							if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 
-								if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
+								if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
 									String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
 									Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
@@ -643,7 +643,7 @@ public class AdapterLOD4WFS {
 
 							//isGeometry = true;
 
-							if(!FactoryFDAFeatures.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
+							if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
 								geojson.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString()) );
 

@@ -18,7 +18,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.SOLRRecord;
+import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
+import de.ifgi.lod4wfs.infrastructure.SOLRConnector;
 
 /**
  * @author Jim Jones
@@ -232,11 +234,24 @@ public class FactorySOLRFeatures {
 
 	public String getSOLRGeometryType(WFSFeature feature){
 
-		//TODO: Implement function to retrieve Geometry Type from SOLRRecords.
-
 		logger.info("Getting geometry type for the SOLR-Based feature [" + feature.getName() + "] ...");
-
-		return "gml:MultiPolygon";
+		
+		String result = new String();
+		int tmpLimit = feature.getLimit();
+		feature.setLimit(1);
+		
+		SOLRConnector solrConnector = new SOLRConnector();
+		SolrDocumentList rs = solrConnector.executeQuery(feature);
+		
+		for (int i = 0; i < rs.size(); i++) {
+			
+			result = Utils.getGeometryType(rs.get(i).getFieldValue(feature.getGeometryVariable()).toString());
+		}
+		
+		feature.setLimit(tmpLimit);
+		
+		
+		return result;
 
 	}
 }

@@ -95,6 +95,7 @@ public class AdapterSOLR4WFS {
 			requestElement.setAttribute("targetNamespace", FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(layerPrefix));
 
 			for (Map.Entry<String, String> entry : FactoryWFS.getInstance().getLoadedModelFeature().getNsPrefixMap().entrySet())
+				
 			{
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 
@@ -109,29 +110,10 @@ public class AdapterSOLR4WFS {
 				sequence.setAttribute("name", fields.get(i).getName());
 				sequence.setAttribute("nillable","true");
 
-				/**
-				 * Checks if predicate is the chosen geometry predicate in the settings file.
-				 */
-
-
 				if(fields.get(i).getName().equals(feature.getSOLRGeometryField())){
 
-					String featureType = new String();
-
-					featureType = factorySOLR.getSOLRGeometryType(feature);
-
-					if(featureType.equals("gml:MultiPolygon") || featureType.equals("gml:Polygon")){
-						sequence.setAttribute("type","gml:MultiPolygonPropertyType");
-					}
-
-					if(featureType.equals("gml:LineString")){
-						sequence.setAttribute("type","gml:MultiLineStringPropertyType");
-					}
-
-					if(featureType.equals("gml:Point") || featureType.equals("gml:MultiPoint") ){
-						sequence.setAttribute("type","gml:MultiPointPropertyType");
-					}
-
+					sequence.setAttribute("type",factorySOLR.getSOLRGeometryType(feature));
+										
 				} else {
 					sequence.setAttribute("type",fields.get(i).getType());
 				}
@@ -164,25 +146,19 @@ public class AdapterSOLR4WFS {
 	}
 
 
-
-
-
 	public String getFeature(WFSFeature feature) {
 
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
 
-		layerPrefix = "solr";
+		layerPrefix = GlobalSettings.getSOLRPrefix();
 
 		feature = this.expandSOLRFeature(feature);
 
 		ArrayList<SOLRRecord> fields = new ArrayList<SOLRRecord>();
 		fields = factorySOLR.getSOLRFeatureFields(feature);
 
-
 		logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve the geometries of [" + feature.getName() + "]  ...");
-		//predicates = factorySOLR.getPredicatesFDAFeatures(feature);
-
 
 		SolrDocumentList rs = new SolrDocumentList();
 
@@ -307,6 +283,15 @@ public class AdapterSOLR4WFS {
 	}
 
 
+	public String getSOLRGeometryType(WFSFeature feature){
+		
+		feature.setLimit(1);
+		
+		
+		
+		return null;
+		
+	}
 }
 
 

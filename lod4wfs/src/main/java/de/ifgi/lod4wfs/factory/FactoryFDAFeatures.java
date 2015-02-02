@@ -1,6 +1,5 @@
 package de.ifgi.lod4wfs.factory;
 
-import it.cutruzzula.lwkt.WKTParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -17,7 +16,6 @@ import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.Triple;
-import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
@@ -117,6 +115,7 @@ public class FactoryFDAFeatures {
 
 	}
 
+	//TODO: FDA existsFeature() to be implemented.
 	public static void updateFeature(WFSFeature feature){
 
 
@@ -330,41 +329,7 @@ public class FactoryFDAFeatures {
 		
 		return feature;
 	}
-
 	
-	public static String getGeometryType(String wkt){
-		
-		String result = new String();
-						
-		//Removing Spatial Reference System
-		if(wkt.contains("<") && wkt.contains(">")){
-			
-			wkt = wkt.substring(wkt.indexOf(">") + 1, wkt.length());
-
-		}
-		
-		//Removing literal type.
-		if(wkt.contains("^^")){
-			
-			wkt = wkt.substring(0, wkt.indexOf("^^"));
-			
-		}
-		
-		if(Utils.isWKT(wkt.toUpperCase())){
-			
-			try {
-				result = WKTParser.parse(wkt.toUpperCase()).getType().toString();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-		} else {
-			result = "INVALID";
-		}
-		
-		return result;
-	}
-
 	/**
 	 * @param WFS feature 
 	 * @return Lists all predicates (properties) related to a given feature.  
