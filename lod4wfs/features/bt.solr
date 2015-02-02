@@ -4,6 +4,7 @@
     "abstract": "Bio-Thesaurus: Records within Europe (All fields)",
     "keywords": "solr, spatial-query, bio-thesaurus",
     "geometryVariable": "placeOfBirth_geom",
+    "crs": "EPSG:4326",
     "endpoint": "http://giv-lodum.uni-muenster.de:8983/solr/test",
     "order": "",
     "limit": 50000,

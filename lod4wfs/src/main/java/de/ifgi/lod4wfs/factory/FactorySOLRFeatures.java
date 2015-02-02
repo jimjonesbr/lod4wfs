@@ -87,7 +87,16 @@ public class FactorySOLRFeatures {
 
 			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
 			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
-			feature.setDefaultCRS(GlobalSettings.defautlCRS);
+			
+			if(jObject.get("crs").getAsString().equals("")){
+				
+				feature.setDefaultCRS(GlobalSettings.defautlCRS);
+				
+			} else {
+				
+				feature.setDefaultCRS(jObject.get("crs").getAsString());
+				
+			}
 			
 			feature.setFileName(fileName);
 			feature.setAsSOLRFeature(true);
@@ -246,6 +255,7 @@ public class FactorySOLRFeatures {
 		for (int i = 0; i < rs.size(); i++) {
 			
 			result = Utils.getGeometryType(rs.get(i).getFieldValue(feature.getGeometryVariable()).toString());
+			
 		}
 		
 		feature.setLimit(tmpLimit);

@@ -45,10 +45,27 @@ public class GlobalSettings {
     private static String featureConnector= "";
     private static String sdaPrefix= "";
     private static String fdaPrefix= "";
-    private static String solrPrefix= "";
+    private static String solrPrefix= "";    
+    private static boolean sdaEnable = false;
+    private static boolean fdaEnable = false;
+    private static boolean solrEnable = false;
     
     
-    private static int previewLimit = 5;
+    
+    
+    public static boolean isSdaEnable() {
+		return sdaEnable;
+	}
+
+	public static boolean isFdaEnable() {
+		return fdaEnable;
+	}
+
+	public static boolean isSolrEnable() {
+		return solrEnable;
+	}
+
+	private static int previewLimit = 5;
     
     public static String getFDAFeaturesNameSpace(){
     	return fdaFeaturesNameSpace;
@@ -169,6 +186,7 @@ public class GlobalSettings {
 	            fdaPrefix = ini.get("SystemDefaults", "fdaPrefix");
 	            sdaPrefix = ini.get("SystemDefaults", "sdaPrefix");
 	            solrPrefix = ini.get("SystemDefaults", "solrPrefix");
+	            	            
 	            fdaFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");
 	            solrFeaturesNameSpace = ini.get("SystemDefaults", "solrFeaturesNameSpace");
 	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
@@ -179,8 +197,28 @@ public class GlobalSettings {
 	            defaultIntegerType  = ini.get("SystemDefaults", "integerLiteral").replace("<", "").replace(">", "");
 	            defaultLongType  = ini.get("SystemDefaults", "longLiteral").replace("<", "").replace(">", "");
 	            defaultFloatType  = ini.get("SystemDefaults", "floatLiteral").replace("<", "").replace(">", "");
-	            	            
+	            
+	            if(ini.get("SystemDefaults", "fdaEnabled").trim().equals("true")){
+	            	
+	            	fdaEnable = true;
+	            	
+	            }
+
+	            if(ini.get("SystemDefaults", "sdaEnabled").trim().equals("true")){
+	            	
+	            	sdaEnable = true;
+	            	
+	            }
+	            
+	            if(ini.get("SystemDefaults", "solrEnabled").trim().equals("true")){
+	            	
+	            	solrEnable = true;
+	            	
+	            }
+	            
 	            previewLimit = Integer.valueOf(ini.get("WebInterface", "PreviewLimit"));
+	            
+	            
 	            
 	        } catch (InvalidFileFormatException e) {
 	            e.printStackTrace();

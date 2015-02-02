@@ -4,6 +4,7 @@
     "abstract": "Sub set of the Bio-Thesaurus Data Set (4 fields only)",
     "keywords": "solr, spatial-query, bio-thesaurus",
     "geometryVariable": "placeOfBirth_geom",
+    "crs": "",
     "endpoint": "http://giv-lodum.uni-muenster.de:8983/solr/test",
     "order": "dateOfBirth:asc",
     "limit": 100,

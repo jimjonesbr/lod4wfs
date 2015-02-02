@@ -77,6 +77,7 @@ public class FactoryFDAFeatures {
 
 					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory()+file.getName());
 					JsonReader jsonReader = new JsonReader(fileReader);
+					jsonReader.setLenient(true);
 					jsonReader.beginObject();
 						
 					while (jsonReader.hasNext()) {
@@ -246,6 +247,7 @@ public class FactoryFDAFeatures {
 
 					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory()+file.getName());
 					JsonReader jsonReader = new JsonReader(fileReader);
+					jsonReader.setLenient(true);
 					jsonReader.beginObject();
 															
 					if(file.getName().endsWith(fileName)){

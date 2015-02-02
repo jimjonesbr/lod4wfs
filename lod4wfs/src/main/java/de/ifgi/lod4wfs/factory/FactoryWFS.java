@@ -30,61 +30,88 @@ import de.ifgi.lod4wfs.core.WFSFeature;
 public class FactoryWFS {
 
 	private static FactoryWFS instance;
-	
+
 	private FactorySDAFeatures factorySDA;
 	private FactoryFDAFeatures factoryFDA;
 	private FactorySOLRFeatures factorySOLR;
-	
+
 	private static Model modelFeatures;	
 
 	private static ArrayList<WFSFeature> fdaFeatureList;
 	private static ArrayList<WFSFeature> sdaFeatureList;
 	private static ArrayList<WFSFeature> solrFeatureList;
-	
+
 	private static Logger logger = Logger.getLogger("WFS-Factory");
-	
-	
+
+
 	public FactoryWFS() {
-		
+
 		factorySDA = new FactorySDAFeatures();
 		factoryFDA = new FactoryFDAFeatures();
 		factorySOLR = new FactorySOLRFeatures();
-		
-		// TODO Auto-generated constructor stub
+
 	}
-	
+
 	public static FactoryWFS getInstance() {
-		
+
 		if (instance == null) {
 			instance = new FactoryWFS();
 		}
 		return instance;
 	}
-	
-	
+
+
 	public String getCapabilities(String version){
 
 		String resultCapabilities = new String();
 		ArrayList<WFSFeature> features = new ArrayList<WFSFeature>();
-		
-		solrFeatureList = factorySOLR.listSOLRFeatures();
-		fdaFeatureList = factoryFDA.listFDAFeatures();
-		sdaFeatureList = factorySDA.listSDAFeatures();
-		
-		for (int i = 0; i < fdaFeatureList.size(); i++) {
-			features.add(fdaFeatureList.get(i));
-		}
-		
-		for (int i = 0; i < sdaFeatureList.size(); i++) {
-			features.add(sdaFeatureList.get(i));
-		}		
 
-		for (int i = 0; i < solrFeatureList.size(); i++) {
-			features.add(solrFeatureList.get(i));
-		}	
+		fdaFeatureList = null;
+		sdaFeatureList = null;
+		solrFeatureList = null;
 		
+		GlobalSettings.loadVariables();
+
+		if(GlobalSettings.isSolrEnable()){
+
+			solrFeatureList = factorySOLR.listSOLRFeatures();
+
+			for (int i = 0; i < solrFeatureList.size(); i++) {
+				features.add(solrFeatureList.get(i));
+			}	
+
+		} 
+
+		if(GlobalSettings.isFdaEnable()){
+
+			fdaFeatureList = factoryFDA.listFDAFeatures();
+
+			for (int i = 0; i < fdaFeatureList.size(); i++) {
+				features.add(fdaFeatureList.get(i));
+			}
+
+		}
+
+		if(GlobalSettings.isSolrEnable()){
+
+			sdaFeatureList = factorySDA.listSDAFeatures();
+
+			for (int i = 0; i < sdaFeatureList.size(); i++) {
+				features.add(sdaFeatureList.get(i));
+			}
+
+		}
+
+
+
+
+
+
+
+
+
 		this.generateLayersPrefixes(features);
-				
+
 		try {
 
 			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
@@ -94,17 +121,17 @@ public class FactoryWFS {
 
 				Document document = documentBuilder.parse("wfs/CapabilitiesDocument_100.xml");		
 
-				 /**
-				  * Iterates through the layers' model and creates NameSpaces' entries with the layers prefixes.
-				  */
+				/**
+				 * Iterates through the layers' model and creates NameSpaces' entries with the layers prefixes.
+				 */
 
 				Element requestElement = document.getDocumentElement(); 
-								
+
 				for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
 				{
 					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 				}
-				
+
 				logger.info("Creating Capabilities Document from " + Utils.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
@@ -114,7 +141,7 @@ public class FactoryWFS {
 				 * Adding LOD features (SDA and FDA) in the Capabilities Document. 
 				 */
 				for (int i = 0; i < features.size(); i++) {
-								
+
 					Element name = document.createElement("Name");
 					name.appendChild(document.createTextNode(modelFeatures.shortForm(features.get(i).getName())));
 					Element title = document.createElement("Title");
@@ -125,13 +152,13 @@ public class FactoryWFS {
 					keywords.appendChild(document.createTextNode(features.get(i).getKeywords()));
 					Element SRS = document.createElement("SRS");
 					SRS.appendChild(document.createTextNode(features.get(i).getCRS()));
-					
+
 					Element BBOX = document.createElement("LatLongBoundingBox");
 					BBOX.setAttribute("maxy", "83.6274");
 					BBOX.setAttribute("maxx", "-180");
 					BBOX.setAttribute("miny", "-90");
 					BBOX.setAttribute("minx", "180");
-					
+
 					Element p = document.createElement("FeatureType");
 					p.appendChild(name);
 					p.appendChild(title);
@@ -139,11 +166,11 @@ public class FactoryWFS {
 					p.appendChild(keywords);
 					p.appendChild(SRS);
 					p.appendChild(BBOX);
-			        
+
 					myNodeList.item(1).getParentNode().insertBefore(p, myNodeList.item(1));
-										
+
 				}
-									        
+
 				resultCapabilities = Utils.printXMLDocument(document);
 			}
 
@@ -157,91 +184,109 @@ public class FactoryWFS {
 		} catch (XPathExpressionException e) {
 			e.printStackTrace();
 		} 
-		
+
 		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.defaultPort));
 		resultCapabilities = resultCapabilities.replace("PARAM_HOST", Utils.getCanonicalHostName());
 		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
-		
+
 		return resultCapabilities;
 
 
-		
+
 	}
-		
-	
+
+
 	public String describeFeatureType(WFSFeature feature){
 
-	
-		String describeFeatureTypeResponse = new String(); 
-			
-		if(this.isSOLRFeature(feature)){
-			
-			describeFeatureTypeResponse = AdapterSOLR4WFS.getInstance().describeFeatureType(feature);
-		}
-		
-		
-		if(this.isFDAFeature(feature)){
-			
-			describeFeatureTypeResponse = AdapterLOD4WFS.getInstance().describeFeatureType(feature);
-			
-		} 		
 
-		
-		if(this.isSDAFeature(feature)){
-			
-			describeFeatureTypeResponse = AdapterLOD4WFS.getInstance().describeFeatureType(feature);
-			
+		String describeFeatureTypeResponse = new String(); 
+
+		if(GlobalSettings.isSolrEnable()){
+
+			if(this.isSOLRFeature(feature)){
+
+				describeFeatureTypeResponse = AdapterSOLR4WFS.getInstance().describeFeatureType(feature);
+			}
+
 		} 
 		
+		if(GlobalSettings.isFdaEnable()){
+
+			if(this.isFDAFeature(feature)){
+
+				describeFeatureTypeResponse = AdapterLOD4WFS.getInstance().describeFeatureType(feature);
+
+			} 		
+
+		} 
 		
+		if(GlobalSettings.isSdaEnable()){
+
+			if(this.isSDAFeature(feature)){
+
+				describeFeatureTypeResponse = AdapterLOD4WFS.getInstance().describeFeatureType(feature);
+
+			} 
+
+		}
+
 		return describeFeatureTypeResponse;
 
 
 	}
 
-	
+
 	public String getFeature(WFSFeature feature){
-		
+
 		String getFeatureResponse = new String(); 
-	
-		
-		if(this.isSOLRFeature(feature)){
-			
-			getFeatureResponse = AdapterSOLR4WFS.getInstance().getFeature(feature);
-			
-		}
-		
-		
-		if(this.isFDAFeature(feature)){
-			
-			getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
-			
+
+
+		if(GlobalSettings.isSolrEnable()){
+
+			if(this.isSOLRFeature(feature)){
+
+				getFeatureResponse = AdapterSOLR4WFS.getInstance().getFeature(feature);
+
+			}
+
 		} 
 
-		
-		if(this.isSDAFeature(feature)){
-			
-			getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
-			
+		if (GlobalSettings.isFdaEnable()) {
+
+			if(this.isFDAFeature(feature)){
+
+				getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
+
+			} 
+
 		} 
-		
-		
+
+		if(GlobalSettings.isSdaEnable()){
+
+
+			if(this.isSDAFeature(feature)){
+
+				getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
+
+			} 
+
+		}
 		return getFeatureResponse;
 	}
-	
-	
 
-	
-	
-	
+
+
+
+
+
 	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
 	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
-		
+
 		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
 		modelFeatures = ModelFactory.createDefaultModel();
-		
+
 		for (int i = 0; i < features.size(); i++) {
-						
+
 			boolean scape = false;
 
 			int size = features.get(i).getName().length()-1;
@@ -257,121 +302,121 @@ public class FactoryWFS {
 
 					position = size;
 					scape=true;
-					
+
 				}
 
 				size--;
 			}
-			
-			
-			
+
+
+
 			if(features.get(i).isSOLRFeature()){
-				
+
 				modelFeatures.setNsPrefix(GlobalSettings.getSOLRPrefix(), features.get(i).getName().substring(0, position+1) );
 				//System.out.println(features.get(i).getName().substring(0, position+1));
 			}
-			
+
 			if (modelFeatures.getNsURIPrefix(features.get(i).getName().substring(0, position+1))==null) {
-				
+
 				if (features.get(i).isFDAFeature()){
-					
+
 					modelFeatures.setNsPrefix(GlobalSettings.getFDAPrefix(), features.get(i).getName().substring(0, position+1) );
-					
+
 				} else {
-					
+
 					modelFeatures.setNsPrefix(GlobalSettings.getSDAPrefix() + modelFeatures.getNsPrefixMap().size(), features.get(i).getName().substring(0, position+1) );
-			
+
 				}
-				
+
 
 			}
-			
+
 		}
-		
+
 	}
 
 	private boolean isFDAFeature(WFSFeature feature){
-		
+
 		boolean result = false;
-		
+
 		/**
 		 * Checks if the selected layer is created via FDA (based on pre-defined SPARQL Query)
 		 */
 		for (int i = 0; i < fdaFeatureList.size(); i++) {
-			
+
 			if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
 				result = true; 
 				feature.setQuery(fdaFeatureList.get(i).getQuery());
 				feature.setGeometryVariable(fdaFeatureList.get(i).getGeometryVariable());
 				feature.setEndpoint(fdaFeatureList.get(i).getEndpoint());
 				feature.setAsFDAFeature(true);
-				
+
 			}
-			
+
 		}
-		
+
 		return result;
-		
+
 	}
-	
+
 	private boolean isSDAFeature(WFSFeature feature){
-		
+
 		boolean result = false;
-		
+
 		/**
 		 * Checks if the selected layer is created via SDA.
 		 */
 		for (int i = 0; i < sdaFeatureList.size(); i++) {
-					
+
 			if(sdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
 				result = true; 
 				feature.setGeometryVariable(sdaFeatureList.get(i).getGeometryVariable());
 				feature.setEndpoint(sdaFeatureList.get(i).getEndpoint());
 				feature.setAsSDAFeature(true);
 			}
-			
+
 		}
-		
+
 		return result;
-		
+
 	}
-	
+
 	private boolean isSOLRFeature(WFSFeature feature){
-		
+
 		boolean result = false;
-		
+
 		/**
 		 * Checks if the selected layer is created via FDA (based on pre-defined SPARQL Query)
 		 */
 		for (int i = 0; i < solrFeatureList.size(); i++) {
-			
+
 			if(solrFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
 				result = true; 
 				feature.setQuery(solrFeatureList.get(i).getQuery());
 				feature.setGeometryVariable(solrFeatureList.get(i).getGeometryVariable());
 				feature.setEndpoint(solrFeatureList.get(i).getEndpoint());
-				
+
 			}
-			
+
 		}
-		
+
 		return result;
-		
+
 	}
 
 	public ArrayList<WFSFeature> getLoadedFDAFeatures(){
-		
+
 		return fdaFeatureList;
 	}
 
 	public ArrayList<WFSFeature> getLoadedSOLRFeatures(){
-		
+
 		return solrFeatureList;
 	}
-	
+
 	public Model getLoadedModelFeature(){
-		
+
 		return modelFeatures;
-		
+
 	}
 }

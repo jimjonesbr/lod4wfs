@@ -16,7 +16,7 @@
 <body>
 <div class="bs-docs-featurette">
   <div class="container">
-    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.3)</small></h2>
+    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.4)</small></h2>
     <hr />
     <p> <a href="index.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-home"></span> Home</a> <a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Manage Layers</a> </p>
     <hr />
@@ -196,8 +196,7 @@
 		 			while (results.hasNext()) {
 		 	            
 		 	        	QuerySolution soln = results.nextSolution();
-		 	        	
-		 	 			
+
 		 	 			out.println("<tr>");
 
 		 	 			for (int i = 0; i < query.getResultVars().size(); i++) {	
@@ -206,14 +205,34 @@
 		 	    			if(("?"+query.getResultVars().get(i).toString()).equals(feature.getGeometryVariable())){
 		 	    				
 		 	    				String geometryType = Facade.getInstance().getGeomeryType(soln.get("?" + query.getResultVars().get(i)).toString());
+								
+		 	    				if(geometryType.equals("gml:MultiPointPropertyType")){
+		 	    				
+		 	    					geometryType = "POINT";
 
+		 	    				}
+		 	    				
+		 	    				if(geometryType.equals("gml:MultiPolygonPropertyType")){
+		 	    				
+		 	    					geometryType = "POLYGON";
+		 	    					
+		 	    				}
+		 	    				
+		 	    				if(geometryType.equals("gml:MultiLineStringPropertyType")){
+			 	    				
+		 	    					geometryType = "LINESTRING";
+		 	    					
+		 	    				}
+		 	    				
 		 	    				out.println("<td><img src = \"img/" + geometryType.toLowerCase() + 
 		 	    						      ".png\" alt = \"" + geometryType + 
 		 	    						        "\" title = \"" + geometryType + "\"" +
 		 	    						        "  height = 51 width = 51> </td>");	
 		 	    				
 		 	    			} else {
-		 	    				out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>");			 	    				
+		 	    				
+		 	    				out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>");
+		 	    				
 		 	    			}
 		 	    			
 		 	    		}

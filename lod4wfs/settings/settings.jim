@@ -29,6 +29,9 @@ solrFeaturesNameSpace = http://ulb.solr4wfs.de/
 sdaPrefix=sda
 fdaPrefix=fda
 solrPrefix=solr
+sdaEnabled = false
+fdaEnabled = true
+solrEnabled = true
 
 [Server]
 defaultPort = 8088

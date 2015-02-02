@@ -42,6 +42,7 @@ public class Utils {
 			WKTParser.parseToGML2(wkt);
 			
 			}
+		
 		catch(Exception e) {
 			result = false;
 		}

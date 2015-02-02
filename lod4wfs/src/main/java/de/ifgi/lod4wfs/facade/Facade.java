@@ -17,14 +17,11 @@ public class Facade {
 
 	private static Facade instance;
 	private FactoryFDAFeatures factoryFDA;	
-//	private AdapterLOD4WFS factoryLOD4WFS;
-//	private AdapterLOD4WFS factorySOLR4WFS;
-//	private FactoryWFS factoryWFS;
 	
 	public Facade(){
+
 		factoryFDA = new FactoryFDAFeatures();
-//		factoryLOD4WFS = new AdapterLOD4WFS();
-//		factoryWFS = new FactoryWFS();
+
 	}
 
 	public static Facade getInstance() {
@@ -135,5 +132,6 @@ public class Facade {
 	public int getPreviewLimit(){
 		
 		return GlobalSettings.getPreviewLimit();
+		
 	}
 }
