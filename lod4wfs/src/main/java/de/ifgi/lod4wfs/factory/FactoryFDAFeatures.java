@@ -301,7 +301,7 @@ public class FactoryFDAFeatures {
 
 								feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
 								feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
-								feature.setDefaultCRS(GlobalSettings.defautlCRS);
+								feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
 								feature.setAsFDAFeature(true);
 								feature.setFileName(file.getName());
 
@@ -339,7 +339,7 @@ public class FactoryFDAFeatures {
 	
 	public ArrayList<Triple> getPredicatesFDAFeatures(WFSFeature feature){
 		
-		logger.info("Listing available predicates for the dynamic feature " + feature.getName() + " ...");
+		logger.info("Listing available predicates for the FDA feature " + feature.getName() + " ...");
 		
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 		Query query = QueryFactory.create(feature.getQuery());

@@ -87,7 +87,7 @@ public class Utils {
 
 				} else {
 
-					gml = WKTParser.parseToGML2(literal,GlobalSettings.defautlCRS);
+					gml = WKTParser.parseToGML2(literal,GlobalSettings.getDefaultCRS());
 
 				}
 

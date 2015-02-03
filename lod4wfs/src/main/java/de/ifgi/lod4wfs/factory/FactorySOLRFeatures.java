@@ -90,7 +90,7 @@ public class FactorySOLRFeatures {
 			
 			if(jObject.get("crs").getAsString().equals("")){
 				
-				feature.setDefaultCRS(GlobalSettings.defautlCRS);
+				feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
 				
 			} else {
 				

@@ -11,12 +11,12 @@ import org.ini4j.Wini;
 
 public class GlobalSettings {
 
-	public static int defaultPort;
-	public static String defautlCRS = "EPSG:4326";
-	public static String default_SPARQLEndpoint= "";
+	private static int defaultPort;
+	private static String defaultCRS = "";
+	private static String defaultSPARQLEndpoint= "";
+
 	public static String defaultLowerCorner = "-180.0 -78.11";
-	public static String defaultUpperCorner = "180.0 83.57";
-	public static String defaultServiceName = "lod4wfs";
+	public static String defaultUpperCorner = "180.0 83.57";	
 	public static String defaultLiteralType = "xsd:string";	
 	public static String defaultDecimalType = "";
 	public static String defaultIntegerType = "";
@@ -26,12 +26,12 @@ public class GlobalSettings {
 	public static String defaultWKTType = "";
 	public static String defaultByteType = "";
 	public static String defaultFloatType = "";
-	
 	public static String xsdNameSpace = "";
 	public static String startupTime = "";
 	//TODO Fix bounding box in the Capabilities Document!
 	
-	public static String crlf = System.getProperty("line.separator");
+	private static String defaultServiceName = "";
+	private static String crlf = System.getProperty("line.separator");
  	private static String abstractPredicate ="";
     private static String titlePredicate ="";
     private static String keywordsPredicate ="";
@@ -52,8 +52,38 @@ public class GlobalSettings {
     
     
     
+    public static String getDefaultServiceName() {
+		return defaultServiceName;
+	}
+
+
+	public static String getCrlf() {
+		return crlf;
+	}
+
+
+	public static String getDefaultSPARQLEndpoint() {
+		return defaultSPARQLEndpoint;
+	}
     
-    public static boolean isSdaEnable() {
+    
+	public static void setDefaultSPARQLEndpoint(String defaultSPARQLEndpoint) {
+		GlobalSettings.defaultSPARQLEndpoint = defaultSPARQLEndpoint;
+	}
+
+	public static String getDefaultCRS(){
+    	return defaultCRS;
+    }
+
+    public static int getDefaultPort(){
+    	return defaultPort;
+    }
+            
+    public static void setDefaultPort(int defaultPort) {
+		GlobalSettings.defaultPort = defaultPort;
+	}
+
+	public static boolean isSdaEnable() {
 		return sdaEnable;
 	}
 
@@ -163,7 +193,7 @@ public class GlobalSettings {
         return defaultFloatType;
     }
     
-    public static void loadVariables(){
+    public static void refreshSystemVariables(){
 	       
 	        Wini ini;
 	        
@@ -186,10 +216,12 @@ public class GlobalSettings {
 	            fdaPrefix = ini.get("SystemDefaults", "fdaPrefix");
 	            sdaPrefix = ini.get("SystemDefaults", "sdaPrefix");
 	            solrPrefix = ini.get("SystemDefaults", "solrPrefix");
-	            	            
-	            fdaFeaturesNameSpace = ini.get("SystemDefaults", "dynamicFeaturesNameSpace");
+	            defaultCRS = ini.get("SystemDefaults", "defaultCRS").trim();
+	            defaultServiceName = ini.get("SystemDefaults", "serviceName").trim();
+
+	            fdaFeaturesNameSpace = ini.get("SystemDefaults", "fdaFeaturesNameSpace");
 	            solrFeaturesNameSpace = ini.get("SystemDefaults", "solrFeaturesNameSpace");
-	            default_SPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
+	            defaultSPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            featureDirectory = ini.get("Server", "SPARQLDirectory");
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
 	            defaultDecimalType  = ini.get("SystemDefaults", "decimalLiteral").replace("<", "").replace(">", "");

@@ -33,14 +33,14 @@ public class SOLRConnector {
 
 		try {
 			
-			logger.info("Performing query for the SOLR Feature [" + feature.getName() + "]:" + GlobalSettings.crlf + GlobalSettings.crlf + 
-					"Title: " + feature.getTitle() + GlobalSettings.crlf +
-					"Endpoint: " + feature.getEndpoint() + GlobalSettings.crlf +					
-					"Spatial Constraint: \"" + feature.getSOLRGeometryField()+ ":" + feature.getSOLRSpatialConstraint() + "\"" + GlobalSettings.crlf +
-					"Filter: " + feature.getSOLRFilter() + GlobalSettings.crlf + 
-					"Fields: " + feature.getFields() + GlobalSettings.crlf +
-					"Sorting: " + feature.getSOLRSorting() + GlobalSettings.crlf +
-					"Limit: " + feature.getLimit() + GlobalSettings.crlf 
+			logger.info("Performing query for the SOLR Feature [" + feature.getName() + "]:" + GlobalSettings.getCrlf() + GlobalSettings.getCrlf() + 
+					"Title: " + feature.getTitle() + GlobalSettings.getCrlf() +
+					"Endpoint: " + feature.getEndpoint() + GlobalSettings.getCrlf() +					
+					"Spatial Constraint: \"" + feature.getSOLRGeometryField()+ ":" + feature.getSOLRSpatialConstraint() + "\"" + GlobalSettings.getCrlf() +
+					"Filter: " + feature.getSOLRFilter() + GlobalSettings.getCrlf() + 
+					"Fields: " + feature.getFields() + GlobalSettings.getCrlf() +
+					"Sorting: " + feature.getSOLRSorting() + GlobalSettings.getCrlf() +
+					"Limit: " + feature.getLimit() + GlobalSettings.getCrlf() 
 					);
 			
 			query.setStart(0);    

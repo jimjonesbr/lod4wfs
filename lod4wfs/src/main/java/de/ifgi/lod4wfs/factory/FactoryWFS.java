@@ -70,7 +70,7 @@ public class FactoryWFS {
 		sdaFeatureList = null;
 		solrFeatureList = null;
 		
-		GlobalSettings.loadVariables();
+		GlobalSettings.refreshSystemVariables();
 
 		if(GlobalSettings.isSolrEnable()){
 
@@ -137,7 +137,7 @@ public class FactoryWFS {
 					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 				}
 
-				logger.info("Creating Capabilities Document from " + Utils.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
+				logger.info("Creating Capabilities Document from " + Utils.getCanonicalHostName() + ":" + GlobalSettings.getDefaultPort() + "/" + GlobalSettings.getDefaultServiceName() + "/wfs ...");
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList nodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
@@ -190,9 +190,9 @@ public class FactoryWFS {
 			e.printStackTrace();
 		} 
 
-		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.defaultPort));
+		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.getDefaultPort()));
 		resultCapabilities = resultCapabilities.replace("PARAM_HOST", Utils.getCanonicalHostName());
-		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
+		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.getDefaultServiceName());
 
 		return resultCapabilities;
 

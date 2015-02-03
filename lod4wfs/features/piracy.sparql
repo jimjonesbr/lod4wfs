@@ -1,0 +1,22 @@
+{
+"name":"http://sparql.lod4wfs.de/piracy",
+"title":"Piracy Data",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://semanticweb.cs.vu.nl/lop/sparql/",
+"query":"PREFIX  eez:  <http://semanticweb.cs.vu.nl/poseidon/ns/eez/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  wgs84: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  sem:  <http://semanticweb.cs.vu.nl/2009/11/sem/>
+PREFIX  poseidon: <http://semanticweb.cs.vu.nl/poseidon/ns/instances/>
+
+SELECT ?event_type ?long ?lat ?place (concat('POINT(', str(?long), ' ', str(?lat), ')') AS ?wkt)
+WHERE
+  { ?event sem:eventType ?event_type .
+    ?event sem:hasPlace ?place .
+    ?place wgs84:lat ?lat .
+    ?place wgs84:long ?long
+  }
+limit 2"
+}

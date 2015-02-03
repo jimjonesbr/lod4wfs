@@ -59,7 +59,7 @@ public class FactorySDAFeaturesOLD {
 		jn = new JenaConnector();
 		factoryFDA = new FactoryFDAFeatures();
 		//Loads variables defined at the settings file.
-		GlobalSettings.loadVariables();
+		GlobalSettings.refreshSystemVariables();
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class FactorySDAFeaturesOLD {
 	
 	public ArrayList<WFSFeature> listSDAFeatures(){
 
-		logger.info("Listing geographic layers at " + GlobalSettings.default_SPARQLEndpoint + " ...");
+		logger.info("Listing geographic layers at " + GlobalSettings.getDefaultSPARQLEndpoint() + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs, GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs, GlobalSettings.getDefaultSPARQLEndpoint());
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
 		
 		String CRS = new String();
@@ -101,7 +101,7 @@ public class FactorySDAFeaturesOLD {
 			
 			} else {
 			
-				feature.setDefaultCRS(GlobalSettings.defautlCRS);
+				feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
 				
 			}
 			
@@ -157,7 +157,7 @@ public class FactorySDAFeaturesOLD {
 					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 				}
 				
-				logger.info("Creating Capabilities Document of " + Utils.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
+				logger.info("Creating Capabilities Document of " + Utils.getCanonicalHostName() + ":" + GlobalSettings.getDefaultPort() + "/" + GlobalSettings.getDefaultServiceName() + "/wfs ...");
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
@@ -207,9 +207,9 @@ public class FactorySDAFeaturesOLD {
 			e.printStackTrace();
 		} 
 		
-		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.defaultPort));
+		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.getDefaultPort()));
 		resultCapabilities = resultCapabilities.replace("PARAM_HOST", Utils.getCanonicalHostName());
-		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
+		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.getDefaultServiceName());
 		
 		return resultCapabilities;
 
@@ -355,8 +355,8 @@ public class FactorySDAFeaturesOLD {
 
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", feature.getName().substring(feature.getName().indexOf(":")+1, feature.getName().length()));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_TYPE", feature.getName());
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.defaultPort));
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.getDefaultPort()));
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.getDefaultServiceName());
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER", java.net.InetAddress.getLocalHost().getHostName());
 
 		} catch (IOException e) {
@@ -379,7 +379,7 @@ public class FactorySDAFeaturesOLD {
 
 		logger.info("Listing available predicates for " + feature + " ...");
 	
-		ResultSet rs = jn.executeQuery(SPARQL.listFeaturePredicates.replace("PARAM_LAYER", feature), GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.listFeaturePredicates.replace("PARAM_LAYER", feature), GlobalSettings.getDefaultSPARQLEndpoint());
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 
 				
@@ -415,7 +415,7 @@ public class FactorySDAFeaturesOLD {
 
 		logger.info("Getting geometry type for " + feature.getName() + " ...");
 		
-		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())),GlobalSettings.default_SPARQLEndpoint);
+		ResultSet rs = jn.executeQuery(SPARQL.getFeatureType.replace("PARAM_LAYER", modelFeatures.expandPrefix(feature.getName())),GlobalSettings.getDefaultSPARQLEndpoint());
 
 		String geometryCoordinates = new String();
 		
@@ -465,14 +465,14 @@ public class FactorySDAFeaturesOLD {
 						
 		} else {
 		
-			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of " + feature.getName() + "  ...");
+			logger.info("Performing query at " + GlobalSettings.getDefaultSPARQLEndpoint()  + " to retrieve all geometries of " + feature.getName() + "  ...");
 			
 			//DELETE
 			String featureName = modelFeatures.expandPrefix(feature.getName());
 			predicates = this.getPredicatesSDAFeatures(featureName);	
 			
 			
-			rs = jn.executeQuery(this.generateGetFeatureSPARQL(featureName, predicates),GlobalSettings.default_SPARQLEndpoint);
+			rs = jn.executeQuery(this.generateGetFeatureSPARQL(featureName, predicates),GlobalSettings.getDefaultSPARQLEndpoint());
 			
 		}
 		
@@ -634,8 +634,8 @@ public class FactorySDAFeaturesOLD {
 				SPARQL_Variable = SPARQL_Variable + i;
 			}
 			
-			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.crlf ;
-			whereClause = whereClause + "	?feature <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.crlf ; 
+			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.getCrlf() ;
+			whereClause = whereClause + "	?feature <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.getCrlf() ; 
 
 			
 			variables.add(SPARQL_Variable);
@@ -643,15 +643,15 @@ public class FactorySDAFeaturesOLD {
 
 		String SPARQL = new String();
 
-		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.crlf ;
+		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.getCrlf() ;
 		
-		SPARQL = " SELECT ?geometry " + GlobalSettings.crlf + selectClause +
-				 //" WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" + GlobalSettings.crlf +
-				" WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.crlf +
-				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.crlf +
-				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.crlf +
-				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.crlf + 
-				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.crlf +
+		SPARQL = " SELECT ?geometry " + GlobalSettings.getCrlf() + selectClause +
+				 //" WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" + GlobalSettings.getCrlf() +
+				" WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.getCrlf() +
+				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.getCrlf() +
+				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.getCrlf() +
+				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.getCrlf() + 
+				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.getCrlf() +
 				 whereClause + " }}";
 
 		return SPARQL;
@@ -774,7 +774,7 @@ public class FactorySDAFeaturesOLD {
 				
 			} else {
 			
-				gml = WKTParser.parseToGML2(wkt,GlobalSettings.defautlCRS);
+				gml = WKTParser.parseToGML2(wkt,GlobalSettings.getDefaultCRS());
 			
 			}
 		

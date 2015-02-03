@@ -35,9 +35,6 @@ public class AdapterLOD4WFS {
 	private static AdapterLOD4WFS instance;
 	private FactorySDAFeatures factorySDA;
 	private FactoryFDAFeatures factoryFDA;
-//	private static Model modelFeatures;	
-//	private static ArrayList<WFSFeature> fdaFeatures;
-//	private static ArrayList<WFSFeature> sdaFeatures;
 
 	private static JenaConnector jn;
 	private static Logger logger = Logger.getLogger("LOD4WFS-Adapter");
@@ -250,8 +247,8 @@ public class AdapterLOD4WFS {
 
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", feature.getName().substring(feature.getName().indexOf(":")+1, feature.getName().length()));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_TYPE", feature.getName());
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.defaultPort));
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.getDefaultPort()));
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.getDefaultServiceName());
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER", java.net.InetAddress.getLocalHost().getHostName());
 
 		} catch (IOException e) {
@@ -291,13 +288,13 @@ public class AdapterLOD4WFS {
 
 		} else {
 
-			logger.info("Performing query at " + GlobalSettings.default_SPARQLEndpoint  + " to retrieve all geometries of [" + feature.getName() + "] ...");
+			logger.info("Performing query at " + GlobalSettings.getDefaultSPARQLEndpoint()  + " to retrieve all geometries of [" + feature.getName() + "] ...");
 
 			String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName());
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);	
 
 			//query = QueryFactory.create(factorySDA.generateGetFeatureSPARQL(featureName, predicates));
-			rs = jn.executeQuery(factorySDA.generateGetFeatureSPARQL(featureName, predicates),GlobalSettings.default_SPARQLEndpoint);
+			rs = jn.executeQuery(factorySDA.generateGetFeatureSPARQL(featureName, predicates),GlobalSettings.getDefaultSPARQLEndpoint());
 
 		}
 

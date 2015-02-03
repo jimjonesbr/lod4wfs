@@ -13,6 +13,7 @@ wktLiteral = <http://www.opengis.net/ont/sf#wktLiteral>
 
 ## Don't touch the [SystemDefaults] variables, unless you really know what you're doing.
 [SystemDefaults]
+serviceName = lod4wfs
 xsdNameSpace = http://www.w3.org/2001/XMLSchema#
 defaultLiteral = <http://www.w3.org/2001/XMLSchema#string>
 stringLiteral = <http://www.w3.org/2001/XMLSchema#string>
@@ -24,7 +25,7 @@ dateLiteral =<http://www.w3.org/2001/XMLSchema#byte>
 floatLiteral =<http://www.w3.org/2001/XMLSchema#float>
 RDFNamespace = <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 defaultCRS = EPSG:4326
-dynamicFeaturesNameSpace = http://sparql.lod4wfs.de/
+fdaFeaturesNameSpace = http://sparql.lod4wfs.de/
 solrFeaturesNameSpace = http://ulb.solr4wfs.de/
 sdaPrefix=sda
 fdaPrefix=fda
@@ -35,7 +36,7 @@ solrEnabled = true
 
 [Server]
 defaultPort = 8088
-SPARQLEndpointURL = http://giv-lodum.uni-muenster.de:8080/openrdf-sesame/repositories/lod4wfs2
+SPARQLEndpointURL = http://recife:8080/openrdf-sesame/repositories/lod4wfs
 SPARQLDirectory = features/
 
 [WebInterface]

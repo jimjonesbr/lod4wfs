@@ -23,14 +23,14 @@ public class Start{
 	public static void main(String[] args) throws Exception
 	{			
 		
-		GlobalSettings.loadVariables();
+		GlobalSettings.refreshSystemVariables();
 		
 		/**
 		 * First parameter: SPARQL Endpoint address. 
 		 */
 		if (args.length >= 1) {
 			
-			GlobalSettings.default_SPARQLEndpoint = args[0];
+			GlobalSettings.setDefaultSPARQLEndpoint(args[0]);
 		}
 		
 		/**
@@ -38,17 +38,18 @@ public class Start{
 		 */
 		if (args.length == 2) {
 			
-			GlobalSettings.defaultPort = Integer.parseInt(args[1]);
+			GlobalSettings.setDefaultPort(Integer.parseInt(args[1]));
+			
 		}
 			
-		Server server = new Server(GlobalSettings.defaultPort);
+		Server server = new Server(GlobalSettings.getDefaultPort());
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date date = new Date();
 		GlobalSettings.startupTime = dateFormat.format(date);
 
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-		context.setContextPath("/"+GlobalSettings.defaultServiceName);
+		context.setContextPath("/"+GlobalSettings.getDefaultServiceName());
 		
     	server.setHandler(context);
 		
@@ -78,14 +79,14 @@ public class Start{
 		
 		server.start();
 			
-		System.out.println(GlobalSettings.crlf +
-				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4 " + GlobalSettings.crlf +
-				"Institut für Geoinformatik | Universitäts- und Landesbibliothek " + GlobalSettings.crlf +
-				"Westfälische Wilhelms-Universität Münster" + GlobalSettings.crlf +
-				"http://www.uni-muenster.de/" + GlobalSettings.crlf + GlobalSettings.crlf +
+		System.out.println(GlobalSettings.getCrlf() +
+				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4 " + GlobalSettings.getCrlf() +
+				"Institut für Geoinformatik | Universitäts- und Landesbibliothek " + GlobalSettings.getCrlf() +
+				"Westfälische Wilhelms-Universität Münster" + GlobalSettings.getCrlf() +
+				"http://www.uni-muenster.de/" + GlobalSettings.getCrlf() + GlobalSettings.getCrlf() +
 				
-				"Startup time: " + GlobalSettings.startupTime + GlobalSettings.crlf +
-				"Port: " + GlobalSettings.defaultPort + GlobalSettings.crlf);
+				"Startup time: " + GlobalSettings.startupTime + GlobalSettings.getCrlf() +
+				"Port: " + GlobalSettings.getDefaultPort() + GlobalSettings.getCrlf());
 		
 		server.join();
 

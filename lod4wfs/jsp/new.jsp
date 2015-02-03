@@ -1,4 +1,4 @@
-﻿<%@page import="de.ifgi.lod4wfs.facade.Facade"%>
+<%@page import="de.ifgi.lod4wfs.facade.Facade"%>
 <%@page import="com.hp.hpl.jena.query.QueryFactory"%>
 <%@page import="com.hp.hpl.jena.query.Query"%>
 <%@page import="de.ifgi.lod4wfs.core.WFSFeature"%>
@@ -25,7 +25,7 @@
           <div class="form-group">
             <label for="endpoint" class="col-sm-2 control-label">SPARQL Endpoint</label>
             <div class="col-sm-10">
-              <input type="text" id="endpoint" class="form-control" name="endpoint" value="<%out.println(GlobalSettings.default_SPARQLEndpoint);%>" />
+              <input type="text" id="endpoint" class="form-control" name="endpoint" value="<%out.println(GlobalSettings.getDefaultSPARQLEndpoint());%>" />
             </div>
           </div>
           <div class="form-group">

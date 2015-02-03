@@ -16,7 +16,7 @@
     <hr />
     <p><a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-wrench"></span> Manage Layers</a> 
     <a href="new.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Create New Layer</a> 
-    <a href="http://<% out.println(Utils.getCanonicalHostName().toString()); %>:<%out.println(Integer.toString(GlobalSettings.defaultPort));%>/<%out.println(GlobalSettings.defaultServiceName);%>/wfs/?service=wfs&version=1.0.0&request=GetCapabilities" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Service Capabilities</a></p>
+    <a href="http://<% out.println(Utils.getCanonicalHostName().toString()); %>:<%out.println(Integer.toString(GlobalSettings.getDefaultPort()));%>/<%out.println(GlobalSettings.getDefaultServiceName());%>/wfs/?service=wfs&version=1.0.0&request=GetCapabilities" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Service Capabilities</a></p>
     <hr />
     <div class="panel panel-primary">
       <div class="panel-heading">System Information</div>
@@ -24,16 +24,16 @@
         <ul>
           <li>Application version: <b>BETA 0.4.4 (January, 2015)</b></li>
           <%
-            out.println("<li>Default SPARQL Endpoint: <b> "+ GlobalSettings.default_SPARQLEndpoint + "</b></li>");
-            out.println("<li>Application Started on: <b> "+ GlobalSettings.startupTime + "</b></li>");
-            out.println("<li>Java Runtime: <b> "+ System.getProperty("java.version") + "</b></li>");
-            out.println("<li>Operating System: <b>" + System.getProperty("os.name") + " " + System.getProperty("os.version")+ " (" + System.getProperty("os.arch") + ")</b></li>");
-            out.println("<li>Memory usage: <b>" + Runtime.getRuntime().freeMemory() / 1024/1024 + "MB </b></li>");                       
-            out.println("<li>LOD4WFS Documentation:  <a href=\"http://ifgi.uni-muenster.de/%7Ej_jone02/lod4wfs/LOD4WFS_documentation.pdf\">User and Developer Manual</a></li>");
-            out.println("<li>Source Code:  <a href=\"https://github.com/jimjonesbr/lod4wfs\">GitHub Repository</a></li>");
-            out.println("<li>Publication (AGILE 2014):  <a href=\"http://www.researchgate.net/publication/260286637_Making_the_Web_of_Data_Available_via_Web_Feature_Services\">Making the Web of Data Available via Web Feature Services</a></li>");
-            //<a href="documentation/LOD4WFS_documentation.pdf" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-wrench"></span> LOD4WFS Documentation </a>
-            %>
+          	out.println("<li>Default SPARQL Endpoint: <b> "+ GlobalSettings.getDefaultSPARQLEndpoint() + "</b></li>");
+                      out.println("<li>Application Started on: <b> "+ GlobalSettings.startupTime + "</b></li>");
+                      out.println("<li>Java Runtime: <b> "+ System.getProperty("java.version") + "</b></li>");
+                      out.println("<li>Operating System: <b>" + System.getProperty("os.name") + " " + System.getProperty("os.version")+ " (" + System.getProperty("os.arch") + ")</b></li>");
+                      out.println("<li>Memory usage: <b>" + Runtime.getRuntime().freeMemory() / 1024/1024 + "MB </b></li>");                       
+                      out.println("<li>LOD4WFS Documentation:  <a href=\"http://ifgi.uni-muenster.de/%7Ej_jone02/lod4wfs/LOD4WFS_documentation.pdf\">User and Developer Manual</a></li>");
+                      out.println("<li>Source Code:  <a href=\"https://github.com/jimjonesbr/lod4wfs\">GitHub Repository</a></li>");
+                      out.println("<li>Publication (AGILE 2014):  <a href=\"http://www.researchgate.net/publication/260286637_Making_the_Web_of_Data_Available_via_Web_Feature_Services\">Making the Web of Data Available via Web Feature Services</a></li>");
+                      //<a href="documentation/LOD4WFS_documentation.pdf" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-wrench"></span> LOD4WFS Documentation </a>
+          %>
         </ul>
       </div>
     </div>
