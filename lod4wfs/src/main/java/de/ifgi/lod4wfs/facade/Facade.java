@@ -57,7 +57,7 @@ public class Facade {
 	
 	
 	/**
-	 * Methods for Web Interface
+	 * Methods for Web Interface (LOD4WFS)
 	 */
 	
 	public ArrayList<WFSFeature> listFDAFeatures(){

@@ -80,7 +80,11 @@ public class FactoryWFS {
 				features.add(solrFeatureList.get(i));
 			}	
 
-		} 
+		} else {
+			
+			logger.warn("SOLR Features support disabled.");
+			
+		}
 
 		if(GlobalSettings.isFdaEnable()){
 
@@ -90,9 +94,13 @@ public class FactoryWFS {
 				features.add(fdaFeatureList.get(i));
 			}
 
+		} else {
+			
+			logger.warn("FDA Features support disabled.");
+			
 		}
 
-		if(GlobalSettings.isSolrEnable()){
+		if(GlobalSettings.isSdaEnable()){
 
 			sdaFeatureList = factorySDA.listSDAFeatures();
 
@@ -100,14 +108,11 @@ public class FactoryWFS {
 				features.add(sdaFeatureList.get(i));
 			}
 
+		} else {
+			
+			logger.warn("SDA Features support disabled.");
+			
 		}
-
-
-
-
-
-
-
 
 
 		this.generateLayersPrefixes(features);
@@ -135,39 +140,39 @@ public class FactoryWFS {
 				logger.info("Creating Capabilities Document from " + Utils.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
-				NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
+				NodeList nodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
 
 				/**
 				 * Adding LOD features (SDA and FDA) in the Capabilities Document. 
 				 */
 				for (int i = 0; i < features.size(); i++) {
 
-					Element name = document.createElement("Name");
-					name.appendChild(document.createTextNode(modelFeatures.shortForm(features.get(i).getName())));
-					Element title = document.createElement("Title");
-					title.appendChild(document.createTextNode(features.get(i).getTitle()));
-					Element featureAbstract = document.createElement("Abstract");
-					featureAbstract.appendChild(document.createTextNode(features.get(i).getFeatureAbstract()));
-					Element keywords = document.createElement("Keywords");
-					keywords.appendChild(document.createTextNode(features.get(i).getKeywords()));
-					Element SRS = document.createElement("SRS");
-					SRS.appendChild(document.createTextNode(features.get(i).getCRS()));
+					Element nameElement = document.createElement("Name");
+					nameElement.appendChild(document.createTextNode(modelFeatures.shortForm(features.get(i).getName())));
+					Element titleElement = document.createElement("Title");
+					titleElement.appendChild(document.createTextNode(features.get(i).getTitle()));
+					Element featureAbstractElement = document.createElement("Abstract");
+					featureAbstractElement.appendChild(document.createTextNode(features.get(i).getFeatureAbstract()));
+					Element keywordsElement = document.createElement("Keywords");
+					keywordsElement.appendChild(document.createTextNode(features.get(i).getKeywords()));
+					Element crsElement = document.createElement("SRS");
+					crsElement.appendChild(document.createTextNode(features.get(i).getCRS()));
 
-					Element BBOX = document.createElement("LatLongBoundingBox");
-					BBOX.setAttribute("maxy", "83.6274");
-					BBOX.setAttribute("maxx", "-180");
-					BBOX.setAttribute("miny", "-90");
-					BBOX.setAttribute("minx", "180");
+					Element bboxElement = document.createElement("LatLongBoundingBox");
+					bboxElement.setAttribute("maxy", "83.6274");
+					bboxElement.setAttribute("maxx", "-180");
+					bboxElement.setAttribute("miny", "-90");
+					bboxElement.setAttribute("minx", "180");
 
-					Element p = document.createElement("FeatureType");
-					p.appendChild(name);
-					p.appendChild(title);
-					p.appendChild(featureAbstract);
-					p.appendChild(keywords);
-					p.appendChild(SRS);
-					p.appendChild(BBOX);
+					Element featureElement = document.createElement("FeatureType");
+					featureElement.appendChild(nameElement);
+					featureElement.appendChild(titleElement);
+					featureElement.appendChild(featureAbstractElement);
+					featureElement.appendChild(keywordsElement);
+					featureElement.appendChild(crsElement);
+					featureElement.appendChild(bboxElement);
 
-					myNodeList.item(1).getParentNode().insertBefore(p, myNodeList.item(1));
+					nodeList.item(1).getParentNode().insertBefore(featureElement, nodeList.item(1));
 
 				}
 
@@ -190,7 +195,6 @@ public class FactoryWFS {
 		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
 
 		return resultCapabilities;
-
 
 
 	}
@@ -275,11 +279,7 @@ public class FactoryWFS {
 	}
 
 
-
-
-
-
-	//TODO implement a return type for generateLayersPrefixes(). Put value direct in a variable isn't recommended. 
+	//TODO implement a return type for generateLayersPrefixes(). Put a value direct in a variable isn't recommended. 
 	private void generateLayersPrefixes(ArrayList<WFSFeature> features){
 
 		Pattern pattern = Pattern.compile("[^a-z0-9A-Z_]");
@@ -298,10 +298,10 @@ public class FactoryWFS {
 
 				boolean finder = matcher.find();
 
-				if (finder==true) {
+				if (finder == true) {
 
 					position = size;
-					scape=true;
+					scape = true;
 
 				}
 
@@ -313,7 +313,7 @@ public class FactoryWFS {
 			if(features.get(i).isSOLRFeature()){
 
 				modelFeatures.setNsPrefix(GlobalSettings.getSOLRPrefix(), features.get(i).getName().substring(0, position+1) );
-				//System.out.println(features.get(i).getName().substring(0, position+1));
+
 			}
 
 			if (modelFeatures.getNsURIPrefix(features.get(i).getName().substring(0, position+1))==null) {
@@ -327,7 +327,6 @@ public class FactoryWFS {
 					modelFeatures.setNsPrefix(GlobalSettings.getSDAPrefix() + modelFeatures.getNsPrefixMap().size(), features.get(i).getName().substring(0, position+1) );
 
 				}
-
 
 			}
 
@@ -345,6 +344,7 @@ public class FactoryWFS {
 		for (int i = 0; i < fdaFeatureList.size(); i++) {
 
 			if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+
 				result = true; 
 				feature.setQuery(fdaFeatureList.get(i).getQuery());
 				feature.setGeometryVariable(fdaFeatureList.get(i).getGeometryVariable());
