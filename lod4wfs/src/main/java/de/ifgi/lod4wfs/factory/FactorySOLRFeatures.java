@@ -4,14 +4,15 @@ import it.cutruzzula.lwkt.WKTParser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.client.solrj.request.LukeRequest;
+import org.apache.solr.client.solrj.response.LukeResponse;
+import org.apache.solr.client.solrj.response.LukeResponse.FieldInfo;
 import org.apache.solr.common.SolrDocumentList;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -34,8 +35,8 @@ public class FactorySOLRFeatures {
 
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 
-		logger.info("Listing features from the direcoty [application root]/" + GlobalSettings.getFeatureDirectory() + " ...");
-		
+		logger.info("Listing features from the direcoty " + System.getProperty("user.dir") + "/" + GlobalSettings.getFeatureDirectory() + " ...");
+
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
 
 		for (File file : files) {
@@ -55,7 +56,7 @@ public class FactorySOLRFeatures {
 		}
 
 		logger.info("Total SOLR Features: " + result.size());
-		
+
 		return result;
 	}
 
@@ -80,24 +81,24 @@ public class FactorySOLRFeatures {
 			feature.setLimit(jObject.get("limit").getAsInt());
 			feature.setFields(jObject.get("fields").getAsString());
 			feature.setSOLRFilter(jObject.get("filter").getAsString());
-			
+
 			JsonElement elem = jObject.get("spatialFilter");
 			feature.setSOLRSpatialConstraint(elem.getAsJsonObject().get("spatialConstraint").getAsString());
 			feature.setSOLRGeometryField(elem.getAsJsonObject().get("geometryField").getAsString());				
 
-			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
-			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
-			
+			feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
+			feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
+
 			if(jObject.get("crs").getAsString().equals("")){
-				
+
 				feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
-				
+
 			} else {
-				
+
 				feature.setDefaultCRS(jObject.get("crs").getAsString());
-				
+
 			}
-			
+
 			feature.setFileName(fileName);
 			feature.setAsSOLRFeature(true);
 
@@ -171,37 +172,79 @@ public class FactorySOLRFeatures {
 		ArrayList<SOLRRecord> result = new ArrayList<SOLRRecord>();		
 
 		HttpSolrServer solr = new HttpSolrServer(feature.getEndpoint());
-		SolrQuery query = new SolrQuery();
 
 		try {
 
-			
 			/**
-			 * Where "*" means all fields.
+			 *  "*" means all fields.
 			 */
 			if (feature.getFields().equals("*")){
 
-				query.setStart(0);    
-				query.setRows(1);			
-				query.addFilterQuery(feature.getSOLRGeometryField() + ":\"" + feature.getSOLRSpatialConstraint() + "\"");
-			
-				query.setQuery(feature.getFields());
-								
-				QueryResponse response = solr.query(query);
-				SolrDocumentList results = response.getResults();
-				
-				List<String> fieldsList = Arrays.asList(results.get(0).getFieldNames().toString().split(","));
 
-				for (int i = 0; i < fieldsList.size(); i++) {
+				LukeRequest lukeRequest = new LukeRequest();
+				lukeRequest.setNumTerms(1);
+				LukeResponse lukeResponse;
+
+
+				lukeResponse = lukeRequest.process(solr);
+
+				List<FieldInfo> sorted = new ArrayList<FieldInfo>(lukeResponse.getFieldInfo().values());
+				
+				for (FieldInfo infoEntry : sorted) {
 
 					SOLRRecord record = new SOLRRecord();
-
-					/**
-					 * Removing the [ and ] from the fields string.  
-					 */
-					record.setName(fieldsList.get(i).toString().replace("[", "").replace("]", "").trim());
-					record.setType(GlobalSettings.getDefaultStringType());
-
+					
+					record.setName(infoEntry.getName());
+					
+					if(infoEntry.getName().equals(feature.getGeometryVariable())){
+						
+						//TODO: Hard-coded geometry type!
+						// record.setType(this.getSOLRGeometryType(feature));
+												
+						record.setType("gml:MultiPolygonPropertyType");
+						
+						
+					} else {
+					
+						
+						if(infoEntry.getType().equals("long")){
+							
+							record.setType(GlobalSettings.getDefaultLongType());
+							
+						} else if(infoEntry.getType().equals("text_general")){
+							
+							record.setType(GlobalSettings.getDefaultStringType());
+							
+						}  else if(infoEntry.getType().equals("location_rpt")){
+							
+							record.setType(GlobalSettings.getDefaultStringType());
+							
+						} else if(infoEntry.getType().equals("string")){
+							
+							record.setType(GlobalSettings.getDefaultStringType());
+							
+						} else if(infoEntry.getType().equals("date")){
+							
+							record.setType(GlobalSettings.getDefaultStringType());
+							
+						} else if(infoEntry.getType().equals("float")){
+							
+							record.setType(GlobalSettings.getDefaultFloatType());
+							
+						} else if(infoEntry.getType().equals("int")){
+							
+							record.setType(GlobalSettings.getDefaultIntegerType());
+							
+						} else {
+							
+							record.setType(GlobalSettings.getDefaultStringType());
+							
+							logger.warn("Unpexpected data type for SOLR Feature [" + feature.getName() + "] The field \"" + infoEntry.getName()  + "\" has the data type \"" + infoEntry.getType() + "\"");
+							
+						}
+							
+					}
+					
 					result.add(record);
 
 				}
@@ -216,7 +259,7 @@ public class FactorySOLRFeatures {
 				geometryField.setType(this.getSOLRGeometryType(feature));
 				geometryField.setName(feature.getSOLRGeometryField());			
 				result.add(geometryField);
-				
+
 				for (int i = 0; i < fields.length; i++) {
 
 					SOLRRecord record = new SOLRRecord();
@@ -226,13 +269,13 @@ public class FactorySOLRFeatures {
 
 					result.add(record);
 
-
 				}
+				
 			}
 
-
-
 		} catch (SolrServerException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}	
 
@@ -244,23 +287,23 @@ public class FactorySOLRFeatures {
 	public String getSOLRGeometryType(WFSFeature feature){
 
 		logger.info("Getting geometry type for the SOLR-Based feature [" + feature.getName() + "] ...");
-		
+
 		String result = new String();
 		int tmpLimit = feature.getLimit();
 		feature.setLimit(1);
-		
+
 		SOLRConnector solrConnector = new SOLRConnector();
 		SolrDocumentList rs = solrConnector.executeQuery(feature);
-		
+
 		for (int i = 0; i < rs.size(); i++) {
-			
+
 			result = Utils.getGeometryType(rs.get(i).getFieldValue(feature.getGeometryVariable()).toString());
-			
+
 		}
-		
+
 		feature.setLimit(tmpLimit);
-		
-		
+
+
 		return result;
 
 	}

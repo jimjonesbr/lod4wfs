@@ -1,0 +1,17 @@
+{
+    "name": "http://solr.lod4wfs.de/biothesaurus",
+    "title": "ubsvirt112 > Bio-Thesaurus: Records within Europe",
+    "abstract": "Bio-Thesaurus: Records within Europe (All fields)",
+    "keywords": "solr, spatial-query, bio-thesaurus",
+    "geometryVariable": "placeOfBirth_geom",
+    "crs": "EPSG:4326",
+    "endpoint": "http://ubsvirt112.uni-muenster.de:8181/solr/gnd",
+    "order": "*",
+    "limit": 50000,
+    "fields": "*",
+    "filter": "*",
+    "spatialFilter": {
+        "geometryField": "*",
+        "spatialConstraint": "*"
+    }
+}

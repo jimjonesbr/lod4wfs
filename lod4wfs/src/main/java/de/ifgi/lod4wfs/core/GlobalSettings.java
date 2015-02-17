@@ -15,19 +15,19 @@ public class GlobalSettings {
 	private static String defaultCRS = "";
 	private static String defaultSPARQLEndpoint= "";
 
-	public static String defaultLowerCorner = "-180.0 -78.11";
-	public static String defaultUpperCorner = "180.0 83.57";	
-	public static String defaultLiteralType = "xsd:string";	
-	public static String defaultDecimalType = "";
-	public static String defaultIntegerType = "";
-	public static String defaultStringType = "";
-	public static String defaultLongType = "";
-	public static String defaultDateType = "";
-	public static String defaultWKTType = "";
-	public static String defaultByteType = "";
-	public static String defaultFloatType = "";
-	public static String xsdNameSpace = "";
-	public static String startupTime = "";
+	private static String defaultLowerCorner = "-180.0 -78.11";
+	private static String defaultUpperCorner = "180.0 83.57";	
+	private static String defaultLiteralType = "xsd:string";	
+	private static String defaultDecimalType = "";
+	private static String defaultIntegerType = "";
+	private static String defaultStringType = "";
+	private static String defaultLongType = "";
+	private static String defaultDateType = "";
+	private static String defaultWKTType = "";
+	private static String defaultByteType = "";
+	private static String defaultFloatType = "";
+	private static String xsdNameSpace = "";
+	private static String startupTime = "";
 	//TODO Fix bounding box in the Capabilities Document!
 	
 	private static String defaultServiceName = "";
@@ -51,13 +51,39 @@ public class GlobalSettings {
     private static boolean solrEnable = false;
     
     
+        
     
-    public static String getDefaultServiceName() {
+	public static String getStartupTime() {
+		return startupTime;
+	}
+
+
+	public static void setStartupTime(String startupTime) {
+		GlobalSettings.startupTime = startupTime;
+	}
+
+
+	public static String getDefaultLowerCorner() {
+		return defaultLowerCorner;
+	}
+
+
+	public static String getDefaultUpperCorner() {
+		return defaultUpperCorner;
+	}
+
+
+	public static String getDefaultLiteralType() {
+		return defaultLiteralType;
+	}
+
+
+	public static String getDefaultServiceName() {
 		return defaultServiceName;
 	}
 
 
-	public static String getCrlf() {
+	public static String getCrLf() {
 		return crlf;
 	}
 
@@ -83,15 +109,15 @@ public class GlobalSettings {
 		GlobalSettings.defaultPort = defaultPort;
 	}
 
-	public static boolean isSdaEnable() {
+	public static boolean isSdaEnabled() {
 		return sdaEnable;
 	}
 
-	public static boolean isFdaEnable() {
+	public static boolean isFdaEnabled() {
 		return fdaEnable;
 	}
 
-	public static boolean isSolrEnable() {
+	public static boolean isSolrEnabled() {
 		return solrEnable;
 	}
 

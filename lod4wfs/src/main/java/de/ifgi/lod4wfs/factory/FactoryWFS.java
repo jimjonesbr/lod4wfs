@@ -72,7 +72,7 @@ public class FactoryWFS {
 		
 		GlobalSettings.refreshSystemVariables();
 
-		if(GlobalSettings.isSolrEnable()){
+		if(GlobalSettings.isSolrEnabled()){
 
 			solrFeatureList = factorySOLR.listSOLRFeatures();
 
@@ -86,7 +86,7 @@ public class FactoryWFS {
 			
 		}
 
-		if(GlobalSettings.isFdaEnable()){
+		if(GlobalSettings.isFdaEnabled()){
 
 			fdaFeatureList = factoryFDA.listFDAFeatures();
 
@@ -100,7 +100,7 @@ public class FactoryWFS {
 			
 		}
 
-		if(GlobalSettings.isSdaEnable()){
+		if(GlobalSettings.isSdaEnabled()){
 
 			sdaFeatureList = factorySDA.listSDAFeatures();
 
@@ -205,7 +205,7 @@ public class FactoryWFS {
 
 		String describeFeatureTypeResponse = new String(); 
 
-		if(GlobalSettings.isSolrEnable()){
+		if(GlobalSettings.isSolrEnabled()){
 
 			if(this.isSOLRFeature(feature)){
 
@@ -214,7 +214,7 @@ public class FactoryWFS {
 
 		} 
 		
-		if(GlobalSettings.isFdaEnable()){
+		if(GlobalSettings.isFdaEnabled()){
 
 			if(this.isFDAFeature(feature)){
 
@@ -224,7 +224,7 @@ public class FactoryWFS {
 
 		} 
 		
-		if(GlobalSettings.isSdaEnable()){
+		if(GlobalSettings.isSdaEnabled()){
 
 			if(this.isSDAFeature(feature)){
 
@@ -245,7 +245,7 @@ public class FactoryWFS {
 		String getFeatureResponse = new String(); 
 
 
-		if(GlobalSettings.isSolrEnable()){
+		if(GlobalSettings.isSolrEnabled()){
 
 			if(this.isSOLRFeature(feature)){
 
@@ -255,7 +255,7 @@ public class FactoryWFS {
 
 		} 
 
-		if (GlobalSettings.isFdaEnable()) {
+		if (GlobalSettings.isFdaEnabled()) {
 
 			if(this.isFDAFeature(feature)){
 
@@ -265,7 +265,7 @@ public class FactoryWFS {
 
 		} 
 
-		if(GlobalSettings.isSdaEnable()){
+		if(GlobalSettings.isSdaEnabled()){
 
 
 			if(this.isSDAFeature(feature)){
@@ -316,7 +316,7 @@ public class FactoryWFS {
 
 			}
 
-			if (modelFeatures.getNsURIPrefix(features.get(i).getName().substring(0, position+1))==null) {
+			if (modelFeatures.getNsURIPrefix(features.get(i).getName().substring(0, position + 1)) == null) {
 
 				if (features.get(i).isFDAFeature()){
 
@@ -324,7 +324,7 @@ public class FactoryWFS {
 
 				} else {
 
-					modelFeatures.setNsPrefix(GlobalSettings.getSDAPrefix() + modelFeatures.getNsPrefixMap().size(), features.get(i).getName().substring(0, position+1) );
+					modelFeatures.setNsPrefix(GlobalSettings.getSDAPrefix() + modelFeatures.getNsPrefixMap().size(), features.get(i).getName().substring(0, position + 1) );
 
 				}
 

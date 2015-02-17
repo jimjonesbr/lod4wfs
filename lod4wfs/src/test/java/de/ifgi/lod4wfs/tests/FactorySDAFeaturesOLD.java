@@ -83,8 +83,8 @@ public class FactorySDAFeaturesOLD {
 			feature.setTitle(soln.getLiteral("?title").getValue().toString());
 			feature.setFeatureAbstract(soln.getLiteral("?abstract").getValue().toString());
 			feature.setKeywords(soln.getLiteral("?keywords").getValue().toString());
-			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
-			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
+			feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
+			feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
 			feature.setAsFDAFeature(false);
 			
 			CRS = soln.get("?wkt").toString();
@@ -391,7 +391,7 @@ public class FactorySDAFeaturesOLD {
 			
 			if (soln.get("?dataType")==null) {
 
-				triple.setObjectDataType(GlobalSettings.defaultLiteralType);
+				triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
 
 			} else {
 
@@ -634,8 +634,8 @@ public class FactorySDAFeaturesOLD {
 				SPARQL_Variable = SPARQL_Variable + i;
 			}
 			
-			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.getCrlf() ;
-			whereClause = whereClause + "	?feature <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.getCrlf() ; 
+			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.getCrLf() ;
+			whereClause = whereClause + "	?feature <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.getCrLf() ; 
 
 			
 			variables.add(SPARQL_Variable);
@@ -643,15 +643,15 @@ public class FactorySDAFeaturesOLD {
 
 		String SPARQL = new String();
 
-		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.getCrlf() ;
+		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.getCrLf() ;
 		
-		SPARQL = " SELECT ?geometry " + GlobalSettings.getCrlf() + selectClause +
+		SPARQL = " SELECT ?geometry " + GlobalSettings.getCrLf() + selectClause +
 				 //" WHERE { GRAPH <"+ modelFeatures.expandPrefix(feature.getName()) + "> {" + GlobalSettings.getCrlf() +
-				" WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.getCrlf() +
-				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.getCrlf() +
-				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.getCrlf() +
-				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.getCrlf() + 
-				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.getCrlf() +
+				" WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.getCrLf() +
+				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.getCrLf() +
+				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.getCrLf() +
+				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.getCrLf() + 
+				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.getCrLf() +
 				 whereClause + " }}";
 
 		return SPARQL;

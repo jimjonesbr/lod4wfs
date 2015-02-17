@@ -47,8 +47,8 @@ public class FactorySDAFeatures {
 			feature.setTitle(soln.getLiteral("?title").getValue().toString());
 			feature.setFeatureAbstract(soln.getLiteral("?abstract").getValue().toString());
 			feature.setKeywords(soln.getLiteral("?keywords").getValue().toString());
-			feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
-			feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
+			feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
+			feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
 			feature.setAsSDAFeature(true);
 			
 			
@@ -95,7 +95,7 @@ public class FactorySDAFeatures {
 			
 			if (soln.get("?dataType")==null) {
 
-				triple.setObjectDataType(GlobalSettings.defaultLiteralType);
+				triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
 
 			} else {
 
@@ -122,28 +122,32 @@ public class FactorySDAFeatures {
 			String SPARQL_Variable = new String();
 			SPARQL_Variable = this.removePredicateURL(predicates.get(i).getPredicate());
 			
-			//Check if more than one variable with the same name is generated.
+			/**
+			 * Checks if more than one variable with the same name is generated.
+			 */
 			if(variables.contains(SPARQL_Variable)){
+				
 				SPARQL_Variable = SPARQL_Variable + i;
+				
 			}
 			
-			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.getCrlf() ;
-			whereClause = whereClause + "	?feature <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.getCrlf() ; 
-
+			selectClause = selectClause + "	?" + SPARQL_Variable + 	GlobalSettings.getCrLf() ;
+			whereClause = whereClause + "	?feature <" + predicates.get(i).getPredicate() + "> ?" + SPARQL_Variable +" ." + GlobalSettings.getCrLf() ; 
 			
 			variables.add(SPARQL_Variable);
+			
 		}
 
 		String SPARQL = new String();
 
-		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.getCrlf() ;
+		selectClause = selectClause +" ?"+ GlobalSettings.getGeometryVariable() + GlobalSettings.getCrLf() ;
 		
-		SPARQL = " SELECT ?geometry " + GlobalSettings.getCrlf() + selectClause +
-				" WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.getCrlf() +
-				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.getCrlf() +
-				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.getCrlf() +
-				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.getCrlf() + 
-				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.getCrlf() +
+		SPARQL = " SELECT ?geometry " + GlobalSettings.getCrLf() + selectClause +
+				 " WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.getCrLf() +
+				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.getCrLf() +
+				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.getCrLf() +
+				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.getCrLf() + 
+				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.getCrLf() +
 				 whereClause + " }}";
 
 		return SPARQL;
@@ -172,6 +176,7 @@ public class FactorySDAFeatures {
 
 			QuerySolution soln = rs.nextSolution();					
 			geometryCoordinates = soln.getLiteral("?geometryLiteral").getString();
+			
 		}
 
 		try {

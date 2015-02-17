@@ -46,7 +46,7 @@ public class Start{
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date date = new Date();
-		GlobalSettings.startupTime = dateFormat.format(date);
+		GlobalSettings.setStartupTime(dateFormat.format(date));
 
 		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 		context.setContextPath("/"+GlobalSettings.getDefaultServiceName());
@@ -63,7 +63,7 @@ public class Start{
         webAppContext.setResourceBase("jsp/");
         webAppContext.setContextPath("/");
 		
-//***************
+//*******************
 		
 		ContextHandler contextGUI = new ContextHandler("/admin");
 	    contextGUI.setHandler(new HandlerGUI("Bonjoir"));
@@ -73,20 +73,20 @@ public class Start{
         
         server.setHandler(contexts);	
         
-//*******************		
+//*******************
 		
 		Facade.getInstance().getCapabilities("1.0.0");
 		
 		server.start();
 			
-		System.out.println(GlobalSettings.getCrlf() +
-				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4 " + GlobalSettings.getCrlf() +
-				"Institut für Geoinformatik | Universitäts- und Landesbibliothek " + GlobalSettings.getCrlf() +
-				"Westfälische Wilhelms-Universität Münster" + GlobalSettings.getCrlf() +
-				"http://www.uni-muenster.de/" + GlobalSettings.getCrlf() + GlobalSettings.getCrlf() +
+		System.out.println(GlobalSettings.getCrLf() +
+				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4 " + GlobalSettings.getCrLf() +
+				"Institut für Geoinformatik | Universitäts- und Landesbibliothek " + GlobalSettings.getCrLf() +
+				"Westfälische Wilhelms-Universität Münster" + GlobalSettings.getCrLf() +
+				"http://www.uni-muenster.de/" + GlobalSettings.getCrLf() + GlobalSettings.getCrLf() +
 				
-				"Startup time: " + GlobalSettings.startupTime + GlobalSettings.getCrlf() +
-				"Port: " + GlobalSettings.getDefaultPort() + GlobalSettings.getCrlf());
+				"Startup time: " + GlobalSettings.getStartupTime() + GlobalSettings.getCrLf() +
+				"Port: " + GlobalSettings.getDefaultPort() + GlobalSettings.getCrLf());
 		
 		server.join();
 

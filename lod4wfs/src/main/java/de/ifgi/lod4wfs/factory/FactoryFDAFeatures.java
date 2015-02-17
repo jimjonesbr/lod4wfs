@@ -40,7 +40,7 @@ public class FactoryFDAFeatures {
 
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
                 
-		logger.info("Listing features from the direcoty [application root]/" + GlobalSettings.getFeatureDirectory() + " ...");
+		logger.info("Listing features from the direcoty " + System.getProperty("user.dir") + "/" + GlobalSettings.getFeatureDirectory() + " ...");
 		
 		for (File file : files) {
 
@@ -62,6 +62,7 @@ public class FactoryFDAFeatures {
 		logger.info("Total FDA Features: " + result.size());
 		
 		return result;
+		
 	}
 
 	public static boolean existsFeature(String featureName){
@@ -75,7 +76,7 @@ public class FactoryFDAFeatures {
 
 				try {
 
-					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory()+file.getName());
+					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory() + file.getName());
 					JsonReader jsonReader = new JsonReader(fileReader);
 					jsonReader.setLenient(true);
 					jsonReader.beginObject();
@@ -142,7 +143,6 @@ public class FactoryFDAFeatures {
 			result = false;
 		}
 
-
 		return result;
 
 	}
@@ -162,7 +162,9 @@ public class FactoryFDAFeatures {
 
 			}
 		} catch (Exception e) {
-			System.out.println("Invalid variable given.");
+			
+			logger.error("Invalid variable given.");
+			
 		}
 
 		return result;
@@ -182,13 +184,13 @@ public class FactoryFDAFeatures {
 			//TODO: Implement function to validate Endpoint
 			if (responseCode == 404) {
 				
-				logger.info("URL cannot be resolved -> " + endpoint);
-				//result = false;
+				logger.error("URL cannot be resolved -> " + endpoint);
+
 			}
 			
 		} catch (MalformedURLException e) {
 			result = false;
-			System.out.println("Malformed URL. " + endpoint);
+			System.out.println("Malformed URL -> " + endpoint);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
@@ -245,7 +247,7 @@ public class FactoryFDAFeatures {
 
 				try {
 
-					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory()+file.getName());
+					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory() + file.getName());
 					JsonReader jsonReader = new JsonReader(fileReader);
 					jsonReader.setLenient(true);
 					jsonReader.beginObject();
@@ -253,8 +255,7 @@ public class FactoryFDAFeatures {
 					if(file.getName().endsWith(fileName)){
 						
 						while (jsonReader.hasNext()) {
-							
-							
+														
 							while (jsonReader.hasNext()) {
 
 								String name = jsonReader.nextName();
@@ -299,8 +300,8 @@ public class FactoryFDAFeatures {
 
 								}
 
-								feature.setLowerCorner(GlobalSettings.defaultLowerCorner);
-								feature.setUpperCorner(GlobalSettings.defaultUpperCorner);
+								feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
+								feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
 								feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
 								feature.setAsFDAFeature(true);
 								feature.setFileName(file.getName());
@@ -318,7 +319,7 @@ public class FactoryFDAFeatures {
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
-					logger.error("Error when parsing " + file.getName() + ".");
+					logger.error("Error parsing " + file.getName() + ".");
 					logger.error(e.toString());
 					e.printStackTrace();
 
@@ -345,8 +346,9 @@ public class FactoryFDAFeatures {
 		Query query = QueryFactory.create(feature.getQuery());
 		
 		for (int i = 0; i < query.getResultVars().size(); i++) {	
+			
 			Triple triple = new Triple();
-			triple.setObjectDataType(GlobalSettings.defaultLiteralType);
+			triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
 			triple.setPredicate(query.getResultVars().get(i).toString());
 			result.add(triple);
 		

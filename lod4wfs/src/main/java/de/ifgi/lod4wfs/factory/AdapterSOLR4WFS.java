@@ -95,7 +95,7 @@ public class AdapterSOLR4WFS {
 			requestElement.setAttribute("targetNamespace", FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(layerPrefix));
 
 			for (Map.Entry<String, String> entry : FactoryWFS.getInstance().getLoadedModelFeature().getNsPrefixMap().entrySet())
-				
+
 			{
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 
@@ -113,7 +113,7 @@ public class AdapterSOLR4WFS {
 				if(fields.get(i).getName().equals(feature.getSOLRGeometryField())){
 
 					sequence.setAttribute("type",factorySOLR.getSOLRGeometryType(feature));
-										
+
 				} else {
 					sequence.setAttribute("type",fields.get(i).getType());
 				}
@@ -211,23 +211,32 @@ public class AdapterSOLR4WFS {
 					if(fields.get(j).getName().equals(feature.getGeometryVariable())){														
 
 
-						String wkt = new String();
-						wkt = rs.get(i).getFieldValue(feature.getGeometryVariable()).toString().replace("[", "").replace("]", "");
 
-						if (Utils.isWKT(wkt)){
+						if(rs.get(i).getFieldValue(feature.getGeometryVariable()) == null){
 
-							String gml = Utils.convertWKTtoGML(wkt);
-
-							Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
-							Node dup = document.importNode(GMLnode, true);
-							elementGeometryPredicate.appendChild(dup);						
-							rootGeometry.appendChild(elementGeometryPredicate);												
-							currentGeometryElement.appendChild(elementGeometryPredicate);						
-							rootGeometry.appendChild(currentGeometryElement);					
+							logger.error("Record skipped. No WKT geometry for the SOLR Feature [" + feature.getName() + "]");
 
 						} else {
 
-							logger.error("Record skipped. Invalid WKT geometry for [" + feature.getName() + "]: " + wkt);
+							String wkt = new String();
+							wkt = rs.get(i).getFieldValue(feature.getGeometryVariable()).toString();
+							wkt = wkt.replace("[", "").replace("]", "");
+							if (Utils.isWKT(wkt)){
+
+								String gml = Utils.convertWKTtoGML(wkt);
+
+								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
+								Node dup = document.importNode(GMLnode, true);
+								elementGeometryPredicate.appendChild(dup);						
+								rootGeometry.appendChild(elementGeometryPredicate);												
+								currentGeometryElement.appendChild(elementGeometryPredicate);						
+								rootGeometry.appendChild(currentGeometryElement);					
+
+							} else {
+
+								logger.error("Record skipped. Invalid WKT geometry for [" + feature.getName() + "]: " + wkt);
+							}
+
 						}
 
 					} else {
@@ -284,13 +293,13 @@ public class AdapterSOLR4WFS {
 
 
 	public String getSOLRGeometryType(WFSFeature feature){
-		
+
 		feature.setLimit(1);
-		
-		
-		
+
+
+
 		return null;
-		
+
 	}
 }
 

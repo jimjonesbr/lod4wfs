@@ -33,21 +33,27 @@ public class SOLRConnector {
 
 		try {
 			
-			logger.info("Performing query for the SOLR Feature [" + feature.getName() + "]:" + GlobalSettings.getCrlf() + GlobalSettings.getCrlf() + 
-					"Title: " + feature.getTitle() + GlobalSettings.getCrlf() +
-					"Endpoint: " + feature.getEndpoint() + GlobalSettings.getCrlf() +					
-					"Spatial Constraint: \"" + feature.getSOLRGeometryField()+ ":" + feature.getSOLRSpatialConstraint() + "\"" + GlobalSettings.getCrlf() +
-					"Filter: " + feature.getSOLRFilter() + GlobalSettings.getCrlf() + 
-					"Fields: " + feature.getFields() + GlobalSettings.getCrlf() +
-					"Sorting: " + feature.getSOLRSorting() + GlobalSettings.getCrlf() +
-					"Limit: " + feature.getLimit() + GlobalSettings.getCrlf() 
+			logger.info("Performing query for the SOLR Feature [" + feature.getName() + "]:" + GlobalSettings.getCrLf() + GlobalSettings.getCrLf() + 
+					"Title: " + feature.getTitle() + GlobalSettings.getCrLf() +
+					"Endpoint: " + feature.getEndpoint() + GlobalSettings.getCrLf() +					
+					"Spatial Constraint: \"" + feature.getSOLRGeometryField()+ ":" + feature.getSOLRSpatialConstraint() + "\"" + GlobalSettings.getCrLf() +
+					"Filter: " + feature.getSOLRFilter() + GlobalSettings.getCrLf() + 
+					"Fields: " + feature.getFields() + GlobalSettings.getCrLf() +
+					"Sorting: " + feature.getSOLRSorting() + GlobalSettings.getCrLf() +
+					"Limit: " + feature.getLimit() + GlobalSettings.getCrLf() 
+					
 					);
 			
 			query.setStart(0);    
-			query.setRows(feature.getLimit());			
-			query.addFilterQuery(feature.getSOLRGeometryField()+ ":\"" + feature.getSOLRSpatialConstraint() + "\"");
+			query.setRows(feature.getLimit());
 			
-			if(!feature.getSOLRSorting().trim().equals("")){
+			if(!feature.getSOLRSpatialConstraint().trim().equals("*") || !feature.getSOLRGeometryField().trim().equals("*") ){
+			
+				query.addFilterQuery(feature.getSOLRGeometryField()+ ":\"" + feature.getSOLRSpatialConstraint() + "\"");
+				
+			}
+			
+			if(!feature.getSOLRSorting().trim().equals("*")){
 				
 				ORDER order = null;
 				boolean valid = true;
@@ -74,7 +80,7 @@ public class SOLRConnector {
 
 			}
 			
-			if(!feature.getSOLRFilter().equals("")){
+			if(!feature.getSOLRFilter().equals("*")){
 			
 				String[] filter = new String[feature.getSOLRFilter().split(",").length];
 				filter = feature.getSOLRFilter().split(",");
@@ -101,7 +107,7 @@ public class SOLRConnector {
 
 			} else {
 
-				query.setQuery("*");
+				query.setQuery("*:*");
 
 			}
 
@@ -111,7 +117,7 @@ public class SOLRConnector {
 			
 		
 		} catch (SolrServerException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
