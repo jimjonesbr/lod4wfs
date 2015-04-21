@@ -52,101 +52,8 @@ public class AdapterLOD4WFS {
 		return instance;
 	}
 
-	//	public String getCapabilities(String version){
-	//
-	//		String resultCapabilities = new String();
-	//
-	//		ArrayList<WFSFeature> features = new ArrayList<WFSFeature>(); 
-	//		features = this.listFeatures();
-	//		this.generateLayersPrefixes(features);
-	//		
-	//		try {
-	//
-	//			DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-	//			DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-	//
-	//			if (version.equals("1.0.0")) {
-	//
-	//				Document document = documentBuilder.parse("wfs/CapabilitiesDocument_100.xml");		
-	//
-	//				 /**
-	//				  * Iterates through the layers' model and creates NameSpaces' entries with the layers prefixes.
-	//				  */
-	//
-	//				Element requestElement = document.getDocumentElement(); 
-	//								
-	//				for (Map.Entry<String, String> entry : modelFeatures.getNsPrefixMap().entrySet())
-	//				{
-	//					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
-	//				}
-	//				
-	//				logger.info("Creating Capabilities Document of " + Utils.getCanonicalHostName() + ":" + GlobalSettings.defaultPort + "/" + GlobalSettings.defaultServiceName + "/wfs ...");
-	//
-	//				XPath xpath = XPathFactory.newInstance().newXPath();
-	//				NodeList myNodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
-	//
-	//				/**
-	//				 * Adding LOD features (SDA and FDA) in the Capabilities Document. 
-	//				 */
-	//				for (int i = 0; i < features.size(); i++) {
-	//								
-	//					Element name = document.createElement("Name");
-	//					name.appendChild(document.createTextNode(modelFeatures.shortForm(features.get(i).getName())));
-	//					Element title = document.createElement("Title");
-	//					title.appendChild(document.createTextNode(features.get(i).getTitle()));
-	//					Element featureAbstract = document.createElement("Abstract");
-	//					featureAbstract.appendChild(document.createTextNode(features.get(i).getFeatureAbstract()));
-	//					Element keywords = document.createElement("Keywords");
-	//					keywords.appendChild(document.createTextNode(features.get(i).getKeywords()));
-	//					Element SRS = document.createElement("SRS");
-	//					SRS.appendChild(document.createTextNode(features.get(i).getCRS()));
-	//					
-	//					Element BBOX = document.createElement("LatLongBoundingBox");
-	//					BBOX.setAttribute("maxy", "83.6274");
-	//					BBOX.setAttribute("maxx", "-180");
-	//					BBOX.setAttribute("miny", "-90");
-	//					BBOX.setAttribute("minx", "180");
-	//					
-	//					Element p = document.createElement("FeatureType");
-	//					p.appendChild(name);
-	//					p.appendChild(title);
-	//					p.appendChild(featureAbstract);
-	//					p.appendChild(keywords);
-	//					p.appendChild(SRS);
-	//					p.appendChild(BBOX);
-	//			        
-	//					myNodeList.item(1).getParentNode().insertBefore(p, myNodeList.item(1));
-	//										
-	//				}
-	//									        
-	//				resultCapabilities = this.printXMLDocument(document);
-	//			}
-	//
-	//
-	//		} catch (IOException e) {
-	//			e.printStackTrace();
-	//		} catch (ParserConfigurationException e) {
-	//			e.printStackTrace();
-	//		} catch (SAXException e) {
-	//			e.printStackTrace();
-	//		} catch (XPathExpressionException e) {
-	//			e.printStackTrace();
-	//		} 
-	//		
-	//		resultCapabilities = resultCapabilities.replace("PARAM_PORT", Integer.toString(GlobalSettings.defaultPort));
-	//		resultCapabilities = resultCapabilities.replace("PARAM_HOST", Utils.getCanonicalHostName());
-	//		resultCapabilities = resultCapabilities.replace("PARAM_SERVICE", GlobalSettings.defaultServiceName);
-	//		
-	//		return resultCapabilities;
-	//
-	//
-	//		
-	//	}
-	//	
+
 	public String describeFeatureType(WFSFeature feature){
-
-
-		//boolean isFDA = isFDAFeature(feature);
 
 		String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));	
 
@@ -183,7 +90,7 @@ public class AdapterLOD4WFS {
 			NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
 
 			String layerPrefix = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));	
-			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":")+1);			
+			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":") + 1);			
 
 			Element requestElement = document.getDocumentElement(); 						
 			requestElement.setAttribute("targetNamespace", FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(layerPrefix));	
@@ -363,7 +270,7 @@ public class AdapterLOD4WFS {
 								//TODO: Check if literal is already GML
 
 								String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
-
+																
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 								Node dup = document.importNode(GMLnode, true);
 								elementGeometryPredicate.appendChild(dup);						

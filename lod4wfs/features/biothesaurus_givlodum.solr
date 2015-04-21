@@ -1,0 +1,17 @@
+{
+    "name": "http://solr.lod4wfs.de/biothesaurus_givlodum",
+    "title": "giv-lodum > Bio-Thesaurus: Records within Europe",
+    "abstract": "Bio-Thesaurus: Records within Europe (All fields)",
+    "keywords": "solr, spatial-query, bio-thesaurus",
+    "geometryVariable": "placeOfBirth_geom",
+    "crs": "EPSG:4326",
+    "endpoint": "http://giv-lodum.uni-muenster.de:8983/solr/test",
+    "order": "*",
+    "limit": 50000,
+    "fields": "*",
+    "filter": "*",
+    "spatialFilter": {
+        "geometryField": "placeOfBirth_geom",
+        "spatialConstraint": "IsWithin(POLYGON((49.04296875 61.53945432202169,49.04296875 33.019720207043974,-18.10546875 33.019720207043974,-18.10546875 61.53945432202169,49.04296875 61.53945432202169))) distErrPct=0"
+    }
+}

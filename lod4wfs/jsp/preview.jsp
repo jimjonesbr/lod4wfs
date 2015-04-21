@@ -7,7 +7,9 @@
 <%@ page import="com.hp.hpl.jena.query.ARQ"%>
 <%@ page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
+
 <html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <head>
 <title>LOD4WFS Administration Interface</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -86,6 +88,7 @@
 		}
 	
 		feature.setGeometryVariable(request.getParameter("variable"));
+		feature.setCRS(request.getParameter("crs"));
 		
 		if(!Facade.getInstance().isVariableValid(feature)){
 			isValidEntry = false;
@@ -139,6 +142,15 @@
               <%--<code "><%=feature.getGeometryVariable()%></code>--%>
             </div>
           </div>
+          
+          <div class="form-group">
+            <label for="crs" class="col-sm-2 control-label">CRS</label>
+            <div class="col-sm-10">
+               <input type="text" id="crs" name="crs" class="form-control" value="<%request.getParameter("crs");%>" readonly/> 
+              
+            </div>
+          </div>
+          
           <div class="form-group">
             <label for="query" class="col-sm-2 control-label">SPARQL Query</label>
             <div class="col-sm-10">
@@ -159,7 +171,7 @@
 				if(request.getParameter("store")!=null){
 					
 					Facade.getInstance().addFeature(feature);
-					//response.sendRedirect("list.jsp");
+
 					out.println("Feature '" + feature.getName() + "' successfully stored. ");
 
 				} else {
@@ -204,6 +216,7 @@
 		 	    			
 		 	    			if(("?"+query.getResultVars().get(i).toString()).equals(feature.getGeometryVariable())){
 		 	    				
+		 	    				String crs = Facade.getInstance().getCoordinateReferenceSystem(soln.get("?" + query.getResultVars().get(i)).toString()); 
 		 	    				String geometryType = Facade.getInstance().getGeomeryType(soln.get("?" + query.getResultVars().get(i)).toString());
 								
 		 	    				if(geometryType.equals("gml:MultiPointPropertyType")){
@@ -223,11 +236,16 @@
 		 	    					geometryType = "LINESTRING";
 		 	    					
 		 	    				}
-		 	    				
+
+		 	    						 	    				
 		 	    				out.println("<td><img src = \"img/" + geometryType.toLowerCase() + 
 		 	    						      ".png\" alt = \"" + geometryType + 
 		 	    						        "\" title = \"" + geometryType + "\"" +
 		 	    						        "  height = 51 width = 51> </td>");	
+		 	    				
+		 	    				feature.setCRS(crs);
+		 	    						 	    				
+		 	    				out.println("<script type='text/javascript'>$('#crs').val('"+ crs +"');</script>");
 		 	    				
 		 	    			} else {
 		 	    				

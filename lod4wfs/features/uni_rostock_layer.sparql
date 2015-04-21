@@ -1,0 +1,22 @@
+{
+"name":"http://sparql.lod4wfs.de/uni_rostock_layer",
+"title":"Field1",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://giv-lodum.uni-muenster.de:8081/parliament/sparql",
+"crs":"EPSG:25833",
+"query":"SELECT  *
+WHERE
+  { GRAPH <http://uni-rostock.de/lod4wfs>
+      { ?geometry <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.opengis.net/ont/geosparql/1.0#Geometry> .
+        ?geometry <http://www.opengis.net/ont/geosparql/1.0#dimension> ?dimension .
+        ?geometry <http://www.opengis.net/ont/geosparql/1.0#isSimple> ?simple .
+        ?geometry <http://www.opengis.net/ont/geosparql/1.0#asWKT> ?wkt .
+        ?geometry <http://www.opengis.net/ont/geosparql/1.0#coordinateDimension> ?coordDimension .
+        ?geometry <http://www.opengis.net/ont/geosparql/1.0#isEmpty> ?empty .
+        ?geometry <http://www.opengis.net/ont/geosparql/1.0#spatialDimension> ?spatialDimension
+      }
+  }
+"
+}

@@ -38,13 +38,9 @@ public class HandlerGUI extends AbstractHandler {
         FileReader fileReader = new FileReader("admin/index.jsp");
         BufferedReader buffer = new BufferedReader(fileReader);         
         String tmp = IOUtil.toString(buffer);        
-		//response.getWriter().println(tmp);
         
 		response.getWriter().print(tmp);
-        
-//        response.getWriter().println("<br/><br/><br/><h1 style=\"text-align:center;\">LOD4WFS Administration Interface</h1><br/>" +
-//        							 "<h2 style=\"text-align:center;\">(Under Construction)</h2>");
-        
+              
         if (_body != null) response.getWriter().println(_body);
     }
 }

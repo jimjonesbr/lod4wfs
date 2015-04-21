@@ -38,12 +38,15 @@ public class AdapterSOLR4WFS {
 	}
 
 	public static AdapterSOLR4WFS getInstance() {
+		
 		if (instance == null) {
+			
 			instance = new AdapterSOLR4WFS();
+			
 		}
+		
 		return instance;
 	}
-
 
 
 	private WFSFeature expandSOLRFeature(WFSFeature feature){
@@ -65,7 +68,8 @@ public class AdapterSOLR4WFS {
 		}
 
 		return feature;
-	}
+		
+	} 
 
 	public String describeFeatureType(WFSFeature feature){
 
@@ -89,7 +93,7 @@ public class AdapterSOLR4WFS {
 			NodeList myNodeList = (NodeList) xpath.compile("//extension/sequence/text()").evaluate(document, XPathConstants.NODESET);           
 
 			String layerPrefix = FactoryWFS.getInstance().getLoadedModelFeature().shortForm(feature.getName());
-			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":")+1);			
+			layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":") + 1);			
 
 			Element requestElement = document.getDocumentElement(); 						
 			requestElement.setAttribute("targetNamespace", FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(layerPrefix));
@@ -115,6 +119,7 @@ public class AdapterSOLR4WFS {
 					sequence.setAttribute("type",factorySOLR.getSOLRGeometryType(feature));
 
 				} else {
+					
 					sequence.setAttribute("type",fields.get(i).getType());
 				}
 
@@ -139,9 +144,8 @@ public class AdapterSOLR4WFS {
 		} catch (XPathExpressionException e) {
 			e.printStackTrace();
 		} 
-
+		
 		return describeFeatureTypeResponse;
-
 
 	}
 
@@ -191,6 +195,8 @@ public class AdapterSOLR4WFS {
 			XPath xpath = XPathFactory.newInstance().newXPath();
 			NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
 
+			int invalid = 0;
+			int empty = 0;
 
 			for (int i = 0; i < rs.size(); i++) {
 
@@ -201,8 +207,7 @@ public class AdapterSOLR4WFS {
 				currentGeometryElement.setAttribute("fid", currentGeometryName + "" + i);				
 
 				Element rootGeometry = document.createElement("gml:featureMember");
-
-
+				
 				for (int j = 0; j < fields.size(); j++) {
 
 
@@ -211,16 +216,18 @@ public class AdapterSOLR4WFS {
 					if(fields.get(j).getName().equals(feature.getGeometryVariable())){														
 
 
-
 						if(rs.get(i).getFieldValue(feature.getGeometryVariable()) == null){
 
-							logger.error("Record skipped. No WKT geometry for the SOLR Feature [" + feature.getName() + "]");
+							//logger.error("Record skipped at SOLR Feature [" + feature.getName() + "]. The field [" + feature.getGeometryVariable()  + "] is empty.");
+							
+							empty = empty +1;
 
 						} else {
 
 							String wkt = new String();
 							wkt = rs.get(i).getFieldValue(feature.getGeometryVariable()).toString();
 							wkt = wkt.replace("[", "").replace("]", "");
+							
 							if (Utils.isWKT(wkt)){
 
 								String gml = Utils.convertWKTtoGML(wkt);
@@ -234,7 +241,8 @@ public class AdapterSOLR4WFS {
 
 							} else {
 
-								logger.error("Record skipped. Invalid WKT geometry for [" + feature.getName() + "]: " + wkt);
+								invalid = invalid + 1;
+								logger.error("Record skipped at SOLR Feature [" + feature.getName() + "]. Invalid WKT geometry for [" + feature.getGeometryVariable() + "]: " + wkt);
 							}
 
 						}
@@ -261,10 +269,23 @@ public class AdapterSOLR4WFS {
 
 				}
 
+				
 				myNodeList.item(1).getParentNode().insertBefore(rootGeometry, myNodeList.item(1));
 
 			}
 
+			if (empty != 0){
+				
+				logger.error(empty + " records skipped at SOLR Feature [" + feature.getName() + "]. Geometry field [" + feature.getGeometryVariable()  + "] is empty.");
+				
+			}
+
+			if (invalid != 0){
+				
+				logger.error(empty + " records skipped at SOLR Feature [" + feature.getName() + "]. Geometry field [" + feature.getGeometryVariable()  + "] with invalid WKT geometries.");
+				
+			}
+			
 			logger.info("XML Document for ["+ feature.getName() +"] successfully created.");
 
 			getFeatureResponse = Utils.printXMLDocument(document);
@@ -280,12 +301,6 @@ public class AdapterSOLR4WFS {
 		}  catch (Exception e) {
 			e.printStackTrace();
 		}
-
-
-
-
-
-
 
 		return getFeatureResponse;
 

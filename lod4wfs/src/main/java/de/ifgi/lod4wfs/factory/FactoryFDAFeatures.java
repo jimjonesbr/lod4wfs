@@ -217,6 +217,7 @@ public class FactoryFDAFeatures {
 			writer.write("\"keywords\":\"" + feature.getKeywords() + "\",\n");
 			writer.write("\"geometryVariable\":\"" + feature.getGeometryVariable() + "\",\n");
 			writer.write("\"endpoint\":\"" + feature.getEndpoint() + "\",\n");
+			writer.write("\"crs\":\"" + feature.getCRS() + "\",\n");
 			writer.write("\"query\":\"" + feature.getQuery().replace("\"", "'") + "\"");
 			writer.write("\n}");
 			writer.close();
@@ -298,11 +299,15 @@ public class FactoryFDAFeatures {
 
 									feature.setEndpoint(jsonReader.nextString());
 
+								} else if (name.equals("crs")) {
+
+									feature.setCRS(jsonReader.nextString());
+
 								}
 
 								feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
 								feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
-								feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
+								//feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
 								feature.setAsFDAFeature(true);
 								feature.setFileName(file.getName());
 

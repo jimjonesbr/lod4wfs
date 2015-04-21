@@ -119,7 +119,7 @@ public class WFSFeature {
 		return defaultCRS;
 	}
 
-	public void setDefaultCRS(String defaultCRS) {
+	public void setCRS(String defaultCRS) {
 		this.defaultCRS = defaultCRS;
 	}
 

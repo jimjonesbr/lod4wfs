@@ -6,15 +6,34 @@
 <%@page import="de.ifgi.lod4wfs.core.GlobalSettings"%>
 <!DOCTYPE html>
 <html lang="en">
+
+
+
+
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+<script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
+
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-label/v0.2.1/leaflet.label.css' rel='stylesheet' />
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.js'></script>
+<link href='https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-minimap/v1.0.0/Control.MiniMap.css' rel='stylesheet' />
+
+<script src="js/map.js"></script>
+
 <head>
 <title>LOD4WFS Administration Interface</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 </head>
-<body>
+<body  onLoad="javascript:init();">
 <div class="bs-docs-featurette">
   <div class="container">
-    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.3)</small></h2>
+    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.4)</small></h2>
     <hr />
     <p> <a href="index.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-home"></span> Home</a> <a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Manage Layers</a> </p>
     <hr />
@@ -58,6 +77,7 @@
               <input type="text" id="variable" name="variable" class="form-control" value="?wkt" />
             </div>
           </div>
+                    
           <div class="form-group">
             <label for="query" class="col-sm-2 control-label">SPARQL Query</label>
             <div class="col-sm-10">
@@ -72,8 +92,10 @@
         </form>
       </div>
     </div>
+    
      <hr />
     
 </div>
+
 </body>
 </html>

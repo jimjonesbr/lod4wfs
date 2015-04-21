@@ -157,7 +157,7 @@ public class FactoryWFS {
 					keywordsElement.appendChild(document.createTextNode(features.get(i).getKeywords()));
 					Element crsElement = document.createElement("SRS");
 					crsElement.appendChild(document.createTextNode(features.get(i).getCRS()));
-
+															
 					Element bboxElement = document.createElement("LatLongBoundingBox");
 					bboxElement.setAttribute("maxy", "83.6274");
 					bboxElement.setAttribute("maxx", "-180");

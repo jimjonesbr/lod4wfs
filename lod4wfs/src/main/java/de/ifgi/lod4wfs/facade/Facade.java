@@ -111,6 +111,12 @@ public class Facade {
 		
 	}
 	
+	public String getCoordinateReferenceSystem(String wkt){
+		
+		return Utils.getCoordinateReferenceSystem(wkt);
+		
+	}
+	
 	public WFSFeature getSPARQLFeature(String fileName){
 		
 		return factoryFDA.getFDAFeature(fileName);

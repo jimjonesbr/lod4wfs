@@ -1,9 +1,12 @@
 package de.ifgi.lod4wfs.core;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -22,6 +25,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 import it.cutruzzula.lwkt.WKTParser;
@@ -30,8 +34,10 @@ import it.cutruzzula.lwkt.WKTParser;
  * @author Jim Jones
  */
 
+
 public class Utils {
 
+	private static Logger logger = Logger.getLogger("LOD4WFS-Utils");
 	
 	public static boolean isWKT(String wkt){
 		
@@ -54,9 +60,7 @@ public class Utils {
 	public static String convertWKTtoGML(String literal){
 
 		String gml = new String();
-
-		if(isWKT(literal)){
-
+				
 			try {
 
 				if(literal.contains("<") && literal.contains(">")){
@@ -66,12 +70,12 @@ public class Utils {
 					/**
 					 * Extracting Reference System
 					 */
-					if(literal.contains("<") && literal.contains(">")){
+					//if(literal.contains("<") && literal.contains(">")){
 
-						CRS = literal.substring(literal.indexOf("<") + 1, literal.indexOf(">"));
+						CRS = literal.substring(literal.indexOf("<") , literal.indexOf(">")+1);
 						literal = literal.substring(literal.indexOf(">") + 1, literal.length());
 
-					}
+					//}
 
 					/**
 					 * Removing Literal Type
@@ -82,7 +86,7 @@ public class Utils {
 
 					}
 
-					gml = WKTParser.parseToGML2(literal,CRS);
+					gml = WKTParser.parseToGML2(literal,getCoordinateReferenceSystem(CRS));
 
 
 				} else {
@@ -94,8 +98,11 @@ public class Utils {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
 
+
+		if(!isWKT(literal)){
+			logger.error("Invalid WKT literal.");
+		}
 		return gml;
 
 	}
@@ -103,8 +110,7 @@ public class Utils {
 
 	public static String convertWKTtoGeoJSON(String wkt){
 
-
-
+		
 		if(wkt.contains("<") && wkt.contains(">")){
 			//String CRS = new String();
 
@@ -367,6 +373,58 @@ public class Utils {
 		return XMLString;
 	}
 	
+	public static String getCoordinateReferenceSystem(String wkt){
+		
+		String crs = new String();
+		
+		if(wkt.contains("<") && wkt.contains(">")){
+			
+			crs = wkt.substring(0,wkt.indexOf(">")+1);
+						
+		} else {
+			
+			crs = GlobalSettings.getDefaultCRS();
+		}
+				
+		String referenceSystemsFile = "settings/reference_systems.crs";
+		BufferedReader br = null;
+		String line = "";
+		String splitBy = ";";
+	 
+		try {
+	 
+			br = new BufferedReader(new FileReader(referenceSystemsFile));
+			
+			while ((line = br.readLine()) != null ) {
+	 
+			        // use comma as separator
+				String[] referenceSystemLine = line.split(splitBy);
+	 			
+				if(referenceSystemLine[0].trim().equals(crs)){
+					
+					crs = referenceSystemLine[1];
+					
+				}
+			}
+	 
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	 
+	
+		
+		return crs;
+	}
 	
 	public static String getGeometryType(String wkt){
 		

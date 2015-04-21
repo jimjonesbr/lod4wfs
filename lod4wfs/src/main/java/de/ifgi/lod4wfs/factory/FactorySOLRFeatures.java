@@ -48,7 +48,9 @@ public class FactorySOLRFeatures {
 				feature = this.getSOLRFeature(file.getName());
 
 				if(feature != null){
+					
 					result.add(feature);
+					
 				}
 
 			}
@@ -91,11 +93,11 @@ public class FactorySOLRFeatures {
 
 			if(jObject.get("crs").getAsString().equals("")){
 
-				feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
+				feature.setCRS(GlobalSettings.getDefaultCRS());
 
 			} else {
 
-				feature.setDefaultCRS(jObject.get("crs").getAsString());
+				feature.setCRS(jObject.get("crs").getAsString());
 
 			}
 
@@ -302,7 +304,6 @@ public class FactorySOLRFeatures {
 		}
 
 		feature.setLimit(tmpLimit);
-
 
 		return result;
 

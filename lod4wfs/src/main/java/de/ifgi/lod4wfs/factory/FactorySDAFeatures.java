@@ -62,11 +62,11 @@ public class FactorySDAFeatures {
 				CRS = CRS.replace("<", "");
 				CRS = CRS.replace(">", "");
 				
-				feature.setDefaultCRS(CRS);
+				feature.setCRS(CRS);
 			
 			} else {
 			
-				feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
+				feature.setCRS(GlobalSettings.getDefaultCRS());
 				
 			}
 			

@@ -1,9 +1,8 @@
 package de.ifgi.lod4wfs.core;
 
 /**
- * Default SPARQL Queries used in the system.
- * @author jones
- * 
+ * Default SPARQL Queries used in the system. (Used for SDA Features only)
+ * @author Jim Jones
  */
 
 public class SPARQL {

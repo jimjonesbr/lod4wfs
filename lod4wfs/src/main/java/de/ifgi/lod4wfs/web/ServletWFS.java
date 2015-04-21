@@ -23,13 +23,16 @@ public class ServletWFS extends HttpServlet
 {
 	
     /**
-	 * Automatically generated serial version UID
+	 * Automatically generated serial version UID.
 	 */
+	
 	private static final long serialVersionUID = 1463163373195766944L;
 	private static Logger logger = Logger.getLogger("Web-Interface");
 
 	public ServletWFS(){
+		
 		super();
+		
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
@@ -56,16 +59,19 @@ public class ServletWFS extends HttpServlet
 			if (parameter.toUpperCase().equals("VERSION")) {
 
 				currentVersion=request.getParameter(parameter);
+				
 			}
 
 			if(parameter.toUpperCase().equals("REQUEST")){
 
 				currentRequest=request.getParameter(parameter);
+				
 			}
 
 			if(parameter.toUpperCase().equals("TYPENAME")){
 
 				currentTypeName=request.getParameter(parameter);
+				
 			}
 
 			if(parameter.toUpperCase().equals("SRSNAME")){
@@ -76,16 +82,19 @@ public class ServletWFS extends HttpServlet
 			if(parameter.toUpperCase().equals("SERVICE")){
 
 				currentService=request.getParameter(parameter);
+				
 			}
 
 			if(parameter.toUpperCase().equals("OUTPUTFORMAT")){
 
 				currentOutputFormat=request.getParameter(parameter);
+				
 			}
 
 			if(parameter.toUpperCase().equals("FORMAT_OPTIONS")){
 
 				currentOptionsFormat=request.getParameter(parameter);
+				
 			}
 
 		}
@@ -154,7 +163,7 @@ public class ServletWFS extends HttpServlet
 
 						response.setContentType("application/zip");
 
-						File zipFile = Utils.compressFile(Facade.getInstance().getFeature(layer), layer.getName().replace(":", "_")+".json");						
+						File zipFile = Utils.compressFile(Facade.getInstance().getFeature(layer), layer.getName().replace(":", "_") + ".json");						
 						byte[] buffer = new byte[128];
 
 						logger.info("Feature " + layer.getName() + " successfully compressed.");
@@ -175,7 +184,10 @@ public class ServletWFS extends HttpServlet
 							} else {
 
 								readBytes=fileInput.read(buffer,0,(int)zipFile.length() - totalRead);
-								totalRead= totalRead+readBytes; }
+								totalRead= totalRead+readBytes; 
+								
+							}
+							
 							response.getOutputStream().write(buffer, 0, readBytes);
 
 						}
