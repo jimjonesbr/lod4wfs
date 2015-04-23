@@ -119,6 +119,7 @@ public class AdapterLOD4WFS {
 				 * Checks if predicate is the chosen geometry predicate in the settings file.
 				 */
 				if(predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))){
+					
 					String featureType = new String();
 					featureType = factorySDA.getFeatureType(featureName);
 
@@ -239,7 +240,7 @@ public class AdapterLOD4WFS {
 
 				if(!feature.isFDAFeature()){
 					Triple triple = new Triple();
-					triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+					triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
 					predicates.add(triple);		
 				}
 
@@ -301,6 +302,7 @@ public class AdapterLOD4WFS {
 							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
 
 							if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
+							//if (predicates.get(i).getPredicate().equals(factoryFDA.getGeometryPredicate(feature.getQuery()))) {
 
 								if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
@@ -365,7 +367,9 @@ public class AdapterLOD4WFS {
 			if(!feature.isFDAFeature()){
 
 				Triple triple = new Triple();
-				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+
+				//triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+				triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
 				predicates.add(triple);	
 
 			}
@@ -468,7 +472,9 @@ public class AdapterLOD4WFS {
 			if(!feature.isFDAFeature()){
 
 				Triple triple = new Triple();
-				triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+				//
+				//triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
+				triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
 				predicates.add(triple);	
 
 			}
@@ -542,9 +548,10 @@ public class AdapterLOD4WFS {
 
 					} else {
 
-
+						
 						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
-
+						//if (predicates.get(i).getPredicate().equals(factoryFDA.getGeometryPredicate(feature.getQuery()))) {
+						
 							//isGeometry = true;
 
 							if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){

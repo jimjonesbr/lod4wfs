@@ -10,11 +10,18 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
+
 import org.apache.log4j.Logger;
 import com.google.gson.stream.JsonReader;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.sparql.core.TriplePath;
+import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
+import com.hp.hpl.jena.sparql.syntax.ElementVisitorBase;
+import com.hp.hpl.jena.sparql.syntax.ElementWalker;
+
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
@@ -361,6 +368,52 @@ public class FactoryFDAFeatures {
 			
 		return result;
 		
+	}
+	
+	public String getGeometryPredicate(String SPARQLQuery){
+
+		Query query = QueryFactory.create(SPARQLQuery);
+		String geometryPredicate = new String();
+		
+		final ArrayList<com.hp.hpl.jena.graph.Triple> triplesList = new ArrayList<com.hp.hpl.jena.graph.Triple>();
+
+		// This will walk through all parts of the query
+		ElementWalker.walk(query.getQueryPattern(),
+				// For each element...
+				new ElementVisitorBase() {
+			// ...when it's a block of triples...
+			public void visit(ElementPathBlock el) {
+				// ...go through all the triples...
+				Iterator<TriplePath> triples = el.patternElts();
+
+				while (triples.hasNext()) {
+					// ...and grab the subject
+
+					triplesList.add(triples.next().asTriple());
+
+				}
+
+
+			}
+		}
+				);
+
+
+
+		for (int i = 0; i < triplesList.size(); i++) {
+
+			//System.out.println(tripleListe.get(i).getObject());
+			if(triplesList.get(i).getObject().toString().equals("?wkt")){
+
+				System.out.println(">>>>> Geometry Predicate found: " +triplesList.get(i).getPredicate().toString());
+				geometryPredicate = triplesList.get(i).getPredicate().toString();
+			}
+
+
+		}
+
+		return geometryPredicate;
+
 	}
 
 }
