@@ -395,6 +395,7 @@ public class Utils {
 	 
 			br = new BufferedReader(new FileReader(referenceSystemsFile));
 			
+			boolean found = false;
 			while ((line = br.readLine()) != null ) {
 	 
 			        // use comma as separator
@@ -403,10 +404,18 @@ public class Utils {
 				if(referenceSystemLine[0].trim().equals(crs)){
 					
 					crs = referenceSystemLine[1];
+					found = true;
+					
 					
 				}
 			}
 	 
+			if(found == false){
+				
+				crs="UNKNOWN";
+				
+			}
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

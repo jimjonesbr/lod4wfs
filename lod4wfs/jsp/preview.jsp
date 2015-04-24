@@ -144,7 +144,9 @@
           </div>
           
           <div class="form-group">
-            <label for="crs" class="col-sm-2 control-label">CRS</label>
+            <label for="crs" class="col-sm-2 control-label">CRS
+            <img title="Automatically generated based on the WKT/GML literal. In case no CRS is found, WGS84 is assumed." width="25" height="25" src="img/info.png" /></label>
+             
             <div class="col-sm-10">
                <input type="text" id="crs" name="crs" class="form-control" value="<%request.getParameter("crs");%>" readonly/> 
               
@@ -171,9 +173,11 @@
 				if(request.getParameter("store")!=null){
 					
 					Facade.getInstance().addFeature(feature);
+				    
+					//out.println("<script>alert(\"Feature '" + feature.getName() + "' successfully stored. \")</script>");
 
-					out.println("Feature '" + feature.getName() + "' successfully stored. ");
-
+					response.sendRedirect("list.jsp"); 
+					
 				} else {
 									
 		 	        Query query = QueryFactory.create(request.getParameter("query"));

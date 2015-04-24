@@ -33,7 +33,7 @@ public class FactorySDAFeatures {
 	
 	public ArrayList<WFSFeature> listSDAFeatures(){
 
-		logger.info("Listing features from the SPARQL Endpoint " + GlobalSettings.getDefaultSPARQLEndpoint() + " ...");
+		logger.info("Listing SDA features from the SPARQL Endpoint " + GlobalSettings.getDefaultSPARQLEndpoint() + " ...");
 		
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs, GlobalSettings.getDefaultSPARQLEndpoint());
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
@@ -181,7 +181,7 @@ public class FactorySDAFeatures {
 
 		try {
 
-			//TODO: Check if literal already is GML. 
+			//TODO: Check if literal is already encoded as GML. 
 			
 			geometryCoordinates = Utils.convertWKTtoGML(geometryCoordinates);
 			

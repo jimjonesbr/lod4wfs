@@ -22,7 +22,7 @@
       <div class="panel-heading">System Information</div>
       <div class="panel-body">
         <ul>
-          <li>Application version: <b>BETA 0.4.4 (January, 2015)</b></li>
+          <li>Application version: <b>BETA 0.4.4 (April, 2015)</b></li>
           <%
           	out.println("<li>Default SPARQL Endpoint: <b> "+ GlobalSettings.getDefaultSPARQLEndpoint() + "</b></li>");
                       out.println("<li>Application Started on: <b> "+ GlobalSettings.getStartupTime() + "</b></li>");

@@ -232,7 +232,7 @@ public class AdapterLOD4WFS {
 
 				long countIteration = 0;
 
-				logger.info("Creating GetFeature XML document for [" + feature.getName() + ".] ..");
+				logger.info("Creating GetFeature XML document for [" + feature.getName() + "] ...");
 
 				XPath xpath = XPathFactory.newInstance().newXPath();
 				NodeList myNodeList = (NodeList) xpath.compile("//FeatureCollection/text()").evaluate(document, XPathConstants.NODESET);           
@@ -595,32 +595,6 @@ public class AdapterLOD4WFS {
 	 ** Private Methods.
 	 **/
 
-
-//	private boolean isFDAFeature(WFSFeature feature){
-//
-//		boolean result = false;
-//
-//		/**
-//		 * Checks if the selected layer is created via FDA (based on pre-defined SPARQL Query)
-//		 */
-//		fdaFeatures = FactoryWFS.getInstance().getLoadedFDAFeatures();
-//		modelFeatures = FactoryWFS.getInstance().getLoadedModelFeature();
-//
-//		for (int i = 0; i < fdaFeatures.size(); i++) {
-//
-//			if(fdaFeatures.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
-//				result = true; 
-//				feature.setQuery(fdaFeatures.get(i).getQuery());
-//				feature.setGeometryVariable(fdaFeatures.get(i).getGeometryVariable());
-//				feature.setEndpoint(fdaFeatures.get(i).getEndpoint());
-//
-//			}
-//
-//		}
-//
-//		return result;
-//
-//	}
 
 	private String removePredicateURL(String predicate){
 

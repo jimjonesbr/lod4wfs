@@ -46,7 +46,9 @@ public class WFSFeature {
 			int recordsLimit, String fields, String sOLRSorting,
 			String sOLRGeometryField, String sOLRFilter,
 			String sOLRSpatialConstraint) {
+		
 		super();
+		
 		this.name = name;
 		this.title = title;
 		this.keywords = keywords;

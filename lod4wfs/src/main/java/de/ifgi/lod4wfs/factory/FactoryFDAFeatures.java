@@ -402,10 +402,8 @@ public class FactoryFDAFeatures {
 
 		for (int i = 0; i < triplesList.size(); i++) {
 
-			//System.out.println(tripleListe.get(i).getObject());
 			if(triplesList.get(i).getObject().toString().equals("?wkt")){
 
-				System.out.println(">>>>> Geometry Predicate found: " +triplesList.get(i).getPredicate().toString());
 				geometryPredicate = triplesList.get(i).getPredicate().toString();
 			}
 

@@ -72,7 +72,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="variable" class="col-sm-2 control-label">Geometry Variable</label>
+            <label for="variable" class="col-sm-2 control-label">Geometry Variable
+            <img title="Variable in the SPARQL Query containing the WKT/GML literal." width="25" height="25" src="img/info.png" /></label>
             <div class="col-sm-10">
               <input type="text" id="variable" name="variable" class="form-control" value="?wkt" />
             </div>
