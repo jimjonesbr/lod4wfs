@@ -374,64 +374,59 @@ public class Utils {
 	}
 	
 	public static String getCoordinateReferenceSystem(String wkt){
-		
+
 		String crs = new String();
-		
+
 		if(wkt.contains("<") && wkt.contains(">")){
-			
+
 			crs = wkt.substring(0,wkt.indexOf(">")+1);
-						
+
+			String referenceSystemsFile = "settings/reference_systems.crs";
+			BufferedReader br = null;
+			String line = "";
+			String splitBy = ";";
+
+			try {
+				br = new BufferedReader(new FileReader(referenceSystemsFile));
+
+
+				boolean found = false;
+				while ((line = br.readLine()) != null ) {
+
+					String[] referenceSystemLine = line.split(splitBy);
+
+					if(referenceSystemLine[0].trim().equals(crs)){
+
+						crs = referenceSystemLine[1];
+						found = true;
+
+
+					}
+				}
+
+				if(found == false){
+
+					crs="UNKNOWN";
+
+				}
+
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		} else {
-			
+
 			crs = GlobalSettings.getDefaultCRS();
-		}
-				
-		String referenceSystemsFile = "settings/reference_systems.crs";
-		BufferedReader br = null;
-		String line = "";
-		String splitBy = ";";
-	 
-		try {
-	 
-			br = new BufferedReader(new FileReader(referenceSystemsFile));
 			
-			boolean found = false;
-			while ((line = br.readLine()) != null ) {
-	 
-			        // use comma as separator
-				String[] referenceSystemLine = line.split(splitBy);
-	 			
-				if(referenceSystemLine[0].trim().equals(crs)){
-					
-					crs = referenceSystemLine[1];
-					found = true;
-					
-					
-				}
-			}
-	 
-			if(found == false){
-				
-				crs="UNKNOWN";
-				
-			}
-			
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			if (br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 		}
-	 
-	
-		
+
+
+
+
 		return crs;
 	}
 	

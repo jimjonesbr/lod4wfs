@@ -47,6 +47,7 @@ public class ServletWFS extends HttpServlet
 		String currentSRSName = new String();
 		String currentOutputFormat = new String();
 		String currentOptionsFormat = new String();
+		String currentMaxFeature = new String();
 
 		System.out.println("\nIncoming request:\n");
 
@@ -94,6 +95,12 @@ public class ServletWFS extends HttpServlet
 			if(parameter.toUpperCase().equals("FORMAT_OPTIONS")){
 
 				currentOptionsFormat=request.getParameter(parameter);
+				
+			}
+			
+			if (parameter.toUpperCase().equals("MAXFEATURE")) {
+
+				currentMaxFeature = request.getParameter(parameter);
 				
 			}
 
@@ -369,7 +376,7 @@ public class ServletWFS extends HttpServlet
 				logger.error("Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
 				valid = false;
 
-			}
+			}// else if (currentMax)
 
 			if(!valid){
 				result = result.replace("PARAM_LOCATOR", request);
