@@ -11,14 +11,15 @@
 <body>
 <div class="bs-docs-featurette"> 
   <div class="container">
-    <h2 class="bs-docs-featurette-title">Web Feature Service Adapter <small>(Beta 0.4.4)</small></h2>
-    <h4 class="bs-docs-featurette-title"><small>Administration Interface</small></h4>
+    <h2 class="bs-docs-featurette-title">Web Feature Service Adapter</h2>
+    <h4 class="bs-docs-featurette-title">Administration Interface</h4>
+    <h4 class="bs-docs-featurette-title"><small><%out.println(GlobalSettings.getAppVersion());%></small></h4>
     <hr />
     
      <table>
      	<tr>
-     		<td width="540" align="center"><a href="main_lod.jsp" target="_self"><img src="img/rdf_logo.gif" /></a></td>
-     		<td width="540" align="center"><a href="main_solr.jsp" target="_self"><img width="225" src="img/solr_logo.png" /></a></td>
+     		<td width="540" align="center"><a href="main_lod.jsp" target="_self"><img title="LOD4WFS" src="img/rdf_logo.gif" /></a></td>
+     		<td width="540" align="center"><a href="main_solr.jsp" target="_self"><img title="SOLR4WFS" width="225" src="img/solr_logo.png" /></a></td>
 
      	</tr>
      </table>
@@ -28,19 +29,19 @@
       <div class="panel-heading">System Information</div>
       <div class="panel-body">
         <ul>
-          <li>Application version: <b>BETA 0.4.4 (April, 2015)</b></li>
+          <li>Application version: <b><%out.println(GlobalSettings.getAppVersion());%></b></li>
           <%
-          	out.println("<li>Default SPARQL Endpoint: <b> "+ GlobalSettings.getDefaultSPARQLEndpoint() + "</b></li>");
-                      out.println("<li>Application Started on: <b> "+ GlobalSettings.getStartupTime() + "</b></li>");
-                      out.println("<li>Java Runtime: <b> "+ System.getProperty("java.version") + "</b></li>");
-                      out.println("<li>Operating System: <b>" + System.getProperty("os.name") + " " + System.getProperty("os.version")+ " (" + System.getProperty("os.arch") + ")</b></li>");
-                      out.println("<li>Current memory usage: <b>" + Runtime.getRuntime().freeMemory() / 1024/1024 + "MB </b></li>");                       
-                      out.println("<li>Get Capabilities: <a href=\"http://" + Utils.getCanonicalHostName().toString() + ":" + Integer.toString(GlobalSettings.getDefaultPort())+ "/" + GlobalSettings.getDefaultServiceName()+"/wfs/?service=wfs&version=1.0.0&request=GetCapabilities\">WFS 1.0.0</a></li>");
-                      out.println("<li>LOD4WFS Documentation:  <a href=\"http://ifgi.uni-muenster.de/%7Ej_jone02/lod4wfs/LOD4WFS_documentation.pdf\">User and Developer Manual</a></li>");
-                      out.println("<li>Source Code:  <a href=\"https://github.com/jimjonesbr/lod4wfs\">GitHub Repository</a></li>");
-                      out.println("<li>Publication (AGILE 2014):  <a href=\"http://www.researchgate.net/publication/260286637_Making_the_Web_of_Data_Available_via_Web_Feature_Services\">Making the Web of Data Available via Web Feature Services</a></li>");
-                      
-                      out.println("");
+  			  out.println("<li>Default SPARQL Endpoint: <b> "+ GlobalSettings.getDefaultSPARQLEndpoint() + "</b></li>");
+              out.println("<li>Application Started on: <b> "+ GlobalSettings.getStartupTime() + "</b></li>");
+              out.println("<li>Java Runtime: <b> "+ System.getProperty("java.version") + "</b></li>");
+              out.println("<li>Operating System: <b>" + System.getProperty("os.name") + " " + System.getProperty("os.version")+ " (" + System.getProperty("os.arch") + ")</b></li>");
+              out.println("<li>Current memory usage: <b>" + Runtime.getRuntime().freeMemory() / 1024/1024 + "MB </b></li>");                       
+              out.println("<li>Get Capabilities: <a href=\"http://" + Utils.getCanonicalHostName().toString() + ":" + Integer.toString(GlobalSettings.getDefaultPort())+ "/" + GlobalSettings.getDefaultServiceName()+"/wfs/?service=wfs&version=1.0.0&request=GetCapabilities\">WFS 1.0.0</a></li>");
+              out.println("<li>LOD4WFS Documentation:  <a href=\"http://ifgi.uni-muenster.de/%7Ej_jone02/lod4wfs/LOD4WFS_documentation.pdf\">User and Developer Manual</a></li>");
+              out.println("<li>Source Code:  <a href=\"https://github.com/jimjonesbr/lod4wfs\">GitHub Repository</a></li>");
+              out.println("<li>Publication (AGILE 2014):  <a href=\"http://www.researchgate.net/publication/260286637_Making_the_Web_of_Data_Available_via_Web_Feature_Services\">Making the Web of Data Available via Web Feature Services</a></li>");
+              
+              out.println("");
           %>
           	
         </ul>

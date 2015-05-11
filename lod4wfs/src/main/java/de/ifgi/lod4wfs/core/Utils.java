@@ -86,7 +86,7 @@ public class Utils {
 
 					}
 
-					gml = WKTParser.parseToGML2(literal,getCoordinateReferenceSystem(CRS));
+					gml = WKTParser.parseToGML2(literal,getWKTReferenceSystem(CRS));
 
 
 				} else {
@@ -306,7 +306,6 @@ public class Utils {
 
 		Path tempFile;
 
-
 		tempFile = Files.createTempFile(null, ".tmp");
 
 		File file = new File(tempFile.toString());
@@ -373,7 +372,7 @@ public class Utils {
 		return XMLString;
 	}
 	
-	public static String getCoordinateReferenceSystem(String wkt){
+	public static String getWKTReferenceSystem(String wkt){
 
 		String crs = new String();
 
@@ -388,9 +387,8 @@ public class Utils {
 
 			try {
 				br = new BufferedReader(new FileReader(referenceSystemsFile));
-
-
 				boolean found = false;
+				
 				while ((line = br.readLine()) != null ) {
 
 					String[] referenceSystemLine = line.split(splitBy);
@@ -400,21 +398,19 @@ public class Utils {
 						crs = referenceSystemLine[1];
 						found = true;
 
-
 					}
 				}
 
 				if(found == false){
 
+					logger.error("Unknown Coordinate Reference System: [" + crs + "]. Please make sure it is a valid CRS.");
 					crs="UNKNOWN";
 
 				}
 
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -423,9 +419,6 @@ public class Utils {
 			crs = GlobalSettings.getDefaultCRS();
 			
 		}
-
-
-
 
 		return crs;
 	}

@@ -113,7 +113,7 @@ public class Facade {
 	
 	public String getCoordinateReferenceSystem(String wkt){
 		
-		return Utils.getCoordinateReferenceSystem(wkt);
+		return Utils.getWKTReferenceSystem(wkt);
 		
 	}
 	

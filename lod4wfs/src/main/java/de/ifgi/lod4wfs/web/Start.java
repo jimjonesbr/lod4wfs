@@ -78,14 +78,17 @@ public class Start{
 		Facade.getInstance().getCapabilities("1.0.0");
 		
 		server.start();
-			
+				
 		System.out.println(GlobalSettings.getCrLf() +
-				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) BETA 0.4 " + GlobalSettings.getCrLf() +
+				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) " + GlobalSettings.getCrLf() + GlobalSettings.getCrLf() +
 				"Institut für Geoinformatik | Universitäts- und Landesbibliothek " + GlobalSettings.getCrLf() +
 				"Westfälische Wilhelms-Universität Münster" + GlobalSettings.getCrLf() +
 				"http://www.uni-muenster.de/" + GlobalSettings.getCrLf() + GlobalSettings.getCrLf() +
-				
+								
+				"Application Version: " + GlobalSettings.getAppVersion() + GlobalSettings.getCrLf() +
 				"Startup time: " + GlobalSettings.getStartupTime() + GlobalSettings.getCrLf() +
+				"Java Runtime: "+ System.getProperty("java.version") + GlobalSettings.getCrLf() +
+				"Operating System: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + " (" + System.getProperty("os.arch")+")"+ GlobalSettings.getCrLf()+
 				"Port: " + GlobalSettings.getDefaultPort() + GlobalSettings.getCrLf());
 		
 		server.join();

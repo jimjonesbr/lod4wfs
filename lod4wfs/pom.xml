@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.uni-muenster.ifgi.lod4wfs</groupId>
 	<artifactId>lod4wfs</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.4.4</version>
 	<name>lod4wfs</name>
 	<description>Linked Open Data Adapter for Web Feature Services</description>
 
@@ -52,9 +52,9 @@
 		</dependency>
 
 		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
-		    <version>2.2.4</version>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.2.4</version>
 		</dependency>
 
 		<dependency>
@@ -79,6 +79,15 @@
 					<target>${jdk.version}</target>
 				</configuration>
 			</plugin>
+
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.5.2</version>
+			</plugin>
+
+
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -102,6 +111,9 @@
 					</execution>
 				</executions>
 			</plugin>
+
+
+
 		</plugins>
 		<resources>
 			<resource>
@@ -115,9 +127,23 @@
 					<include>log4j.xml</include>
 				</includes>
 			</resource>
+
+
+
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+
+
 		</resources>
-		<!-- <finalName>LOD4WFS Adapter - Linked Open Data for Web Feature Services</finalName> -->
+		
 	</build>
+
+	<properties>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyyMMddHHmm</maven.build.timestamp.format>
+	</properties>
 
 
 </project>

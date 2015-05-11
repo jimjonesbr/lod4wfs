@@ -2,6 +2,9 @@ package de.ifgi.lod4wfs.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Wini;
 
@@ -28,7 +31,7 @@ public class GlobalSettings {
 	private static String defaultFloatType = "";
 	private static String xsdNameSpace = "";
 	private static String startupTime = "";
-	//TODO Fix bounding box in the Capabilities Document!
+	//TODO Fix bounding box in the Capabilities Document.
 	
 	private static String defaultServiceName = "";
 	private static String crlf = System.getProperty("line.separator");
@@ -49,10 +52,14 @@ public class GlobalSettings {
     private static boolean sdaEnable = false;
     private static boolean fdaEnable = false;
     private static boolean solrEnable = false;
-    
+    private static String appVersion = "";
     
         
     
+	public static String getAppVersion() {
+		return appVersion;
+	}
+
 	public static String getStartupTime() {
 		return startupTime;
 	}
@@ -277,6 +284,18 @@ public class GlobalSettings {
 	            previewLimit = Integer.valueOf(ini.get("WebInterface", "PreviewLimit"));
 	            
 	            
+	            Properties properties = new Properties();
+	            InputStream inputStream = GlobalSettings.class.getClassLoader().getResourceAsStream("version.properties");
+	            
+	            properties.load(inputStream);
+	            
+	            appVersion = properties.getProperty("snapshot");
+	            
+	            if(properties.getProperty("build.date").equals("${maven.build.timestamp}")){
+	            	
+	            	//TODO: Settings variables being set 2!
+	            	appVersion = properties.getProperty("build") + " (Development Version)";
+	            }
 	            
 	        } catch (InvalidFileFormatException e) {
 	            e.printStackTrace();

@@ -11,7 +11,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
-
 import org.apache.log4j.Logger;
 import com.google.gson.stream.JsonReader;
 import com.hp.hpl.jena.query.Query;
@@ -21,7 +20,6 @@ import com.hp.hpl.jena.sparql.core.TriplePath;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
 import com.hp.hpl.jena.sparql.syntax.ElementVisitorBase;
 import com.hp.hpl.jena.sparql.syntax.ElementWalker;
-
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
@@ -47,7 +45,7 @@ public class FactoryFDAFeatures {
 
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
                 
-		logger.info("Listing features from the direcoty " + System.getProperty("user.dir") + "/" + GlobalSettings.getFeatureDirectory() + " ...");
+		logger.info("Listing features from the direcoty " + System.getProperty("user.dir") + File.separator + GlobalSettings.getFeatureDirectory() + " ...");
 		
 		for (File file : files) {
 
@@ -274,7 +272,7 @@ public class FactoryFDAFeatures {
 
 								} else if (name.equals("title")) {
 
-									feature.setTitle(jsonReader.nextString());//
+									feature.setTitle(jsonReader.nextString());
 
 								} else if (name.equals("name")) {
 

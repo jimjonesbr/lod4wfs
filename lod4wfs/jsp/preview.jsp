@@ -8,17 +8,20 @@
 <%@ page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 
+
 <html lang="en">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="js/jquery.bpopup.min.js"></script>
 <head>
 <title>LOD4WFS Administration Interface</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="assets/css/popup.css">
 </head>
 <body>
 <div class="bs-docs-featurette">
   <div class="container">
-    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.4)</small></h2>
+    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface </h2>
     <hr />
     <p> <a href="index.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-home"></span> Home</a> <a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-list"></span> Manage Layers</a> </p>
     <hr />
@@ -145,8 +148,13 @@
           
           <div class="form-group">
             <label for="crs" class="col-sm-2 control-label">CRS
-            <img title="Automatically generated based on the WKT/GML literal. In case no CRS is found, WGS84 is assumed." width="25" height="25" src="img/info.png" /></label>
-             
+            <img onclick="$('#popup').bPopup();" title="Automatically generated based on the WKT/GML literal. In case no CRS is found, WGS84 is assumed." width="25" height="25" src="img/info.png" /></label>
+            
+            <div id="popup">Content of popup
+            <img width="25" height="25" src="img/info.png" />
+            
+            </div>
+            
             <div class="col-sm-10">
                <input type="text" id="crs" name="crs" class="form-control" value="<%request.getParameter("crs");%>" readonly/> 
               
@@ -186,17 +194,18 @@
 		 	        int previewLimit = GlobalSettings.getPreviewLimit();
 		 	        
 		 	        if(!query.hasLimit()){
+		 	        	
 		 	        	query.setLimit(previewLimit);
 		 	        			 	        	
 		 	        } else if (query.getLimit()>previewLimit){
+		 	        	
 		 	        	query.setLimit(previewLimit);
+		 	        	
 		 	        }
 		 	        
-		 	       out.println("<p>* Limited to the first " + previewLimit + " records.</p>");
-
+		 	        out.println("<p>* Limited to the first " + previewLimit + " records.</p>");
 	 	        	 	       
 		 	        ResultSet results = Facade.getInstance().executeQuery(query.toString(), request.getParameter("endpoint"));
-	 				        
 		 			
 		 			out.println("<table border=\"1\" class='table table-condensed table-hover table-striped table-bordered'>");
 		 			out.println("<thead><tr>");

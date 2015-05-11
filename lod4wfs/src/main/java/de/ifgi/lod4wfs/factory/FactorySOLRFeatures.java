@@ -35,7 +35,7 @@ public class FactorySOLRFeatures {
 
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 
-		logger.info("Listing features from the direcoty " + System.getProperty("user.dir") + "/" + GlobalSettings.getFeatureDirectory() + " ...");
+		logger.info("Listing features from the direcoty " + System.getProperty("user.dir") + File.separator + GlobalSettings.getFeatureDirectory() + " ...");
 
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
 

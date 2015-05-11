@@ -11,8 +11,8 @@
 <body>
 <div class="bs-docs-featurette"> 
   <div class="container">
-    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface <small>(Beta 0.4.4)</small></h2>
-    <h4 class="bs-docs-featurette-title"><small>Linked Open Data for Web Feature Services</small></h4>
+    <h2 class="bs-docs-featurette-title">LOD4WFS Administration Interface </h2>
+    <h4 class="bs-docs-featurette-title">Linked Open Data for Web Feature Services</h4>
     <hr />
     <p><a href="list.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-wrench"></span> Manage Layers</a> 
     <a href="new.jsp" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span> Create New Layer</a> 
@@ -22,7 +22,7 @@
       <div class="panel-heading">System Information</div>
       <div class="panel-body">
         <ul>
-          <li>Application version: <b>BETA 0.4.4 (April, 2015)</b></li>
+          <li>Application version: <b><%out.println(GlobalSettings.getAppVersion());%></b></li>
           <%
           	out.println("<li>Default SPARQL Endpoint: <b> "+ GlobalSettings.getDefaultSPARQLEndpoint() + "</b></li>");
                       out.println("<li>Application Started on: <b> "+ GlobalSettings.getStartupTime() + "</b></li>");
