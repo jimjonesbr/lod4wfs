@@ -149,12 +149,7 @@
           <div class="form-group">
             <label for="crs" class="col-sm-2 control-label">CRS
             <img onclick="$('#popup').bPopup();" title="Automatically generated based on the WKT/GML literal. In case no CRS is found, WGS84 is assumed." width="25" height="25" src="img/info.png" /></label>
-            
-            <div id="popup">Content of popup
-            <img width="25" height="25" src="img/info.png" />
-            
-            </div>
-            
+                        
             <div class="col-sm-10">
                <input type="text" id="crs" name="crs" class="form-control" value="<%request.getParameter("crs");%>" readonly/> 
               

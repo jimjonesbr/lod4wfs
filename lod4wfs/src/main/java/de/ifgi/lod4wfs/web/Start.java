@@ -3,6 +3,8 @@ package de.ifgi.lod4wfs.web;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandler;
@@ -20,6 +22,8 @@ import de.ifgi.lod4wfs.facade.Facade;
 public class Start{
 	public static String startTime;
 
+	private static Logger logger = Logger.getLogger("WFS-Servlet");
+	
 	public static void main(String[] args) throws Exception
 	{			
 		
@@ -78,8 +82,9 @@ public class Start{
 		Facade.getInstance().getCapabilities("1.0.0");
 		
 		server.start();
-				
-		System.out.println(GlobalSettings.getCrLf() +
+		
+		
+		logger.info("Service started:"+GlobalSettings.getCrLf() + GlobalSettings.getCrLf() +
 				"LOD4WFS Adapter (Linked Open Data for Web Feature Service) " + GlobalSettings.getCrLf() + GlobalSettings.getCrLf() +
 				"Institut für Geoinformatik | Universitäts- und Landesbibliothek " + GlobalSettings.getCrLf() +
 				"Westfälische Wilhelms-Universität Münster" + GlobalSettings.getCrLf() +
@@ -88,7 +93,9 @@ public class Start{
 				"Application Version: " + GlobalSettings.getAppVersion() + GlobalSettings.getCrLf() +
 				"Startup time: " + GlobalSettings.getStartupTime() + GlobalSettings.getCrLf() +
 				"Java Runtime: "+ System.getProperty("java.version") + GlobalSettings.getCrLf() +
-				"Operating System: " + System.getProperty("os.name") + " " + System.getProperty("os.version") + " (" + System.getProperty("os.arch")+")"+ GlobalSettings.getCrLf()+
+				"Operating System: " + System.getProperty("os.name").toString() + " " + 
+									   System.getProperty("os.version").toString() + " (" + 
+									   System.getProperty("os.arch").toString()+")"+ GlobalSettings.getCrLf()+
 				"Port: " + GlobalSettings.getDefaultPort() + GlobalSettings.getCrLf());
 		
 		server.join();
