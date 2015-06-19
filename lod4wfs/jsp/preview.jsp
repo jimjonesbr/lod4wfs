@@ -90,6 +90,12 @@
 			feature.setKeywords(request.getParameter("keywords"));	
 		}
 	
+ 		if(request.getParameterValues("enable")!=null){
+			feature.setEnabled(true);
+		} else {
+			feature.setEnabled(false);	
+		} 
+		
 		feature.setGeometryVariable(request.getParameter("variable"));
 		feature.setCRS(request.getParameter("crs"));
 		
@@ -163,6 +169,29 @@
               <%-- <code><%=feature.getQuery()%></code> --%>
             </div>
           </div>
+          
+          <div class="form-group">
+            <label for="variable" class="col-sm-2 control-label">Feature Enabled</label>
+            <div class="col-sm-10">
+            
+            	<%
+	            		
+	            	if(feature.getEnabled()){
+	            		
+	            		out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled.\"></td>");
+	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" checked=\"checked\" style=\"display:none;\" />");
+	            		
+	            	} else {
+	            		
+	            		out.println("<td><img src=\"img/nok.png\"/ width=\"20\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
+	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" style=\"display:none;\" />");
+	            	}
+	            	
+            	%>
+              
+            </div>
+          </div>
+          
           <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
               <input type="submit" id="btnCreate" name="store" value="Save" class="btn btn-success"/>
@@ -175,10 +204,10 @@
 				
 				if(request.getParameter("store")!=null){
 					
+					out.println(feature.getEnabled()+" <- enabled");
 					Facade.getInstance().addFeature(feature);
 				    
-					//out.println("<script>alert(\"Feature '" + feature.getName() + "' successfully stored. \")</script>");
-
+					out.println("<script>alert(\"Feature '" + feature.getName() + "' successfully stored. \")</script>");
 					response.sendRedirect("list.jsp"); 
 					
 				} else {

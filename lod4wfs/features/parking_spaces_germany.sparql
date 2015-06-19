@@ -1,0 +1,36 @@
+{
+"name":"http://sparql.lod4wfs.de/parking_spaces_germany",
+"title":"Natural Earth Query examples",
+"abstract":"Find all parking spaces within Germany",
+"keywords":"no keywords",
+"geometryVariable":"?itemGeo",
+"endpoint":"http://linkedgeodata.org/vsparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"query":"PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  lgdo: <http://linkedgeodata.org/ontology/>
+PREFIX  ogc:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  geom: <http://geovocab.org/geometry#>
+PREFIX  meta: <http://linkedgeodata.org/meta/>
+PREFIX  bif:  <http://www.openlinksw.com/schemas/bif#>
+
+SELECT  ?item ?itemLabel ?itemGeo
+WHERE
+  { GRAPH <http://linkedgeodata.org/osm/>
+      { ?item <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> lgdo:ParkingSpace .
+        ?item <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> meta:Way .
+        ?item rdfs:label ?itemLabel .
+        ?item geom:geometry _:b0 .
+        _:b0 ogc:asWKT ?itemGeo
+      }
+    GRAPH <http://linkedgeodata.org/ne/>
+      { ?area <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkedgeodata.org/ne/ontology/Country> .
+        ?area rdfs:label 'Germany' .
+        ?area geom:geometry _:b1 .
+        _:b1 ogc:asWKT ?areaGeo
+      }
+    FILTER bif:st_intersects(?itemGeo, ?areaGeo)
+  }
+ORDER BY ?itemLabel
+"
+}

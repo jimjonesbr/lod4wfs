@@ -6,6 +6,7 @@
 "geometryVariable":"?wkt",
 "endpoint":"http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sparql",
 "crs":"EPSG:4326",
+"enabled":"true",
 "query":"PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
 
 SELECT  ?name (concat('POINT(', xsd:string(?long), ' ', xsd:string(?lat), ')') AS ?wkt) ?gss ?unitid

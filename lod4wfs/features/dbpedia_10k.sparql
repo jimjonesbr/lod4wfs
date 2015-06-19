@@ -5,7 +5,8 @@
 "keywords":"dbpedia, places",
 "geometryVariable":"?wkt",
 "endpoint":"http://dbpedia.org/sparql",
-"crs":"EPSG:4326",
+"crs":"",
+"enabled":"true",
 "query":"PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
 PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
@@ -22,6 +23,5 @@ WHERE
     ?s dbpedia-owl:populationTotal ?population
     FILTER langMatches(lang(?label), 'EN')
   }
-
 "
 }

@@ -78,6 +78,14 @@
               <input type="text" id="variable" name="variable" class="form-control" value="?wkt" />
             </div>
           </div>
+          
+          <div class="form-group">
+            
+            <div class="col-sm-10">
+            
+            	<input type="checkbox" id="enable" name="enable" checked="checked" style="display:none;" />
+              
+          </div></div>
                     
           <div class="form-group">
             <label for="query" class="col-sm-2 control-label">SPARQL Query</label>
@@ -90,6 +98,8 @@
               <input type="submit" value="Validate" class="btn btn-success"/>
             </div>
           </div>
+          
+          
         </form>
       </div>
     </div>

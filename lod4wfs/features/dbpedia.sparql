@@ -6,6 +6,7 @@
 "geometryVariable":"?wkt",
 "endpoint":"http://dbpedia.org/sparql",
 "crs":"EPSG:4326",
+"enabled":"true",
 "query":"PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX  dbo:  <http://dbpedia.org/ontology/>
 

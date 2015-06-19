@@ -141,10 +141,10 @@ public class AdapterLOD4WFS {
 					//TODO: create function to identify geometry type!!!
 					sequence.setAttribute("type","gml:MultiPointPropertyType");
 
-
-
 				} else {
+					
 					sequence.setAttribute("type",predicates.get(i).getObjectDataType());
+					
 				}
 
 				myNodeList.item(0).getParentNode().insertBefore(sequence, myNodeList.item(0));
@@ -270,8 +270,9 @@ public class AdapterLOD4WFS {
 
 								//TODO: Check if literal is already GML
 
+														
 								String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
-																
+								
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 								Node dup = document.importNode(GMLnode, true);
 								elementGeometryPredicate.appendChild(dup);						

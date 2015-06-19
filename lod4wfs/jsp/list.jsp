@@ -20,10 +20,10 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <%
-        	ArrayList<WFSFeature> dynamicFeatures = new ArrayList<WFSFeature>();
-        	
-        	dynamicFeatures = Facade.getInstance().listFDAFeatures();
-        	out.println("Layers available (" + dynamicFeatures.size() +  ")");
+        	ArrayList<WFSFeature> fdaFeatures = new ArrayList<WFSFeature>();
+
+        	fdaFeatures = Facade.getInstance().listFDAFeatures();
+        	out.println("Layers available (" + fdaFeatures.size() + ")");
         %>
       </div>
       <div class="panel-body">
@@ -38,27 +38,38 @@
                 <th>Endpoint</th>
                 <th></th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <%
-			
-			for (int i = 0; i < dynamicFeatures.size(); i++) {
-				out.println("<tr>");
-				//out.println("<td>"+dynamicFeatures.get(i).getName()+"</td>");
-				out.println("<td>"+dynamicFeatures.get(i).getTitle()+"</td>");
-				out.println("<td>"+dynamicFeatures.get(i).getFeatureAbstract()+"</td>");
-				out.println("<td>"+dynamicFeatures.get(i).getKeywords()+"</td>");
-				out.println("<td>"+dynamicFeatures.get(i).getEndpoint()+"</td>");								
-				out.println("<td><a href=\"edit.jsp?edit="+ dynamicFeatures.get(i).getFileName()+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
-				//out.println("<td><a href=\"list.jsp?delete=" + dynamicFeatures.get(i).getFileName() + "\">  <span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
-				out.println("<td><a href='#' onclick='deleteFeature(\"" + dynamicFeatures.get(i).getFileName() + "\");'><span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
-				
-				out.println("</tr>");
-				
-			}
+              	for (int i = 0; i < fdaFeatures.size(); i++) {
+              		out.println("<tr>");
+              		out.println("<td>" + fdaFeatures.get(i).getTitle() + "</td>");
+              		out.println("<td>" + fdaFeatures.get(i).getFeatureAbstract()
+              				+ "</td>");
+              		out.println("<td>" + fdaFeatures.get(i).getKeywords() + "</td>");
+              		out.println("<td>" + fdaFeatures.get(i).getEndpoint() + "</td>");
+              		out.println("<td><a title=\"Edit feature\" href=\"edit.jsp?edit="
+              				+ fdaFeatures.get(i).getFileName()
+              				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
 
-		%>
+              		if (fdaFeatures.get(i).getEnabled()) {
+
+              			out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled\"></td>");
+
+              		} else {
+
+              			out.println("<td><img src=\"img/nok.png\"/ width=\"20\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
+              		}
+              		out.println("<td><a title=\"Delete feature\" href='#' onclick='deleteFeature(\""
+              				+ fdaFeatures.get(i).getFileName()
+              				+ "\");'><span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
+
+              		out.println("</tr>");
+
+              	}
+              %>
             </tbody>
           </table>
         </FORM>
@@ -67,50 +78,46 @@
      <hr />
     </div>
 </div>
-</div>
+
 
 
 <script type="text/javascript">
-		
 
-		function deleteFeature(file) {
+
+function deleteFeature(file) {
+	
+	if (confirm('Are you sure you want to delete the layer \"' + file + '\"?')) {
+	    											
+	    $.ajax({  
+	        type:"POST",      
+	        url: "list.jsp",  
+	        data:"delete="+file,           
+	          success: function(success) {  
+	        	  window.location.reload(true);        
+	          }  
+	        }); 
 			
-			if (confirm('Are you sure you want to delete the layer \"' + file + '\"?')) {
-			    											
-			    $.ajax({  
-			        type:"POST",      
-			        url: "list.jsp",  
-			        data:"delete="+file,           
-			          success: function(success) {  
-			        	  window.location.reload(true);        
-			          }  
-			        }); 
-					
-				
-
-			} else {
-
-			}
-		}
 		
-		</script>
+
+	} else {
+
+	}
+}
+
+</script>
+
 <%
-	if(request.getParameter("delete")!= null){
-	 		String path = GlobalSettings.getFeatureDirectory()+request.getParameter("delete");
-	 		
-	WFSFeature feature = new WFSFeature();
-	 		feature.setFileName(path);
-	 		
-	Facade.getInstance().deleteFeature(feature);
+	if (request.getParameter("delete") != null) {
+		String path = GlobalSettings.getFeatureDirectory() + request.getParameter("delete");
+
+		WFSFeature feature = new WFSFeature();
+		feature.setFileName(path);
+
+		Facade.getInstance().deleteFeature(feature);
+	}
+
+	
 %>
-		
-<!-- <script type="text/javascript">
-			window.open("list.jsp","_self")
-			</script>
- -->
- <%	
-		//out.println("SPARQL " + request.getParameter("delete") + " deleted.");
- 		}
- 		%>
+	
 </BODY>
 </HTML>

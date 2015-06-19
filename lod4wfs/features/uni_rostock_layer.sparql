@@ -5,7 +5,8 @@
 "keywords":"no keywords",
 "geometryVariable":"?wkt",
 "endpoint":"http://giv-lodum.uni-muenster.de:8081/parliament/sparql",
-"crs":"EPSG:25833",
+"crs":"",
+"enabled":"false",
 "query":"SELECT  *
 WHERE
   { GRAPH <http://uni-rostock.de/lod4wfs>

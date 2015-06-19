@@ -33,10 +33,10 @@ public class FactoryFDAFeatures {
 
 	private static Logger logger = Logger.getLogger("FDAFeatures-Factory");
 	private static JenaConnector jn;
-	
+
 	public FactoryFDAFeatures() {
 		jn = new JenaConnector();
-		
+
 	}
 
 	public ArrayList<WFSFeature> listFDAFeatures() {
@@ -44,17 +44,17 @@ public class FactoryFDAFeatures {
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
-                
+
 		logger.info("Listing features from the direcoty " + System.getProperty("user.dir") + File.separator + GlobalSettings.getFeatureDirectory() + " ...");
-		
+
 		for (File file : files) {
 
 			if(file.getName().endsWith(".sparql")){
 
 				WFSFeature feature = new WFSFeature();
-				
+
 				feature = this.getFDAFeature(file.getName());
-				
+
 				if(feature != null){
 					feature.setAsFDAFeature(true);
 					result.add(feature);
@@ -65,16 +65,16 @@ public class FactoryFDAFeatures {
 		}
 
 		logger.info("Total FDA Features: " + result.size());
-		
+
 		return result;
-		
+
 	}
 
 	public static boolean existsFeature(String featureName){
 
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 		boolean result = false;
-		
+
 		for (File file : files) {
 
 			if(file.getName().endsWith(".sparql")){
@@ -85,23 +85,23 @@ public class FactoryFDAFeatures {
 					JsonReader jsonReader = new JsonReader(fileReader);
 					jsonReader.setLenient(true);
 					jsonReader.beginObject();
-						
+
 					while (jsonReader.hasNext()) {
 
 						String record = jsonReader.nextName();
-						
+
 						if(record.equals("name")){
-							
+
 							if(jsonReader.nextString().equals(GlobalSettings.getFDAFeaturesNameSpace() + featureName)){
-								
+
 								result = true;
-								
+
 							}
-							
+
 						} else {
-							
+
 							jsonReader.nextString();
-							
+
 						}
 					}
 
@@ -126,15 +126,15 @@ public class FactoryFDAFeatures {
 	public static void updateFeature(WFSFeature feature){
 
 
-		
+
 	}
 
 	public static void deleteFeature(WFSFeature feature){
 
 		File file = new File(feature.getFileName());
-		
+
 		file.delete();
-				
+
 	}
 
 	public static boolean isQueryValid(String query){
@@ -167,9 +167,9 @@ public class FactoryFDAFeatures {
 
 			}
 		} catch (Exception e) {
-			
+
 			logger.error("Invalid variable given.");
-			
+
 		}
 
 		return result;
@@ -183,16 +183,16 @@ public class FactoryFDAFeatures {
 
 			URL url = new URL(endpoint);
 			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-			
+
 			int responseCode = huc.getResponseCode();
-			
+
 			//TODO: Implement function to validate Endpoint
 			if (responseCode == 404) {
-				
+
 				logger.error("URL cannot be resolved -> " + endpoint);
 
 			}
-			
+
 		} catch (MalformedURLException e) {
 			result = false;
 			System.out.println("Malformed URL -> " + endpoint);
@@ -203,9 +203,9 @@ public class FactoryFDAFeatures {
 		return result;
 
 	}
-	
+
 	public static boolean isFeatureNameValid(String featureName){
-		
+
 		return featureName.matches("([A-Za-z0-9-_]+)");
 
 	}
@@ -223,6 +223,13 @@ public class FactoryFDAFeatures {
 			writer.write("\"geometryVariable\":\"" + feature.getGeometryVariable() + "\",\n");
 			writer.write("\"endpoint\":\"" + feature.getEndpoint() + "\",\n");
 			writer.write("\"crs\":\"" + feature.getCRS() + "\",\n");
+			
+			if (feature.getEnabled()) {
+				writer.write("\"enabled\":\"true\",\n");
+			} else {
+				writer.write("\"enabled\":\"false\",\n");
+			}
+			
 			writer.write("\"query\":\"" + feature.getQuery().replace("\"", "'") + "\"");
 			writer.write("\n}");
 			writer.close();
@@ -237,16 +244,16 @@ public class FactoryFDAFeatures {
 	}
 
 	public ResultSet executeQuery(String SPARQL, String endpoint){
-		
+
 		return jn.executeQuery(SPARQL, endpoint);
-		
+
 	}
 
 	public WFSFeature getFDAFeature(String fileName){
-		
+
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 		WFSFeature feature = new WFSFeature();
-		
+
 		for (File file : files) {
 
 			if(file.getName().endsWith(".sparql")){
@@ -257,11 +264,11 @@ public class FactoryFDAFeatures {
 					JsonReader jsonReader = new JsonReader(fileReader);
 					jsonReader.setLenient(true);
 					jsonReader.beginObject();
-															
+
 					if(file.getName().endsWith(fileName)){
-						
+
 						while (jsonReader.hasNext()) {
-														
+
 							while (jsonReader.hasNext()) {
 
 								String name = jsonReader.nextName();
@@ -308,6 +315,14 @@ public class FactoryFDAFeatures {
 
 									feature.setCRS(jsonReader.nextString());
 
+								} else if (name.equals("enabled")) {
+
+									if(jsonReader.nextString().endsWith("false")){
+										feature.setEnabled(false);
+									} else {
+										feature.setEnabled(true);
+									}									
+
 								}
 
 								feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
@@ -317,15 +332,15 @@ public class FactoryFDAFeatures {
 								feature.setFileName(file.getName());
 
 							}
-							
+
 						}
 
 						jsonReader.endObject();
 						jsonReader.close();
-						
+
 					} 
 
-					
+
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -339,40 +354,40 @@ public class FactoryFDAFeatures {
 			}
 		}
 
-		
+
 		return feature;
 	}
-	
+
 	/**
 	 * @param WFS feature 
 	 * @return Lists all predicates (properties) related to a given feature.  
 	 */
-	
+
 	public ArrayList<Triple> getPredicatesFDAFeatures(WFSFeature feature){
-		
+
 		logger.info("Listing available predicates for the FDA feature " + feature.getName() + " ...");
-		
+
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 		Query query = QueryFactory.create(feature.getQuery());
-		
+
 		for (int i = 0; i < query.getResultVars().size(); i++) {	
-			
+
 			Triple triple = new Triple();
 			triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
 			triple.setPredicate(query.getResultVars().get(i).toString());
 			result.add(triple);
-		
+
 		}
-			
+
 		return result;
-		
+
 	}
-	
+
 	public String getGeometryPredicate(String SPARQLQuery){
 
 		Query query = QueryFactory.create(SPARQLQuery);
 		String geometryPredicate = new String();
-		
+
 		final ArrayList<com.hp.hpl.jena.graph.Triple> triplesList = new ArrayList<com.hp.hpl.jena.graph.Triple>();
 
 		// This will walk through all parts of the query
@@ -412,4 +427,8 @@ public class FactoryFDAFeatures {
 
 	}
 
+	public void enableFeature(boolean enable){
+		
+		
+	}
 }

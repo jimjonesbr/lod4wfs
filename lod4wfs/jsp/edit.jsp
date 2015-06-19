@@ -21,10 +21,12 @@
 <%
 	//Create function getSPARQLFeature(String fileName);
 	WFSFeature feature = new WFSFeature();
+	
 	if(request.getParameter("edit")!=null){
 		feature = Facade.getInstance().getSPARQLFeature(request.getParameter("edit"));
 	}
-	%>
+
+%>
 <body>
 <div class="bs-docs-featurette">
   <div class="container">
@@ -35,7 +37,9 @@
     <div class="panel panel-primary">
       <div class="panel-heading"> Feature Update </div>
       <div class="panel-body">
+      
         <form action="preview.jsp" name="form1" method="POST" class="form-horizontal" >
+      
           <div class="form-group">
             <label for="endpoint" class="col-sm-2 control-label">SPARQL Endpoint</label>
             <div class="col-sm-10">
@@ -79,8 +83,29 @@
             </div>
           </div>
           <div class="form-group">
+            <label for="enable" class="col-sm-2 control-label">Feature Enabled</label>
+            <div class="col-sm-10">
+            
+            	<%
+            	
+	            	if(feature.getEnabled()){
+	            		
+	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" checked=\"checked\">");
+	            		
+	            	} else {
+	            		
+	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" >");
+	            		
+	            	}
+            	
+            	%>
+              
+            </div>
+          </div>
+ 
+          <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-              <p>* Feature name cannot be modified.</p>
+              
               <input type="hidden" id="hiddenId" name="operation" value="edit" >
               <input type="submit" id="btnSave" name="update" value="Preview" class="btn btn-success"/>
             </div>
@@ -91,82 +116,6 @@
      <hr />
      </div>
 </div>
-<%
-		
-/* 		if(request.getParameter("update")!=null){
-			
-			
-			Facade.getInstance().addFeature
-			out.println("Changes saved.");	
-			
-			
-		} */
-		
-		%>
-<%-- 				<% 
-				
-				if(request.getParameter("update")!=null){
-					
-					
-					out.println("Changes at '" + feature.getName() + "' saved. ");
 
-				} else {
-									
-		 	        Query query = QueryFactory.create(request.getParameter("query"));
-		 	        ARQ.getContext().setTrue(ARQ.useSAX); 	       	        
-		 	                     
-		 	        if(!query.hasLimit()){
-		 	        	query.setLimit(10);
-		 	        			 	        	
-		 	        } else if (query.getLimit()>10){
-		 	        	query.setLimit(10);
-		 	        }
-		 	        
-		 	       out.println("* Limited to the first 10 records.");
-		 	        
-		 	        
-		 	        //QueryExecution qexec = QueryExecutionFactory.sparqlService(request.getParameter("endpoint"), query);
-		 	        //ResultSet results = qexec.execSelect();
-	 	        	 	       
-		 	        ResultSet results = Facade.getInstance().executeQuery(query.toString(), request.getParameter("endpoint"));
-	 				        
-		 			%> 
-		 			<table border="1">
-		 				<tr>
-		 			<% 
-		 			
-		 			for (int i = 0; i < query.getresultvars().size(); i++) {	
-	
-		 				out.println("<td><b>"+query.getResultVars().get(i).toString()+"</b></td>");
-			 			
-		 			}
-		 			%> 
-			 			</tr>
-			 		<%
-		 	        while (results.hasNext()) {
-		 	            
-		 	        	QuerySolution soln = results.nextSolution();
-		 	        	
-		 	 			%> 
-		 	 			<tr>
-		 	 			<% 
-		 	    		for (int i = 0; i < query.getresultvars().size(); i++) {	
-	
-		 	    			out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>"); 	    			
-		 	    		}
-		 	 			%> 
-		 	 			</tr>
-		 	 			<%  	           
-		 	        }
-		 			%> 
-		 			</table>
-		 			<%		 				 	         	        
-	
-		 		}
-	
-		
- 		%>
- 		
- 	 --%>
 </body>
 </html>

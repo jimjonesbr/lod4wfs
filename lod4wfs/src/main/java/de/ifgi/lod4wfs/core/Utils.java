@@ -70,15 +70,12 @@ public class Utils {
 					/**
 					 * Extracting Reference System
 					 */
-					//if(literal.contains("<") && literal.contains(">")){
+					CRS = literal.substring(literal.indexOf("<") , literal.indexOf(">")+1);
+					literal = literal.substring(literal.indexOf(">") + 1, literal.length());
 
-						CRS = literal.substring(literal.indexOf("<") , literal.indexOf(">")+1);
-						literal = literal.substring(literal.indexOf(">") + 1, literal.length());
-
-					//}
 
 					/**
-					 * Removing Literal Type
+					 * Removing Literal Type, if applicable.
 					 */
 					if(literal.contains("^^")){
 

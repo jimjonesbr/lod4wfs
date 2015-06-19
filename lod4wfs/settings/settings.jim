@@ -4,7 +4,7 @@ abstract = <http://purl.org/dc/terms/abstract>
 keywords = <http://purl.org/dc/terms/subject>
 
 [Geometry]
-geometryPredicate = <http://www.opengis.net/ont/geosparql/1.0#asWKT>
+geometryPredicate = DELETE-ME!!<http://www.opengis.net/ont/geosparql/1.0#asWKT>
 geometryVariable = asWKT
 geometryClass = <http://www.opengis.net/ont/geosparql/1.0#Geometry>
 predicatesContainer = <http://www.opengis.net/ont/geosparql/1.0#Feature>

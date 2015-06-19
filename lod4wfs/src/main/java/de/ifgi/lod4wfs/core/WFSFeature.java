@@ -13,6 +13,7 @@ public class WFSFeature {
 	private String defaultCRS;
 	private String lowerCorner;
 	private String upperCorner;
+	private boolean enabled;
 
 	private String query;
 	private String geometryVariable;
@@ -41,14 +42,13 @@ public class WFSFeature {
 
 	public WFSFeature(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
-			String upperCorner, String query, String geometryVariable,
-			String endpoint, String fileName, String outputFormat,
-			int recordsLimit, String fields, String sOLRSorting,
+			String upperCorner, String enabled, String query,
+			String geometryVariable, String endpoint, String fileName,
+			String outputFormat, int recordsLimit, String fields,
+			String sOLRSorting, boolean isSOLR, boolean isFDA, boolean isSDA,
 			String sOLRGeometryField, String sOLRFilter,
 			String sOLRSpatialConstraint) {
-		
 		super();
-		
 		this.name = name;
 		this.title = title;
 		this.keywords = keywords;
@@ -56,6 +56,7 @@ public class WFSFeature {
 		this.defaultCRS = defaultCRS;
 		this.lowerCorner = lowerCorner;
 		this.upperCorner = upperCorner;
+		this.enabled = true;
 		this.query = query;
 		this.geometryVariable = geometryVariable;
 		this.endpoint = endpoint;
@@ -63,19 +64,14 @@ public class WFSFeature {
 		this.outputFormat = outputFormat;
 		this.recordsLimit = recordsLimit;
 		this.fields = fields;
-		this.SOLRSorting = sOLRSorting;
-		this.SOLRGeometryField = sOLRGeometryField;
-		this.SOLRFilter = sOLRFilter;
-		this.SOLRSpatialConstraint = sOLRSpatialConstraint;
-		this.isFDA = false;
-		this.isSDA = false;
-		this.isSOLR = false;
-		
+		SOLRSorting = sOLRSorting;
+		this.isSOLR = isSOLR;
+		this.isFDA = isFDA;
+		this.isSDA = isSDA;
+		SOLRGeometryField = sOLRGeometryField;
+		SOLRFilter = sOLRFilter;
+		SOLRSpatialConstraint = sOLRSpatialConstraint;
 	}
-
-
-
-
 
 
 
@@ -125,6 +121,15 @@ public class WFSFeature {
 		this.defaultCRS = defaultCRS;
 	}
 
+	
+	public boolean getEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
 	public String getLowerCorner() {
 		return lowerCorner;
 	}

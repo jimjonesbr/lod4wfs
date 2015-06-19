@@ -91,7 +91,17 @@ public class FactoryWFS {
 			fdaFeatureList = factoryFDA.listFDAFeatures();
 
 			for (int i = 0; i < fdaFeatureList.size(); i++) {
-				features.add(fdaFeatureList.get(i));
+				
+				//Checks if the feature is enabled for download.				
+				if(fdaFeatureList.get(i).getEnabled()){
+				
+					features.add(fdaFeatureList.get(i));
+					
+				} else {
+					
+					logger.warn("FDA Feature [" + fdaFeatureList.get(i).getName() + "] disabled. This feature will not appear in the Capabilities Document.");
+					
+				}
 			}
 
 		} else {
