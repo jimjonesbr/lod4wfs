@@ -175,19 +175,17 @@
             <div class="col-sm-10">
             
             	<%
-	            		
-	            	if(feature.getEnabled()){
-	            		
-	            		out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled.\"></td>");
-	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" checked=\"checked\" style=\"display:none;\" />");
-	            		
-	            	} else {
-	            		
-	            		out.println("<td><img src=\"img/nok.png\"/ width=\"20\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
-	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" style=\"display:none;\" />");
-	            	}
-	            	
-            	%>
+                        		if(feature.isEnabled()){
+                        		            		
+                        		            		out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled.\"></td>");
+                        		            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" checked=\"checked\" style=\"display:none;\" />");
+                        		            		
+                        		            	} else {
+                        		            		
+                        		            		out.println("<td><img src=\"img/nok.png\"/ width=\"20\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
+                        		            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" style=\"display:none;\" />");
+                        		            	}
+                        	%>
               
             </div>
           </div>
@@ -200,106 +198,105 @@
         </FORM>
       </div>
     </div>
-   <div class="row"> <div class="col-md-offset-2 col-md-8"><% 
-				
-				if(request.getParameter("store")!=null){
-					
-					out.println(feature.getEnabled()+" <- enabled");
-					Facade.getInstance().addFeature(feature);
-				    
-					out.println("<script>alert(\"Feature '" + feature.getName() + "' successfully stored. \")</script>");
-					response.sendRedirect("list.jsp"); 
-					
-				} else {
-									
-		 	        Query query = QueryFactory.create(request.getParameter("query"));
-		 	        ARQ.getContext().setTrue(ARQ.useSAX); 	       	        
-		 	                     
-		 	        int previewLimit = GlobalSettings.getPreviewLimit();
-		 	        
-		 	        if(!query.hasLimit()){
-		 	        	
-		 	        	query.setLimit(previewLimit);
-		 	        			 	        	
-		 	        } else if (query.getLimit()>previewLimit){
-		 	        	
-		 	        	query.setLimit(previewLimit);
-		 	        	
-		 	        }
-		 	        
-		 	        out.println("<p>* Limited to the first " + previewLimit + " records.</p>");
-	 	        	 	       
-		 	        ResultSet results = Facade.getInstance().executeQuery(query.toString(), request.getParameter("endpoint"));
-		 			
-		 			out.println("<table border=\"1\" class='table table-condensed table-hover table-striped table-bordered'>");
-		 			out.println("<thead><tr>");
-		 			
-		 			for (int i = 0; i < query.getResultVars().size(); i++) {	
-	
-		 				out.println("<th>"+query.getResultVars().get(i).toString()+"</th>");
-			 			
-		 			}
-		 			
-		 			out.println("</tr></thead><tbody>");
-		 			
-		 			while (results.hasNext()) {
-		 	            
-		 	        	QuerySolution soln = results.nextSolution();
+   <div class="row"> <div class="col-md-offset-2 col-md-8"><%
+ 	if(request.getParameter("store")!=null){
+ 			
+ 			out.println(feature.isEnabled()+" <- enabled");
+ 			Facade.getInstance().addFeature(feature);
+ 		    
+ 			out.println("<script>alert(\"Feature '" + feature.getName() + "' successfully stored. \")</script>");
+ 			response.sendRedirect("list.jsp"); 
+ 			
+ 		} else {
+ 							
+ 		 	        Query query = QueryFactory.create(request.getParameter("query"));
+ 		 	        ARQ.getContext().setTrue(ARQ.useSAX); 	       	        
+ 		 	                     
+ 		 	        int previewLimit = GlobalSettings.getPreviewLimit();
+ 		 	        
+ 		 	        if(!query.hasLimit()){
+ 		 	        	
+ 		 	        	query.setLimit(previewLimit);
+ 		 	        			 	        	
+ 		 	        } else if (query.getLimit()>previewLimit){
+ 		 	        	
+ 		 	        	query.setLimit(previewLimit);
+ 		 	        	
+ 		 	        }
+ 		 	        
+ 		 	        out.println("<p>* Limited to the first " + previewLimit + " records.</p>");
+ 	 	        	 	       
+ 		 	        ResultSet results = Facade.getInstance().executeQuery(query.toString(), request.getParameter("endpoint"));
+ 		 			
+ 		 			out.println("<table border=\"1\" class='table table-condensed table-hover table-striped table-bordered'>");
+ 		 			out.println("<thead><tr>");
+ 		 			
+ 		 			for (int i = 0; i < query.getResultVars().size(); i++) {	
+ 	
+ 		 				out.println("<th>"+query.getResultVars().get(i).toString()+"</th>");
+ 	 			
+ 		 			}
+ 		 			
+ 		 			out.println("</tr></thead><tbody>");
+ 		 			
+ 		 			while (results.hasNext()) {
+ 		 	            
+ 		 	        	QuerySolution soln = results.nextSolution();
 
-		 	 			out.println("<tr>");
+ 		 	 			out.println("<tr>");
 
-		 	 			for (int i = 0; i < query.getResultVars().size(); i++) {	
-								
-		 	    			
-		 	    			if(("?"+query.getResultVars().get(i).toString()).equals(feature.getGeometryVariable())){
-		 	    				
-		 	    				String crs = Facade.getInstance().getCoordinateReferenceSystem(soln.get("?" + query.getResultVars().get(i)).toString()); 
-		 	    				String geometryType = Facade.getInstance().getGeomeryType(soln.get("?" + query.getResultVars().get(i)).toString());
-								
-		 	    				if(geometryType.equals("gml:MultiPointPropertyType")){
-		 	    				
-		 	    					geometryType = "POINT";
+ 		 	 			for (int i = 0; i < query.getResultVars().size(); i++) {	
+ 						
+ 		 	    			
+ 		 	    			if(("?"+query.getResultVars().get(i).toString()).equals(feature.getGeometryVariable())){
+ 		 	    				
+ 		 	    				String crs = Facade.getInstance().getCoordinateReferenceSystem(soln.get("?" + query.getResultVars().get(i)).toString()); 
+ 		 	    				String geometryType = Facade.getInstance().getGeomeryType(soln.get("?" + query.getResultVars().get(i)).toString());
+ 						
+ 		 	    				if(geometryType.equals("gml:MultiPointPropertyType")){
+ 		 	    				
+ 		 	    					geometryType = "POINT";
 
-		 	    				}
-		 	    				
-		 	    				if(geometryType.equals("gml:MultiPolygonPropertyType")){
-		 	    				
-		 	    					geometryType = "POLYGON";
-		 	    					
-		 	    				}
-		 	    				
-		 	    				if(geometryType.equals("gml:MultiLineStringPropertyType")){
-			 	    				
-		 	    					geometryType = "LINESTRING";
-		 	    					
-		 	    				}
+ 		 	    				}
+ 		 	    				
+ 		 	    				if(geometryType.equals("gml:MultiPolygonPropertyType")){
+ 		 	    				
+ 		 	    					geometryType = "POLYGON";
+ 		 	    					
+ 		 	    				}
+ 		 	    				
+ 		 	    				if(geometryType.equals("gml:MultiLineStringPropertyType")){
+ 	 	    				
+ 		 	    					geometryType = "LINESTRING";
+ 		 	    					
+ 		 	    				}
 
-		 	    						 	    				
-		 	    				out.println("<td><img src = \"img/" + geometryType.toLowerCase() + 
-		 	    						      ".png\" alt = \"" + geometryType + 
-		 	    						        "\" title = \"" + geometryType + "\"" +
-		 	    						        "  height = 51 width = 51> </td>");	
-		 	    				
-		 	    				feature.setCRS(crs);
-		 	    						 	    				
-		 	    				out.println("<script type='text/javascript'>$('#crs').val('"+ crs +"');</script>");
-		 	    				
-		 	    			} else {
-		 	    				
-		 	    				out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>");
-		 	    				
-		 	    			}
-		 	    			
-		 	    		}
-		 	 			out.println("</tr>");
-    
-		 	        }
-		 			out.println("</tbody></table>");
+ 		 	    						 	    				
+ 		 	    				out.println("<td><img src = \"img/" + geometryType.toLowerCase() + 
+ 		 	    						      ".png\" alt = \"" + geometryType + 
+ 		 	    						        "\" title = \"" + geometryType + "\"" +
+ 		 	    						        "  height = 51 width = 51> </td>");	
+ 		 	    				
+ 		 	    				feature.setCRS(crs);
+ 		 	    						 	    				
+ 		 	    				out.println("<script type='text/javascript'>$('#crs').val('"+ crs +"');</script>");
+ 		 	    				
+ 		 	    			} else {
+ 		 	    				
+ 		 	    				out.println("<td>"+soln.get("?" + query.getResultVars().get(i).toString())+"</td>");
+ 		 	    				
+ 		 	    			}
+ 		 	    			
+ 		 	    		}
+ 		 	 			out.println("</tr>");
+     
+ 		 	        }
+ 		 			out.println("</tbody></table>");
 
-		 		}
-	
-			}	
- 		%></div></div>
+ 		 		}
+ 	
+ 	}
+ %></div></div>
          <hr />
     
   </div>

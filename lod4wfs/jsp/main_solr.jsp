@@ -7,6 +7,6 @@
 </head>
 
 	<body></br></br></br></br></br></br></br></br>
-		<center><h1><b>Under Construction</b></h1></center>
+		<center><br><h1><b>SOLR4WFS Web Interface</b><br><b>Under Construction</b></h1></center>
 	</body>
 </html>	

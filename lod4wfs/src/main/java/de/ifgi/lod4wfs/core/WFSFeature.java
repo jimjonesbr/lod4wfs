@@ -29,7 +29,7 @@ public class WFSFeature {
 	private boolean isSOLR = false;
 	private boolean isFDA = false;
 	private boolean isSDA = false;
-	
+
 	private String SOLRGeometryField;
 	private String SOLRFilter;
 	private String SOLRSpatialConstraint;
@@ -74,13 +74,6 @@ public class WFSFeature {
 	}
 
 
-
-
-
-
-
-
-
 	public String getName() {
 		return name;
 	}
@@ -121,15 +114,15 @@ public class WFSFeature {
 		this.defaultCRS = defaultCRS;
 	}
 
-	
-	public boolean getEnabled() {
+
+	public boolean isEnabled() {
 		return enabled;
 	}
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	public String getLowerCorner() {
 		return lowerCorner;
 	}
@@ -170,7 +163,7 @@ public class WFSFeature {
 		this.isSDA = sda;
 	}
 
-	
+
 	public String getQuery() {
 		return query;
 	}
@@ -265,15 +258,6 @@ public class WFSFeature {
 	public void setSOLRFilter(String sOLRFilter) {
 		SOLRFilter = sOLRFilter;
 	}
-
-
-
-
-
-
-
-
-
 
 }
 

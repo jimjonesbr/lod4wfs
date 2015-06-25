@@ -25,6 +25,7 @@ import de.ifgi.lod4wfs.core.WFSFeature;
 
 /**
  * @author Jim Jones
+ * @tutorial: https://www.overleaf.com/1324048zhbcdw#/3368311/
  */
 
 public class FactoryWFS {
@@ -42,7 +43,6 @@ public class FactoryWFS {
 	private static ArrayList<WFSFeature> solrFeatureList;
 
 	private static Logger logger = Logger.getLogger("WFS-Factory");
-
 
 	public FactoryWFS() {
 
@@ -92,8 +92,10 @@ public class FactoryWFS {
 
 			for (int i = 0; i < fdaFeatureList.size(); i++) {
 				
-				//Checks if the feature is enabled for download.				
-				if(fdaFeatureList.get(i).getEnabled()){
+				/**
+				 * Checks if the feature is enabled for download.				
+				 */
+				if(fdaFeatureList.get(i).isEnabled()){
 				
 					features.add(fdaFeatureList.get(i));
 					

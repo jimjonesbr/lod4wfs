@@ -87,18 +87,16 @@
             <div class="col-sm-10">
             
             	<%
-            	
-	            	if(feature.getEnabled()){
-	            		
-	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" checked=\"checked\">");
-	            		
-	            	} else {
-	            		
-	            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" >");
-	            		
-	            	}
-            	
-            	%>
+                        		if(feature.isEnabled()){
+                        		            		
+                        		            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" checked=\"checked\">");
+                        		            		
+                        		            	} else {
+                        		            		
+                        		            		out.println("<input type=\"checkbox\" id=\"enable\" name=\"enable\" >");
+                        		            		
+                        		            	}
+                        	%>
               
             </div>
           </div>

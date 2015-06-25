@@ -24,7 +24,7 @@ public class JenaConnector {
 	public ResultSet executeQuery(String SPARQL, String endpoint){
 		
 		Query query = QueryFactory.create(SPARQL);
-		logger.info("Query fired -> \n\n" + SPARQL + "\n\n");
+		logger.info("SPARQL Query fired at the endpoint [" + endpoint + "]: \n\n" + SPARQL + "\n\n");
 		
 		QueryExecution qexec = QueryExecutionFactory.sparqlService(endpoint, query);
 		ResultSet results = qexec.execSelect();

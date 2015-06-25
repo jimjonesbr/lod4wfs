@@ -27,11 +27,11 @@
         %>
       </div>
       <div class="panel-body">
+      
         <FORM NAME="form1" >
           <table class="table table-condensed table-hover table-striped table-bordered">
             <thead>
-              <tr>
-                
+              <tr>                
                 <th>Title</th>
                 <th>Abstract</th>
                 <th>Keywords</th>
@@ -44,35 +44,38 @@
             <tbody>
               <%
               	for (int i = 0; i < fdaFeatures.size(); i++) {
-              		out.println("<tr>");
-              		out.println("<td>" + fdaFeatures.get(i).getTitle() + "</td>");
-              		out.println("<td>" + fdaFeatures.get(i).getFeatureAbstract()
-              				+ "</td>");
-              		out.println("<td>" + fdaFeatures.get(i).getKeywords() + "</td>");
-              		out.println("<td>" + fdaFeatures.get(i).getEndpoint() + "</td>");
-              		out.println("<td><a title=\"Edit feature\" href=\"edit.jsp?edit="
-              				+ fdaFeatures.get(i).getFileName()
-              				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
+                            		
+                            		out.println("<tr>");
+                            		out.println("<td>" + fdaFeatures.get(i).getTitle() + "</td>");
+                            		out.println("<td>" + fdaFeatures.get(i).getFeatureAbstract()
+                            				+ "</td>");
+                            		out.println("<td>" + fdaFeatures.get(i).getKeywords() + "</td>");
+                            		out.println("<td>" + fdaFeatures.get(i).getEndpoint() + "</td>");
+                            		out.println("<td><a title=\"Edit feature\" href=\"edit.jsp?edit="
+                            				+ fdaFeatures.get(i).getFileName()
+                            				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
 
-              		if (fdaFeatures.get(i).getEnabled()) {
+                            		if (fdaFeatures.get(i).isEnabled()) {
 
-              			out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled\"></td>");
+                            			out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled\"></td>");
 
-              		} else {
+                            		} else {
 
-              			out.println("<td><img src=\"img/nok.png\"/ width=\"20\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
-              		}
-              		out.println("<td><a title=\"Delete feature\" href='#' onclick='deleteFeature(\""
-              				+ fdaFeatures.get(i).getFileName()
-              				+ "\");'><span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
+                            			out.println("<td><img src=\"img/nok.png\"/ width=\"21\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
+                            		}
+                            		
+                            		out.println("<td><a title=\"Delete feature\" href='#' onclick='deleteFeature(\""
+                            				+ fdaFeatures.get(i).getFileName()
+                            				+ "\");'><span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
 
-              		out.println("</tr>");
+                            		out.println("</tr>");
 
-              	}
+                            	}
               %>
             </tbody>
           </table>
         </FORM>
+        
       </div>
     </div>
      <hr />
@@ -82,27 +85,26 @@
 
 
 <script type="text/javascript">
-
-
-function deleteFeature(file) {
-	
-	if (confirm('Are you sure you want to delete the layer \"' + file + '\"?')) {
-	    											
-	    $.ajax({  
-	        type:"POST",      
-	        url: "list.jsp",  
-	        data:"delete="+file,           
-	          success: function(success) {  
-	        	  window.location.reload(true);        
-	          }  
-	        }); 
-			
 		
-
-	} else {
-
-	}
-}
+		function deleteFeature(file) {
+			
+			if (confirm('Are you sure you want to delete the layer \"' + file + '\"?')) {
+			    											
+			    $.ajax({  
+			        type:"POST",      
+			        url: "list.jsp",  
+			        data:"delete="+file,           
+			          success: function(success) {  
+			        	  window.location.reload(true);        
+			          }  
+			        }); 
+					
+				
+		
+			} else {
+		
+			}
+		}
 
 </script>
 

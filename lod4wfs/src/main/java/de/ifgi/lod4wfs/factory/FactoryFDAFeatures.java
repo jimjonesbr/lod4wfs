@@ -224,7 +224,7 @@ public class FactoryFDAFeatures {
 			writer.write("\"endpoint\":\"" + feature.getEndpoint() + "\",\n");
 			writer.write("\"crs\":\"" + feature.getCRS() + "\",\n");
 			
-			if (feature.getEnabled()) {
+			if (feature.isEnabled()) {
 				writer.write("\"enabled\":\"true\",\n");
 			} else {
 				writer.write("\"enabled\":\"false\",\n");
