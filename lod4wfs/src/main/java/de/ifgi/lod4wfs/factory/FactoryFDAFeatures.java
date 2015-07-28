@@ -1,5 +1,6 @@
 package de.ifgi.lod4wfs.factory;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -56,8 +57,17 @@ public class FactoryFDAFeatures {
 				feature = this.getFDAFeature(file.getName());
 
 				if(feature != null){
+					
+					WFSFeature featureLog = new WFSFeature();
+					featureLog = getFeatureLog(feature);
+					
+					feature.setSize(featureLog.getSize());
+					feature.setGeometries(featureLog.getGeometries());
+					feature.setLastAccess(featureLog.getLastAccess());
+					
 					feature.setAsFDAFeature(true);
 					result.add(feature);
+					
 				}
 
 			}
@@ -70,6 +80,42 @@ public class FactoryFDAFeatures {
 
 	}
 
+	
+	private WFSFeature getFeatureLog(WFSFeature feature){
+
+		WFSFeature result = new WFSFeature();
+
+		String featureLogFile = "logs/features.log";
+		String line = "";
+		String splitBy = ";";
+
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(featureLogFile));
+
+			while ((line = br.readLine()) != null ) {
+
+				String[] featureLogLine = line.split(splitBy);
+
+				if(feature.getName().equals(featureLogLine[0])){
+
+					result.setLastAccess(featureLogLine[1]);
+					result.setSize(Double.parseDouble(featureLogLine[2]));
+					result.setGeometries(Long.parseLong(featureLogLine[3]));
+
+				}
+
+			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return result;
+		
+	}
+	
 	public static boolean existsFeature(String featureName){
 
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
@@ -327,7 +373,6 @@ public class FactoryFDAFeatures {
 
 								feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
 								feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
-								//feature.setDefaultCRS(GlobalSettings.getDefaultCRS());
 								feature.setAsFDAFeature(true);
 								feature.setFileName(file.getName());
 

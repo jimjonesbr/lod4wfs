@@ -293,7 +293,6 @@ public class GlobalSettings {
 	            
 	            if(properties.getProperty("build.date").equals("${maven.build.timestamp}")){
 	            	
-	            	//TODO: Settings variables being set 2!
 	            	appVersion = properties.getProperty("build") + " (Development Version)";
 	            }
 	            

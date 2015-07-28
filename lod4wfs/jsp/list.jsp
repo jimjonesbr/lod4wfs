@@ -1,8 +1,11 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@ page import="java.io.*"%>
 <%@ page import="de.ifgi.lod4wfs.core.*"%>
 <%@ page import="de.ifgi.lod4wfs.facade.*"%>
 <%@ page import="de.ifgi.lod4wfs.factory.*"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.text.DecimalFormat"%>
+
 <html lang="en">
 <head>
 <title>LOD4WFS Administration Interface</title>
@@ -55,6 +58,10 @@
                             				+ fdaFeatures.get(i).getFileName()
                             				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
 
+                            		out.println("<td><img src=\"img/info2.png\"/ width=\"21\" title=\"Size: "+ new DecimalFormat("#.##").format(fdaFeatures.get(i).getSize()/1024.0/1024.0) + " MB" +
+                            																				  "\nGeometries: " + fdaFeatures.get(i).getGeometries() + 
+                            																				  "\nLast Downloaded: " + fdaFeatures.get(i).getLastAccess() +"\"></td>");
+                            		
                             		if (fdaFeatures.get(i).isEnabled()) {
 
                             			out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled\"></td>");

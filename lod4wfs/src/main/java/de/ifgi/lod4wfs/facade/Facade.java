@@ -17,11 +17,13 @@ public class Facade {
 
 	private static Facade instance;
 	private FactoryFDAFeatures factoryFDA;	
+	private ArrayList<WFSFeature> globalFeatureList;
 	
 	public Facade(){
 
 		factoryFDA = new FactoryFDAFeatures();
-
+		globalFeatureList = new ArrayList<WFSFeature>();
+		
 	}
 
 	public static Facade getInstance() {
@@ -36,9 +38,10 @@ public class Facade {
 	 * Methods for WFS Interface
 	 */
 	
-	public String getFeature(WFSFeature layer){
-
-		return FactoryWFS.getInstance().getFeature(layer);
+	public String getFeature(WFSFeature feature){
+		
+		return FactoryWFS.getInstance().getFeature(feature);
+		
 	}
 
 	public String describeFeatureType(WFSFeature feature){
@@ -59,6 +62,37 @@ public class Facade {
 	/**
 	 * Methods for Web Interface (LOD4WFS)
 	 */
+	
+	public WFSFeature getFeatureMetadata(WFSFeature feature){
+		
+
+		WFSFeature result = new WFSFeature();
+		boolean isInMemory = false;
+		
+		String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));
+			
+		for (int i = 0; i < globalFeatureList.size(); i++) {
+			
+			System.out.println("feature: " + FactoryWFS.getInstance().getLoadedModelFeature().shortForm((feature.getName())) + " | global: " + globalFeatureList.get(i).getName());
+			
+			if(featureName.equals(globalFeatureList.get(i).getName())){
+				
+				result.setSize(feature.getSize());
+				isInMemory=true;
+			}
+			
+		}
+
+
+		if(!isInMemory) {
+			
+			result.setSize(0);
+			
+		}
+		
+		return result;
+		
+	}
 	
 	public ArrayList<WFSFeature> listFDAFeatures(){
 		

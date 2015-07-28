@@ -9,7 +9,7 @@ import com.hp.hpl.jena.query.ResultSet;
 
 /**
  * 
- * @author jones
+ * @author Jim Jones
  * @version 1.0
  */
 

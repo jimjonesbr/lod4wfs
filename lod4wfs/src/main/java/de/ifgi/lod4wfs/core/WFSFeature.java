@@ -14,7 +14,10 @@ public class WFSFeature {
 	private String lowerCorner;
 	private String upperCorner;
 	private boolean enabled;
-
+	private double size;
+	private long geometries;
+	private String lastAccess;
+	
 	private String query;
 	private String geometryVariable;
 	private String endpoint;
@@ -40,13 +43,16 @@ public class WFSFeature {
 	}
 
 
+
+
+
 	public WFSFeature(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
-			String upperCorner, String enabled, String query,
-			String geometryVariable, String endpoint, String fileName,
-			String outputFormat, int recordsLimit, String fields,
-			String sOLRSorting, boolean isSOLR, boolean isFDA, boolean isSDA,
-			String sOLRGeometryField, String sOLRFilter,
+			String upperCorner, boolean enabled, double size, long triples,
+			String query, String geometryVariable, String endpoint,
+			String fileName, String outputFormat, int recordsLimit,
+			String fields, String sOLRSorting, boolean isSOLR, boolean isFDA,
+			boolean isSDA, String sOLRGeometryField, String sOLRFilter,
 			String sOLRSpatialConstraint) {
 		super();
 		this.name = name;
@@ -56,7 +62,9 @@ public class WFSFeature {
 		this.defaultCRS = defaultCRS;
 		this.lowerCorner = lowerCorner;
 		this.upperCorner = upperCorner;
-		this.enabled = true;
+		this.enabled = enabled;
+		this.size = size;
+		this.geometries = triples;
 		this.query = query;
 		this.geometryVariable = geometryVariable;
 		this.endpoint = endpoint;
@@ -72,6 +80,9 @@ public class WFSFeature {
 		SOLRFilter = sOLRFilter;
 		SOLRSpatialConstraint = sOLRSpatialConstraint;
 	}
+
+
+
 
 
 	public String getName() {
@@ -259,6 +270,57 @@ public class WFSFeature {
 		SOLRFilter = sOLRFilter;
 	}
 
+
+
+
+
+	public double getSize() {
+		return size;
+	}
+
+
+
+
+
+	public void setSize(double size) {
+		this.size = size;
+	}
+
+
+
+
+
+	public long getGeometries() {
+		return geometries;
+	}
+
+
+
+
+
+	public void setGeometries(long geometries) {
+		this.geometries = geometries;
+	}
+
+
+
+
+
+	public String getLastAccess() {
+		return lastAccess;
+	}
+
+
+
+
+
+	public void setLastAccess(String lastAccess) {
+		this.lastAccess = lastAccess;
+	}
+
+
+	
+	
 }
 
 

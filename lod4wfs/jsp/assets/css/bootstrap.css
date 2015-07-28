@@ -179,7 +179,9 @@ optgroup {
 table {
   border-spacing: 0;
   border-collapse: collapse;
+  
 }
+
 td,
 th {
   padding: 0;

@@ -69,7 +69,7 @@ public class FactoryWFS {
 		fdaFeatureList = null;
 		sdaFeatureList = null;
 		solrFeatureList = null;
-		
+
 		GlobalSettings.refreshSystemVariables();
 
 		if(GlobalSettings.isSolrEnabled()){
@@ -81,9 +81,9 @@ public class FactoryWFS {
 			}	
 
 		} else {
-			
+
 			logger.warn("SOLR Features support disabled.");
-			
+
 		}
 
 		if(GlobalSettings.isFdaEnabled()){
@@ -91,25 +91,25 @@ public class FactoryWFS {
 			fdaFeatureList = factoryFDA.listFDAFeatures();
 
 			for (int i = 0; i < fdaFeatureList.size(); i++) {
-				
+
 				/**
 				 * Checks if the feature is enabled for download.				
 				 */
 				if(fdaFeatureList.get(i).isEnabled()){
-				
+					
 					features.add(fdaFeatureList.get(i));
-					
+
 				} else {
-					
+
 					logger.warn("FDA Feature [" + fdaFeatureList.get(i).getName() + "] disabled. This feature will not appear in the Capabilities Document.");
-					
+
 				}
 			}
 
 		} else {
-			
+
 			logger.warn("FDA Features support disabled.");
-			
+
 		}
 
 		if(GlobalSettings.isSdaEnabled()){
@@ -121,9 +121,9 @@ public class FactoryWFS {
 			}
 
 		} else {
-			
+
 			logger.warn("SDA Features support disabled.");
-			
+
 		}
 
 
@@ -169,7 +169,7 @@ public class FactoryWFS {
 					keywordsElement.appendChild(document.createTextNode(features.get(i).getKeywords()));
 					Element crsElement = document.createElement("SRS");
 					crsElement.appendChild(document.createTextNode(features.get(i).getCRS()));
-															
+
 					Element bboxElement = document.createElement("LatLongBoundingBox");
 					bboxElement.setAttribute("maxy", "83.6274");
 					bboxElement.setAttribute("maxx", "-180");
@@ -225,7 +225,7 @@ public class FactoryWFS {
 			}
 
 		} 
-		
+
 		if(GlobalSettings.isFdaEnabled()){
 
 			if(this.isFDAFeature(feature)){
@@ -235,7 +235,7 @@ public class FactoryWFS {
 			} 		
 
 		} 
-		
+
 		if(GlobalSettings.isSdaEnabled()){
 
 			if(this.isSDAFeature(feature)){
@@ -431,4 +431,5 @@ public class FactoryWFS {
 		return modelFeatures;
 
 	}
+
 }

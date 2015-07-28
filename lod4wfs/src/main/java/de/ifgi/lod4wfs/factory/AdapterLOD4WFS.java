@@ -5,9 +5,19 @@ package de.ifgi.lod4wfs.factory;
  * @description Provides all standard WFS functions (GetCapabilities, DescribeFeatureType and GetFeature) for LOD data sources.
  */
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -201,14 +211,15 @@ public class AdapterLOD4WFS {
 			String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName());
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);	
 
-			//query = QueryFactory.create(factorySDA.generateGetFeatureSPARQL(featureName, predicates));
 			rs = jn.executeQuery(factorySDA.generateGetFeatureSPARQL(featureName, predicates),GlobalSettings.getDefaultSPARQLEndpoint());
 
 		}
 
 		layerPrefix = FactoryWFS.getInstance().getLoadedModelFeature().shortForm(feature.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
-
+		
+		long countIteration = 0;
+		
 		if(feature.getOutputFormat().equals("xml")){
 
 			try {
@@ -228,9 +239,7 @@ public class AdapterLOD4WFS {
 
 					requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 
-				}			
-
-				long countIteration = 0;
+				}							
 
 				logger.info("Creating GetFeature XML document for [" + feature.getName() + "] ...");
 
@@ -339,7 +348,8 @@ public class AdapterLOD4WFS {
 				logger.info("XML Document with " + countIteration + " features successfully created.");
 
 				getFeatureResponse = Utils.printXMLDocument(document);
-
+				
+				
 			} catch (ParserConfigurationException e) {
 				e.printStackTrace();
 			} catch (SAXException e) {
@@ -466,15 +476,13 @@ public class AdapterLOD4WFS {
 
 			String properties = new String();
 
-			int counter=0;
+			//int counter=0;
 
 			geojson.append("{\"type\":\"FeatureCollection\",\"totalFeatures\":[PARAM_FEATURES],\"features\":[") ;
 
 			if(!feature.isFDAFeature()){
 
 				Triple triple = new Triple();
-				//
-				//triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
 				triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
 				predicates.add(triple);	
 
@@ -484,24 +492,18 @@ public class AdapterLOD4WFS {
 
 			while (rs.hasNext()) {
 
-
-
-				counter++;
+				countIteration++;
 				QuerySolution soln = rs.nextSolution();
-				geojson.append("\n{\"type\":\"Feature\",\n	\"id\":\"FEATURE_"+ counter +"\",	\n	\"geometry\":");
+				geojson.append("\n{\"type\":\"Feature\",\n	\"id\":\"FEATURE_"+ countIteration +"\",	\n	\"geometry\":");
 				properties = "\n\"properties\": {\n";
 
 				for (int i = 0; i < predicates.size(); i++) {
-
-//					boolean isGeometry = false;
 
 					if(feature.isFDAFeature()){
 
 						if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){
 
 							geojson.append(Utils.convertWKTtoGeoJSON(soln.getLiteral("?" + feature.getGeometryVariable()).getString()));
-							//isGeometry = true;
-							//System.out.println(isGeometry);
 
 						} else {
 
@@ -551,9 +553,6 @@ public class AdapterLOD4WFS {
 
 						
 						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
-						//if (predicates.get(i).getPredicate().equals(factoryFDA.getGeometryPredicate(feature.getQuery()))) {
-						
-							//isGeometry = true;
 
 							if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
@@ -578,13 +577,24 @@ public class AdapterLOD4WFS {
 			geojson.deleteCharAt(geojson.length()-1);
 			geojson.append("]}");
 
-			getFeatureResponse = geojson.toString().replace("[PARAM_FEATURES]", Integer.toString(counter));
+			getFeatureResponse = geojson.toString().replace("[PARAM_FEATURES]", Long.toString(countIteration));
 
-			logger.info("GeoJSON document for [" + feature.getName() + "] successfully created.");
+			logger.info("GeoJSON document for [" + feature.getName() + "] with " + countIteration + " geometries successfully created.");
 
 		}
-
-
+		
+//		System.out.println( new DecimalFormat("#.##").format(getFeatureResponse.getBytes().length / 1024.0/1024.0));
+//		System.out.println("Size -->>>>"+ getFeatureResponse.getBytes().length / 1024.0/1024.0);
+		
+		
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Date date = new Date();
+		feature.setLastAccess(dateFormat.format(date));		
+		feature.setSize(getFeatureResponse.getBytes().length);
+		feature.setGeometries(countIteration);
+		
+		this.updateFeatureLog(feature);
+		
 		return getFeatureResponse;
 
 	}
@@ -596,6 +606,54 @@ public class AdapterLOD4WFS {
 	 ** Private Methods.
 	 **/
 
+	
+	private void updateFeatureLog(WFSFeature feature){
+		
+		String featureLogFile = "logs/features.log";
+		String line = "";
+		String splitBy = ";";
+		boolean exists = false;
+		
+		try {
+			
+			BufferedReader br = new BufferedReader(new FileReader(featureLogFile));
+			
+			int lineNr = 0;
+			
+			while ((line = br.readLine()) != null ) {
+
+				String[] featureLogLine = line.split(splitBy);
+				
+				
+				if(FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName()).equals(featureLogLine[0])){
+
+					//TODO: update log file.
+					exists = true;
+				}
+
+				lineNr++;
+				
+			}
+			
+			if(!exists){
+				
+				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(featureLogFile, true))); 
+				    
+				out.println(FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName())+";"+feature.getLastAccess()+";"+feature.getSize()+";"+feature.getGeometries());
+				out.close();
+				
+			}
+
+			br.close();
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
 
 	private String removePredicateURL(String predicate){
 
