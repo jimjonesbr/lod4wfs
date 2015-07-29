@@ -608,50 +608,61 @@ public class AdapterLOD4WFS {
 
 	
 	private void updateFeatureLog(WFSFeature feature){
-		
+
 		String featureLogFile = "logs/features.log";
 		String line = "";
 		String splitBy = ";";
+		String featureFullname = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName());
+		StringBuilder fileContent = new StringBuilder();
+		String featureNewLogData = featureFullname+";"+feature.getLastAccess()+";"+feature.getSize()+";"+feature.getGeometries()+"\n";
+
 		boolean exists = false;
-		
+
 		try {
-			
+
 			BufferedReader br = new BufferedReader(new FileReader(featureLogFile));
-			
-			int lineNr = 0;
-			
+
 			while ((line = br.readLine()) != null ) {
 
 				String[] featureLogLine = line.split(splitBy);
-				
-				
-				if(FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName()).equals(featureLogLine[0])){
 
-					//TODO: update log file.
+				if(featureFullname.equals(featureLogLine[0].trim())){
+
+					fileContent.append(featureNewLogData);
 					exists = true;
+
+				} else {
+
+					if(!featureLogLine[0].trim().equals("")){
+
+						fileContent.append(line+"\n");
+
+					}
+
 				}
 
-				lineNr++;
-				
-			}
-			
-			if(!exists){
-				
-				PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(featureLogFile, true))); 
-				    
-				out.println(FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName())+";"+feature.getLastAccess()+";"+feature.getSize()+";"+feature.getGeometries());
-				out.close();
-				
 			}
 
+			if(!exists){
+
+				fileContent.append(featureNewLogData);
+
+			}
+
+			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(featureLogFile, false))); 
+			out.println(fileContent.toString());
+			out.close();
+
+
+
 			br.close();
-			
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 	
 
