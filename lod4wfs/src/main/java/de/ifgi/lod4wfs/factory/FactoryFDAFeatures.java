@@ -64,6 +64,7 @@ public class FactoryFDAFeatures {
 					feature.setSize(featureLog.getSize());
 					feature.setGeometries(featureLog.getGeometries());
 					feature.setLastAccess(featureLog.getLastAccess());
+					feature.setGeometryType(featureLog.getGeometryType());
 					
 					feature.setAsFDAFeature(true);
 					result.add(feature);
@@ -101,6 +102,7 @@ public class FactoryFDAFeatures {
 					result.setLastAccess(featureLogLine[1]);
 					result.setSize(Double.parseDouble(featureLogLine[2]));
 					result.setGeometries(Long.parseLong(featureLogLine[3]));
+					result.setGeometryType(featureLogLine[4]);
 
 				}
 

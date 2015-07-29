@@ -42,6 +42,8 @@
                 <th></th>
                 <th></th>
                 <th></th>
+                <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -58,6 +60,16 @@
                             				+ fdaFeatures.get(i).getFileName()
                             				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
 
+                            		if(fdaFeatures.get(i).getGeometryType()!=null){
+                            			
+                            			out.println("<td><img src=\"img/"+fdaFeatures.get(i).getGeometryType().toLowerCase() +".png\"/ width=\"22\" title=\""+ fdaFeatures.get(i).getGeometryType() +" \"></td>");
+                            			
+                            		} else {
+                            			
+                            			out.println("<td><img src=\"img/unknown.png\"/ width=\"20\" title=\"Unknown Geometry Type\"></td>");
+                            			
+                            		}
+                            		
                             		out.println("<td><img src=\"img/info2.png\"/ width=\"21\" title=\"Size: "+ new DecimalFormat("#.##").format(fdaFeatures.get(i).getSize()/1024.0/1024.0) + " MB" +
                             																				  "\nGeometries: " + fdaFeatures.get(i).getGeometries() + 
                             																				  "\nLast Downloaded: " + fdaFeatures.get(i).getLastAccess() +"\"></td>");

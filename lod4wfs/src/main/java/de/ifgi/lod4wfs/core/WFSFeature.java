@@ -17,6 +17,7 @@ public class WFSFeature {
 	private double size;
 	private long geometries;
 	private String lastAccess;
+	private String geometryType;
 	
 	private String query;
 	private String geometryVariable;
@@ -319,6 +320,23 @@ public class WFSFeature {
 	}
 
 
+
+
+
+	public String getGeometryType() {
+		return geometryType;
+	}
+
+
+
+
+
+	public void setGeometryType(String geometryType) {
+		this.geometryType = geometryType;
+	}
+
+
+	
 	
 	
 }

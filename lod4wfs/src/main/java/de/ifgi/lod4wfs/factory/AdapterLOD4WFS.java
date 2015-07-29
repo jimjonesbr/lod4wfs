@@ -5,6 +5,8 @@ package de.ifgi.lod4wfs.factory;
  * @description Provides all standard WFS functions (GetCapabilities, DescribeFeatureType and GetFeature) for LOD data sources.
  */
 
+import it.cutruzzula.lwkt.WKTParser;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -193,10 +195,12 @@ public class AdapterLOD4WFS {
 
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
-
+		String geometryType = "";
+		
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 		ResultSet rs;
-
+		
+		
 		if(feature.isFDAFeature()){
 
 			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of [" + feature.getName() + "]  ...");
@@ -278,16 +282,28 @@ public class AdapterLOD4WFS {
 							if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){														
 
 								//TODO: Check if literal is already GML
-
-														
-								String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+feature.getGeometryVariable()).getString());
-								
+								String wkt = soln.getLiteral("?"+feature.getGeometryVariable()).getString();
+								String gml = Utils.convertWKTtoGML(wkt);
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
-								Node dup = document.importNode(GMLnode, true);
-								elementGeometryPredicate.appendChild(dup);						
+								Node node = document.importNode(GMLnode, true);
+								elementGeometryPredicate.appendChild(node);						
 								rootGeometry.appendChild(elementGeometryPredicate);												
 								currentGeometryElement.appendChild(elementGeometryPredicate);						
-								rootGeometry.appendChild(currentGeometryElement);					
+								rootGeometry.appendChild(currentGeometryElement);
+								
+								if(!WKTParser.parse(wkt).getType().equals(geometryType)){
+									
+									if(geometryType.equals("")){
+										
+										geometryType= WKTParser.parse(wkt).getType().toString();
+										
+									} else {
+										
+										logger.error("The feature [" + feature.getName() + "] has multiple geometry types. This is not supported by the OGC WFS Standard. For this document, the geometry type ["+geometryType+"] will be assumed.");
+										
+									}
+									
+								}
 
 							} else {
 
@@ -312,7 +328,6 @@ public class AdapterLOD4WFS {
 							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
 
 							if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
-							//if (predicates.get(i).getPredicate().equals(factoryFDA.getGeometryPredicate(feature.getQuery()))) {
 
 								if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
@@ -583,15 +598,14 @@ public class AdapterLOD4WFS {
 
 		}
 		
-//		System.out.println( new DecimalFormat("#.##").format(getFeatureResponse.getBytes().length / 1024.0/1024.0));
-//		System.out.println("Size -->>>>"+ getFeatureResponse.getBytes().length / 1024.0/1024.0);
-		
 		
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date date = new Date();
+		
 		feature.setLastAccess(dateFormat.format(date));		
 		feature.setSize(getFeatureResponse.getBytes().length);
 		feature.setGeometries(countIteration);
+		feature.setGeometryType(geometryType);
 		
 		this.updateFeatureLog(feature);
 		
@@ -614,7 +628,7 @@ public class AdapterLOD4WFS {
 		String splitBy = ";";
 		String featureFullname = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName());
 		StringBuilder fileContent = new StringBuilder();
-		String featureNewLogData = featureFullname+";"+feature.getLastAccess()+";"+feature.getSize()+";"+feature.getGeometries()+"\n";
+		String featureNewLogData = featureFullname+";"+feature.getLastAccess()+";"+feature.getSize()+";"+feature.getGeometries()+";"+feature.getGeometryType()+"\n";
 
 		boolean exists = false;
 
