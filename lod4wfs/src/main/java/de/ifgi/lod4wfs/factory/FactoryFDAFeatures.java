@@ -34,6 +34,7 @@ public class FactoryFDAFeatures {
 
 	private static Logger logger = Logger.getLogger("FDAFeatures-Factory");
 	private static JenaConnector jn;
+	private BufferedReader br;
 
 	public FactoryFDAFeatures() {
 		jn = new JenaConnector();
@@ -91,26 +92,39 @@ public class FactoryFDAFeatures {
 		String splitBy = ";";
 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(featureLogFile));
+			br = new BufferedReader(new FileReader(featureLogFile));
 
 			while ((line = br.readLine()) != null ) {
 
 				String[] featureLogLine = line.split(splitBy);
-
+				
+				
+				
 				if(feature.getName().equals(featureLogLine[0])){
+					
+					if(!(featureLogLine.length < 5)){
 
-					result.setLastAccess(featureLogLine[1]);
-					result.setSize(Double.parseDouble(featureLogLine[2]));
-					result.setGeometries(Long.parseLong(featureLogLine[3]));
-					result.setGeometryType(featureLogLine[4]);
+						result.setLastAccess(featureLogLine[1]);
+						result.setSize(Double.parseDouble(featureLogLine[2]));
+						result.setGeometries(Long.parseLong(featureLogLine[3]));
+						result.setGeometryType(featureLogLine[4]);
+						
+					} else {
+						
+						logger.error("Invalid entry at features.log");
+						
+					}
+					
 
 				}
 
 			}
 
 		} catch (FileNotFoundException e) {
+			logger.error("The features.log file does not exist or is corrupted.");
 			e.printStackTrace();
 		} catch (IOException e) {
+			logger.error("Error reading features.log");
 			e.printStackTrace();
 		}
 

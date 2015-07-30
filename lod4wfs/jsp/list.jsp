@@ -1,4 +1,4 @@
-<%@page import="java.text.DecimalFormat"%>
+<%@ page import="java.text.DecimalFormat"%>
 <%@ page import="java.io.*"%>
 <%@ page import="de.ifgi.lod4wfs.core.*"%>
 <%@ page import="de.ifgi.lod4wfs.facade.*"%>
@@ -23,10 +23,10 @@
     <div class="panel panel-primary">
       <div class="panel-heading">
         <%
-        	ArrayList<WFSFeature> fdaFeatures = new ArrayList<WFSFeature>();
+       	ArrayList<WFSFeature> fdaFeatures = new ArrayList<WFSFeature>();
 
-        	fdaFeatures = Facade.getInstance().listFDAFeatures();
-        	out.println("Layers available (" + fdaFeatures.size() + ")");
+       	fdaFeatures = Facade.getInstance().listFDAFeatures();
+       	out.println("Layers available (" + fdaFeatures.size() + ")");
         %>
       </div>
       <div class="panel-body">
@@ -50,46 +50,46 @@
               <%
               	for (int i = 0; i < fdaFeatures.size(); i++) {
                             		
-                            		out.println("<tr>");
-                            		out.println("<td>" + fdaFeatures.get(i).getTitle() + "</td>");
-                            		out.println("<td>" + fdaFeatures.get(i).getFeatureAbstract()
-                            				+ "</td>");
-                            		out.println("<td>" + fdaFeatures.get(i).getKeywords() + "</td>");
-                            		out.println("<td>" + fdaFeatures.get(i).getEndpoint() + "</td>");
-                            		out.println("<td><a title=\"Edit feature\" href=\"edit.jsp?edit="
-                            				+ fdaFeatures.get(i).getFileName()
-                            				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
+               		out.println("<tr>");
+               		out.println("<td>" + fdaFeatures.get(i).getTitle() + "</td>");
+               		out.println("<td>" + fdaFeatures.get(i).getFeatureAbstract()
+               				+ "</td>");
+               		out.println("<td>" + fdaFeatures.get(i).getKeywords() + "</td>");
+               		out.println("<td>" + fdaFeatures.get(i).getEndpoint() + "</td>");
+               		out.println("<td><a title=\"Edit feature\" href=\"edit.jsp?edit="
+               				+ fdaFeatures.get(i).getFileName()
+               				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
 
-                            		if(fdaFeatures.get(i).getGeometryType()!=null){
-                            			
-                            			out.println("<td><img src=\"img/"+fdaFeatures.get(i).getGeometryType().toLowerCase() +".png\"/ width=\"22\" title=\""+ fdaFeatures.get(i).getGeometryType() +" \"></td>");
-                            			
-                            		} else {
-                            			
-                            			out.println("<td><img src=\"img/unknown.png\"/ width=\"20\" title=\"Unknown Geometry Type\"></td>");
-                            			
-                            		}
-                            		
-                            		out.println("<td><img src=\"img/info2.png\"/ width=\"21\" title=\"Size: "+ new DecimalFormat("#.##").format(fdaFeatures.get(i).getSize()/1024.0/1024.0) + " MB" +
-                            																				  "\nGeometries: " + fdaFeatures.get(i).getGeometries() + 
-                            																				  "\nLast Downloaded: " + fdaFeatures.get(i).getLastAccess() +"\"></td>");
-                            		
-                            		if (fdaFeatures.get(i).isEnabled()) {
+               		if(fdaFeatures.get(i).getGeometryType()!=null){
+               			
+               			out.println("<td><img src=\"img/"+fdaFeatures.get(i).getGeometryType().toLowerCase() +".png\"/ width=\"22\" title=\""+ fdaFeatures.get(i).getGeometryType() +" \"></td>");
+               			
+               		} else {
+               			
+               			out.println("<td><img src=\"img/unknown.png\"/ width=\"20\" title=\"Unknown Geometry Type\"></td>");
+               			
+               		}
+               		
+               		out.println("<td><img src=\"img/info2.png\"/ width=\"21\" title=\"Size: "+ new DecimalFormat("#.##").format(fdaFeatures.get(i).getSize()/1024.0/1024.0) + " MB" +
+               																				  "\nGeometries: " + fdaFeatures.get(i).getGeometries() + 
+               																				  "\nLast Downloaded: " + fdaFeatures.get(i).getLastAccess() +"\"></td>");
+               		
+               		if (fdaFeatures.get(i).isEnabled()) {
 
-                            			out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled\"></td>");
+               			out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled\"></td>");
 
-                            		} else {
+               		} else {
 
-                            			out.println("<td><img src=\"img/nok.png\"/ width=\"21\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
-                            		}
-                            		
-                            		out.println("<td><a title=\"Delete feature\" href='#' onclick='deleteFeature(\""
-                            				+ fdaFeatures.get(i).getFileName()
-                            				+ "\");'><span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
+               			out.println("<td><img src=\"img/nok.png\"/ width=\"21\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
+               		}
+               		
+               		out.println("<td><a title=\"Delete feature\" href='#' onclick='deleteFeature(\""
+               				+ fdaFeatures.get(i).getFileName()
+               				+ "\");'><span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
 
-                            		out.println("</tr>");
+               		out.println("</tr>");
 
-                            	}
+               }
               %>
             </tbody>
           </table>
