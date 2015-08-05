@@ -57,38 +57,58 @@ public class Utils {
 		
 	}
 
-	public static String convertWKTtoGML(String literal){
+	
+	public static String removeCRSandTypefromWKT(String wktLiteral){
+		
+		if(wktLiteral.contains("<") && wktLiteral.contains(">")){
+		
+			wktLiteral = wktLiteral.substring(wktLiteral.indexOf(">") + 1, wktLiteral.length());
+			
+		}
+		
+		if(wktLiteral.contains("^^")){
+
+			wktLiteral = wktLiteral.substring(0, wktLiteral.indexOf("^^"));
+
+		}
+		
+		return wktLiteral;
+		
+	}
+	
+	
+	public static String convertWKTtoGML(String wktLiteral){
 
 		String gml = new String();
 				
 			try {
 
-				if(literal.contains("<") && literal.contains(">")){
-					String CRS = new String();
+				if(wktLiteral.contains("<") && wktLiteral.contains(">")){
+					String crs = new String();
 
 
 					/**
 					 * Extracting Reference System
 					 */
-					CRS = literal.substring(literal.indexOf("<") , literal.indexOf(">")+1);
-					literal = literal.substring(literal.indexOf(">") + 1, literal.length());
+					crs = wktLiteral.substring(wktLiteral.indexOf("<") , wktLiteral.indexOf(">")+1);
+					wktLiteral = wktLiteral.substring(wktLiteral.indexOf(">") + 1, wktLiteral.length());
 
 
 					/**
 					 * Removing Literal Type, if applicable.
 					 */
-					if(literal.contains("^^")){
+					if(wktLiteral.contains("^^")){
 
-						literal = literal.substring(0, literal.indexOf("^^"));
+						wktLiteral = wktLiteral.substring(0, wktLiteral.indexOf("^^"));
 
 					}
 
-					gml = WKTParser.parseToGML2(literal,getWKTReferenceSystem(CRS));
+					gml = WKTParser.parseToGML2(wktLiteral,getWKTReferenceSystem(crs));
 
 
 				} else {
 
-					gml = WKTParser.parseToGML2(literal,GlobalSettings.getDefaultCRS());
+					gml = WKTParser.parseToGML2(wktLiteral,GlobalSettings.getDefaultCRS());
 
 				}
 
@@ -97,7 +117,7 @@ public class Utils {
 			}
 
 
-		if(!isWKT(literal)){
+		if(!isWKT(wktLiteral)){
 			logger.error("Invalid WKT literal.");
 		}
 		return gml;

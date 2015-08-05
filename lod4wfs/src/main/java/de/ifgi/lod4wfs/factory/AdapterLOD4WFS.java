@@ -290,12 +290,13 @@ public class AdapterLOD4WFS {
 								rootGeometry.appendChild(elementGeometryPredicate);												
 								currentGeometryElement.appendChild(elementGeometryPredicate);						
 								rootGeometry.appendChild(currentGeometryElement);
+																													
 								
-								if(!WKTParser.parse(wkt).getType().equals(geometryType)){
+								if(!WKTParser.parse(Utils.removeCRSandTypefromWKT(wkt)).getType().equals(geometryType)){
 									
 									if(geometryType.equals("")){
 										
-										geometryType= WKTParser.parse(wkt).getType().toString();
+										geometryType= WKTParser.parse(Utils.removeCRSandTypefromWKT(wkt)).getType().toString();
 										
 									} else {
 										
