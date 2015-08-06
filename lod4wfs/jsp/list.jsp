@@ -12,6 +12,8 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.4.js"></script>  
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
 </head>
 <body>
 <div class="bs-docs-featurette">
@@ -56,36 +58,53 @@
                				+ "</td>");
                		out.println("<td>" + fdaFeatures.get(i).getKeywords() + "</td>");
                		out.println("<td>" + fdaFeatures.get(i).getEndpoint() + "</td>");
-               		out.println("<td><a title=\"Edit feature\" href=\"edit.jsp?edit="
+               		out.println("<td><span title=\"Edit feature\"><a title=\"Edit feature\" href=\"edit.jsp?edit="
                				+ fdaFeatures.get(i).getFileName()
-               				+ "\"> <span class='glyphicon glyphicon-pencil'></span></a></td>");
+               				+ "\"> <i class='fa fa-pencil-square-o fa-lg'></i></a></span></td>");
 
                		if(fdaFeatures.get(i).getGeometryType()!=null){
+               			              		               			
+               			if(fdaFeatures.get(i).getGeometryType().toUpperCase().equals("POLYGON")){
+
+               				out.println("<td><span title=\"POLYGON\"><i class=\"fa fa-object-ungroup fa-lg\"></i></span></td>");
                			
-               			out.println("<td><img src=\"img/"+fdaFeatures.get(i).getGeometryType().toLowerCase() +".png\"/ width=\"22\" title=\""+ fdaFeatures.get(i).getGeometryType() +" \"></td>");
+               			} else if(fdaFeatures.get(i).getGeometryType().toUpperCase().equals("POINT")){
+
+               				out.println("<td><span title=\"POINT\"><i class=\"fa fa-map-marker fa-lg\"></i></span></td>");
+
+               			} else if(fdaFeatures.get(i).getGeometryType().toUpperCase().equals("MULTIPOLYGON")){
+
+               				out.println("<td><span title=\"MULTIPOLYGON\"><i class=\"fa fa-object-group fa-lg\"></span></i></td>");
                			
+						} else if(fdaFeatures.get(i).getGeometryType().toUpperCase().equals("LINESTRING")){
+
+               				out.println("<td><span title=\"LINESTRING\"><i class=\"fa fa-code-fork fa-lg\"></span></i></td>");
+               			}             			
+               			
+
+               			//out.println("<td><i class=\"fa fa-object-group fa-lg\"><img src=\"img/"+fdaFeatures.get(i).getGeometryType().toLowerCase() +".png\"/ width=\"22\" title=\""+ fdaFeatures.get(i).getGeometryType() +" \"></i></td>");
                		} else {
                			
-               			out.println("<td><img src=\"img/unknown.png\"/ width=\"20\" title=\"Unknown Geometry Type\"></td>");
+               			out.println("<td><span title =\"Unknown Geometry Type\"><i class=\"fa fa-question-circle fa-lg\"></i></span></td>");
                			
                		}
                		
-               		out.println("<td><img src=\"img/info2.png\"/ width=\"21\" title=\"Size: "+ new DecimalFormat("#.##").format(fdaFeatures.get(i).getSize()/1024.0/1024.0) + " MB" +
-               																				  "\nGeometries: " + fdaFeatures.get(i).getGeometries() + 
-               																				  "\nLast Downloaded: " + fdaFeatures.get(i).getLastAccess() +"\"></td>");
+               		out.println("<td><span title =\"Size: "+ new DecimalFormat("#.##").format(fdaFeatures.get(i).getSize()/1024.0/1024.0) + " MB" +
+								  "\nGeometries: " + fdaFeatures.get(i).getGeometries() + 
+								  "\nLast Downloaded: " + fdaFeatures.get(i).getLastAccess() +"\"><i class=\"fa fa-info-circle fa-lg\"></i></span></td>");
                		
                		if (fdaFeatures.get(i).isEnabled()) {
 
-               			out.println("<td><img src=\"img/ok.png\"/ width=\"20\" title=\"Feature enabled\"></td>");
+               			out.println("<td><span title=\"Feature enabled\"><i class=\"fa fa-check fa-lg\"></i></span></td>");
 
                		} else {
 
-               			out.println("<td><img src=\"img/nok.png\"/ width=\"21\" title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"></td>");
+               			out.println("<td><span title=\"Feature disabled. This feature will not appear in the Capabilities Document.\"><i class=\"fa fa-ban fa-lg\"></i></span></td>");
                		}
                		
-               		out.println("<td><a title=\"Delete feature\" href='#' onclick='deleteFeature(\""
+               		out.println("<td><span title=\"Delete feature\"><a title=\"Delete feature\" href='#' onclick='deleteFeature(\""
                				+ fdaFeatures.get(i).getFileName()
-               				+ "\");'><span class='glyphicon glyphicon-trash text-danger'></span></a></td>");
+               				+ "\");'><i class='fa fa-trash-o fa-lg'></a></i></span></td>");
 
                		out.println("</tr>");
 
