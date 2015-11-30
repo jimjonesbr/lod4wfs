@@ -4,7 +4,7 @@ abstract = <http://purl.org/dc/terms/abstract>
 keywords = <http://purl.org/dc/terms/subject>
 
 [Geometry]
-geometryPredicate = DELETE-ME!!<http://www.opengis.net/ont/geosparql/1.0#asWKT>
+geometryPredicate = <http://www.opengis.net/ont/geosparql/1.0#asWKT>
 geometryVariable = asWKT
 geometryClass = <http://www.opengis.net/ont/geosparql/1.0#Geometry>
 predicatesContainer = <http://www.opengis.net/ont/geosparql/1.0#Feature>
@@ -30,13 +30,13 @@ solrFeaturesNameSpace = http://ulb.solr4wfs.de/
 sdaPrefix=sda
 fdaPrefix=fda
 solrPrefix=solr
-sdaEnabled = false
+sdaEnabled = true
 fdaEnabled = true
 solrEnabled = true
 
 [Server]
 defaultPort = 8088
-SPARQLEndpointURL = http://giv-lodum.uni-muenster.de:8081/parliament/sparql
+SPARQLEndpointURL = http://linkeddata.uni-muenster.de:8081/parliament/sparql
 SPARQLDirectory = features/
 
 [WebInterface]

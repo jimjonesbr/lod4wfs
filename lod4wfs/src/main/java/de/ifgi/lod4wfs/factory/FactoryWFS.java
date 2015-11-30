@@ -118,6 +118,7 @@ public class FactoryWFS {
 
 			for (int i = 0; i < sdaFeatureList.size(); i++) {
 				features.add(sdaFeatureList.get(i));
+				
 			}
 
 		} else {

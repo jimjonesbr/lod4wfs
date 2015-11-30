@@ -20,7 +20,7 @@ public class GlobalSettings {
 
 	private static String defaultLowerCorner = "-180.0 -78.11";
 	private static String defaultUpperCorner = "180.0 83.57";	
-	private static String defaultLiteralType = "xsd:string";	
+	private static String defaultLiteralType = "http://www.w3.org/2001/XMLSchema#string";	
 	private static String defaultDecimalType = "";
 	private static String defaultIntegerType = "";
 	private static String defaultStringType = "";

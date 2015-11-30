@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import com.google.gson.stream.JsonReader;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.sparql.core.TriplePath;
 import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
@@ -430,22 +431,37 @@ public class FactoryFDAFeatures {
 
 		ArrayList<Triple> result = new ArrayList<Triple>();		
 		Query query = QueryFactory.create(feature.getQuery());
+		query.setLimit(1);
+		
+		ResultSet rs = this.executeQuery(query.toString(), feature.getEndpoint());
+		QuerySolution qsol = rs.nextSolution();
 
+		
 		for (int i = 0; i < query.getResultVars().size(); i++) {	
 
 			Triple triple = new Triple();
-			triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
+						
+			if(qsol.get(query.getResultVars().get(i).toString()).isLiteral()){
+				
+				triple.setObjectDataType(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI());
+				
+			} else {
+
+				triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
+				
+			}
+			
 			triple.setPredicate(query.getResultVars().get(i).toString());
 			result.add(triple);
-
+			
 		}
-
+						
 		return result;
 
 	}
 
 	public String getGeometryPredicate(String SPARQLQuery){
-
+	
 		Query query = QueryFactory.create(SPARQLQuery);
 		String geometryPredicate = new String();
 

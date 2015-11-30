@@ -6,7 +6,6 @@ package de.ifgi.lod4wfs.factory;
  */
 
 import it.cutruzzula.lwkt.WKTParser;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
@@ -16,7 +15,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -252,9 +250,11 @@ public class AdapterLOD4WFS {
 
 
 				if(!feature.isFDAFeature()){
+					
 					Triple triple = new Triple();
 					triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
 					predicates.add(triple);		
+					
 				}
 
 
@@ -311,7 +311,16 @@ public class AdapterLOD4WFS {
 								Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());							
 
 								if(soln.get("?"+predicates.get(i).getPredicate().toString()) != null){
-									elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicates.get(i).getPredicate()).toString()));	
+									
+									if(soln.get("?"+predicates.get(i).getPredicate().toString()).isLiteral()){
+										
+										elementAttribute.appendChild(document.createCDATASection(soln.getLiteral("?"+predicates.get(i).getPredicate()).getValue().toString()));
+										
+									} else {
+									
+										elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicates.get(i).getPredicate()).toString()));
+									}
+									
 								}
 
 								currentGeometryElement.appendChild(elementAttribute);

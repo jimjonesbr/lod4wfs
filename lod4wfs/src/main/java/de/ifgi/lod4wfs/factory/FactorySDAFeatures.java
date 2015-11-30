@@ -50,6 +50,7 @@ public class FactorySDAFeatures {
 			feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
 			feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
 			feature.setAsSDAFeature(true);
+			feature.setEnabled(true);
 			
 			
 			CRS = soln.get("?wkt").toString();
