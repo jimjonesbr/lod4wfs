@@ -16,12 +16,14 @@ import de.ifgi.lod4wfs.factory.FactoryWFS;
 public class Facade {
 
 	private static Facade instance;
-	private FactoryFDAFeatures factoryFDA;	
+	private FactoryFDAFeatures factoryFDA;
+	private FactoryWFS factoryWFS;	
 	private ArrayList<WFSFeature> globalFeatureList;
 	
 	public Facade(){
 
 		factoryFDA = new FactoryFDAFeatures();
+		factoryWFS = new FactoryWFS();
 		globalFeatureList = new ArrayList<WFSFeature>();
 		
 	}
@@ -46,6 +48,7 @@ public class Facade {
 
 	public String describeFeatureType(WFSFeature feature){
 
+		
 		return FactoryWFS.getInstance().describeFeatureType(feature);
 	}
 
@@ -101,7 +104,7 @@ public class Facade {
 	
 	public void addFeature(WFSFeature feature){		
 		
-		FactoryFDAFeatures.addFeature(feature);	
+		factoryFDA.addFeature(feature);	
 		
 	}
 	
@@ -130,8 +133,9 @@ public class Facade {
 	}
 	
 	public boolean existsFeature(String featureName){
+
+		return factoryWFS.existsFeature(featureName);
 		
-		return FactoryFDAFeatures.existsFeature(featureName);
 	}
 	
 	public void deleteFeature(WFSFeature feature){

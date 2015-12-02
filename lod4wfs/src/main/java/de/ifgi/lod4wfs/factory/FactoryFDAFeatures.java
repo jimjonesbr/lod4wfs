@@ -13,6 +13,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.apache.log4j.Logger;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
@@ -25,6 +28,7 @@ import com.hp.hpl.jena.sparql.syntax.ElementWalker;
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
+import de.ifgi.lod4wfs.core.WFSFeatureContents;
 import de.ifgi.lod4wfs.infrastructure.JenaConnector;
 
 /**
@@ -59,18 +63,18 @@ public class FactoryFDAFeatures {
 				feature = this.getFDAFeature(file.getName());
 
 				if(feature != null){
-					
+
 					WFSFeature featureLog = new WFSFeature();
 					featureLog = getFeatureLog(feature);
-					
+
 					feature.setSize(featureLog.getSize());
 					feature.setGeometries(featureLog.getGeometries());
 					feature.setLastAccess(featureLog.getLastAccess());
 					feature.setGeometryType(featureLog.getGeometryType());
-					
+
 					feature.setAsFDAFeature(true);
 					result.add(feature);
-					
+
 				}
 
 			}
@@ -83,7 +87,7 @@ public class FactoryFDAFeatures {
 
 	}
 
-	
+
 	private WFSFeature getFeatureLog(WFSFeature feature){
 
 		WFSFeature result = new WFSFeature();
@@ -98,24 +102,24 @@ public class FactoryFDAFeatures {
 			while ((line = br.readLine()) != null ) {
 
 				String[] featureLogLine = line.split(splitBy);
-				
-				
-				
+
+
+
 				if(feature.getName().equals(featureLogLine[0])){
-					
+
 					if(!(featureLogLine.length < 5)){
 
 						result.setLastAccess(featureLogLine[1]);
 						result.setSize(Double.parseDouble(featureLogLine[2]));
 						result.setGeometries(Long.parseLong(featureLogLine[3]));
 						result.setGeometryType(featureLogLine[4]);
-						
+
 					} else {
-						
+
 						logger.error("Invalid entry at features.log");
-						
+
 					}
-					
+
 
 				}
 
@@ -130,9 +134,9 @@ public class FactoryFDAFeatures {
 		}
 
 		return result;
-		
+
 	}
-	
+
 	public static boolean existsFeature(String featureName){
 
 		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
@@ -258,7 +262,7 @@ public class FactoryFDAFeatures {
 
 		} catch (MalformedURLException e) {
 			result = false;
-			System.out.println("Malformed URL -> " + endpoint);
+			logger.error("Malformed URL -> " + endpoint);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 
@@ -273,9 +277,10 @@ public class FactoryFDAFeatures {
 
 	}
 
-	public static void addFeature(WFSFeature feature){
+	public void addFeature(WFSFeature feature){
 
 		try {
+
 			Writer writer = new FileWriter(GlobalSettings.getFeatureDirectory() + feature.getName() + ".sparql");
 
 			writer.write("{\n");
@@ -286,16 +291,65 @@ public class FactoryFDAFeatures {
 			writer.write("\"geometryVariable\":\"" + feature.getGeometryVariable() + "\",\n");
 			writer.write("\"endpoint\":\"" + feature.getEndpoint() + "\",\n");
 			writer.write("\"crs\":\"" + feature.getCRS() + "\",\n");
-			
+
 			if (feature.isEnabled()) {
 				writer.write("\"enabled\":\"true\",\n");
 			} else {
 				writer.write("\"enabled\":\"false\",\n");
 			}
-			
+
+
+			//***************
+
+			ArrayList<Triple> predicates = new ArrayList<Triple>();
+			predicates = this.getDataTypesFDAFeatures(feature);
+
+			String json = "\"toc\": [\n"; 
+
+			for (int i = 0; i < predicates.size(); i++) {
+
+				//if(!predicates.get(i).getPredicate().trim().equals(feature.getGeometryVariable().trim().replace("?", ""))) {
+
+				if(predicates.get(i).getObjectDataType()==null){
+
+					json = json + "	{\""+predicates.get(i).getPredicate() + "\": \"" + GlobalSettings.getDefaultLiteralType() + "\"}";
+
+				} else {
+
+					json = json + "	{\""+ predicates.get(i).getPredicate() + "\": \"" + predicates.get(i).getObjectDataType() + "\"}";
+
+
+				}
+
+				if(i != predicates.size()-1){
+
+					json = json +",\n";
+
+				}
+
+				//}
+			}
+
+			json = json + "\n	],\n";
+
+			writer.write(json);
+
+
+			//*********
+
 			writer.write("\"query\":\"" + feature.getQuery().replace("\"", "'") + "\"");
 			writer.write("\n}");
+
 			writer.close();
+
+
+
+
+
+
+
+
+
 
 
 		} catch (IOException e) {
@@ -314,106 +368,63 @@ public class FactoryFDAFeatures {
 
 	public WFSFeature getFDAFeature(String fileName){
 
-		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
 		WFSFeature feature = new WFSFeature();
 
-		for (File file : files) {
+		try {
 
-			if(file.getName().endsWith(".sparql")){
+			FileReader fileReader2 = new FileReader(GlobalSettings.getFeatureDirectory() + fileName);
 
-				try {
+			JsonParser jParser = new JsonParser();
+			JsonObject jObject = (JsonObject) jParser.parse(fileReader2);
 
-					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory() + file.getName());
-					JsonReader jsonReader = new JsonReader(fileReader);
-					jsonReader.setLenient(true);
-					jsonReader.beginObject();
+			feature.setFeatureAbstract(jObject.get("abstract").getAsString());
+			feature.setTitle(jObject.get("title").getAsString());
+			feature.setName(jObject.get("name").getAsString());
 
-					if(file.getName().endsWith(fileName)){
+			try {
+				Query query = QueryFactory.create(jObject.get("query").getAsString());
+				feature.setQuery(query.toString());
 
-						while (jsonReader.hasNext()) {
+			} catch (Exception e) {
+				logger.error("Invalid SPARQL Query at [" + fileName + "]. The correspondent layer won't be listed in the Capabilities Document.");
+				logger.error(feature.getQuery());
+			}
 
-							while (jsonReader.hasNext()) {
+			feature.setKeywords(jObject.get("keywords").getAsString());
+			feature.setGeometryVariable(jObject.get("geometryVariable").getAsString().replace("?", "")); 
+			feature.setEndpoint(jObject.get("endpoint").getAsString());
+			feature.setCRS(jObject.get("crs").getAsString());
+			feature.setEnabled(jObject.get("enabled").getAsBoolean());
 
-								String name = jsonReader.nextName();
-
-								if (name.equals("abstract")) {
-
-									feature.setFeatureAbstract(jsonReader.nextString());
-
-								} else if (name.equals("title")) {
-
-									feature.setTitle(jsonReader.nextString());
-
-								} else if (name.equals("name")) {
-
-									feature.setName(jsonReader.nextString());
-
-								} else if (name.equals("query")) {
-
-									String tmpQuery = jsonReader.nextString();
-
-									try {
-										Query query = QueryFactory.create(tmpQuery);
-										feature.setQuery(query.toString());
-
-									} catch (Exception e) {
-										logger.error("Invalid SPARQL Query at " + file.getName() + ". The correspondent layer won't be listed in the Capabilities Document.");
-										logger.error(tmpQuery);
-									}
+			JsonElement elem = jObject.get("toc");
 
 
-								} else if (name.equals("keywords")) {
+			if(elem!=null){		
 
-									feature.setKeywords(jsonReader.nextString());
+				for (int i = 0; i < elem.getAsJsonArray().size(); i++) {
 
-								} else if (name.equals("geometryVariable")) {
+					WFSFeatureContents content = new WFSFeatureContents();
 
-									feature.setGeometryVariable(jsonReader.nextString().replace("?", ""));
+					content.setField(elem.getAsJsonArray().get(i).getAsJsonObject().entrySet().iterator().next().getKey().toString());
+					content.setFieldType(elem.getAsJsonArray().get(i).getAsJsonObject().entrySet().iterator().next().getValue().toString());
 
-								} else if (name.equals("endpoint")) {
-
-									feature.setEndpoint(jsonReader.nextString());
-
-								} else if (name.equals("crs")) {
-
-									feature.setCRS(jsonReader.nextString());
-
-								} else if (name.equals("enabled")) {
-
-									if(jsonReader.nextString().endsWith("false")){
-										feature.setEnabled(false);
-									} else {
-										feature.setEnabled(true);
-									}									
-
-								}
-
-								feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
-								feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
-								feature.setAsFDAFeature(true);
-								feature.setFileName(file.getName());
-
-							}
-
-						}
-
-						jsonReader.endObject();
-						jsonReader.close();
-
-					} 
-
-
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					logger.error("Error parsing " + file.getName() + ".");
-					logger.error(e.toString());
-					e.printStackTrace();
+					feature.addContent(content);
 
 				}
 
 
 			}
+
+			feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
+			feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
+			feature.setAsFDAFeature(true);
+			feature.setFileName(fileName);
+
+
+		} catch (FileNotFoundException e1) {
+
+			e1.printStackTrace();
+
 		}
 
 
@@ -425,7 +436,7 @@ public class FactoryFDAFeatures {
 	 * @return Lists all predicates (properties) related to a given feature.  
 	 */
 
-	public ArrayList<Triple> getPredicatesFDAFeatures(WFSFeature feature){
+	public ArrayList<Triple> getDataTypesFDAFeatures(WFSFeature feature){
 
 		logger.info("Listing available predicates for the FDA feature " + feature.getName() + " ...");
 
@@ -436,32 +447,32 @@ public class FactoryFDAFeatures {
 		ResultSet rs = this.executeQuery(query.toString(), feature.getEndpoint());
 		QuerySolution qsol = rs.nextSolution();
 
-		
+
 		for (int i = 0; i < query.getResultVars().size(); i++) {	
 
 			Triple triple = new Triple();
-						
+
 			if(qsol.get(query.getResultVars().get(i).toString()).isLiteral()){
-				
+
 				triple.setObjectDataType(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI());
-				
+
 			} else {
 
 				triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
-				
+
 			}
-			
+
 			triple.setPredicate(query.getResultVars().get(i).toString());
 			result.add(triple);
-			
+
 		}
-						
+
 		return result;
 
 	}
 
 	public String getGeometryPredicate(String SPARQLQuery){
-	
+
 		Query query = QueryFactory.create(SPARQLQuery);
 		String geometryPredicate = new String();
 
@@ -505,7 +516,7 @@ public class FactoryFDAFeatures {
 	}
 
 	public void enableFeature(boolean enable){
-		
-		
+
+
 	}
 }

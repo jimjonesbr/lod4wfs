@@ -62,7 +62,7 @@ public class AdapterLOD4WFS {
 		return instance;
 	}
 
-
+	
 	public String describeFeatureType(WFSFeature feature){
 
 		String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));	
@@ -71,9 +71,18 @@ public class AdapterLOD4WFS {
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 
 		if(feature.isFDAFeature()){
-
-			predicates = factoryFDA.getPredicatesFDAFeatures(feature);
-
+						
+			for (int i = 0; i < feature.getTableOfContents().size(); i++) {
+			
+				Triple triple = new Triple();
+				
+				triple.setPredicate(feature.getTableOfContents().get(i).getField());
+				triple.setObjectDataType(feature.getTableOfContents().get(i).getFieldType());
+				
+				predicates.add(triple);
+			}
+			
+			
 		} else { 
 
 
@@ -126,7 +135,7 @@ public class AdapterLOD4WFS {
 				sequence.setAttribute("nillable","true");
 
 				/**
-				 * Checks if predicate is the chosen geometry predicate in the settings file.
+				 * Checks if predicate is the geometry predicate indicated in the settings file.
 				 */
 				if(predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))){
 					
@@ -201,9 +210,16 @@ public class AdapterLOD4WFS {
 		
 		if(feature.isFDAFeature()){
 
-			logger.info("Performing query at " + feature.getEndpoint()  + " to retrieve all geometries of [" + feature.getName() + "]  ...");
-			predicates = factoryFDA.getPredicatesFDAFeatures(feature);
-
+			for (int i = 0; i < feature.getTableOfContents().size(); i++) {
+				
+				Triple triple = new Triple();
+				
+				triple.setPredicate(feature.getTableOfContents().get(i).getField());
+				triple.setObjectDataType(feature.getTableOfContents().get(i).getFieldType());				
+				predicates.add(triple);
+				
+			}
+			
 			rs = jn.executeQuery(feature.getQuery().toString(),feature.getEndpoint());
 
 		} else {

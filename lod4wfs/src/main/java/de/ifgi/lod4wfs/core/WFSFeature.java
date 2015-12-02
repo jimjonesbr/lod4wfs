@@ -1,5 +1,7 @@
 package de.ifgi.lod4wfs.core;
 
+import java.util.ArrayList;
+
 /**
  * @author Jim Jones
  */
@@ -18,7 +20,7 @@ public class WFSFeature {
 	private long geometries;
 	private String lastAccess;
 	private String geometryType;
-	
+	private ArrayList<WFSFeatureContents> contents;
 	private String query;
 	private String geometryVariable;
 	private String endpoint;
@@ -39,21 +41,22 @@ public class WFSFeature {
 	private String SOLRSpatialConstraint;
 
 	public WFSFeature() {
+		
 		super();
+		this.contents = new ArrayList<WFSFeatureContents>();
 
 	}
 
 
-
-
-
 	public WFSFeature(String name, String title, String keywords,
 			String featureAbstract, String defaultCRS, String lowerCorner,
-			String upperCorner, boolean enabled, double size, long triples,
-			String query, String geometryVariable, String endpoint,
-			String fileName, String outputFormat, int recordsLimit,
-			String fields, String sOLRSorting, boolean isSOLR, boolean isFDA,
-			boolean isSDA, String sOLRGeometryField, String sOLRFilter,
+			String upperCorner, boolean enabled, double size, long geometries,
+			String lastAccess, String geometryType,
+			ArrayList<WFSFeatureContents> contents, String query,
+			String geometryVariable, String endpoint, String fileName,
+			String outputFormat, int recordsLimit, String fields,
+			String sOLRSorting, boolean isSOLR, boolean isFDA, boolean isSDA,
+			String sOLRGeometryField, String sOLRFilter,
 			String sOLRSpatialConstraint) {
 		super();
 		this.name = name;
@@ -65,7 +68,10 @@ public class WFSFeature {
 		this.upperCorner = upperCorner;
 		this.enabled = enabled;
 		this.size = size;
-		this.geometries = triples;
+		this.geometries = geometries;
+		this.lastAccess = lastAccess;
+		this.geometryType = geometryType;
+		this.contents = contents;
 		this.query = query;
 		this.geometryVariable = geometryVariable;
 		this.endpoint = endpoint;
@@ -80,6 +86,7 @@ public class WFSFeature {
 		SOLRGeometryField = sOLRGeometryField;
 		SOLRFilter = sOLRFilter;
 		SOLRSpatialConstraint = sOLRSpatialConstraint;
+		
 	}
 
 
@@ -329,13 +336,30 @@ public class WFSFeature {
 
 
 
-
-
 	public void setGeometryType(String geometryType) {
 		this.geometryType = geometryType;
 	}
 
+	
 
+	public ArrayList<WFSFeatureContents> getTableOfContents() {
+		
+		return this.contents;
+	}
+
+
+	public void addContent(WFSFeatureContents content) {
+		
+		this.contents.add(content);
+		
+	}
+
+
+	public void setTableOfContents(ArrayList<WFSFeatureContents> contents) {
+		
+		this.contents = contents;
+		
+	}
 	
 	
 	

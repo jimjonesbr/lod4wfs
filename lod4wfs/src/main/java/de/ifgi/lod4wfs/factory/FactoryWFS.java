@@ -98,7 +98,7 @@ public class FactoryWFS {
 				if(fdaFeatureList.get(i).isEnabled()){
 					
 					features.add(fdaFeatureList.get(i));
-
+					
 				} else {
 
 					logger.warn("FDA Feature [" + fdaFeatureList.get(i).getName() + "] disabled. This feature will not appear in the Capabilities Document.");
@@ -231,6 +231,17 @@ public class FactoryWFS {
 
 			if(this.isFDAFeature(feature)){
 
+				for (int i = 0; i < fdaFeatureList.size(); i++) {
+
+					if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+
+						feature = fdaFeatureList.get(i);
+						
+					}
+
+
+				}
+				
 				describeFeatureTypeResponse = AdapterLOD4WFS.getInstance().describeFeatureType(feature);
 
 			} 		
@@ -272,6 +283,15 @@ public class FactoryWFS {
 
 			if(this.isFDAFeature(feature)){
 
+				for (int i = 0; i < fdaFeatureList.size(); i++) {
+
+					if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+
+						feature.setTableOfContents(fdaFeatureList.get(i).getTableOfContents());
+						
+					}
+
+				}
 				getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
 
 			} 
@@ -358,12 +378,14 @@ public class FactoryWFS {
 
 			if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
 
+				//TODO: remove setters!!!
 				result = true; 
 				feature.setQuery(fdaFeatureList.get(i).getQuery());
 				feature.setGeometryVariable(fdaFeatureList.get(i).getGeometryVariable());
 				feature.setEndpoint(fdaFeatureList.get(i).getEndpoint());
 				feature.setAsFDAFeature(true);
-
+				
+				
 			}
 
 		}
@@ -408,7 +430,8 @@ public class FactoryWFS {
 				feature.setQuery(solrFeatureList.get(i).getQuery());
 				feature.setGeometryVariable(solrFeatureList.get(i).getGeometryVariable());
 				feature.setEndpoint(solrFeatureList.get(i).getEndpoint());
-
+				
+				
 			}
 
 		}
@@ -417,10 +440,25 @@ public class FactoryWFS {
 
 	}
 
-	public ArrayList<WFSFeature> getLoadedFDAFeatures(){
 
-		return fdaFeatureList;
+	public boolean existsFeature(String featureName){
+		
+		fdaFeatureList = factoryFDA.listFDAFeatures();
+		boolean result = false;
+		
+		for (int i = 0; i < fdaFeatureList.size(); i++) {
+
+			if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(featureName))){
+				
+				result = true;
+				
+			}
+			
+		}
+		
+		return result;
 	}
+	
 
 	public ArrayList<WFSFeature> getLoadedSOLRFeatures(){
 
