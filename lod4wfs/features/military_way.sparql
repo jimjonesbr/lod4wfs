@@ -1,0 +1,23 @@
+{
+"name":"http://sparql.lod4wfs.de/military_way",
+"title":"Military Way",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://linkeddata.uni-muenster.de:8081/parliament/sparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"query":"SELECT  ?feature ?label ?wkt ?access
+WHERE
+  { GRAPH <http://linkedgeodata.org/geometry/militarythings/way>
+      { ?feature <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkedgeodata.org/meta/Way> .
+        ?feature <http://geovocab.org/geometry#geometry> ?geometry .
+        ?geometry <http://www.opengis.net/ont/geosparql#asWKT> ?wkt 
+        OPTIONAL
+          { ?feature <http://linkedgeodata.org/ontology/access> ?access}
+        OPTIONAL
+          { ?feature <http://www.w3.org/2000/01/rdf-schema#label> ?label }
+      }
+  }
+"
+}

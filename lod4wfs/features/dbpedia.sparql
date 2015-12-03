@@ -2,11 +2,17 @@
 "name":"http://sparql.lod4wfs.de/dbpedia",
 "title":"no title given",
 "abstract":"no abstract given",
-"keywords":"no keywords given",
+"keywords":"no keywords",
 "geometryVariable":"?wkt",
 "endpoint":"http://dbpedia.org/sparql",
 "crs":"EPSG:4326",
 "enabled":"true",
+"toc": [
+	{"s": "http://www.w3.org/2001/XMLSchema#string"},
+	{"lat": "http://www.w3.org/2001/XMLSchema#float"},
+	{"long": "http://www.w3.org/2001/XMLSchema#float"},
+	{"wkt": "http://www.w3.org/2001/XMLSchema#string"}
+	],
 "query":"PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX  dbo:  <http://dbpedia.org/ontology/>
 
@@ -16,5 +22,6 @@ WHERE
     ?s geo:lat ?lat .
     ?s geo:long ?long
   }
-LIMIT   5000"
+LIMIT   5000
+"
 }

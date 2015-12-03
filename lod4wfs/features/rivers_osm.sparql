@@ -1,6 +1,6 @@
 {
-"name":"http://sparql.lod4wfs.de/historic_things",
-"title":"Historic Things at GeoNames",
+"name":"http://sparql.lod4wfs.de/rivers_osm",
+"title":"Rivers at OSM",
 "abstract":"no abstract",
 "keywords":"no keywords",
 "geometryVariable":"?wkt",
@@ -9,21 +9,20 @@
 "enabled":"true",
 "toc": [
 	{"historicthing": "http://www.w3.org/2001/XMLSchema#string"},
-	{"label": "http://www.w3.org/2001/XMLSchema#string"},
+	{"lbl": "http://www.w3.org/2001/XMLSchema#string"},
 	{"wkt": "http://www.openlinksw.com/schemas/virtrdf#Geometry"}
 	],
 "query":"PREFIX  wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
 
-SELECT  ?historicthing ?label ?wkt
+SELECT DISTINCT  ?historicthing (xsd:string(?label) AS ?lbl) ?wkt
 WHERE
-  { ?historicthing wgs84_pos:lat ?lat .
-    ?historicthing wgs84_pos:long ?long .
-    ?historicthing <http://geovocab.org/geometry#geometry> ?geometry .
+  { ?historicthing <http://geovocab.org/geometry#geometry> ?geometry .
     ?geometry <http://www.opengis.net/ont/geosparql#asWKT> ?wkt .
-    ?historicthing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkedgeodata.org/ontology/HistoricThing>
+    ?historicthing <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkedgeodata.org/ontology/Bedrock>
     OPTIONAL
       { ?historicthing <http://www.w3.org/2000/01/rdf-schema#label> ?label }
-    FILTER langMatches(lang(?label), 'EN')
   }
+ORDER BY ?lbl
 "
 }

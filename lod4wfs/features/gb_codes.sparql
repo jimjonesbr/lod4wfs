@@ -7,9 +7,15 @@
 "endpoint":"http://data.ordnancesurvey.co.uk/datasets/os-linked-data/apis/sparql",
 "crs":"EPSG:4326",
 "enabled":"true",
+"toc": [
+	{"name": "http://www.w3.org/2001/XMLSchema#string"},
+	{"wkt": "http://www.w3.org/2001/XMLSchema#string"},
+	{"gss": "http://www.w3.org/2001/XMLSchema#string"},
+	{"unitId": "http://www.w3.org/2001/XMLSchema#int"}
+	],
 "query":"PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
 
-SELECT  ?name (concat('POINT(', xsd:string(?long), ' ', xsd:string(?lat), ')') AS ?wkt) ?gss ?unitid
+SELECT  ?name (concat('POINT(', xsd:string(?long), ' ', xsd:string(?lat), ')') AS ?wkt) ?gss (xsd:int(?unitid) AS ?unitId)
 WHERE
   { ?x <http://www.w3.org/2000/01/rdf-schema#label> ?name .
     ?x <http://www.w3.org/2003/01/geo/wgs84_pos#lat> ?lat .

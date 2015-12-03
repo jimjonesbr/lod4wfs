@@ -1,0 +1,22 @@
+{
+"name":"http://sparql.lod4wfs.de/city_limits_geonames",
+"title":"no title",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://linkedgeodata.org/vsparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"toc": [
+	{"s": "http://www.w3.org/2001/XMLSchema#string"},
+	{"wkt": "http://www.opengis.net/ont/geosparql#wktLiteral"}
+	],
+"query":"SELECT  ?s ?wkt
+WHERE
+  { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://linkedgeodata.org/ontology/City> .
+    ?s <http://geovocab.org/geometry#geometry> ?geometry .
+    ?geometry <http://www.opengis.net/ont/geosparql#asWKT> ?wkt
+  }
+ORDER BY DESC(?s)
+"
+}
