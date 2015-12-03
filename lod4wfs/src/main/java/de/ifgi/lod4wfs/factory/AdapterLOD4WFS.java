@@ -80,6 +80,8 @@ public class AdapterLOD4WFS {
 				triple.setObjectDataType(feature.getTableOfContents().get(i).getFieldType());
 				
 				predicates.add(triple);
+				
+				
 			}
 			
 			
@@ -269,6 +271,7 @@ public class AdapterLOD4WFS {
 					
 					Triple triple = new Triple();
 					triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
+					
 					predicates.add(triple);		
 					
 				}
