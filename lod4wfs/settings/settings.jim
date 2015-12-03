@@ -32,7 +32,7 @@ fdaPrefix=fda
 solrPrefix=solr
 sdaEnabled = false
 fdaEnabled = true
-solrEnabled = true
+solrEnabled = false
 
 [Server]
 defaultPort = 8088

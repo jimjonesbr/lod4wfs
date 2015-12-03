@@ -268,12 +268,23 @@ public class FactoryWFS {
 
 		String getFeatureResponse = new String(); 
 
-
 		if(GlobalSettings.isSolrEnabled()){
 
 			if(this.isSOLRFeature(feature)){
 
-				getFeatureResponse = AdapterSOLR4WFS.getInstance().getFeature(feature);
+				for (int i = 0; i < solrFeatureList.size(); i++) {
+
+					if(solrFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+						
+						feature.setQuery(solrFeatureList.get(i).getQuery());
+						feature.setGeometryVariable(solrFeatureList.get(i).getGeometryVariable());
+						feature.setEndpoint(solrFeatureList.get(i).getEndpoint());	
+
+					}
+
+				}
+
+				getFeatureResponse = AdapterSOLR4WFS.getInstance().getFeature(feature);				
 
 			}
 
@@ -282,16 +293,23 @@ public class FactoryWFS {
 		if (GlobalSettings.isFdaEnabled()) {
 
 			if(this.isFDAFeature(feature)){
-
+				
+				logger.info("Loading Table of Contents for feature [" + feature.getName() + "]");
+				
 				for (int i = 0; i < fdaFeatureList.size(); i++) {
 
 					if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
 
-						feature.setTableOfContents(fdaFeatureList.get(i).getTableOfContents());
+						feature.setTableOfContents(fdaFeatureList.get(i).getTableOfContents());						
+						feature.setQuery(fdaFeatureList.get(i).getQuery());
+						feature.setGeometryVariable(fdaFeatureList.get(i).getGeometryVariable());
+						feature.setEndpoint(fdaFeatureList.get(i).getEndpoint());
+						feature.setAsFDAFeature(true);	
 						
 					}
 
 				}
+				
 				getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
 
 			} 
@@ -303,6 +321,9 @@ public class FactoryWFS {
 
 			if(this.isSDAFeature(feature)){
 
+//				feature.setGeometryVariable(sdaFeatureList.get(i).getGeometryVariable());
+//				feature.setEndpoint(sdaFeatureList.get(i).getEndpoint());
+//				feature.setAsSDAFeature(true);
 				getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
 
 			} 
@@ -378,13 +399,7 @@ public class FactoryWFS {
 
 			if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
 
-				//TODO: remove setters!!!
-				result = true; 
-				feature.setQuery(fdaFeatureList.get(i).getQuery());
-				feature.setGeometryVariable(fdaFeatureList.get(i).getGeometryVariable());
-				feature.setEndpoint(fdaFeatureList.get(i).getEndpoint());
-				feature.setAsFDAFeature(true);
-				
+				result = true;			
 				
 			}
 
@@ -404,10 +419,9 @@ public class FactoryWFS {
 		for (int i = 0; i < sdaFeatureList.size(); i++) {
 
 			if(sdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+
 				result = true; 
-				feature.setGeometryVariable(sdaFeatureList.get(i).getGeometryVariable());
-				feature.setEndpoint(sdaFeatureList.get(i).getEndpoint());
-				feature.setAsSDAFeature(true);
+
 			}
 
 		}
@@ -426,12 +440,9 @@ public class FactoryWFS {
 		for (int i = 0; i < solrFeatureList.size(); i++) {
 
 			if(solrFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(feature.getName()))){
+			
 				result = true; 
-				feature.setQuery(solrFeatureList.get(i).getQuery());
-				feature.setGeometryVariable(solrFeatureList.get(i).getGeometryVariable());
-				feature.setEndpoint(solrFeatureList.get(i).getEndpoint());
-				
-				
+							
 			}
 
 		}
@@ -444,11 +455,12 @@ public class FactoryWFS {
 	public boolean existsFeature(String featureName){
 		
 		fdaFeatureList = factoryFDA.listFDAFeatures();
+		
 		boolean result = false;
 		
 		for (int i = 0; i < fdaFeatureList.size(); i++) {
-
-			if(fdaFeatureList.get(i).getName().equals(modelFeatures.expandPrefix(featureName))){
+						
+			if(fdaFeatureList.get(i).getName().equals(GlobalSettings.getFDAFeaturesNameSpace()+ featureName)){
 				
 				result = true;
 				

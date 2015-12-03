@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
@@ -137,64 +136,6 @@ public class FactoryFDAFeatures {
 
 	}
 
-	public static boolean existsFeature(String featureName){
-
-		File[] files = new File(GlobalSettings.getFeatureDirectory()).listFiles();
-		boolean result = false;
-
-		for (File file : files) {
-
-			if(file.getName().endsWith(".sparql")){
-
-				try {
-
-					FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory() + file.getName());
-					JsonReader jsonReader = new JsonReader(fileReader);
-					jsonReader.setLenient(true);
-					jsonReader.beginObject();
-
-					while (jsonReader.hasNext()) {
-
-						String record = jsonReader.nextName();
-
-						if(record.equals("name")){
-
-							if(jsonReader.nextString().equals(GlobalSettings.getFDAFeaturesNameSpace() + featureName)){
-
-								result = true;
-
-							}
-
-						} else {
-
-							jsonReader.nextString();
-
-						}
-					}
-
-					jsonReader.endObject();
-					jsonReader.close();
-
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-
-
-			}
-		}
-
-		return result;
-
-	}
-
-	//TODO: FDA existsFeature() to be implemented.
-	public static void updateFeature(WFSFeature feature){
-
-
-
-	}
 
 	public static void deleteFeature(WFSFeature feature){
 
@@ -344,14 +285,6 @@ public class FactoryFDAFeatures {
 
 
 
-
-
-
-
-
-
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -372,10 +305,10 @@ public class FactoryFDAFeatures {
 
 		try {
 
-			FileReader fileReader2 = new FileReader(GlobalSettings.getFeatureDirectory() + fileName);
+			FileReader fileReader = new FileReader(GlobalSettings.getFeatureDirectory() + fileName);
 
 			JsonParser jParser = new JsonParser();
-			JsonObject jObject = (JsonObject) jParser.parse(fileReader2);
+			JsonObject jObject = (JsonObject) jParser.parse(fileReader);
 
 			feature.setFeatureAbstract(jObject.get("abstract").getAsString());
 			feature.setTitle(jObject.get("title").getAsString());
@@ -422,7 +355,9 @@ public class FactoryFDAFeatures {
 
 
 		} catch (FileNotFoundException e1) {
-
+			
+			logger.error("Error loading ["+fileName+"]");
+			
 			e1.printStackTrace();
 
 		}
@@ -471,6 +406,7 @@ public class FactoryFDAFeatures {
 
 	}
 
+
 	public String getGeometryPredicate(String SPARQLQuery){
 
 		Query query = QueryFactory.create(SPARQLQuery);
@@ -515,8 +451,5 @@ public class FactoryFDAFeatures {
 
 	}
 
-	public void enableFeature(boolean enable){
-
-
-	}
+	
 }
