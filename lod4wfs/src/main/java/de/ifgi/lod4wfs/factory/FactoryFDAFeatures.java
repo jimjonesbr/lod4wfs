@@ -394,18 +394,14 @@ public class FactoryFDAFeatures {
 
 			Triple triple = new Triple();
 
-			if(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI()!=null){
 				
 				if(qsol.get(query.getResultVars().get(i).toString()).isLiteral()){
-					
+					if(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI()!=null){
 					triple.setObjectDataType(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI());
+					}
 				}
 			
-//			} else {
-//
-//				triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
-
-			}
+		
 
 			triple.setPredicate(query.getResultVars().get(i).toString());
 			result.add(triple);

@@ -162,7 +162,6 @@ public class AdapterLOD4WFS {
 				} else {
 					
 					sequence.setAttribute("type",predicates.get(i).getObjectDataType());
-					System.out.println(">>>"+predicates.get(i).getObjectDataType());
 					
 				}
 
