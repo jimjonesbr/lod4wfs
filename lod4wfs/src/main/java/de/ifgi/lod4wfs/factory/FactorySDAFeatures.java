@@ -145,10 +145,10 @@ public class FactorySDAFeatures {
 		
 		SPARQL = " SELECT ?geometry " + GlobalSettings.getCrLf() + selectClause +
 				 " WHERE { GRAPH <"+ feature + "> {" + GlobalSettings.getCrLf() +
-				 "	?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.getCrLf() +
-				 "	?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.getCrLf() +
-				 "	?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.getCrLf() + 
-				 "	?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.getCrLf() +
+				 "		?feature a " + GlobalSettings.getPredicatesContainer() + " . "+ GlobalSettings.getCrLf() +
+				 "		?feature " + GlobalSettings.getFeatureConnector() + " ?geometry . "+ GlobalSettings.getCrLf() +
+				 "		?geometry a " + GlobalSettings.getGeometryClass() + " . " + GlobalSettings.getCrLf() + 
+				 "		?geometry " + GlobalSettings.getGeometryPredicate() + " ?"+ GlobalSettings.getGeometryVariable() + " . " + GlobalSettings.getCrLf() +
 				 whereClause + " }}";
 
 		return SPARQL;

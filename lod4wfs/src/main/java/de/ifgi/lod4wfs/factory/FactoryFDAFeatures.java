@@ -145,6 +145,7 @@ public class FactoryFDAFeatures {
 
 	}
 
+	
 	public static boolean isQueryValid(String query){
 
 		boolean result;
@@ -160,6 +161,7 @@ public class FactoryFDAFeatures {
 
 	}
 
+	
 	public static boolean isVariableValid(WFSFeature feature){
 
 		boolean result = false;
@@ -183,6 +185,7 @@ public class FactoryFDAFeatures {
 		return result;
 	}
 
+	
 	public static boolean isEndpointValid(String endpoint){
 
 		boolean result = true;
@@ -212,12 +215,14 @@ public class FactoryFDAFeatures {
 
 	}
 
+	
 	public static boolean isFeatureNameValid(String featureName){
 
 		return featureName.matches("([A-Za-z0-9-_]+)");
 
 	}
 
+	
 	public void addFeature(WFSFeature feature){
 
 		try {
@@ -293,12 +298,14 @@ public class FactoryFDAFeatures {
 
 	}
 
+	
 	public ResultSet executeQuery(String SPARQL, String endpoint){
 
 		return jn.executeQuery(SPARQL, endpoint);
 
 	}
 
+	
 	public WFSFeature getFDAFeature(String fileName){
 
 		WFSFeature feature = new WFSFeature();

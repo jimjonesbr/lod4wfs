@@ -323,7 +323,7 @@ public class FactoryWFS {
 
 //				feature.setGeometryVariable(sdaFeatureList.get(i).getGeometryVariable());
 //				feature.setEndpoint(sdaFeatureList.get(i).getEndpoint());
-//				feature.setAsSDAFeature(true);
+				feature.setAsSDAFeature(true);
 				getFeatureResponse = AdapterLOD4WFS.getInstance().getFeature(feature);
 
 			} 

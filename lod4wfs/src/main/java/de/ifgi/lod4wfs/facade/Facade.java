@@ -76,8 +76,6 @@ public class Facade {
 			
 		for (int i = 0; i < globalFeatureList.size(); i++) {
 			
-			//System.out.println("feature: " + FactoryWFS.getInstance().getLoadedModelFeature().shortForm((feature.getName())) + " | global: " + globalFeatureList.get(i).getName());
-			
 			if(featureName.equals(globalFeatureList.get(i).getName())){
 				
 				result.setSize(feature.getSize());

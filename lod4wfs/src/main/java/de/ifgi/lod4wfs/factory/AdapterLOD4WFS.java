@@ -174,7 +174,7 @@ public class AdapterLOD4WFS {
 
 			describeFeatureTypeResponse = Utils.printXMLDocument(document);
 
-			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", feature.getName().substring(feature.getName().indexOf(":")+1, feature.getName().length()));
+			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_NAME", feature.getName());
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_TYPE", feature.getName());
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVER_PORT", Integer.toString(GlobalSettings.getDefaultPort()));
 			describeFeatureTypeResponse = describeFeatureTypeResponse.replace("PARAM_SERVICE", GlobalSettings.getDefaultServiceName());
@@ -226,7 +226,7 @@ public class AdapterLOD4WFS {
 
 		} else {
 
-			logger.info("Performing query at " + GlobalSettings.getDefaultSPARQLEndpoint()  + " to retrieve all geometries of [" + feature.getName() + "] ...");
+			logger.info("Performing query at " + GlobalSettings.getDefaultSPARQLEndpoint()  + " to retrieve all geometries of the SDA Fature [" + feature.getName() + "] ...");
 
 			String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix(feature.getName());
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);	
@@ -270,8 +270,7 @@ public class AdapterLOD4WFS {
 				if(!feature.isFDAFeature()){
 					
 					Triple triple = new Triple();
-					triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
-					
+					triple.setPredicate(GlobalSettings.getGeometryPredicate());					
 					predicates.add(triple);		
 					
 				}
@@ -356,8 +355,9 @@ public class AdapterLOD4WFS {
 
 							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
 
-							if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
-
+							
+							if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate())) {
+								
 								if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
 									String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
@@ -370,7 +370,7 @@ public class AdapterLOD4WFS {
 
 								} else {
 
-									logger.error("The feature [" + soln.get("?geometry") + "] has an invalid geometry literal.");
+									logger.error("The SDA feature [" + soln.get("?geometry") + "] has an invalid geometry literal.");
 
 								}
 
@@ -695,8 +695,6 @@ public class AdapterLOD4WFS {
 			PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(featureLogFile, false))); 
 			out.println(fileContent.toString());
 			out.close();
-
-
 
 			br.close();
 

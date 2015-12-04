@@ -243,7 +243,7 @@ public class GlobalSettings {
 	            geometryVariable = ini.get("Geometry", "geometryVariable");
 	            predicatesContainer = ini.get("Geometry", "predicatesContainer");
 	            featureConnector = ini.get("Geometry", "featureConnector");
-	            featureConnector = ini.get("Geometry", "wktLiteral");
+	            //featureConnector = ini.get("Geometry", "wktLiteral");
 	            
 	            xsdNameSpace = ini.get("SystemDefaults", "xsdNameSpace");
 	            fdaPrefix = ini.get("SystemDefaults", "fdaPrefix");
