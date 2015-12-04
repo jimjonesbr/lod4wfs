@@ -89,11 +89,8 @@ public class AdapterLOD4WFS {
 
 
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);
-
-			//TODO: Verify the need of manual input of geometry predicate.
 			Triple triple = new Triple();
 			triple.setPredicate(GlobalSettings.getGeometryPredicate().replace("<", "").replace(">", ""));
-
 			predicates.add(triple);
 
 		}
@@ -165,6 +162,7 @@ public class AdapterLOD4WFS {
 				} else {
 					
 					sequence.setAttribute("type",predicates.get(i).getObjectDataType());
+					System.out.println(">>>"+predicates.get(i).getObjectDataType());
 					
 				}
 

@@ -346,7 +346,7 @@ public class FactoryFDAFeatures {
 					WFSFeatureContents content = new WFSFeatureContents();
 
 					content.setField(elem.getAsJsonArray().get(i).getAsJsonObject().entrySet().iterator().next().getKey().toString());
-					content.setFieldType(elem.getAsJsonArray().get(i).getAsJsonObject().entrySet().iterator().next().getValue().toString());
+					content.setFieldType(elem.getAsJsonArray().get(i).getAsJsonObject().entrySet().iterator().next().getValue().toString().replace("\"", ""));
 
 					feature.addContent(content);
 
@@ -394,13 +394,16 @@ public class FactoryFDAFeatures {
 
 			Triple triple = new Triple();
 
-			if(qsol.get(query.getResultVars().get(i).toString()).isLiteral()){
-
-				triple.setObjectDataType(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI());
-
-			} else {
-
-				triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
+			if(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI()!=null){
+				
+				if(qsol.get(query.getResultVars().get(i).toString()).isLiteral()){
+					
+					triple.setObjectDataType(qsol.getLiteral(query.getResultVars().get(i)).getDatatypeURI());
+				}
+			
+//			} else {
+//
+//				triple.setObjectDataType(GlobalSettings.getDefaultLiteralType());
 
 			}
 
