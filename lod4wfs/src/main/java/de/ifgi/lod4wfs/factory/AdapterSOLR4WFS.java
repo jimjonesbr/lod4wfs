@@ -218,7 +218,7 @@ public class AdapterSOLR4WFS {
 
 						if(rs.get(i).getFieldValue(feature.getGeometryVariable()) == null){
 
-							//logger.error("Record skipped at SOLR Feature [" + feature.getName() + "]. The field [" + feature.getGeometryVariable()  + "] is empty.");
+							logger.error("Record skipped at SOLR Feature [" + feature.getName() + "]. The field [" + feature.getGeometryVariable()  + "] is empty.");
 							
 							empty = empty +1;
 
@@ -310,8 +310,6 @@ public class AdapterSOLR4WFS {
 	public String getSOLRGeometryType(WFSFeature feature){
 
 		feature.setLimit(1);
-
-
 
 		return null;
 

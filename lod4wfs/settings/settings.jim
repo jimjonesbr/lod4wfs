@@ -17,7 +17,7 @@ serviceName = lod4wfs
 xsdNameSpace = http://www.w3.org/2001/XMLSchema#
 defaultLiteral = <http://www.w3.org/2001/XMLSchema#string>
 stringLiteral = <http://www.w3.org/2001/XMLSchema#string>
-integerLiteral = <http://www.w3.org/2001/XMLSchema#integer>
+integerLiteral = <http://www.w3.org/2001/XMLSchema#int>
 decimalLiteral =<http://www.w3.org/2001/XMLSchema#decimal>
 longLiteral =<http://www.w3.org/2001/XMLSchema#long>
 dateLiteral =<http://www.w3.org/2001/XMLSchema#date>
@@ -30,7 +30,7 @@ solrFeaturesNameSpace = http://ulb.solr4wfs.de/
 sdaPrefix=sda
 fdaPrefix=fda
 solrPrefix=solr
-sdaEnabled = false
+sdaEnabled = true
 fdaEnabled = true
 solrEnabled = false
 

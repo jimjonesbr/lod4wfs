@@ -438,17 +438,17 @@ public class AdapterLOD4WFS {
 				for (int i = 0; i < predicates.size(); i++) {
 
 					if(soln.get("?"+predicates.get(i).getPredicate()).isLiteral()){
-
+						
 						if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatype() != null){
 
 							/**
 							 * Checks if the literal is of type integer, long, byte or decimal, in order to avoid quotation marks -> "".
 							 */
 							if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultDecimalType()) ||
-									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultLongType()) ||
-									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultIntegerType()) ||
-									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultByteType()) ||
-									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultFloatType())) {
+							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultLongType()) ||
+							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultIntegerType()) ||
+							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultByteType()) ||
+							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultFloatType())) {
 
 
 								if(!soln.getLiteral("?" + predicates.get(i).getPredicate()).getLexicalForm().toUpperCase().equals("NAN")){
@@ -478,8 +478,12 @@ public class AdapterLOD4WFS {
 					}
 
 
+					
+					
 					if(i != predicates.size()-1 ){
+
 						jsonEntries = jsonEntries + ",\n";
+						
 					}
 
 
