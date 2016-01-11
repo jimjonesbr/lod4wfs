@@ -476,8 +476,6 @@ public class AdapterLOD4WFS {
 								"\": \"" + soln.get("?" + predicates.get(i).getPredicate()).toString().replace("\"", "'") + "\"";
 
 					}
-
-
 					
 					
 					if(i != predicates.size()-1 ){
