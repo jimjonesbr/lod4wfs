@@ -296,9 +296,27 @@ public class AdapterLOD4WFS {
 
 							if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){														
 
-								//TODO: Check if literal is already GML
-								String wkt = soln.getLiteral("?"+feature.getGeometryVariable()).getString();
-								String gml = Utils.convertWKTtoGML(wkt);
+
+								
+								String geometryLiteral = soln.getLiteral("?"+feature.getGeometryVariable()).getString();								
+								String gml; 
+																
+								if(!Utils.isWKT(geometryLiteral)){
+								
+									//TODO: Check if literal is GML 
+									//Geometry literal isn't WKT. Assuming GML ...
+									gml = geometryLiteral;
+									
+									
+								} else {
+								
+									gml = Utils.convertWKTtoGML(geometryLiteral);
+									
+								}
+								
+								
+								
+								
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 								Node node = document.importNode(GMLnode, true);
 								elementGeometryPredicate.appendChild(node);						
@@ -307,11 +325,11 @@ public class AdapterLOD4WFS {
 								rootGeometry.appendChild(currentGeometryElement);
 																													
 								
-								if(!WKTParser.parse(Utils.removeCRSandTypefromWKT(wkt)).getType().equals(geometryType)){
+								if(!WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().equals(geometryType)){
 									
 									if(geometryType.equals("")){
 										
-										geometryType= WKTParser.parse(Utils.removeCRSandTypefromWKT(wkt)).getType().toString();
+										geometryType= WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().toString();
 										
 									} else {
 										
