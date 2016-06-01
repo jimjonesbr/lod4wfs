@@ -62,7 +62,7 @@ public class AdapterLOD4WFS {
 		return instance;
 	}
 
-	
+
 	public String describeFeatureType(WFSFeature feature){
 
 		String featureName = FactoryWFS.getInstance().getLoadedModelFeature().expandPrefix((feature.getName()));	
@@ -71,20 +71,20 @@ public class AdapterLOD4WFS {
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 
 		if(feature.isFDAFeature()){
-						
+
 			for (int i = 0; i < feature.getTableOfContents().size(); i++) {
-			
+
 				Triple triple = new Triple();
-				
+
 				triple.setPredicate(feature.getTableOfContents().get(i).getField());
 				triple.setObjectDataType(feature.getTableOfContents().get(i).getFieldType());
-				
+
 				predicates.add(triple);
-				
-				
+
+
 			}
-			
-			
+
+
 		} else { 
 
 
@@ -137,7 +137,7 @@ public class AdapterLOD4WFS {
 				 * Checks if predicate is the geometry predicate indicated in the settings file.
 				 */
 				if(predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))){
-					
+
 					String featureType = new String();
 					featureType = factorySDA.getFeatureType(featureName);
 
@@ -160,9 +160,9 @@ public class AdapterLOD4WFS {
 					sequence.setAttribute("type","gml:MultiPointPropertyType");
 
 				} else {
-					
+
 					sequence.setAttribute("type",predicates.get(i).getObjectDataType());
-					
+
 				}
 
 				myNodeList.item(0).getParentNode().insertBefore(sequence, myNodeList.item(0));
@@ -202,23 +202,23 @@ public class AdapterLOD4WFS {
 		String getFeatureResponse = new String();
 		String layerPrefix = new String();
 		String geometryType = "";
-		
+
 		ArrayList<Triple> predicates = new ArrayList<Triple>();
 		ResultSet rs;
-		
-		
+
+
 		if(feature.isFDAFeature()){
 
 			for (int i = 0; i < feature.getTableOfContents().size(); i++) {
-				
+
 				Triple triple = new Triple();
-				
+
 				triple.setPredicate(feature.getTableOfContents().get(i).getField());
 				triple.setObjectDataType(feature.getTableOfContents().get(i).getFieldType());				
 				predicates.add(triple);
-				
+
 			}
-			
+
 			rs = jn.executeQuery(feature.getQuery().toString(),feature.getEndpoint());
 
 		} else {
@@ -234,9 +234,9 @@ public class AdapterLOD4WFS {
 
 		layerPrefix = FactoryWFS.getInstance().getLoadedModelFeature().shortForm(feature.getName());
 		layerPrefix = layerPrefix.substring(0,layerPrefix.indexOf(":"));
-		
+
 		long countIteration = 0;
-		
+
 		if(feature.getOutputFormat().equals("xml")){
 
 			try {
@@ -265,11 +265,11 @@ public class AdapterLOD4WFS {
 
 
 				if(!feature.isFDAFeature()){
-					
+
 					Triple triple = new Triple();
 					triple.setPredicate(GlobalSettings.getGeometryPredicate());					
 					predicates.add(triple);		
-					
+
 				}
 
 
@@ -297,63 +297,63 @@ public class AdapterLOD4WFS {
 							if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){														
 
 
-								
+
 								String geometryLiteral = soln.getLiteral("?"+feature.getGeometryVariable()).getString();								
 								String gml; 
-																
+
 								if(!Utils.isWKT(geometryLiteral)){
-								
+
 									//TODO: Check if literal is GML 
 									//Geometry literal isn't WKT. Assuming GML ...
 									gml = geometryLiteral;
-									
-									
+
+
 								} else {
-								
+
 									gml = Utils.convertWKTtoGML(geometryLiteral);
-									
+
 								}
-								
-								
-								
-								
+
+
+
+
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		
 								Node node = document.importNode(GMLnode, true);
 								elementGeometryPredicate.appendChild(node);						
 								rootGeometry.appendChild(elementGeometryPredicate);												
 								currentGeometryElement.appendChild(elementGeometryPredicate);						
 								rootGeometry.appendChild(currentGeometryElement);
-																													
-								
-								if(!WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().equals(geometryType)){
-									
-									if(geometryType.equals("")){
-										
-										geometryType= WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().toString();
-										
-									} else {
-										
-										logger.error("The feature [" + feature.getName() + "] has multiple geometry types. This is not supported by the OGC WFS Standard. For this document, the geometry type ["+geometryType+"] will be assumed.");
-										
-									}
-									
-								}
+
+
+//								if(!WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().equals(geometryType)){
+//
+//									if(geometryType.equals("")){
+//
+//										geometryType= WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().toString();
+//
+//									} else {
+//
+//										logger.error("The feature [" + feature.getName() + "] has multiple geometry types. This is not supported by the OGC WFS Standard. For this document, the geometry type ["+geometryType+"] will be assumed.");
+//
+//									}
+//
+//								}
 
 							} else {
 
 								Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());							
 
 								if(soln.get("?"+predicates.get(i).getPredicate().toString()) != null){
-									
+
 									if(soln.get("?"+predicates.get(i).getPredicate().toString()).isLiteral()){
-										
+
 										elementAttribute.appendChild(document.createCDATASection(soln.getLiteral("?"+predicates.get(i).getPredicate()).getValue().toString()));
-										
+
 									} else {
-									
+
 										elementAttribute.appendChild(document.createCDATASection(soln.get("?"+predicates.get(i).getPredicate()).toString()));
 									}
-									
+
 								}
 
 								currentGeometryElement.appendChild(elementAttribute);
@@ -370,9 +370,9 @@ public class AdapterLOD4WFS {
 
 							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicateWithoutPrefix);
 
-							
+
 							if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate())) {
-								
+
 								if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
 
 									String gml = Utils.convertWKTtoGML(soln.getLiteral("?"+GlobalSettings.getGeometryVariable()).getString());											
@@ -407,8 +407,8 @@ public class AdapterLOD4WFS {
 				logger.info("XML Document with " + countIteration + " features successfully created.");
 
 				getFeatureResponse = Utils.printXMLDocument(document);
-				
-				
+
+
 			} catch (ParserConfigurationException e) {
 				e.printStackTrace();
 			} catch (SAXException e) {
@@ -456,17 +456,17 @@ public class AdapterLOD4WFS {
 				for (int i = 0; i < predicates.size(); i++) {
 
 					if(soln.get("?"+predicates.get(i).getPredicate()).isLiteral()){
-						
+
 						if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatype() != null){
 
 							/**
 							 * Checks if the literal is of type integer, long, byte or decimal, in order to avoid quotation marks -> "".
 							 */
 							if(soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultDecimalType()) ||
-							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultLongType()) ||
-							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultIntegerType()) ||
-							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultByteType()) ||
-							   soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultFloatType())) {
+									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultLongType()) ||
+									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultIntegerType()) ||
+									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultByteType()) ||
+									soln.getLiteral("?"+predicates.get(i).getPredicate()).getDatatypeURI().trim().equals(GlobalSettings.getDefaultFloatType())) {
 
 
 								if(!soln.getLiteral("?" + predicates.get(i).getPredicate()).getLexicalForm().toUpperCase().equals("NAN")){
@@ -494,12 +494,12 @@ public class AdapterLOD4WFS {
 								"\": \"" + soln.get("?" + predicates.get(i).getPredicate()).toString().replace("\"", "'") + "\"";
 
 					}
-					
-					
+
+
 					if(i != predicates.size()-1 ){
 
 						jsonEntries = jsonEntries + ",\n";
-						
+
 					}
 
 
@@ -612,7 +612,7 @@ public class AdapterLOD4WFS {
 
 					} else {
 
-						
+
 						if (predicates.get(i).getPredicate().equals(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""))) {
 
 							if(!Utils.getGeometryType(soln.getLiteral("?" + GlobalSettings.getGeometryVariable()).getString()).equals("INVALID")){
@@ -643,18 +643,18 @@ public class AdapterLOD4WFS {
 			logger.info("GeoJSON document for [" + feature.getName() + "] with " + countIteration + " geometries successfully created.");
 
 		}
-		
-		
+
+
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date date = new Date();
-		
+
 		feature.setLastAccess(dateFormat.format(date));		
 		feature.setSize(getFeatureResponse.getBytes().length);
 		feature.setGeometries(countIteration);
 		feature.setGeometryType(geometryType);
-		
+
 		this.updateFeatureLog(feature);
-		
+
 		return getFeatureResponse;
 
 	}
@@ -666,7 +666,7 @@ public class AdapterLOD4WFS {
 	 ** Private Methods.
 	 **/
 
-	
+
 	private void updateFeatureLog(WFSFeature feature){
 
 		String featureLogFile = "logs/features.log";
@@ -722,7 +722,7 @@ public class AdapterLOD4WFS {
 		}
 
 	}
-	
+
 
 	private String removePredicateURL(String predicate){
 
