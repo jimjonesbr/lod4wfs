@@ -88,7 +88,13 @@ public class WKTParser {
 			throw new Exception("Invalid input");
 		}
 
-		String s = input.substring(0, input.indexOf('(')).trim();
+
+		/**
+		 * @author Jones
+		 * @change: toUpperCase added to the s variable, to avoid errors with 
+		 * geometries annotated with lower case literals, e.g. Point, point.
+		 */
+		String s = input.substring(0, input.indexOf('(')).trim().toUpperCase();
 		String content = input.substring(input.indexOf('(') + 1, input.lastIndexOf(')'));
 
 		if(s.equals("POINT")) {
