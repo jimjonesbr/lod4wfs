@@ -5,7 +5,6 @@ package de.ifgi.lod4wfs.factory;
  * @description Provides all standard WFS functions (GetCapabilities, DescribeFeatureType and GetFeature) for LOD data sources.
  */
 
-import it.cutruzzula.lwkt.WKTParser;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;

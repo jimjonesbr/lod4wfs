@@ -1,0 +1,23 @@
+{
+"name":"http://sparql.lod4wfs.de/gnd_places",
+"title":"Normdaten GND",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://linkeddata.uni-muenster.de:8081/parliament/sparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"toc": [
+	{"feature": "http://www.w3.org/2001/XMLSchema#string"},
+	{"name": "http://www.w3.org/2001/XMLSchema#string"},
+	{"wkt": "http://www.opengis.net/ont/geosparql#wktLiteral"}
+	],
+"query":"SELECT  ?feature ?name ?wkt
+WHERE
+  { GRAPH <http://www.dnb.de/normdaten>
+      { ?feature <http://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName> ?name .
+        ?feature <http://www.opengis.net/ont/geosparql#hasGeometry> ?geo .
+        ?geo <http://www.opengis.net/ont/geosparql#asWKT> ?wkt
+      }
+  }"
+}
