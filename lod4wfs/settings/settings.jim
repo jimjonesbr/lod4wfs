@@ -30,7 +30,7 @@ solrFeaturesNameSpace = http://ulb.solr4wfs.de/
 sdaPrefix=sda
 fdaPrefix=fda
 solrPrefix=solr
-sdaEnabled = true
+sdaEnabled = false
 fdaEnabled = true
 solrEnabled = false
 

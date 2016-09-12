@@ -165,6 +165,12 @@ public class ServletWFS extends HttpServlet
 						response.setContentType("text/javascript");
 						response.getWriter().println(Facade.getInstance().getFeature(layer));
 
+					} else if (currentOptionsFormat.toUpperCase().equals("GEOJSON")){
+
+						layer.setOutputFormat("geojson");
+						response.setContentType("text/javascript");
+						response.getWriter().println(Facade.getInstance().getFeature(layer));
+
 
 					} else if (currentOptionsFormat.toUpperCase().equals("ZIP")){
 
@@ -369,6 +375,7 @@ public class ServletWFS extends HttpServlet
 			} else if (!formatOptions.toUpperCase().equals("ZIP") &&
 					!formatOptions.toUpperCase().equals("CALLBACK:LOADGEOJSON") &&
 					!formatOptions.toUpperCase().equals("JSON") &&
+					!formatOptions.toUpperCase().equals("GEOJSON") &&
 					!formatOptions.toUpperCase().isEmpty()){
 
 				result = result.replace("PARAM_REPORT", "Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
