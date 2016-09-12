@@ -34,49 +34,52 @@ public class FactorySDAFeatures {
 	public ArrayList<WFSFeature> listSDAFeatures(){
 
 		logger.info("Listing SDA features from the SPARQL Endpoint " + GlobalSettings.getDefaultSPARQLEndpoint() + " ...");
-		
+
 		ResultSet rs = jn.executeQuery(SPARQL.listNamedGraphs, GlobalSettings.getDefaultSPARQLEndpoint());
 		ArrayList<WFSFeature> result = new ArrayList<WFSFeature>();
-		
-		String CRS = new String();
-		
-		while (rs.hasNext()) {
-			WFSFeature feature = new WFSFeature();
-			QuerySolution soln = rs.nextSolution();
-			feature.setName(soln.get("?graphName").toString());
-			feature.setTitle(soln.getLiteral("?title").getValue().toString());
-			feature.setFeatureAbstract(soln.getLiteral("?abstract").getValue().toString());
-			feature.setKeywords(soln.getLiteral("?keywords").getValue().toString());
-			feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
-			feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
-			feature.setAsSDAFeature(true);
-			feature.setEnabled(true);
-			
-			
-			CRS = soln.get("?wkt").toString();
 
-			if(CRS.contains("<") || CRS.contains(">")){
-				
-				CRS = CRS.substring(CRS.indexOf("<"), CRS.indexOf(">"));
-				CRS = CRS.replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
-				
-				CRS = CRS.replace("<", "");
-				CRS = CRS.replace(">", "");
-				
-				feature.setCRS(CRS);
+		String CRS = new String();
+
+		if(rs!=null){
 			
-			} else {
-			
-				feature.setCRS(GlobalSettings.getDefaultCRS());
-				
+			while (rs.hasNext()) {
+				WFSFeature feature = new WFSFeature();
+				QuerySolution soln = rs.nextSolution();
+				feature.setName(soln.get("?graphName").toString());
+				feature.setTitle(soln.getLiteral("?title").getValue().toString());
+				feature.setFeatureAbstract(soln.getLiteral("?abstract").getValue().toString());
+				feature.setKeywords(soln.getLiteral("?keywords").getValue().toString());
+				feature.setLowerCorner(GlobalSettings.getDefaultLowerCorner());
+				feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
+				feature.setAsSDAFeature(true);
+				feature.setEnabled(true);
+
+
+				CRS = soln.get("?wkt").toString();
+
+				if(CRS.contains("<") || CRS.contains(">")){
+
+					CRS = CRS.substring(CRS.indexOf("<"), CRS.indexOf(">"));
+					CRS = CRS.replace("http://www.opengis.net/def/crs/EPSG/0/", "EPSG:");
+
+					CRS = CRS.replace("<", "");
+					CRS = CRS.replace(">", "");
+
+					feature.setCRS(CRS);
+
+				} else {
+
+					feature.setCRS(GlobalSettings.getDefaultCRS());
+
+				}
+
+				result.add(feature);
+
 			}
-			
-			result.add(feature);
-			
 		}
-				
+
 		logger.info("Total SDA Features: " + result.size());
-		
+
 		return result;
 	}
 	

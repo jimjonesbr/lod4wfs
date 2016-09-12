@@ -10,9 +10,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
+import java.net.MalformedURLException;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Enumeration;
@@ -503,5 +506,40 @@ public class Utils {
 		return result;
 	}
 	
-	
+	public static boolean isEndpointValid(String endpoint){
+
+		boolean result = false;
+
+		try {
+
+			URL url = new URL(endpoint);
+			 
+						
+			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+			huc.setConnectTimeout(GlobalSettings.getConnectionTimeOut());
+			
+			if(huc.getHeaderFields().isEmpty()){
+				
+				logger.error("Invalid SPARQL Endpoint. The given URL is cannot be resolved -> " + endpoint);
+				
+			} else {
+				
+				result = true;
+			}
+			
+			//int responseCode = huc.getResponseCode();
+			//System.out.println(">> "+responseCode);
+			//TODO: Implement function to validate Endpoint			
+			//if (responseCode == 404) {logger.error("URL cannot be resolved -> " + endpoint);}			
+
+		} catch (MalformedURLException e) {
+			result = false;
+			logger.error("Malformed URL -> " + endpoint);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
+
+		return result;
+
+	}	
 }

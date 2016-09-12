@@ -53,9 +53,15 @@ public class GlobalSettings {
     private static boolean fdaEnable = false;
     private static boolean solrEnable = false;
     private static String appVersion = "";
+    private static int connectionTimeOut = 0;
     
         
     
+    
+	public static int getConnectionTimeOut() {
+		return connectionTimeOut;
+	}
+
 	public static String getAppVersion() {
 		return appVersion;
 	}
@@ -256,6 +262,7 @@ public class GlobalSettings {
 	            solrFeaturesNameSpace = ini.get("SystemDefaults", "solrFeaturesNameSpace");
 	            defaultSPARQLEndpoint = ini.get("Server", "SPARQLEndpointURL");
 	            featureDirectory = ini.get("Server", "SPARQLDirectory");
+	            connectionTimeOut = Integer.parseInt(ini.get("Server", "connectionTimeOut"));
 	            defaultPort = Integer.valueOf(ini.get("Server", "defaultPort"));
 	            defaultDecimalType  = ini.get("SystemDefaults", "decimalLiteral").replace("<", "").replace(">", "");
 	            defaultStringType  = ini.get("SystemDefaults", "stringLiteral").replace("<", "").replace(">", "");

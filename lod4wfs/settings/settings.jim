@@ -38,6 +38,7 @@ solrEnabled = false
 defaultPort = 8088
 SPARQLEndpointURL = http://linkeddata.uni-muenster.de:8081/parliament/sparql
 SPARQLDirectory = features/
+connectionTimeOut = 1000
 
 [WebInterface]
 PreviewLimit = 10

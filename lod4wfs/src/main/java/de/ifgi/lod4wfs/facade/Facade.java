@@ -120,7 +120,7 @@ public class Facade {
 	
 	public boolean isEndpointValid(String endpoint){
 		
-		return FactoryFDAFeatures.isEndpointValid(endpoint);
+		return Utils.isEndpointValid(endpoint);
 		
 	}
 	

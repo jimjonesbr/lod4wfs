@@ -102,10 +102,8 @@ public class FactoryFDAFeatures {
 
 				String[] featureLogLine = line.split(splitBy);
 
-
-
 				if(feature.getName().equals(featureLogLine[0])){
-
+					
 					if(!(featureLogLine.length < 5)){
 
 						result.setLastAccess(featureLogLine[1]);
@@ -186,35 +184,6 @@ public class FactoryFDAFeatures {
 	}
 
 	
-	public static boolean isEndpointValid(String endpoint){
-
-		boolean result = true;
-
-		try {
-
-			URL url = new URL(endpoint);
-			HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-
-			int responseCode = huc.getResponseCode();
-
-			//TODO: Implement function to validate Endpoint
-			if (responseCode == 404) {
-
-				logger.error("URL cannot be resolved -> " + endpoint);
-
-			}
-
-		} catch (MalformedURLException e) {
-			result = false;
-			logger.error("Malformed URL -> " + endpoint);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} 
-
-		return result;
-
-	}
-
 	
 	public static boolean isFeatureNameValid(String featureName){
 
