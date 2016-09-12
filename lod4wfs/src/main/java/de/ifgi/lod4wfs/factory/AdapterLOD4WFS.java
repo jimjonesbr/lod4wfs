@@ -292,28 +292,20 @@ public class AdapterLOD4WFS {
 
 							Element elementGeometryPredicate = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());
 
-
 							if(predicates.get(i).getPredicate().equals(feature.getGeometryVariable())){														
-
-
 
 								String geometryLiteral = soln.getLiteral("?"+feature.getGeometryVariable()).getString();								
 								String gml; 
 
 								if(!Utils.isWKT(geometryLiteral)){
 
-									//TODO: Check if literal is GML 
-									//Geometry literal isn't WKT. Assuming GML ...
 									gml = geometryLiteral;
-
 
 								} else {
 
 									gml = Utils.convertWKTtoGML(geometryLiteral);
 
 								}
-
-
 
 
 								Element GMLnode =  documentBuilder.parse(new ByteArrayInputStream(gml.getBytes())).getDocumentElement();		

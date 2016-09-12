@@ -42,7 +42,7 @@ SPARQLDirectory = features/
 [WebInterface]
 PreviewLimit = 10
 
-
+#SPARQLEndpointURL = http://linkeddata.uni-muenster.de:8081/parliament/sparql
 #SPARQLEndpointURL = http://giv-siidemo.uni-muenster.de:8081/parliament/sparql
 #SPARQLEndpointURL = http://localhost:8080/openrdf-sesame/repositories/lod4wfs
 
