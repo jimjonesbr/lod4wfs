@@ -96,7 +96,16 @@ public class Start{
 				"Operating System: " + System.getProperty("os.name").toString() + " " + 
 									   System.getProperty("os.version").toString() + " (" + 
 									   System.getProperty("os.arch").toString()+")"+ GlobalSettings.getCrLf()+
-				"Port: " + GlobalSettings.getDefaultPort() + GlobalSettings.getCrLf());
+				"Port: " + GlobalSettings.getDefaultPort() + GlobalSettings.getCrLf() + 
+				
+				"Default SPARQL Endpoint (SDA Features): " + GlobalSettings.getDefaultSPARQLEndpoint() + GlobalSettings.getCrLf() +
+				"Connection Time-out in ms: " + GlobalSettings.getConnectionTimeOut() + GlobalSettings.getCrLf() +
+				"FDA Features enabled: " + GlobalSettings.isFdaEnabled() + GlobalSettings.getCrLf() +
+				"SDA Features enabled: " + GlobalSettings.isSdaEnabled() + GlobalSettings.getCrLf() +
+				"SOLR Features enabled: " + GlobalSettings.isSolrEnabled() + GlobalSettings.getCrLf() +				
+				"FDA Features directory: " + GlobalSettings.getFeatureDirectory() + GlobalSettings.getCrLf() +
+				"Web Interface Preview Limit: " + GlobalSettings.getPreviewLimit() + GlobalSettings.getCrLf() + GlobalSettings.getCrLf()
+				);
 		
 		server.join();
 
