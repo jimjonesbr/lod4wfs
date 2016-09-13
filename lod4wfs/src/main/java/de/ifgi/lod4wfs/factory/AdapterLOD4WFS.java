@@ -80,12 +80,9 @@ public class AdapterLOD4WFS {
 
 				predicates.add(triple);
 
-
 			}
 
-
 		} else { 
-
 
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);
 			Triple triple = new Triple();
@@ -117,7 +114,6 @@ public class AdapterLOD4WFS {
 				requestElement.setAttribute("xmlns:" + entry.getKey(), entry.getValue());
 
 			}
-
 
 			for (int i = 0; i < predicates.size(); i++) {
 				

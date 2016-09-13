@@ -1,12 +1,5 @@
 package de.ifgi.lod4wfs.infrastructure;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
-
-import org.apache.jena.atlas.web.HttpException;
 import org.apache.log4j.Logger;
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;

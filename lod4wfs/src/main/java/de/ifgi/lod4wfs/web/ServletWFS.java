@@ -39,6 +39,10 @@ public class ServletWFS extends HttpServlet
 	{
 
 		Enumeration<String> listParameters = request.getParameterNames();
+	    response.addHeader("Access-Control-Allow-Origin","*");
+	    response.addHeader("Access-Control-Allow-Methods","GET,POST");
+	    response.addHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+		
 		String CapabilitiesDocuemnt = new String();
 		String currentVersion = new String();
 		String currentRequest = new String();
