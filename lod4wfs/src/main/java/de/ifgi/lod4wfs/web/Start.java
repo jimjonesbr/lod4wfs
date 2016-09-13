@@ -100,10 +100,10 @@ public class Start{
 				
 				"Default SPARQL Endpoint (SDA Features): " + GlobalSettings.getDefaultSPARQLEndpoint() + GlobalSettings.getCrLf() +
 				"Connection Time-out in ms: " + GlobalSettings.getConnectionTimeOut() + GlobalSettings.getCrLf() +
-				"FDA Features enabled: " + GlobalSettings.isFdaEnabled() + GlobalSettings.getCrLf() +
-				"SDA Features enabled: " + GlobalSettings.isSdaEnabled() + GlobalSettings.getCrLf() +
-				"SOLR Features enabled: " + GlobalSettings.isSolrEnabled() + GlobalSettings.getCrLf() +				
-				"FDA Features directory: " + GlobalSettings.getFeatureDirectory() + GlobalSettings.getCrLf() +
+				"FDA Features Enabled: " + GlobalSettings.isFdaEnabled() + GlobalSettings.getCrLf() +
+				"SDA Features Enabled: " + GlobalSettings.isSdaEnabled() + GlobalSettings.getCrLf() +
+				"SOLR Features Enabled: " + GlobalSettings.isSolrEnabled() + GlobalSettings.getCrLf() +				
+				"FDA Features Directory: " + GlobalSettings.getFeatureDirectory() + GlobalSettings.getCrLf() +
 				"Web Interface Preview Limit: " + GlobalSettings.getPreviewLimit() + GlobalSettings.getCrLf() + GlobalSettings.getCrLf()
 				);
 		

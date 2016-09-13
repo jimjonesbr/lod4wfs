@@ -120,11 +120,9 @@ public class AdapterLOD4WFS {
 
 
 			for (int i = 0; i < predicates.size(); i++) {
-
+				
 				String predicateWithoutPrefix = new String();
 				predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
-
-				predicateWithoutPrefix = this.removePredicateURL(predicates.get(i).getPredicate());
 
 				Element sequence = document.createElement("xsd:element");
 				sequence.setAttribute("maxOccurs","1");
