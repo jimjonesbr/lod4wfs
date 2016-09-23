@@ -44,8 +44,7 @@
 			<artifactId>ini4j</artifactId>
 			<version>0.5.4</version>
 		</dependency>
-	
-	
+		
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
     		<groupId>com.google.code.gson</groupId>
@@ -53,9 +52,13 @@
     		<version>2.7</version>
 		</dependency>
 	
-	
-	
-	
+	    <dependency>
+        	<groupId>org.slf4j</groupId>
+        	<artifactId>slf4j-simple</artifactId>
+        	<version>1.7.5</version>
+    	</dependency>
+    
+    
 	
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
