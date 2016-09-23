@@ -55,26 +55,27 @@
 	    <dependency>
         	<groupId>org.slf4j</groupId>
         	<artifactId>slf4j-simple</artifactId>
-        	<version>1.7.5</version>
+        	<version>1.7.21</version>
     	</dependency>
     
-    
 	
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-maven-plugin -->
 		<dependency>
-			<groupId>org.mortbay.jetty</groupId>
-			<artifactId>jetty-maven-plugin</artifactId>
-			<version>8.1.10.v20130312</version>
+    		<groupId>org.mortbay.jetty</groupId>
+    		<artifactId>jetty-maven-plugin</artifactId>
+    		<version>8.1.10.v20130312</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.eclipse.jetty/jetty-servlets -->
 		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlets</artifactId>
-			<version>8.1.10.v20130312</version>
+    		<groupId>org.eclipse.jetty</groupId>
+    		<artifactId>jetty-servlets</artifactId>
+    		<version>8.1.10.v20130312</version>
 		</dependency>
 
 
 	
-
+		
 		<dependency>
 			<groupId>org.apache.solr</groupId>
 			<artifactId>solr-solrj</artifactId>
