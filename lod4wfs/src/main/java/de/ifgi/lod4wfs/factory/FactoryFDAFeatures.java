@@ -13,14 +13,14 @@ import org.apache.log4j.Logger;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.sparql.core.TriplePath;
-import com.hp.hpl.jena.sparql.syntax.ElementPathBlock;
-import com.hp.hpl.jena.sparql.syntax.ElementVisitorBase;
-import com.hp.hpl.jena.sparql.syntax.ElementWalker;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
+import org.apache.jena.sparql.core.TriplePath;
+import org.apache.jena.sparql.syntax.ElementPathBlock;
+import org.apache.jena.sparql.syntax.ElementVisitorBase;
+import org.apache.jena.sparql.syntax.ElementWalker;
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
@@ -384,7 +384,7 @@ public class FactoryFDAFeatures {
 		Query query = QueryFactory.create(SPARQLQuery);
 		String geometryPredicate = new String();
 
-		final ArrayList<com.hp.hpl.jena.graph.Triple> triplesList = new ArrayList<com.hp.hpl.jena.graph.Triple>();
+		final ArrayList<org.apache.jena.graph.Triple> triplesList = new ArrayList<org.apache.jena.graph.Triple>();
 
 		// This will walk through all parts of the query
 		ElementWalker.walk(query.getQueryPattern(),

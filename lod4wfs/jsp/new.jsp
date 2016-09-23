@@ -1,6 +1,6 @@
 <%@page import="de.ifgi.lod4wfs.facade.Facade"%>
-<%@page import="com.hp.hpl.jena.query.QueryFactory"%>
-<%@page import="com.hp.hpl.jena.query.Query"%>
+<%@page import="org.apache.jena.query.QueryFactory"%>
+<%@page import="org.apache.jena.query.Query"%>
 <%@page import="de.ifgi.lod4wfs.core.WFSFeature"%>
 <%@page import="java.io.*"%>
 <%@page import="de.ifgi.lod4wfs.core.GlobalSettings"%>

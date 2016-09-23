@@ -9,13 +9,13 @@
 "enabled":"true",
 "toc": [
 	{"historicthing": "http://www.w3.org/2001/XMLSchema#string"},
-	{"lbl": "http://www.w3.org/2001/XMLSchema#string"},
+	{"my_lbl": "http://www.w3.org/2001/XMLSchema#string"},
 	{"wkt": "http://www.openlinksw.com/schemas/virtrdf#Geometry"}
 	],
-"query":"PREFIX  wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#>
-PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
+"query":"PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX  wgs84_pos: <http://www.w3.org/2003/01/geo/wgs84_pos#>
 
-SELECT DISTINCT  ?historicthing (xsd:string(?label) AS ?lbl) ?wkt
+SELECT DISTINCT  ?historicthing (xsd:string(?label) AS ?my_lbl) ?wkt
 WHERE
   { ?historicthing <http://geovocab.org/geometry#geometry> ?geometry .
     ?geometry <http://www.opengis.net/ont/geosparql#asWKT> ?wkt .
@@ -23,6 +23,6 @@ WHERE
     OPTIONAL
       { ?historicthing <http://www.w3.org/2000/01/rdf-schema#label> ?label }
   }
-ORDER BY ?lbl
+ORDER BY ?my_lbl
 "
 }

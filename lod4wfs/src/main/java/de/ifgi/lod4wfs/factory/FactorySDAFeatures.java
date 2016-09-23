@@ -7,8 +7,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.SPARQL;
 import de.ifgi.lod4wfs.core.Triple;
@@ -43,6 +43,7 @@ public class FactorySDAFeatures {
 		if(rs!=null){
 			
 			while (rs.hasNext()) {
+				
 				WFSFeature feature = new WFSFeature();
 				QuerySolution soln = rs.nextSolution();
 				feature.setName(soln.get("?graphName").toString());
@@ -53,7 +54,6 @@ public class FactorySDAFeatures {
 				feature.setUpperCorner(GlobalSettings.getDefaultUpperCorner());
 				feature.setAsSDAFeature(true);
 				feature.setEnabled(true);
-
 
 				CRS = soln.get("?wkt").toString();
 
@@ -89,7 +89,6 @@ public class FactorySDAFeatures {
 
 		ResultSet rs = jn.executeQuery(SPARQL.listFeaturePredicates.replace("PARAM_LAYER", feature), GlobalSettings.getDefaultSPARQLEndpoint());
 		ArrayList<Triple> result = new ArrayList<Triple>();		
-
 				
 		while (rs.hasNext()) {
 

@@ -1,7 +1,7 @@
 package de.ifgi.lod4wfs.facade;
 
 import java.util.ArrayList;
-import com.hp.hpl.jena.query.ResultSet;
+import org.apache.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.EscapeChars;
 import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;

@@ -1,9 +1,14 @@
 package de.ifgi.lod4wfs.tests;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
+import java.util.List;
 
 import de.ifgi.lod4wfs.core.Utils;
 
@@ -15,53 +20,18 @@ public class Test {
     	
     	
     	
-    	
-    		    //byte[] ipAddr2 = InetAddress.getLocalHost();
-    		    InetAddress addr = InetAddress.getLocalHost();
-    		    String hostnameCanonical = addr.getCanonicalHostName();
-    		  
-    		    
-    	
-    	System.out.println("Test " + addr.getHostName());
-    	System.out.println("-> "+ hostnameCanonical);
-    	System.out.println("-> "+ Utils.getCanonicalHostName());
-    	
-        InetAddress localHost = InetAddress.getLocalHost();
-        //%><td><input type="submit" value="<%=dynamicFeatures.get(i).getFileName()%>" name="delete"';"/><%
-        printInetAddress("localHost", localHost);
-        
-        String hostName = localHost.getHostName();
-        String canonicalHostName = localHost.getCanonicalHostName();
-        printByName("  by " + hostName, hostName);
-        printByName("  by " + canonicalHostName, canonicalHostName);
-        
-        System.out.println();
-        
-        System.out.println("Full list of Network Interfaces:");
-        Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
-        
-        if (en == null) {
-            
-        	System.out.println("got null from NetworkInterface.getNetworkInterfaces()");
-        	
-        } else for (int networkInterfaceNumber = 0; en.hasMoreElements(); networkInterfaceNumber++) {
-          NetworkInterface intf = en.nextElement();
-          
-          System.out.println();
-          String ifaceId = "networkInterface[" + networkInterfaceNumber + "]";
-          System.out.println("  " + ifaceId + ".name: " + intf.getName());
-          System.out.println("  " + ifaceId + ".displayName: " + intf.getDisplayName());
-          
+	
 
-                    
-          Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses();
-          
-          for (int addressNumber = 0; enumIpAddr.hasMoreElements(); addressNumber++) {
-            InetAddress ipAddr = enumIpAddr.nextElement();
-            System.out.println();
-            printInetAddress("    " + ifaceId + ".address[" + addressNumber + "]", ipAddr);
-          }
-        }
+    	 RuntimeMXBean bean = ManagementFactory.getRuntimeMXBean();
+    	  List<String> aList = bean.getInputArguments();
+
+    	  for (int i = 0; i < aList.size(); i++) {
+    	    System.out.println( aList.get( i ) );
+
+    	  }
+    	
+    	
+    	
     }
 
     private static void printByName(String prefix, String canonicalHostName)

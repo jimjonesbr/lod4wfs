@@ -31,8 +31,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.Triple;
 import de.ifgi.lod4wfs.core.Utils;
@@ -85,9 +85,13 @@ public class AdapterLOD4WFS {
 		} else { 
 
 			predicates = factorySDA.getPredicatesSDAFeatures(featureName);
+			
+			
 			Triple triple = new Triple();
-			triple.setPredicate(GlobalSettings.getGeometryPredicate().replace("<", "").replace(">", ""));
+			triple.setPredicate(GlobalSettings.getGeometryPredicate().replace("<", "").replace(">", ""));			
 			predicates.add(triple);
+			
+			
 
 		}
 
@@ -118,8 +122,8 @@ public class AdapterLOD4WFS {
 			for (int i = 0; i < predicates.size(); i++) {
 				
 				String predicateWithoutPrefix = new String();
-				predicateWithoutPrefix =  predicates.get(i).getPredicate().substring(predicates.get(i).getPredicate().indexOf(":")+1, predicates.get(i).getPredicate().length());
-
+				predicateWithoutPrefix = this.removePredicateURL(predicates.get(i).getPredicate());
+				
 				Element sequence = document.createElement("xsd:element");
 				sequence.setAttribute("maxOccurs","1");
 				sequence.setAttribute("minOccurs","0");
@@ -309,21 +313,7 @@ public class AdapterLOD4WFS {
 								currentGeometryElement.appendChild(elementGeometryPredicate);						
 								rootGeometry.appendChild(currentGeometryElement);
 
-
-//								if(!WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().equals(geometryType)){
-//
-//									if(geometryType.equals("")){
-//
-//										geometryType= WKTParser.parse(Utils.removeCRSandTypefromWKT(geometryLiteral)).getType().toString();
-//
-//									} else {
-//
-//										logger.error("The feature [" + feature.getName() + "] has multiple geometry types. This is not supported by the OGC WFS Standard. For this document, the geometry type ["+geometryType+"] will be assumed.");
-//
-//									}
-//
-//								}
-
+								
 							} else {
 
 								Element elementAttribute = document.createElement(layerPrefix + ":" + predicates.get(i).getPredicate());							
@@ -331,8 +321,12 @@ public class AdapterLOD4WFS {
 								if(soln.get("?"+predicates.get(i).getPredicate().toString()) != null){
 
 									if(soln.get("?"+predicates.get(i).getPredicate().toString()).isLiteral()){
-
-										elementAttribute.appendChild(document.createCDATASection(soln.getLiteral("?"+predicates.get(i).getPredicate()).getValue().toString()));
+										
+										if (!soln.getLiteral("?"+predicates.get(i).getPredicate()).getLexicalForm().toString().toUpperCase().equals("NAN")) {
+										
+											elementAttribute.appendChild(document.createCDATASection(soln.getLiteral("?"+predicates.get(i).getPredicate()).getValue().toString()));
+										}
+																				
 
 									} else {
 
@@ -411,7 +405,7 @@ public class AdapterLOD4WFS {
 
 
 		/**
-		 * Generates a JSON file as output. Geometries are maintained as WKT.
+		 * Generates a JSON file as output. Geometries are delivered as WKT.
 		 */
 
 		if(feature.getOutputFormat().equals("json")){
@@ -422,8 +416,6 @@ public class AdapterLOD4WFS {
 			if(!feature.isFDAFeature()){
 
 				Triple triple = new Triple();
-
-				//triple.setPredicate(GlobalSettings.getGeometryPredicate().replaceAll("<", "").replace(">", ""));
 				triple.setPredicate(factoryFDA.getGeometryPredicate(feature.getQuery()));
 				predicates.add(triple);	
 

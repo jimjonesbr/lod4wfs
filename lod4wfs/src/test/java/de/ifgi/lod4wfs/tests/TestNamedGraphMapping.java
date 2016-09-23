@@ -12,8 +12,8 @@ import javax.xml.namespace.QName;
 import org.apache.xerces.util.URI;
 import org.apache.xerces.util.URI.MalformedURIException;
 
-import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
 
 import de.ifgi.lod4wfs.core.WFSFeature;
 

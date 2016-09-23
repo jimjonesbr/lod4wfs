@@ -9,7 +9,7 @@ geometryVariable = asWKT
 geometryClass = <http://www.opengis.net/ont/geosparql/1.0#Geometry>
 predicatesContainer = <http://www.opengis.net/ont/geosparql/1.0#Feature>
 featureConnector = <http://www.opengis.net/ont/geosparql/1.0#hasGeometry>
-wktLiteral = <http://www.opengis.net/ont/sf#wktLiteral>
+wktLiteral = <http://www.opengis.net/ont/geosparql#wktLiteral>
 
 ## Don't touch the [SystemDefaults] variables, unless you really know what you're doing.
 [SystemDefaults]

@@ -2,9 +2,9 @@
 <%@ page import="de.ifgi.lod4wfs.core.*"%>
 <%@ page import="de.ifgi.lod4wfs.facade.*"%>
 <%@ page import="de.ifgi.lod4wfs.factory.*"%>
-<%@ page import="com.hp.hpl.jena.query.*"%>
+<%@ page import="org.apache.jena.query.*"%>
 <%@ page import="java.util.ArrayList"%>
-<%@ page import="com.hp.hpl.jena.query.ARQ"%>
+<%@ page import="org.apache.jena.query.ARQ"%>
 <%@ page import="java.net.URLEncoder"%>
 <html>
 <link rel="stylesheet" href="http://data.uni-muenster.de/php/sparql/lib/codemirror/codemirror.css">

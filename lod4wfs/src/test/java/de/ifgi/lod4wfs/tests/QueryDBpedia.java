@@ -5,13 +5,13 @@ import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-import com.hp.hpl.jena.query.ARQ;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ResultSet;
+import org.apache.jena.query.ARQ;
+import org.apache.jena.query.Query;
+import org.apache.jena.query.QueryExecution;
+import org.apache.jena.query.QueryExecutionFactory;
+import org.apache.jena.query.QueryFactory;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.query.ResultSet;
 
 import de.ifgi.lod4wfs.core.GlobalSettings;
 import de.ifgi.lod4wfs.core.Triple;
@@ -50,12 +50,13 @@ public class QueryDBpedia {
 //" ?class rdfs:subClassOf phen:Landcover.  " +
 //" }";
 
-    	String sparqlQueryString2 = "SELECT * WHERE {?s ?p ?o}";
+    	String sparqlQueryString2 = "SELECT ?geo ?gml WHERE {<http://example.com/my/fme-gen-4f929834-7188-452c-bbc0-b17eedd08727> <http://www.opengis.net/ont/geosparql#hasGeometry> ?geo ." +
+    												"?geo <http://www.opengis.net/ont/geosparql#asGML> ?gml} LIMIT 10";
     	Query query = QueryFactory.create(sparqlQueryString2);
         ARQ.getContext().setTrue(ARQ.useSAX);
        
        
-        QueryExecution qexec = QueryExecutionFactory.sparqlService("http://data.uni-muenster.de/accessibility/sparql", query);
+        QueryExecution qexec = QueryExecutionFactory.sparqlService("http://ec2-54-229-171-74.eu-west-1.compute.amazonaws.com:7200/repositories/stan_data", query);
         ResultSet results = qexec.execSelect();
 
         
