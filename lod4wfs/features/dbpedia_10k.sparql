@@ -10,25 +10,25 @@
 "toc": [
 	{"wkt": "http://www.w3.org/2001/XMLSchema#string"},
 	{"label": "http://www.w3.org/2001/XMLSchema#string"},
-	{"population": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"},
+	{"my_population": "http://www.w3.org/2001/XMLSchema#nonNegativeInteger"},
 	{"abstract": "http://www.w3.org/2001/XMLSchema#string"},
 	{"lat": "http://www.w3.org/2001/XMLSchema#float"},
 	{"long": "http://www.w3.org/2001/XMLSchema#float"}
 	],
-"query":"PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
-PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+"query":"PREFIX  geo:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
 PREFIX  dbo:  <http://dbpedia.org/ontology/>
+PREFIX  rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX  dbpedia-owl: <http://dbpedia.org/ontology/>
 
-SELECT DISTINCT  (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt) ?label ?population ?abstract ?lat ?long
+SELECT DISTINCT  (concat('POINT(', ?long, ' ', ?lat, ')') AS ?wkt) ?label ?my_population ?abstract ?lat ?long
 WHERE
-  { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> dbpedia-owl:Place .
+  { ?s <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> dbo:Place .
     ?s geo:lat ?lat .
     ?s geo:long ?long .
     ?s rdfs:label ?label .
-    ?s dbpedia-owl:abstract ?abstract
+    ?s dbo:abstract ?abstract
     FILTER langMatches(lang(?abstract), 'EN')
-    ?s dbpedia-owl:populationTotal ?population
+    ?s dbo:populationTotal ?my_population
     FILTER langMatches(lang(?label), 'EN')
   }
 "

@@ -51,7 +51,8 @@ public class ServletWFS extends HttpServlet
 		String currentSRSName = new String();
 		String currentOutputFormat = new String();
 		String currentOptionsFormat = new String();
-		String currentMaxFeature = new String();
+		String serverRequest = new String();
+		//String currentMaxFeature = new String();
 
 		System.out.println("\nIncoming request:\n");
 
@@ -102,11 +103,18 @@ public class ServletWFS extends HttpServlet
 				
 			}
 			
-			if (parameter.toUpperCase().equals("MAXFEATURE")) {
+			if(parameter.toUpperCase().equals("SERVER")){
 
-				currentMaxFeature = request.getParameter(parameter);
+				serverRequest = request.getParameter(parameter);
 				
 			}
+
+			
+//			if (parameter.toUpperCase().equals("MAXFEATURE")) {
+//
+//				currentMaxFeature = request.getParameter(parameter);
+//				
+//			}
 
 		}
 
@@ -295,13 +303,16 @@ public class ServletWFS extends HttpServlet
 	}
 
 
+	@SuppressWarnings("resource")
 	private String validateRequest(String version, String request, String service, String typeName, String SRS, String outputFormat, String formatOptions){
 
 		String result = new String();
 		boolean valid = true;
+		Scanner exceptionFileScanner = null;
 		try {
 
-			result = new Scanner(new File("wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z").next();
+			exceptionFileScanner = new Scanner(new File("wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z");
+			result = exceptionFileScanner.next();
 
 			if(!service.toUpperCase().equals("WFS")){
 
@@ -333,7 +344,6 @@ public class ServletWFS extends HttpServlet
 					result = result.replace("PARAM_CODE", "VersionNotSupported");
 					logger.error("WFS version " + version + " is not supported by this server.");
 
-
 				}
 
 				valid = false;
@@ -362,13 +372,14 @@ public class ServletWFS extends HttpServlet
 				valid = false;
 
 				/**
-				 * Supported output formats:
+				 * 	Supported output formats:
 				 * 	GeoJSON (text/javascript)
-				 * 	GML2    
+				 *  JSON
+				 * 	GML2 > assumed for requests without an explicit output format.    
 				 *  ZIP 
 				 */
 			} else if (!outputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && 
-					!outputFormat.isEmpty() && //GML2 is assumed for requests without an explicit output format. 
+					!outputFormat.isEmpty() &&  
 					!outputFormat.toUpperCase().equals("GML2")){
 
 				result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ". The output format '"+ outputFormat + "' is not supported.");
@@ -398,6 +409,9 @@ public class ServletWFS extends HttpServlet
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		} finally {
+			
+			exceptionFileScanner.close();
 		}
 
 

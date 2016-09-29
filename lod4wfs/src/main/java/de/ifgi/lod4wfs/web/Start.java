@@ -3,7 +3,6 @@ package de.ifgi.lod4wfs.web;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
@@ -37,7 +36,7 @@ public class Start{
 			GlobalSettings.setDefaultSPARQLEndpoint(args[0]);
 		}
 		
-		/**
+		/***
 		 * Second parameter: Server port
 		 */
 		if (args.length == 2) {
@@ -69,8 +68,8 @@ public class Start{
 		
 //*******************
 		
-		ContextHandler contextGUI = new ContextHandler("/admin");
-	    contextGUI.setHandler(new HandlerGUI("Bonjoir"));
+		ContextHandler contextGUI = new ContextHandler("/api");
+	    contextGUI.setHandler(new HandlerGUI("Bom dia"));
 	        
 		ContextHandlerCollection contexts = new ContextHandlerCollection();
         contexts.setHandlers(new Handler[] { context, contextGUI, webAppContext});

@@ -156,7 +156,7 @@ public class FactoryWFS {
 				NodeList nodeList = (NodeList) xpath.compile("//FeatureTypeList/text()").evaluate(document, XPathConstants.NODESET);           
 
 				/**
-				 * Adding LOD features (SDA and FDA) in the Capabilities Document. 
+				 * Adding LOD features (SOLR, SDA and FDA) in the Capabilities Document. 
 				 */
 				for (int i = 0; i < features.size(); i++) {
 
