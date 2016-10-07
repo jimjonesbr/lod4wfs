@@ -6,6 +6,7 @@ import de.ifgi.lod4wfs.core.EscapeChars;
 import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.core.GlobalSettings;
+import de.ifgi.lod4wfs.factory.FactoryAPI;
 import de.ifgi.lod4wfs.factory.FactoryFDAFeatures;
 import de.ifgi.lod4wfs.factory.FactoryWFS;
 
@@ -65,6 +66,8 @@ public class Facade {
 	/**
 	 * Methods for Web Interface (LOD4WFS)
 	 */
+	
+	
 	
 	public WFSFeature getFeatureMetadata(WFSFeature feature){
 		
@@ -169,6 +172,16 @@ public class Facade {
 		
 		return Utils.getGeometryType(wkt);
 		
+	}
+	
+	public String getSystemIndo () {
+		
+		return FactoryAPI.getSystemInfo();
+	}
+
+	public String getFeaturesList () {
+		
+		return FactoryAPI.listFeatures();
 	}
 	
 	public int getPreviewLimit(){

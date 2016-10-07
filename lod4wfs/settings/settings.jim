@@ -35,7 +35,7 @@ fdaEnabled = true
 solrEnabled = false
 
 [Server]
-defaultPort = 8088
+defaultPort = 4200
 SPARQLEndpointURL = http://linkeddata.uni-muenster.de:8081/parliament/sparql
 SPARQLDirectory = features/
 connectionTimeOut = 1000

@@ -31,6 +31,12 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonWriter;
+
 import it.cutruzzula.lwkt.WKTParser;
 
 /**
@@ -40,7 +46,7 @@ import it.cutruzzula.lwkt.WKTParser;
 
 public class Utils {
 
-	private static Logger logger = Logger.getLogger("LOD4WFS-Utils");
+	private static Logger logger = Logger.getLogger("WFSAdapter-Utils");
 	
 	public static boolean isWKT(String wkt){
 		
@@ -60,6 +66,8 @@ public class Utils {
 		
 	}
 
+	
+	
 	
 	public static String removeCRSandTypefromWKT(String wktLiteral){
 		

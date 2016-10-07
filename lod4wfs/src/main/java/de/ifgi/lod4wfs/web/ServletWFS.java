@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
 import de.ifgi.lod4wfs.core.Utils;
 import de.ifgi.lod4wfs.core.WFSFeature;
 import de.ifgi.lod4wfs.facade.Facade;
+import de.ifgi.lod4wfs.factory.FactoryAPI;
 
 /**
  * @author Jim Jones
@@ -21,28 +22,28 @@ import de.ifgi.lod4wfs.facade.Facade;
 
 public class ServletWFS extends HttpServlet
 {
-	
-    /**
+
+	/**
 	 * Automatically generated serial version UID.
 	 */
-	
+
 	private static final long serialVersionUID = 1463163373195766944L;
 	private static Logger logger = Logger.getLogger("Web-Interface");
 
 	public ServletWFS(){
-		
+
 		super();
-		
+
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 
 		Enumeration<String> listParameters = request.getParameterNames();
-	    response.addHeader("Access-Control-Allow-Origin","*");
-	    response.addHeader("Access-Control-Allow-Methods","GET,POST");
-	    response.addHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
-		
+		response.addHeader("Access-Control-Allow-Origin","*");
+		response.addHeader("Access-Control-Allow-Methods","GET,POST");
+		response.addHeader("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
+
 		String CapabilitiesDocuemnt = new String();
 		String currentVersion = new String();
 		String currentRequest = new String();
@@ -65,19 +66,19 @@ public class ServletWFS extends HttpServlet
 			if (parameter.toUpperCase().equals("VERSION")) {
 
 				currentVersion=request.getParameter(parameter);
-				
+
 			}
 
 			if(parameter.toUpperCase().equals("REQUEST")){
 
 				currentRequest=request.getParameter(parameter);
-				
+
 			}
 
 			if(parameter.toUpperCase().equals("TYPENAME")){
 
 				currentTypeName=request.getParameter(parameter);
-				
+
 			}
 
 			if(parameter.toUpperCase().equals("SRSNAME")){
@@ -88,33 +89,33 @@ public class ServletWFS extends HttpServlet
 			if(parameter.toUpperCase().equals("SERVICE")){
 
 				currentService=request.getParameter(parameter);
-				
+
 			}
 
 			if(parameter.toUpperCase().equals("OUTPUTFORMAT")){
 
 				currentOutputFormat=request.getParameter(parameter);
-				
+
 			}
 
 			if(parameter.toUpperCase().equals("FORMAT_OPTIONS")){
 
 				currentOptionsFormat=request.getParameter(parameter);
-				
+
 			}
-			
+
 			if(parameter.toUpperCase().equals("SERVER")){
 
 				serverRequest = request.getParameter(parameter);
-				
+
 			}
 
-			
-//			if (parameter.toUpperCase().equals("MAXFEATURE")) {
-//
-//				currentMaxFeature = request.getParameter(parameter);
-//				
-//			}
+
+			//			if (parameter.toUpperCase().equals("MAXFEATURE")) {
+			//
+			//				currentMaxFeature = request.getParameter(parameter);
+			//				
+			//			}
 
 		}
 
@@ -153,7 +154,35 @@ public class ServletWFS extends HttpServlet
 				 * GetFeature request
 				 */
 
-			} else if (currentRequest.toUpperCase().equals("GETFEATURE")) {
+			} else if (currentRequest.toUpperCase().equals("SYSTEMINFO")) { 
+
+				response.setContentType("application/json");
+				response.setStatus(HttpServletResponse.SC_OK);	
+				response.getWriter().println(Facade.getInstance().getSystemIndo());
+
+				logger.info("System Info request devlivered.");
+			}
+
+			else if (currentRequest.toUpperCase().equals("LISTFEATURES")) { 
+
+
+
+				//REMOVER VALIDACAO DAQUI. COLOCAR NA FUNCAO VALIDATEREQUEST! oi: FACTORYAPI!
+				if(currentService.toUpperCase().equals("API")){
+
+					response.setContentType("application/json");
+					response.setStatus(HttpServletResponse.SC_OK);	
+					response.getWriter().println(Facade.getInstance().getFeaturesList());
+
+					logger.info("Feature list devlivered.");
+
+				} else {
+
+/////
+
+				}
+
+			} 	else if (currentRequest.toUpperCase().equals("GETFEATURE")) {
 
 				WFSFeature layer = new WFSFeature();
 				layer.setName(currentTypeName);
@@ -210,9 +239,9 @@ public class ServletWFS extends HttpServlet
 
 								readBytes=fileInput.read(buffer,0,(int)zipFile.length() - totalRead);
 								totalRead= totalRead+readBytes; 
-								
+
 							}
-							
+
 							response.getOutputStream().write(buffer, 0, readBytes);
 
 						}
@@ -309,12 +338,109 @@ public class ServletWFS extends HttpServlet
 		String result = new String();
 		boolean valid = true;
 		Scanner exceptionFileScanner = null;
+
 		try {
 
 			exceptionFileScanner = new Scanner(new File("wfs/ServiceExceptionReport.xml")).useDelimiter("\\Z");
 			result = exceptionFileScanner.next();
 
-			if(!service.toUpperCase().equals("WFS")){
+
+
+			///////////////////////////////////////////////////////////
+
+			if(service.toUpperCase().equals("API")){
+
+				if(!request.toUpperCase().equals("LISTFEATURES") && 
+				   !request.toUpperCase().equals("LOADFEATURE") && 
+				   !request.toUpperCase().equals("SYSTEMINFO")){
+					
+					logger.error("Uknown API request > " + request);
+					
+					result = FactoryAPI.raiseException("\nUnknown API request > "+ request);
+
+					valid = false;
+					
+				}
+
+				
+				
+				
+
+			} else if(service.toUpperCase().equals("WFS")){
+
+
+				if (!version.equals("1.0.0")){
+
+					if (version.isEmpty()){
+
+						result = result.replace("PARAM_REPORT", "Web Feature Service version not informed.");
+						result = result.replace("PARAM_CODE", "VersionNotProvided");
+						logger.error("Web Feature Service version not informed.");
+
+					} else {
+
+						result = result.replace("PARAM_REPORT", "WFS version " + version + " is not supported by this server.");
+						result = result.replace("PARAM_CODE", "VersionNotSupported");
+						logger.error("WFS version " + version + " is not supported by this server.");
+
+					}
+
+					valid = false;
+
+				} else if(!request.toUpperCase().equals("GETCAPABILITIES") && 
+						!request.toUpperCase().equals("DESCRIBEFEATURETYPE") &&
+						!request.toUpperCase().equals("GETFEATURE")){
+
+					result = result.replace("PARAM_REPORT", "Operation " + request + " not supported by WFS.");
+					result = result.replace("PARAM_CODE", "UnknownOperation");
+					logger.error("Operation " + request + " unknown. See the WFS Adapter docs for more details.");
+					valid = false;
+
+				} else if (request.toUpperCase().equals("DESCRIBEFEATURETYPE") && typeName.isEmpty()){
+
+					result = result.replace("PARAM_REPORT", "No feature provided for " + request + ".");
+					result = result.replace("PARAM_CODE", "FeatureNotProvided");
+					logger.error("No feature provided for " + request + ".");
+					valid = false;
+
+				} else if (request.toUpperCase().equals("GETFEATURE") && typeName.isEmpty()){
+
+					result = result.replace("PARAM_REPORT", "No feature provided for " + request + ".");
+					result = result.replace("PARAM_CODE", "FeatureNotProvided");
+					logger.error("No feature provided for " + request + ".");
+					valid = false;
+
+					/**
+					 * 	Supported output formats:
+					 * 	GeoJSON (text/javascript)
+					 *  JSON
+					 * 	GML2 > assumed for requests without an explicit output format.    
+					 *  ZIP 
+					 */
+				} else if (!outputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && 
+						!outputFormat.isEmpty() &&  
+						!outputFormat.toUpperCase().equals("GML2")){
+
+					result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ". The output format '"+ outputFormat + "' is not supported.");
+					result = result.replace("PARAM_CODE", "InvalidOutputFormat");
+					logger.error("Invalid output format for " + request + ". The output format " + outputFormat + " is not supported.");
+					valid = false;
+
+				} else if (!formatOptions.toUpperCase().equals("ZIP") &&
+						!formatOptions.toUpperCase().equals("CALLBACK:LOADGEOJSON") &&
+						!formatOptions.toUpperCase().equals("JSON") &&
+						!formatOptions.toUpperCase().equals("GEOJSON") &&
+						!formatOptions.toUpperCase().isEmpty()){
+
+					result = result.replace("PARAM_REPORT", "Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
+					result = result.replace("PARAM_CODE", "InvalidOutputFormatOption");
+					logger.error("Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
+					valid = false;
+
+				}
+
+			} else {
+
 
 				if(service.isEmpty()){
 
@@ -328,77 +454,104 @@ public class ServletWFS extends HttpServlet
 					logger.error("Service " + service + " is not supported by this server.");
 				}
 
-				valid = false;
+				valid = false;				
 
-			} else if (!version.equals("1.0.0")){
+			}
 
-				if (version.isEmpty()){
 
-					result = result.replace("PARAM_REPORT", "Web Feature Service version not informed.");
-					result = result.replace("PARAM_CODE", "VersionNotProvided");
-					logger.error("Web Feature Service version not informed.");
 
-				} else {
 
-					result = result.replace("PARAM_REPORT", "WFS version " + version + " is not supported by this server.");
-					result = result.replace("PARAM_CODE", "VersionNotSupported");
-					logger.error("WFS version " + version + " is not supported by this server.");
+			//////////////////////////////////////////////////////////
 
-				}
 
-				valid = false;
-
-			} else if(!request.toUpperCase().equals("GETCAPABILITIES") && 
-					!request.toUpperCase().equals("DESCRIBEFEATURETYPE") &&
-					!request.toUpperCase().equals("GETFEATURE")){
-
-				result = result.replace("PARAM_REPORT", "Operation " + request + " not supported by WFS.");
-				result = result.replace("PARAM_CODE", "OperationNotSupported");
-				logger.error("Operation " + request + " not supported by WFS.");
-				valid = false;
-
-			} else if (request.toUpperCase().equals("DESCRIBEFEATURETYPE") && typeName.isEmpty()){
-
-				result = result.replace("PARAM_REPORT", "No feature provided for " + request + ".");
-				result = result.replace("PARAM_CODE", "FeatureNotProvided");
-				logger.error("No feature provided for " + request + ".");
-				valid = false;
-
-			} else if (request.toUpperCase().equals("GETFEATURE") && typeName.isEmpty()){
-
-				result = result.replace("PARAM_REPORT", "No feature provided for " + request + ".");
-				result = result.replace("PARAM_CODE", "FeatureNotProvided");
-				logger.error("No feature provided for " + request + ".");
-				valid = false;
-
-				/**
-				 * 	Supported output formats:
-				 * 	GeoJSON (text/javascript)
-				 *  JSON
-				 * 	GML2 > assumed for requests without an explicit output format.    
-				 *  ZIP 
-				 */
-			} else if (!outputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && 
-					!outputFormat.isEmpty() &&  
-					!outputFormat.toUpperCase().equals("GML2")){
-
-				result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ". The output format '"+ outputFormat + "' is not supported.");
-				result = result.replace("PARAM_CODE", "InvalidOutputFormat");
-				logger.error("Invalid output format for " + request + ". The output format " + outputFormat + " is not supported.");
-				valid = false;
-
-			} else if (!formatOptions.toUpperCase().equals("ZIP") &&
-					!formatOptions.toUpperCase().equals("CALLBACK:LOADGEOJSON") &&
-					!formatOptions.toUpperCase().equals("JSON") &&
-					!formatOptions.toUpperCase().equals("GEOJSON") &&
-					!formatOptions.toUpperCase().isEmpty()){
-
-				result = result.replace("PARAM_REPORT", "Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
-				result = result.replace("PARAM_CODE", "InvalidOutputFormatOption");
-				logger.error("Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
-				valid = false;
-
-			}// else if (currentMax)
+			//				if(!service.toUpperCase().equals("WFS")){
+			//
+			//					if(service.isEmpty()){
+			//
+			//						result = result.replace("PARAM_REPORT", "No service provided in the request.");
+			//						result = result.replace("PARAM_CODE", "ServiceNotProvided");
+			//						logger.error("No service provided in the request.");					
+			//
+			//					} else {
+			//						result = result.replace("PARAM_REPORT", "Service " + service + " is not supported by this server.");
+			//						result = result.replace("PARAM_CODE", "ServiceNotSupported");
+			//						logger.error("Service " + service + " is not supported by this server.");
+			//					}
+			//
+			//					valid = false;
+			//
+			//				} else if (!version.equals("1.0.0")){
+			//
+			//					if (version.isEmpty()){
+			//
+			//						result = result.replace("PARAM_REPORT", "Web Feature Service version not informed.");
+			//						result = result.replace("PARAM_CODE", "VersionNotProvided");
+			//						logger.error("Web Feature Service version not informed.");
+			//
+			//					} else {
+			//
+			//						result = result.replace("PARAM_REPORT", "WFS version " + version + " is not supported by this server.");
+			//						result = result.replace("PARAM_CODE", "VersionNotSupported");
+			//						logger.error("WFS version " + version + " is not supported by this server.");
+			//
+			//					}
+			//
+			//					valid = false;
+			//
+			//				} else if(!request.toUpperCase().equals("GETCAPABILITIES") && 
+			//						!request.toUpperCase().equals("DESCRIBEFEATURETYPE") &&
+			//						!request.toUpperCase().equals("LISTFEATURES") &&
+			//						!request.toUpperCase().equals("LOADFEATURE") &&
+			//						!request.toUpperCase().equals("SYSTEMINFO") &&
+			//						!request.toUpperCase().equals("GETFEATURE")){
+			//
+			//					result = result.replace("PARAM_REPORT", "Operation " + request + " not supported by WFS.");
+			//					result = result.replace("PARAM_CODE", "UnknownOperation");
+			//					logger.error("Operation " + request + " unknown. See the WFS Adapter docs for more details.");
+			//					valid = false;
+			//
+			//				} else if (request.toUpperCase().equals("DESCRIBEFEATURETYPE") && typeName.isEmpty()){
+			//
+			//					result = result.replace("PARAM_REPORT", "No feature provided for " + request + ".");
+			//					result = result.replace("PARAM_CODE", "FeatureNotProvided");
+			//					logger.error("No feature provided for " + request + ".");
+			//					valid = false;
+			//
+			//				} else if (request.toUpperCase().equals("GETFEATURE") && typeName.isEmpty()){
+			//
+			//					result = result.replace("PARAM_REPORT", "No feature provided for " + request + ".");
+			//					result = result.replace("PARAM_CODE", "FeatureNotProvided");
+			//					logger.error("No feature provided for " + request + ".");
+			//					valid = false;
+			//
+			//					/**
+			//					 * 	Supported output formats:
+			//					 * 	GeoJSON (text/javascript)
+			//					 *  JSON
+			//					 * 	GML2 > assumed for requests without an explicit output format.    
+			//					 *  ZIP 
+			//					 */
+			//				} else if (!outputFormat.toUpperCase().equals("TEXT/JAVASCRIPT") && 
+			//						!outputFormat.isEmpty() &&  
+			//						!outputFormat.toUpperCase().equals("GML2")){
+			//
+			//					result = result.replace("PARAM_REPORT", "Invalid output format for " + request + ". The output format '"+ outputFormat + "' is not supported.");
+			//					result = result.replace("PARAM_CODE", "InvalidOutputFormat");
+			//					logger.error("Invalid output format for " + request + ". The output format " + outputFormat + " is not supported.");
+			//					valid = false;
+			//
+			//				} else if (!formatOptions.toUpperCase().equals("ZIP") &&
+			//						!formatOptions.toUpperCase().equals("CALLBACK:LOADGEOJSON") &&
+			//						!formatOptions.toUpperCase().equals("JSON") &&
+			//						!formatOptions.toUpperCase().equals("GEOJSON") &&
+			//						!formatOptions.toUpperCase().isEmpty()){
+			//
+			//					result = result.replace("PARAM_REPORT", "Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
+			//					result = result.replace("PARAM_CODE", "InvalidOutputFormatOption");
+			//					logger.error("Invalid output format option for " + request + ". The output format option '" + formatOptions + "' is not supported.");
+			//					valid = false;
+			//
+			//				}
 
 			if(!valid){
 				result = result.replace("PARAM_LOCATOR", request);
@@ -410,7 +563,7 @@ public class ServletWFS extends HttpServlet
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} finally {
-			
+
 			exceptionFileScanner.close();
 		}
 
