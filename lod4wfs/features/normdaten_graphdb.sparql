@@ -1,0 +1,31 @@
+{
+"name":"http://sparql.lod4wfs.de/normdaten_graphdb",
+"title":"Normdaten GND (GraphDB)",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://linkeddata.uni-muenster.de:8081/parliament/sparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"toc": [
+	{"feature": "http://www.w3.org/2001/XMLSchema#string"},
+	{"name": "http://www.w3.org/2001/XMLSchema#string"},
+	{"wkt": "http://www.opengis.net/ont/geosparql#wktLiteral"},
+	{"geonames": "http://www.w3.org/2001/XMLSchema#string"}
+	],
+"query":"PREFIX  geo:  <http://www.opengis.net/ont/geosparql#>
+PREFIX  geof: <http://www.opengis.net/def/function/geosparql/>
+
+SELECT  ?feature ?name ?wkt ?geonames
+WHERE
+  { GRAPH <http://www.dnb.de/normdaten>
+      { ?feature  <http://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName>  ?name ;
+                  geo:hasGeometry       ?geometry .
+        ?geometry  a                    <http://www.opengis.net/ont/sf#Point> ;
+                  geo:asWKT             ?wkt
+        OPTIONAL
+          { ?feature  <http://www.w3.org/2002/07/owl#sameAs>  ?geonames }
+      }
+  }
+"
+}

@@ -60,10 +60,10 @@ public class FactoryWFS {
 		return instance;
 	}
 
-
-	public String getCapabilities(String version){
-
-		String resultCapabilities = new String();
+	
+	
+	public ArrayList<WFSFeature> getFeatureList() {
+		
 		ArrayList<WFSFeature> features = new ArrayList<WFSFeature>();
 
 		fdaFeatureList = null;
@@ -127,6 +127,20 @@ public class FactoryWFS {
 
 		}
 
+		return features;
+		
+		
+	}
+	
+	
+
+	public String getCapabilities(String version){
+
+		String resultCapabilities = new String();
+
+		
+		ArrayList<WFSFeature> features = getFeatureList();
+		
 
 		this.generateLayersPrefixes(features);
 

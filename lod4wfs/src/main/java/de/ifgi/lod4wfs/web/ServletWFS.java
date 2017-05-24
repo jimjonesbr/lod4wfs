@@ -165,22 +165,11 @@ public class ServletWFS extends HttpServlet
 
 			else if (currentRequest.toUpperCase().equals("LISTFEATURES")) { 
 
+				response.setContentType("application/json");
+				response.setStatus(HttpServletResponse.SC_OK);	
+				response.getWriter().println(Facade.getInstance().getFeaturesList());
 
-
-				//REMOVER VALIDACAO DAQUI. COLOCAR NA FUNCAO VALIDATEREQUEST! oi: FACTORYAPI!
-				if(currentService.toUpperCase().equals("API")){
-
-					response.setContentType("application/json");
-					response.setStatus(HttpServletResponse.SC_OK);	
-					response.getWriter().println(Facade.getInstance().getFeaturesList());
-
-					logger.info("Feature list devlivered.");
-
-				} else {
-
-/////
-
-				}
+				logger.info("Feature list devlivered.");
 
 			} 	else if (currentRequest.toUpperCase().equals("GETFEATURE")) {
 
@@ -351,20 +340,20 @@ public class ServletWFS extends HttpServlet
 			if(service.toUpperCase().equals("API")){
 
 				if(!request.toUpperCase().equals("LISTFEATURES") && 
-				   !request.toUpperCase().equals("LOADFEATURE") && 
-				   !request.toUpperCase().equals("SYSTEMINFO")){
-					
+						!request.toUpperCase().equals("LOADFEATURE") && 
+						!request.toUpperCase().equals("SYSTEMINFO")){
+
 					logger.error("Uknown API request > " + request);
-					
+
 					result = FactoryAPI.raiseException("\nUnknown API request > "+ request);
 
 					valid = false;
-					
+
 				}
 
-				
-				
-				
+
+
+
 
 			} else if(service.toUpperCase().equals("WFS")){
 

@@ -1,0 +1,23 @@
+{
+"name":"http://sparql.lod4wfs.de/world",
+"title":"World Borders",
+"abstract":"Polygons of all countries",
+"keywords":"world, countries, linked open data, lod4wfs",
+"geometryVariable":"?wkt",
+"endpoint":"http://linkeddata.uni-muenster.de:8081/parliament/sparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"toc": [
+	{"geometry": "http://www.w3.org/2001/XMLSchema#string"},
+	{"wkt": "http://www.opengis.net/ont/geosparql#wktLiteral"}
+	],
+"query":"PREFIX  geo:  <http://www.opengis.net/ont/geosparql/1.0#>
+PREFIX my:   <http://ifgi.lod4wfs.de/resource/> 
+
+SELECT ?geometry ?wkt
+WHERE
+  { GRAPH <http://ifgi.uni-muenster.de/context/geometry/world>
+      { ?geometry geo:asWKT ?wkt }
+  }
+"
+}

@@ -1,0 +1,22 @@
+{
+"name":"http://sparql.lod4wfs.de/goettingen_maps",
+"title":"Goettingen Maps",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://linkeddata.uni-muenster.de:8081/parliament/sparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"toc": [
+	{"geometry": "http://www.w3.org/2001/XMLSchema#string"},
+	{"wkt": "http://www.opengis.net/ont/geosparql#wktLiteral"}
+	],
+"query":"PREFIX  geo:  <http://www.opengis.net/ont/geosparql/1.0#>
+
+SELECT  ?geometry ?wkt
+WHERE
+  { GRAPH <http://ulb.uni-muenster.de/context/karten/ulb>
+      { ?geometry geo:asWKT ?wkt }
+  }
+"
+}

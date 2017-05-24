@@ -1,0 +1,17 @@
+{
+    "name": "http://solr.lod4wfs.de/katalog_karten",
+    "title": "localhost > Katalog Karten",
+    "abstract": "Bio-Thesaurus: Records within Europe (All fields)",
+    "keywords": "solr, spatial-query, bio-thesaurus",
+    "geometryVariable": "coordinates",
+    "crs": "EPSG:4326",
+    "endpoint": "http://localhost:7800/solr/katalog_karten",
+    "order": "*",
+    "limit": 50000,
+    "fields": "*",
+    "filter": "*",
+    "spatialFilter": {
+        "geometryField": "coordinates",
+        "spatialConstraint": "IsWithin(POLYGON((12.908935546875 52.77867785295501,14.051513671875 52.77867785295501,14.051513671875 52.20339869520866,12.908935546875 52.20339869520866,12.908935546875 52.77867785295501))) distErrPct=0"
+    }
+}

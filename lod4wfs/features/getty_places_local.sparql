@@ -1,0 +1,40 @@
+{
+"name":"http://sparql.lod4wfs.de/getty_places_local",
+"title":"Getty TGN Places (WWU)",
+"abstract":"no abstract",
+"keywords":"no keywords",
+"geometryVariable":"?wkt",
+"endpoint":"http://linkeddata.uni-muenster.de:8081/parliament/sparql",
+"crs":"EPSG:4326",
+"enabled":"true",
+"toc": [
+	{"place": "http://www.w3.org/2001/XMLSchema#string"},
+	{"name": "http://www.w3.org/2001/XMLSchema#string"},
+	{"parentString": "http://www.w3.org/2001/XMLSchema#string"},
+	{"wkt": "http://www.w3.org/2001/XMLSchema#string"}
+	],
+"query":"PREFIX  schema: <http://schema.org/>
+PREFIX  gvp:  <http://vocab.getty.edu/ontology#>
+PREFIX  wgs:  <http://www.w3.org/2003/01/geo/wgs84_pos#>
+PREFIX  xl:   <http://www.w3.org/2008/05/skos-xl#>
+PREFIX  xsd:  <http://www.w3.org/2001/XMLSchema#>
+PREFIX  ontogeo: <http://www.ontotext.com/owlim/geo#>
+PREFIX  skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX  tgn:  <http://vocab.getty.edu/tgn/>
+PREFIX  foaf: <http://xmlns.com/foaf/0.1/>
+
+SELECT  ?place ?name ?parentString (concat('POINT(', xsd:string(?long), ' ', xsd:string(?lat), ')') AS ?wkt)
+WHERE
+  { GRAPH <http://vocab.getty.edu/dataset/tgn>
+      { ?feature skos:inScheme tgn: .
+        ?feature gvp:parentString ?parentString .
+        ?feature foaf:focus ?place .
+        ?feature gvp:prefLabelGVP _:b0 .
+        _:b0 xl:literalForm ?name .
+        ?place wgs:lat ?lat .
+        ?place wgs:long ?long .
+        ?place <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> schema:Place
+      }
+  }
+"
+}

@@ -1,8 +1,8 @@
 {
 "name":"http://sparql.lod4wfs.de/gnd_places",
-"title":"Normdaten GND",
-"abstract":"no abstract",
-"keywords":"no keywords",
+"title":"GND Places (Normdaten)",
+"abstract":"Places extracted from the GND dataset",
+"keywords":"places, geonames, gnd. dnb",
 "geometryVariable":"?wkt",
 "endpoint":"http://linkeddata.uni-muenster.de:8081/parliament/sparql",
 "crs":"EPSG:4326",
@@ -10,14 +10,22 @@
 "toc": [
 	{"feature": "http://www.w3.org/2001/XMLSchema#string"},
 	{"name": "http://www.w3.org/2001/XMLSchema#string"},
-	{"wkt": "http://www.opengis.net/ont/geosparql#wktLiteral"}
+	{"wkt": "http://www.opengis.net/ont/geosparql#wktLiteral"},
+	{"geonames": "http://www.w3.org/2001/XMLSchema#string"}
 	],
-"query":"SELECT  ?feature ?name ?wkt
+"query":"PREFIX  geof: <http://www.opengis.net/def/function/geosparql/>
+PREFIX  sf:   <http://www.opengis.net/ont/sf#>
+
+SELECT  ?feature ?name ?wkt ?geonames
 WHERE
   { GRAPH <http://www.dnb.de/normdaten>
       { ?feature <http://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName> ?name .
-        ?feature <http://www.opengis.net/ont/geosparql#hasGeometry> ?geo .
-        ?geo <http://www.opengis.net/ont/geosparql#asWKT> ?wkt
+        ?feature <http://www.opengis.net/ont/geosparql#hasGeometry> ?geometry .
+        ?geometry <http://www.opengis.net/ont/geosparql#asWKT> ?wkt
+        OPTIONAL
+          { ?feature <http://www.w3.org/2002/07/owl#sameAs> ?geonames }
+        FILTER geof:sfWithin(?wkt, 'POLYGON((7.4322509765625 52.12674385964288,7.8717041015625 52.133488040771475,7.8936767578125 51.36492148825955,9.5306396484375 51.36492148825955,9.5196533203125 51.055207338584964,7.8497314453125 51.062112513997754,7.8936767578125 49.53946900793534,7.3773193359375 49.532339195028115,7.3223876953125 51.062112513997754,5.9381103515625 51.04830113331224,5.9381103515625 51.41291212935532,7.3333740234375 51.35120063065598,7.4322509765625 52.12674385964288))'^^sf:wktLiteral)
       }
-  }"
+  }
+"
 }
